@@ -166,7 +166,7 @@ get_meteo_from('aemet', query_options)
 
 ## OPTION 1
 
-One function, `get_stations_info_for(service)`.
+One function, `get_stations_info_for(service, options, ...)`.
 
 ## Return
 
@@ -195,7 +195,7 @@ Proposed columns:
 ## Expected working examples
 
 ```{r station_info_mockup, eval=FALSE}
-get_stations_info_for('aemet')
-get_stations_info_for('smc')
+get_stations_info_for('aemet', aemet_options())
+get_stations_info_for('smc', smc_options())
 ```
 
