@@ -1,0 +1,201 @@
+---
+title: "weatherspain specifications"
+author: "Víctor Granda"
+date: "4/27/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Intro
+
+The idea is to extract the meteorlogical station data download functionality from `meteoland` to this
+new package. This will involve also an update in both, the code, and the user interface (more tidy friendly,
+sf...).
+
+# Expected available workflows
+
+  1. **Data access**: Programmatic access to APIs and RSS feeds to access the different spanish meteorological
+  services, all under the same user interface
+  
+  1. **Info access**: Programmatic access to APIs and RSS feeds to access services stations info (coordinates,
+  elevation... if available)
+
+This workflow will be structured as follows:
+
+# Workflow 1: Data access
+
+## OPTION 1
+
+One function (UI), i.e. `get_meteo_from(service, options, ...)`. The advantage of this is that the user
+always use the same interface for all services. `options` argument will provide the specific options for
+each service (api, dates, stations...). `options` also will allow selecting between historical, current day
+or instant, as well as station info.
+
+```{r option_1_examples, eval=FALSE}
+get_meteo_from('aemet', options = list(api = 'xxx', dates = '2020-04-25', stations = 'X234'), ...)
+```
+
+This also involves creating helper functions to generate the options list for each service, with sensible
+defaults:
+
+```{r option_1_helpers, eval = FALSE}
+aemet_options <- function(api, dates = Sys.Date(), stations = NULL, ...) {...}
+smc_options <- function(api, dates = Sys.Date(), stations = NULL, ...) {...}
+# ...
+```
+
+And, of course, helper functions to manage the quirks of each service to use internally in `get_meteo_from`:
+
+```{r option_1_internal_helpers, eval=FALSE}
+.get_aemet_data <- function(options, ...) {...}
+.get_smc_data <- function(options, ...) {...}
+# ...
+```
+
+This way opens the possibility of piping access to different services and creation of an sf with all the 
+desired stations in one take, always using the same interface.
+
+```{r piping_example, eval=FALSE}
+all_catalonia_stations <-
+  get_meteo_from('aemet', aemet_options(), ...) %>%
+  dplyr::bind_rows(get_meteo_from('smc', smc_options(), ...)) %>%
+  dplyr::bind_rows(get_meteo_from('meteoclimatic', meteoclimatic_options(), ...))
+```
+
+As a con, internal code for each service (`.get_*_data` helpers) is going to be a little more complicated
+to take into account different possibilities (hourly, daily, monthly, current, instant). But this is
+unavoidable in any case, so...
+
+## OPTION 2
+
+"meteoland style". Meaning, a function for each service and data type (hourly, daily, monthly...). This also
+allows a piping style, but more complex, as each function will have its own interface (some have apis,
+some don't, some offers hourly, some don't...). This is not a big concern right now, but if we are adding
+different services (CyL, Aragón, Asturias...) the complexity for the user increases.
+
+```{r option_2_example, eval=FALSE}
+get_aemet_daily_data(dates, stations, api, ...) %>%
+  dplyr::bind_rows(get_smc_daily_data(dates, stations, api, ...)) %>%
+  dplyr::bind_rows(get_meteoclimatic_daily_data(dates, stations, ...))
+```
+
+Also, different functions for different periods means more duplicated code between functions:
+
+```{r option_2_example, eval=FALSE}
+get_aemet_daily_data <- function(...) {
+  # block of common code for all extraction data functions
+  {...}
+  # block of common code for all aemet extraction data functions
+  {...}
+  # block of specific code for aemet daily
+  {...}
+}
+
+get_aemet_monthly_data <- function(...) {
+  # block of common code for all extraction data functions
+  {...}
+  # block of common code for all aemet extraction data functions
+  {...}
+  # block of specific code for aemet monthly
+  {...}
+}
+
+get_smc_daily_data <- function(...) {
+  # block of common code for all extraction data functions
+  {...}
+  # block of common code for all smc extraction data functions
+  {...}
+  # block of specific code for smc daily
+  {...}
+}
+
+# ...
+```
+
+This increase complexity in maintenance, as any change in the common parts of the code has to be replicated
+in all functions. You can use helper functions to generate the common part of the code to avoid this, but
+it increases package complexity (too many helpers, more time to find where the change must be done...).
+
+## Return
+
+The returned objects for all services must be compatible between them (meaning, they must be able to bind
+smoothly). This means same class of object and same columns.  
+
+### Object class
+
+An spatial tibble (dependency on `sf`). It is the most updated standard right now for spatial points data,
+tidy and easy to manage.  
+Returned objects all should be in the same coordinates system, common latlon (EPSG 4326)
+
+```{r crs}
+sf::st_crs(4326)
+```
+
+### Object structure
+
+Proposed columns:
+
+  - `stationID`: station code as provided by the service (with enough services, ID collision is a possibility).
+  - `service`: service acronym indicating the station origin (aemet, smc...). This avoid collissions betweeen
+  stations IDs
+  - meteo variables: common names for meteo variables (`temperature`, `temperature_max`, `temperature_min`...)
+  - `geometry`: sf geometry column
+
+
+
+The expected return value for all services is an spatial tibble object (dependency on `sf`) with common
+columns for all services. Each row should be an observation for each timestep (hourly, daily, monthly, instant)
+and stations.
+
+## Expected working examples
+
+```{r station_data_mockup, eval=FALSE}
+query_options <- aemet_options(
+  api = 'xxxxXXXxxx',
+  timescale = 'daily',
+  dates = lubridate::as_date(lubridate::as_date('1990-01-01'):lubridate::as_date('2020-12-31'))
+)
+
+get_meteo_from('aemet', query_options)
+```
+
+# Workflow 2: Info access
+
+## OPTION 1
+
+One function, `get_stations_info_for(service)`.
+
+## Return
+
+The returned objects for all services must be compatible between them (meaning, they must be able to bind
+smoothly). This means same class of object and same columns.  
+
+### Object class
+
+An spatial tibble (dependency on `sf`). It is the most updated standard right now for spatial points data,
+tidy and easy to manage.  
+Returned objects all should be in the same coordinates system, common latlon (EPSG 4326)
+
+```{r crs}
+sf::st_crs(4326)
+```
+
+### Object structure
+
+Proposed columns:
+
+  - `stationID`: station code as provided by the service (with enough services, ID collision is a possibility).
+  - info variables: common names for info variables (`elevation`, `lat`, `long`...)
+  - `geometry`: sf geometry column
+
+
+## Expected working examples
+
+```{r station_info_mockup, eval=FALSE}
+get_stations_info_for('aemet')
+get_stations_info_for('smc')
+```
+
