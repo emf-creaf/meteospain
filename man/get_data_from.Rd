@@ -29,7 +29,9 @@ services have at least temperature values.
 
 Some APIs have limits in terms of the data that can be retrieved with one call. For example, AEMET
 only serves daily data for 31 days in one query. In case a bigger period is wanted, a loop must
-be done (see \code{\link[base]{for}}, \code{\link[base]{lapply}} or \code{\link[purrr]{map}}).
+be done (see \code{\link[base]{for}}, \code{\link[base]{lapply}} or \code{\link[purrr]{map}}). When doing
+this is recommendable to add a wait step of 3-5 seconds between loop steps, to avoid hitting the
+query limits per minute.
 }
 
 \examples{

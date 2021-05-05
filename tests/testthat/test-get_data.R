@@ -84,7 +84,12 @@ test_that("aemet API errors are correctly raised", {
   )
   expect_error(get_data_from('aemet', api_options), "El rango de fechas")
   # no data for stations selected
-  api_options$stations <- 'XXXXX'
+  api_options <- aemet_options(
+    'daily',
+    start_date = as.Date('1990-01-01'), end_date = as.Date('1990-01-02'),
+    api_key = keyring::key_get('aemet'),
+    stations = 'XXXXXX'
+  )
   expect_error(get_data_from('aemet', api_options), "Station(s) not available for the period selected")
   # query limit reached
   ## TODO test in some way if we catch the query limit (json error, because it returns html)???
