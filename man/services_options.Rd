@@ -9,9 +9,10 @@
 \title{Options for meteorological services}
 \usage{
 aemet_options(
-  dates,
+  resolution = c("current_day", "daily"),
+  start_date = Sys.Date(),
+  end_date = NULL,
   stations = NULL,
-  resolution = c("instant", "hourly", "daily", "monthly"),
   api_key
 )
 
@@ -34,13 +35,18 @@ meteogalicia_options(
 )
 }
 \arguments{
-\item{dates}{Date vector with the desired dates to extract data from}
-
-\item{stations}{Character vector with the stations codes from which extract data from. If NULL (default)
-all available stations are returned. See \code{\link{get_stations_info_for}} for more information.}
-
 \item{resolution}{Character indicating the temporal resolution for the data. Services allows different
 temporal resolutions that can be present or not in each of them (hourly, daily, monthly, instant).}
+
+\item{start_date}{Date class object with the start date from which start collecting data. Ignored if
+resolution is one of \code{current_day} or \code{instant}.}
+
+\item{end_date}{Date class object with the end date from which stop collecting data. If NULL (default),
+only the date in \code{start_date} is returned. Ignored if resolution is one of \code{current_day} or
+\code{instant}.}
+
+\item{stations}{Character vector with the stations codes from which extract data from. If NULL (default)
+all available stations are returned.}
 
 \item{api_key}{Character with the API key. NULL by default as not all services require keys. See API Keys
 section for more details.}
@@ -49,7 +55,7 @@ section for more details.}
 A list with the service API options to make the query to obtain the data.
 }
 \description{
-Set the options for accesing the different spanish meteorological services
+Set the options for accessing the different spanish meteorological services
 
 Set the options for accessing the AEMET service
 
@@ -59,6 +65,19 @@ Set the options for accessing the Meteoclimatic service
 
 Set the options for accessing the MeteoGalicia service
 }
+\section{Resolution}{
+
+Temporal resolutions vary from service to service. Check the "Usage" section to see resolutions available
+to each service. Possible values are:
+\itemize{
+\item{\code{current_day} returns the last 24h of measures.}
+\item{\code{instant} returns the last measure available.}
+\item{\code{hourly} returns any past date/s in hourly format.}
+\item{\code{daily} returns any past date/s with daily aggregation.}
+\item{\code{monthly} returns any past date/s with monthly aggregation.}
+}
+}
+
 \section{Keys}{
 
 Some services (i.e. AEMET, SMC...) require an API key to access the data. The requirements and process
@@ -69,7 +88,7 @@ at "Obtencion de API Key".}
 \item{SMC: Visit \link{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
 }
 It is not advisable to use the keys directly in any script shared or publicly available (github...), neither
-store them in plain text files. We recommend using the keyring package
+store them in plain text files.One option is using the keyring package
 (\link{https://github.com/r-lib/keyring}) for managing and accesing keys.
 }
 
@@ -83,7 +102,7 @@ keyring::key_set(service = 'aemet', user = 'me')
 
 # create the options
 query_options <- aemet_options(
-  dates = as_date(as_date('1990-01-01'):as_date('2020-12-31')),
+  dates = as_date(as_date('1990-01-01'):as_date('1990-02-01')),
   resolution = 'daily',
   api = keyring::key_get('aemet', 'me')
 )

@@ -160,6 +160,12 @@ query_options <- aemet_options(
 )
 
 get_meteo_from('aemet', query_options)
+
+query_options <- smc_options(
+  api = 'xxxxXXXxxx',
+  timescale = 'daily',
+  dates = lubridate::as_date(lubridate::as_date('1990-01-01'):lubridate::as_date('2020-12-31'))
+)
 ```
 
 # Workflow 2: Info access
