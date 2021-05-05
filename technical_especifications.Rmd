@@ -1,5 +1,5 @@
 ---
-title: "weatherspain specifications"
+title: "meteospain specifications"
 author: "Víctor Granda"
 date: "4/27/2021"
 output: pdf_document

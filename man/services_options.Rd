@@ -94,7 +94,7 @@ store them in plain text files.One option is using the keyring package
 
 \examples{
 library(keyring)
-library(weatherspain)
+library(meteospain)
 library(lubridate)
 
 # setting the key (a prompt will appear in console to supply the API key)
@@ -108,7 +108,7 @@ query_options <- aemet_options(
 )
 
 library(keyring)
-library(weatherspain)
+library(meteospain)
 library(lubridate)
 
 # setting the key (a prompt will appear in console to supply the API key)
@@ -121,14 +121,14 @@ query_options <- smc_options(
   api = keyring::key_get('smc', 'me')
 )
 
-library(weatherspain)
+library(meteospain)
 library(lubridate)
 
 query_options <- meteoclimatic_options(
   resolution = 'present_day'
 )
 
-library(weatherspain)
+library(meteospain)
 library(lubridate)
 
 # create the options

@@ -1,4 +1,4 @@
-Package: weatherspain
+Package: meteospain
 Title: Access to spanish meteorological stations services
 Version: 0.0.0.9000
 Authors@R: 

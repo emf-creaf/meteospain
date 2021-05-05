@@ -27,7 +27,7 @@ the stations returned by this function and the stations returned by \code{\link{
 historical dates.
 }
 \examples{
-library(weatherspain)
+library(meteospain)
 library(keyring)
 
 # AEMET (we need a key)

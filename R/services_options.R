@@ -48,7 +48,7 @@ NULL
 #'
 #' @examples
 #' library(keyring)
-#' library(weatherspain)
+#' library(meteospain)
 #' library(lubridate)
 #'
 #' # setting the key (a prompt will appear in console to supply the API key)
@@ -101,7 +101,7 @@ aemet_options <- function(
 #'
 #' @examples
 #' library(keyring)
-#' library(weatherspain)
+#' library(meteospain)
 #' library(lubridate)
 #'
 #' # setting the key (a prompt will appear in console to supply the API key)
@@ -145,7 +145,7 @@ smc_options <- function(
 #' Set the options for accessing the Meteoclimatic service
 #'
 #' @examples
-#' library(weatherspain)
+#' library(meteospain)
 #' library(lubridate)
 #'
 #' query_options <- meteoclimatic_options(
@@ -177,7 +177,7 @@ meteoclimatic_options <- function(
 #' Set the options for accessing the MeteoGalicia service
 #'
 #' @examples
-#' library(weatherspain)
+#' library(meteospain)
 #' library(lubridate)
 #'
 #' # create the options

@@ -18,7 +18,7 @@
 #'
 #'
 #' @examples
-#' library(weatherspain)
+#' library(meteospain)
 #' library(keyring)
 #'
 #' # AEMET (we need a key)
@@ -61,7 +61,7 @@ get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogal
 #' @param api_key API key in case the service needs one. NULL by default.
 #'
 #' @examples
-#' library(weatherspain)
+#' library(meteospain)
 #' library(keyring)
 #'
 #' # AEMET (we need a key)

@@ -33,7 +33,7 @@ be done (see \code{\link[base]{for}}, \code{\link[base]{lapply}} or \code{\link[
 }
 
 \examples{
-library(weatherspain)
+library(meteospain)
 library(keyring)
 
 # AEMET (we need a key)
