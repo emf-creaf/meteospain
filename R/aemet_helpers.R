@@ -253,14 +253,17 @@
     dplyr::mutate(
       altitude = as.numeric(stringr::str_replace_all(altitude, ',', '.')),
       altitude = units::set_units(altitude, m),
-      latitude_temp = as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000,
-      longitude_temp = as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000,
-      latitude_temp = dplyr::if_else(stringr::str_detect(latitude, 'S'), -latitude_temp, latitude_temp),
-      longitude_temp = dplyr::if_else(stringr::str_detect(longitude, 'W'), -longitude_temp, longitude_temp),
-      latitude = latitude_temp,
-      longitude = longitude_temp,
+      latitude = dplyr::if_else(
+        stringr::str_detect(latitude, 'S'),
+        -as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000,
+        as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000
+      ),
+      longitude = dplyr::if_else(
+        stringr::str_detect(longitude, 'W'),
+        -as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000,
+        as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000
+      )
     ) %>%
-    dplyr::select(-latitude_temp, -longitude_temp) %>%
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 
 }
