@@ -195,7 +195,7 @@
   # AEMET monthly seems to be impossible to reach from R, I spent 3 days trying every option
   # I found and nothing, so I remove it from now, to wait for a solution.
   # NOTE: It also doesn't work with the python example in their webpage, so...
-  # I tried to communicate with them, no answer yet.
+  # I tried to communicate with them, No solution offered :(
   # if (api_options$resolution == 'monthly') {
   #
   # }
@@ -211,18 +211,25 @@
   }
 
   # Check request limit -----------------------------------------------------------------------------------
-  # we need to check if we are reaching the request limit of the API, and if we are near, take a rest
+  # we need to check if we are reaching the request limit of the API, and if we are near, take a rest.
+  # If remaining-request-count goes down 100 it can broke, not always with a 426 error, so instead of checking
+  # the error, check the count. Also, if we let it go down 106, next request could reach the limit (is not
+  # 1 per GET, I don't know why), so we specifiy the limit at 106 to cooldown for 60 seconds.
   if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
     message("Reached the API request limit, taking a cooldown of 60 seconds to reset.")
     Sys.sleep(60)
   }
 
 
-  # copyright message for AEMET
+  # Copyright message -------------------------------------------------------------------------------------
   message(copyright_style(request_metadata$copyright), '\n', legal_note_style(request_metadata$notaLegal))
-  # return
+
+
+  # Return ------------------------------------------------------------------------------------------------
   return(res)
 }
+
+
 
 #' Get info for the aemet stations
 #'
