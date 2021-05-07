@@ -82,9 +82,8 @@
   # get the api response
   api_response <- httr::GET(
     "https://opendata.aemet.es",
-    # httr::add_headers(api_key = api_options$api_key),
-    path = path_resolution,
-    query = list(api_key = api_options$api_key)
+    httr::add_headers(api_key = api_options$api_key),
+    path = path_resolution
   )
   # now we need to check the status of the response (general status), and the status of the AEMET (specific
   # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
@@ -114,8 +113,6 @@
       filter_expression <- rlang::expr(idema %in% api_options$stations)
     }
 
-    ## TODO add ubication/name of stations
-
     res <- stations_data %>%
       dplyr::as_tibble() %>%
       dplyr::filter(!! filter_expression) %>%
@@ -143,8 +140,6 @@
         wind_direction = units::set_units(wind_direction, degree)
       ) %>%
       sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
-
-    return(res)
   }
 
   # aemet daily -------------------------------------------------------------------------------------------
@@ -190,8 +185,6 @@
       ) %>%
       dplyr::left_join(stations_info, by = c('station_id', 'station_name')) %>%
       sf::st_as_sf()
-
-    return(res)
   }
 
   # aemet monthly -----------------------------------------------------------------------------------------
@@ -204,6 +197,16 @@
   # }
 
 
+  # Check stations ----------------------------------------------------------------------------------------
+  if ((!is.null(api_options$stations)) & nrow(res) < 1) {
+    stop(
+      "Station(s) provided have no data for the dates selected.\n",
+      "Available stations with data for the actual query are:\n",
+      paste0(c(unique(stations_data$indicativo), unique(stations_data$idema)), collapse = ', ')
+    )
+  }
+
+  return(res)
 }
 
 #' Get info for the aemet stations

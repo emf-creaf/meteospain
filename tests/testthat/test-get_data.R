@@ -90,7 +90,7 @@ test_that("aemet API errors are correctly raised", {
     api_key = keyring::key_get('aemet'),
     stations = 'XXXXXX'
   )
-  expect_error(get_data_from('aemet', api_options), "Station(s) not available for the period selected")
+  expect_error(get_data_from('aemet', api_options), "Station(s) provided have no data for the dates selected")
   # query limit reached
   ## TODO test in some way if we catch the query limit (json error, because it returns html)???
 })
