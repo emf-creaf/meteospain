@@ -82,6 +82,7 @@
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution
   )
+
   # now we need to check the status of the response (general status), and the status of the AEMET (specific
   # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
   # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
@@ -209,6 +210,14 @@
     )
   }
 
+  # Check request limit -----------------------------------------------------------------------------------
+  # we need to check if we are reaching the request limit of the API, and if we are near, take a rest
+  if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
+    message("Reached the API request limit, taking a cooldown of 60 seconds to reset.")
+    Sys.sleep(60)
+  }
+
+
   # copyright message for AEMET
   message(copyright_style(request_metadata$copyright), '\n', legal_note_style(request_metadata$notaLegal))
   # return
@@ -233,7 +242,7 @@
     path = path_resolution
   )
 
-  if (api_response$status_code != 200) {
+  if (api_response$status_code == 404) {
     stop("Unable to connect to AEMET API at ", api_response$url)
   }
 
@@ -246,11 +255,6 @@
   stations_info <-
     jsonlite::fromJSON(httr::content(
       httr::GET(response_content$datos), as = 'text', encoding = 'ISO-8859-15'
-    ))
-
-  stations_info_metadata <-
-    jsonlite::fromJSON(httr::content(
-      httr::GET(response_content$metadatos), as = 'text', encoding = 'ISO-8859-15'
     ))
 
   stations_info %>%
