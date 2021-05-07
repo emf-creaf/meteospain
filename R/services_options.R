@@ -80,14 +80,11 @@ aemet_options <- function(
     rlang::is_character(api_key)
   )
 
-  # stamp dates function
-  aemet_stamp <- lubridate::stamp("2020-12-25T00:00:00UTC")
-
   # build list
   res <- list(
     resolution = resolution,
-    start_date = aemet_stamp(start_date),
-    end_date = dplyr::if_else(rlang::is_null(end_date), aemet_stamp(start_date), aemet_stamp(end_date)),
+    start_date = start_date,
+    end_date = dplyr::if_else(rlang::is_null(end_date), start_date, end_date),
     stations = stations,
     api_key = api_key
   )

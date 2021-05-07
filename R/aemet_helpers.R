@@ -7,15 +7,11 @@
 #' @noRd
 .create_aemet_path <- function(api_options) {
 
-  # create the api path, based on the api_options.
-  # For the link, we need:
-  #   - base url
-  #   - resolution
-  #   - stations, if NULL means all stations
-  #   - dates, in case of hourly, daily and monthly, only the start and end of the sequence
-  # This is rather complicated, so we use a helper function, .create_aemet_path to cover
-  # all possibilities
+  # we need the resolution to create the corresponding path
   resolution <- api_options$resolution
+  # we need to transform the dates to the character string especific format for the AEMET path.
+  # We will use a stamp function:
+  aemet_stamp <- lubridate::stamp("2020-12-25T00:00:00UTC", orders = "YOmdHMS", quiet = TRUE)
 
   # current day
   if (resolution == 'current_day') {
@@ -27,7 +23,8 @@
     return(
       c(
         'opendata', 'api', 'valores', 'climatologicos', 'diarios', 'datos',
-        'fechaini', api_options$start_date, 'fechafin', api_options$end_date,
+        'fechaini', aemet_stamp(api_options$start_date),
+        'fechafin', aemet_stamp(api_options$end_date),
         'todasestaciones'
       )
     )
