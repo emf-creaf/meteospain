@@ -90,7 +90,12 @@ test_that("aemet API errors are correctly raised", {
     api_key = keyring::key_get('aemet'),
     stations = 'XXXXXX'
   )
-  expect_error(get_data_from('aemet', api_options), "Station(s) provided have no data for the dates selected")
+  expect_error(
+    get_data_from('aemet', api_options),
+    "provided have no data for the dates selected"
+  )
+  api_options$resolution <- 'monthly'
+  expect_error(get_data_from('aemet', api_options), "is not a valid temporal resolution")
   # query limit reached
   ## TODO test in some way if we catch the query limit (json error, because it returns html)???
 })

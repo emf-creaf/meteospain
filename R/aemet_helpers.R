@@ -34,30 +34,30 @@
   }
 
   # monthly
-  if (resolution == 'monthly') {
-    # issue a warning if more than one station is provided
-    if (length(api_options$stations) > 1) {
-      warning(
-        "AEMET API for monthly aggregated values only accepts one station per query.\n",
-        "Only the first station provided will be used: ", api_options$stations[1]
-      )
-    }
-
-    return(
-      c(
-        'opendata', 'api', 'valores', 'climatologicos', 'mensualesanuales', 'datos',
-        'anioini', lubridate::year(api_options$start_date), 'aniofin', lubridate::year(api_options$end_date),
-        'estacion', api_options$stations[1]
-      )
-    )
-  }
+  # monthly API does not work for now
+  # if (resolution == 'monthly') {
+  #   # issue a warning if more than one station is provided
+  #   if (length(api_options$stations) > 1) {
+  #     warning(
+  #       "AEMET API for monthly aggregated values only accepts one station per query.\n",
+  #       "Only the first station provided will be used: ", api_options$stations[1]
+  #     )
+  #   }
+  #
+  #   return(
+  #     c(
+  #       'opendata', 'api', 'valores', 'climatologicos', 'mensualesanuales', 'datos',
+  #       'anioini', lubridate::year(api_options$start_date), 'aniofin', lubridate::year(api_options$end_date),
+  #       'estacion', api_options$stations[1]
+  #     )
+  #   )
+  # }
 
   # not recognised resolution
-  warning(
+  stop(
     api_options$resolution,
     " is not a valid temporal resolution for AEMET. Please see aemet_options help for more information"
   )
-  return(invisible(NULL))
 }
 
 
