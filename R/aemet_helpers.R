@@ -100,6 +100,12 @@
     jsonlite::fromJSON(httr::content(
       httr::GET(response_content$datos), as = 'text', encoding = 'ISO-8859-15'
     ))
+
+  # We also need the metadata to show the copyright, and the legal note
+  request_metadata <-
+    jsonlite::fromJSON(httr::content(
+      httr::GET(response_content$metadatos), as = 'text', encoding = 'ISO-8859-15'
+    ))
   # Also, in case stations were supplied, we need also to filter them
   filter_expression <- TRUE
 
@@ -203,6 +209,9 @@
     )
   }
 
+  # copyright message for AEMET
+  message(copyright_style(request_metadata$copyright), '\n', legal_note_style(request_metadata$notaLegal))
+  # return
   return(res)
 }
 

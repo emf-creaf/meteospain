@@ -4,7 +4,7 @@
 test_that("aemet current works", {
   # all stations
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
-  test_object <- get_data_from('aemet', api_options)
+  expect_message((test_object <- get_data_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "station_id", "station_name", "altitude", "temperature", "min_temperature", "max_temperature",
     "precipitation", "relative_humidity", "wind_speed", "wind_direction", "geometry"

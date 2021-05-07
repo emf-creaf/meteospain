@@ -27,5 +27,6 @@ Suggests:
 Imports: 
     dplyr,
     assertthat,
-    rlang
+    rlang,
+    crayon
 Config/testthat/edition: 3
