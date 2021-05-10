@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_data.R
 \name{get_stations_info_from}
 \alias{get_stations_info_from}
-\title{Get metorological stations info}
+\title{Get meteorological stations info}
 \usage{
 get_stations_info_from(
   service = c("aemet", "smc", "meteoclimatic", "meteogalicia"),

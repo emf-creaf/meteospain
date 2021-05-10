@@ -49,7 +49,7 @@ get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogal
 
 }
 
-#' Get metorological stations info
+#' Get meteorological stations info
 #'
 #' Obtain info and metadata for the available stations in the different services
 #'

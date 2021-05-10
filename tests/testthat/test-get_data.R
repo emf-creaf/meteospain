@@ -4,7 +4,7 @@
 test_that("aemet current works", {
   # all stations
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
-  test_object <- get_data_from('aemet', api_options)
+  test_object <- suppressMessages(get_data_from('aemet', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "altitude", "temperature", "min_temperature", "max_temperature",
     "precipitation", "relative_humidity", "wind_speed", "wind_direction", "geometry"
@@ -13,11 +13,12 @@ test_that("aemet current works", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   # some stations
-  api_options$stations <- c('0009X', '0016A', '0034X')
-  test_object <- get_data_from('aemet', api_options)
+  stations_to_check <- test_object[['station_id']][1:3]
+  api_options$stations <- stations_to_check
+  test_object <- suppressMessages(get_data_from('aemet', api_options))
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), c('0009X', '0016A', '0034X'))
+  expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
 })
 
@@ -28,7 +29,7 @@ test_that("aemet daily works", {
     start_date = as.Date('2020-04-01'), end_date = as.Date('2020-05-01'),
     api_key = keyring::key_get('aemet')
   )
-  test_object <- get_data_from('aemet', api_options)
+  test_object <- suppressMessages(get_data_from('aemet', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "station_province",
     "mean_temperature", "min_temperature", "max_temperature",
@@ -38,11 +39,12 @@ test_that("aemet daily works", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   # some stations
-  api_options$stations <- c('4358X', '4220X', 'C447A')
-  test_object <- get_data_from('aemet', api_options)
+  stations_to_check <- test_object[['station_id']][1:3]
+  api_options$stations <- stations_to_check
+  test_object <- suppressMessages(get_data_from('aemet', api_options))
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), c('4358X', '4220X', 'C447A'))
+  expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
   # all stations 2000's
   api_options <- aemet_options(
@@ -50,7 +52,7 @@ test_that("aemet daily works", {
     start_date = as.Date('2005-04-01'), end_date = as.Date('2005-05-01'),
     api_key = keyring::key_get('aemet')
   )
-  test_object <- get_data_from('aemet', api_options)
+  test_object <- suppressMessages(get_data_from('aemet', api_options))
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
@@ -60,7 +62,7 @@ test_that("aemet daily works", {
     start_date = as.Date('1990-04-01'), end_date = as.Date('1990-05-01'),
     api_key = keyring::key_get('aemet')
   )
-  test_object <- get_data_from('aemet', api_options)
+  test_object <- suppressMessages(get_data_from('aemet', api_options))
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
@@ -101,4 +103,33 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
   expect_error(get_data_from('aemet', api_options), "is not a valid temporal resolution")
   # query limit reached
   ## TODO test in some way if we catch the query limit (json error, because it returns html)???
+})
+
+# meteoclimatic get data tests --------------------------------------------------------------------------
+
+test_that("Meteoclimatic works as expected", {
+  # all stations
+  api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
+  test_object <- suppressMessages(get_data_from('meteoclimatic', api_options))
+  expected_names <- c(
+    "timestamp", "station_id", "station_name", "max_temperature", "min_temperature",
+    "max_relative_humidity", "min_relative_humidity", "precipitation", "geometry"
+  )
+  expect_s3_class(test_object, 'sf')
+  expect_true(nrow(test_object) > 1)
+  expect_named(test_object, expected_names)
+  # one station
+  api_options$stations <- test_object[['station_id']][1]
+  test_object <- suppressMessages(get_data_from('meteoclimatic', api_options))
+  expect_s3_class(test_object, 'sf')
+  expect_true(nrow(test_object) == 1)
+  expect_named(test_object, expected_names)
+})
+
+test_that("meteoclimatic errors, warnings and messages are correctly raised", {
+  # copyright message
+  api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
+  expect_message(get_data_from('meteoclimatic', api_options), 'non-professional')
+  api_options$stations <- 'tururu'
+  expect_error(get_data_from('meteoclimatic', api_options), 'not found in Meteoclimatic')
 })
