@@ -28,5 +28,7 @@ Imports:
     dplyr,
     assertthat,
     rlang,
-    crayon
+    crayon,
+    xml2,
+    stringr
 Config/testthat/edition: 3

@@ -39,12 +39,13 @@ get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogal
   service <- rlang::arg_match(service)
 
   # dispatch the correct function depending on the service selected
-  res <- switch(
+  api_function <- switch(
     service,
-    'aemet' = .get_data_aemet(options)
+    'aemet' = .get_data_aemet,
+    'meteoclimatic' = .get_data_meteoclimatic
   )
 
-  return(res)
+  return(api_function(options))
 
 }
 

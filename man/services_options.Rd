@@ -23,10 +23,7 @@ smc_options(
   api_key
 )
 
-meteoclimatic_options(
-  stations = NULL,
-  resolution = c("instant", "present_day")
-)
+meteoclimatic_options(stations = NULL, resolution = c("current_day"))
 
 meteogalicia_options(
   dates,
@@ -124,9 +121,9 @@ query_options <- smc_options(
 library(meteospain)
 library(lubridate)
 
-query_options <- meteoclimatic_options(
-  resolution = 'present_day'
-)
+query_options <- meteoclimatic_options()
+# same as before, but more verbose
+query_options <- meteoclimatic_options(stations = 'ES', resolution = 'present_day')
 
 library(meteospain)
 library(lubridate)

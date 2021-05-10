@@ -145,22 +145,28 @@ smc_options <- function(
 #' library(meteospain)
 #' library(lubridate)
 #'
-#' query_options <- meteoclimatic_options(
-#'   resolution = 'present_day'
-#' )
+#' query_options <- meteoclimatic_options()
+#' # same as before, but more verbose
+#' query_options <- meteoclimatic_options(stations = 'ES', resolution = 'present_day')
 #'
 #' @rdname services_options
 #'
 #' @export
 meteoclimatic_options <- function(
   stations = NULL,
-  resolution = c('instant', 'present_day')
+  resolution = c('current_day')
 ) {
   # check arguments
   resolution <- rlang::arg_match(resolution)
   assertthat::assert_that(
-    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations))
+    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
+    dplyr::if_else(rlang::is_null(stations), TRUE, !length(stations) > 1)
   )
+
+  # check if stations is NULL, then return all spanish stations
+  if (rlang::is_null(stations)) {
+    stations <- 'ES'
+  }
 
   # build list
   list(
