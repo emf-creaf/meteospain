@@ -9,7 +9,7 @@
 
   # we need the resolution to create the corresponding path
   resolution <- api_options$resolution
-  # we need to transform the dates to the character string especific format for the AEMET path.
+  # we need to transform the dates to the character string specific format for the AEMET path.
   # We will use a stamp function:
   aemet_stamp <- lubridate::stamp("2020-12-25T00:00:00UTC", orders = "YOmdHMS", quiet = TRUE)
 
@@ -57,6 +57,62 @@
   )
 }
 
+#' Get info for the aemet stations
+#'
+#' Get info for the aemet stations
+#'
+#' @noRd
+
+.get_info_aemet <- function(api_options) {
+  # path
+  path_resolution <- c(
+    'opendata', 'api', 'valores', 'climatologicos', 'inventarioestaciones', 'todasestaciones'
+  )
+
+  api_response <- httr::GET(
+    "https://opendata.aemet.es",
+    httr::add_headers(api_key = api_options$api_key),
+    path = path_resolution
+  )
+
+  if (api_response$status_code == 404) {
+    stop("Unable to connect to AEMET API at ", api_response$url)
+  }
+
+  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
+
+  if (response_content$estado != 200) {
+    stop("AEMET API returned no data:\n", response_content$descripcion)
+  }
+
+  stations_info <-
+    jsonlite::fromJSON(httr::content(
+      httr::GET(response_content$datos), as = 'text', encoding = 'ISO-8859-15'
+    ))
+
+  stations_info %>%
+    dplyr::as_tibble() %>%
+    dplyr::select(
+      station_id = indicativo, station_name = nombre, altitude = altitud,
+      latitude = latitud, longitude = longitud
+    ) %>%
+    dplyr::mutate(
+      altitude = as.numeric(stringr::str_replace_all(altitude, ',', '.')),
+      altitude = units::set_units(altitude, m),
+      latitude = dplyr::if_else(
+        stringr::str_detect(latitude, 'S'),
+        -as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000,
+        as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000
+      ),
+      longitude = dplyr::if_else(
+        stringr::str_detect(longitude, 'W'),
+        -as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000,
+        as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000
+      )
+    ) %>%
+    sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
+
+}
 
 #' Get data from AEMET
 #'
@@ -227,63 +283,4 @@
 
   # Return ------------------------------------------------------------------------------------------------
   return(res)
-}
-
-
-
-#' Get info for the aemet stations
-#'
-#' Get info for the aemet stations
-#'
-#' @noRd
-
-.get_info_aemet <- function(api_options) {
-  # path
-  path_resolution <- c(
-    'opendata', 'api', 'valores', 'climatologicos', 'inventarioestaciones', 'todasestaciones'
-  )
-
-  api_response <- httr::GET(
-    "https://opendata.aemet.es",
-    httr::add_headers(api_key = api_options$api_key),
-    path = path_resolution
-  )
-
-  if (api_response$status_code == 404) {
-    stop("Unable to connect to AEMET API at ", api_response$url)
-  }
-
-  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
-
-  if (response_content$estado != 200) {
-    stop("AEMET API returned no data:\n", response_content$descripcion)
-  }
-
-  stations_info <-
-    jsonlite::fromJSON(httr::content(
-      httr::GET(response_content$datos), as = 'text', encoding = 'ISO-8859-15'
-    ))
-
-  stations_info %>%
-    dplyr::as_tibble() %>%
-    dplyr::select(
-      station_id = indicativo, station_name = nombre, altitude = altitud,
-      latitude = latitud, longitude = longitud
-    ) %>%
-    dplyr::mutate(
-      altitude = as.numeric(stringr::str_replace_all(altitude, ',', '.')),
-      altitude = units::set_units(altitude, m),
-      latitude = dplyr::if_else(
-        stringr::str_detect(latitude, 'S'),
-        -as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000,
-        as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000
-      ),
-      longitude = dplyr::if_else(
-        stringr::str_detect(longitude, 'W'),
-        -as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000,
-        as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000
-      )
-    ) %>%
-    sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
-
 }
