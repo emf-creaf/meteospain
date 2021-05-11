@@ -82,7 +82,8 @@ get_stations_info_from <- function(
   # dispatch the correct function depending on the service selected
   res <- switch(
     service,
-    'aemet' = .get_info_aemet(list(api_key = api_key))
+    'aemet' = .get_info_aemet(list(api_key = api_key)),
+    'meteogalicia' = .get_info_meteogalicia()
   )
 
   return(res)
