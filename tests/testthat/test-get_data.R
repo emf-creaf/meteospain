@@ -133,3 +133,7 @@ test_that("meteoclimatic errors, warnings and messages are correctly raised", {
   api_options$stations <- 'tururu'
   expect_error(get_data_from('meteoclimatic', api_options), 'not found in Meteoclimatic')
 })
+
+# error in meteogalicia with the wind
+api_options <- meteogalicia_options('current_day', stations = c("10045", "10046", "10050"))
+.get_data_meteogalicia(api_options)

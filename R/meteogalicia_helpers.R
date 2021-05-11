@@ -186,9 +186,10 @@
       tidyr::pivot_wider(names_from = codigoParametro, values_from = valor) %>%
       dplyr::select(
         timestamp = instanteLecturaUTC, station_id = idEstacion, station_name = estacion,
-        mean_temperature = TA_AVG_1.5m,
-        mean_wind_direction = DV_AVG_2m, mean_wind_speed = VV_AVG_2m,
-        mean_relative_humidity = HR_AVG_1.5m,
+        temperature = TA_AVG_1.5m,
+        wind_direction = DV_AVG_2m,
+        wind_speed = VV_AVG_2m,
+        relative_humidity = HR_AVG_1.5m,
         precipitation = PP_SUM_1.5m,
         insolation = HSOL_SUM_1.5m,
         global_solar_radiation = RS_AVG_1.5m
@@ -196,10 +197,10 @@
       dplyr::mutate(
         timestamp = lubridate::as_date(timestamp),
         station_id = as.character(station_id),
-        mean_temperature = units::set_units(mean_temperature, degree_C),
-        mean_wind_direction = units::set_units(mean_wind_direction, degree),
-        mean_wind_speed = units::set_units(mean_wind_speed, m/s),
-        mean_relative_humidity = units::set_units(mean_relative_humidity, `%`),
+        temperature = units::set_units(temperature, degree_C),
+        wind_direction = units::set_units(wind_direction, degree),
+        wind_speed = units::set_units(wind_speed, m/s),
+        relative_humidity = units::set_units(relative_humidity, `%`),
         precipitation = units::set_units(precipitation, L/m2),
         insolation = units::set_units(insolation, h),
         global_solar_radiation = units::set_units(global_solar_radiation, W/m2)
@@ -212,8 +213,46 @@
 
   if (api_options$resolution == 'current_day') {
 
+    # For current is a double nested data frames. First the list of instants (hours), and then the list of
+    # measures. So double unnest, the rest is the same except for the variables, as there are some new and
+    # some that are not present
 
+    res <-
+      response_content$listHorarios %>%
+      tidyr::unnest(listaInstantes) %>%
+      tidyr::unnest(listaMedidas) %>%
+      # remove the non valid data
+      dplyr::filter(lnCodigoValidacion != 9) %>%
+      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      # now, some stations have errors in the sense of duplicated precipitation values. We get the first record
+      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      dplyr::select(
+        timestamp = instanteLecturaUTC, station_id = idEstacion, station_name = estacion,
+        temperature = TA_AVG_1.5m,
+        min_temperature = TA_MIN_1.5m,
+        max_temperature = TA_MAX_1.5m,
+        wind_direction = DV_AVG_2m,
+        wind_speed = VV_AVG_2m,
+        relative_humidity = HR_AVG_1.5m,
+        precipitation = PP_SUM_1.5m,
+        insolation = HSOL_SUM_1.5m
+      ) %>%
+      dplyr::mutate(
+        timestamp = lubridate::as_datetime(timestamp),
+        station_id = as.character(station_id),
+        temperature = units::set_units(temperature, degree_C),
+        min_temperature = units::set_units(min_temperature, degree_C),
+        max_temperature = units::set_units(max_temperature, degree_C),
+        wind_direction = units::set_units(wind_direction, degree),
+        wind_speed = units::set_units(wind_speed, m/s),
+        relative_humidity = units::set_units(relative_humidity, `%`),
+        precipitation = units::set_units(precipitation, L/m2),
+        insolation = units::set_units(insolation, h)
+      ) %>%
+      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
+      sf::st_as_sf()
   }
 
-
+  return(res)
 }
