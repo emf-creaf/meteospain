@@ -146,8 +146,10 @@ smc_options <- function(
 #' library(lubridate)
 #'
 #' query_options <- meteoclimatic_options()
+#' query_options
 #' # same as before, but more verbose
 #' query_options <- meteoclimatic_options(stations = 'ES', resolution = 'present_day')
+#' query_options
 #'
 #' @rdname services_options
 #'
@@ -193,21 +195,26 @@ meteoclimatic_options <- function(
 #'
 #' @export
 meteogalicia_options <- function(
-  dates,
-  stations = NULL,
-  resolution = c('instant', 'hourly', 'daily', 'monthly')
+  resolution = c('instant', 'current_day', 'daily', 'monthly'),
+  start_date = Sys.Date(),
+  end_date = NULL,
+  stations = NULL
 ) {
   # check arguments
   resolution <- rlang::arg_match(resolution)
   assertthat::assert_that(
-    assertthat::is.date(dates),
+    assertthat::is.date(start_date),
+    dplyr::if_else(rlang::is_null(end_date), TRUE, assertthat::is.date(end_date)),
     dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations))
   )
 
   # build list
-  list(
-    dates = dates,
-    stations = stations,
-    resolution = resolution
+  res <- list(
+    resolution = resolution,
+    start_date = start_date,
+    end_date = dplyr::if_else(rlang::is_null(end_date), start_date, end_date),
+    stations = stations
   )
+
+  return(res)
 }
