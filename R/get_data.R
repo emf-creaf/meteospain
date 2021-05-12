@@ -42,7 +42,8 @@ get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogal
   api_function <- switch(
     service,
     'aemet' = .get_data_aemet,
-    'meteoclimatic' = .get_data_meteoclimatic
+    'meteoclimatic' = .get_data_meteoclimatic,
+    'meteogalicia' = .get_data_meteogalicia
   )
 
   return(api_function(options))

@@ -225,6 +225,7 @@
         insolation = units::set_units(insolation, h),
         global_solar_radiation = units::set_units(global_solar_radiation, W/m2)
       ) %>%
+      dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
       sf::st_as_sf()
   }
@@ -389,6 +390,18 @@
       sf::st_as_sf()
 
   }
+
+  # Copyright message -------------------------------------------------------------------------------------
+  message(
+    copyright_style(
+      "A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser",
+      " utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á",
+      " Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
+      " que as utilice para os usos distintos do particular e privado."
+    ),
+    '\n',
+    legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
+  )
 
   return(res)
 }
