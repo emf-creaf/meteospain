@@ -30,7 +30,7 @@
 
   # monthly
   if (resolution == 'monthly') {
-    return(c('rss', 'observacion', 'datosMesuaisEstacionsMeteo.action'))
+    return(c('rss', 'observacion', 'datosMensuaisEstacionsMeteo.action'))
   }
 
   # not recognised resolution
@@ -53,6 +53,11 @@
 #' @noRd
 .create_meteogalicia_query <- function(api_options) {
 
+  # In case of dates supplied and in the corresponding resolutions, we need to transform the dates to the
+  # character string specific format (dd-mm-yyyy) for the meteogalicia query
+  # We will use a stamp function:
+  meteogalicia_stamp <- lubridate::stamp("25/12/2001", orders = "d0mY", quiet = TRUE)
+
   # the first thing is the stations, as it is the common part for any resolution
   stations_query_string <- glue::glue("idEst={glue::glue_collapse(api_options$stations, sep = ',')}")
 
@@ -60,11 +65,6 @@
   dates_query_string <- glue::glue(
     "dataIni={meteogalicia_stamp(api_options$start_date)}&dataFin={meteogalicia_stamp(api_options$end_date)}"
   )
-
-  # In case of dates supplied and in the corresponding resolutions, we need to transform the dates to the
-  # character string specific format (dd-mm-yyyy) for the meteogalicia query
-  # We will use a stamp function:
-  meteogalicia_stamp <- lubridate::stamp("25/12/2001", orders = "d0mY", quiet = TRUE)
 
   # now the specifics for each resolution:
   #   - instant, nothing, only the stations if any
@@ -167,9 +167,25 @@
     stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
 
+  ## Check when empty lists are returned (bad dates), when html with error is returned (bad stations)
+  if (stringr::str_detect(httr::content(api_response, as = 'text'), '<html>')) {
+    stop(
+      "MeteoGalicia API returned an error:\n",
+      stringr::str_remove_all(xml2::xml_text(httr::content(api_response)), '[\\t\\n]'),
+      '\n',
+      'This ususally happens when bad station ids are supplied.'
+    )
+  }
+
   # response content
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
 
+  if (length(response_content[[1]]) < 1) {
+    stop(
+      "MeteoGalicia API returned no data:\n",
+      "This usually happens when there is no data for the dates supplied."
+    )
+  }
 
   # meteogalicia instant ----------------------------------------------------------------------------------
 
@@ -182,8 +198,12 @@
     res <-
       response_content$listUltimos10min %>%
       tidyr::unnest(listaMedidas) %>%
+      # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
+      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
       dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
-      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor) %>%
+      # now, some stations can have errors in the sense of duplicated precipitation values.
+      # We get the first record
+      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
       dplyr::select(
         timestamp = instanteLecturaUTC, station_id = idEstacion, station_name = estacion,
         temperature = TA_AVG_1.5m,
@@ -221,11 +241,20 @@
       response_content$listHorarios %>%
       tidyr::unnest(listaInstantes) %>%
       tidyr::unnest(listaMedidas) %>%
-      # remove the non valid data
-      dplyr::filter(lnCodigoValidacion != 9) %>%
+      # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
+      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
       dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
-      # now, some stations have errors in the sense of duplicated precipitation values. We get the first record
+      # now, some stations can have errors in the sense of duplicated precipitation values.
+      # We get the first record
       tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      # When querying stations, it can happen that some stations lack some variables, making the further
+      # select step to fail. We create missing variables and populate them with NAs to avoid this error
+      .create_missing_vars(
+        var_names = c(
+          'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
+          'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+        )
+      ) %>%
       dplyr::select(
         timestamp = instanteLecturaUTC, station_id = idEstacion, station_name = estacion,
         temperature = TA_AVG_1.5m,
@@ -252,6 +281,113 @@
       dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
       sf::st_as_sf()
+  }
+
+
+  # meteogalicia daily ------------------------------------------------------------------------------------
+
+  if (api_options$resolution == 'daily') {
+
+    # As in the current day, we have a double nested dataframe
+    res <-
+      response_content$listDatosDiarios %>%
+      tidyr::unnest(listaEstacions) %>%
+      tidyr::unnest(listaMedidas) %>%
+      # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
+      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
+      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      # now, some stations can have errors in the sense of duplicated precipitation values.
+      # We get the first record
+      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      # When querying stations, it can happen that some stations lack some variables, making the further
+      # select step to fail. We create missing variables and populate them with NAs to avoid this error
+      .create_missing_vars(
+        var_names = c(
+          'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
+          'HR_AVG_1.5m', 'HR_MIN_1.5m', 'HR_MAX_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+        )
+      ) %>%
+      dplyr::select(
+        timestamp = data, station_id = idEstacion, station_name = estacion, station_province = provincia,
+        temperature = TA_AVG_1.5m,
+        min_temperature = TA_MIN_1.5m,
+        max_temperature = TA_MAX_1.5m,
+        wind_direction = DV_AVG_2m,
+        wind_speed = VV_AVG_2m,
+        relative_humidity = HR_AVG_1.5m,
+        min_relative_humidity = HR_MIN_1.5m,
+        max_relative_humidity = HR_MAX_1.5m,
+        precipitation = PP_SUM_1.5m,
+        insolation = HSOL_SUM_1.5m
+      ) %>%
+      dplyr::mutate(
+        timestamp = lubridate::as_date(timestamp),
+        station_id = as.character(station_id),
+        temperature = units::set_units(temperature, degree_C),
+        min_temperature = units::set_units(min_temperature, degree_C),
+        max_temperature = units::set_units(max_temperature, degree_C),
+        wind_direction = units::set_units(wind_direction, degree),
+        wind_speed = units::set_units(wind_speed, m/s),
+        relative_humidity = units::set_units(relative_humidity, `%`),
+        min_relative_humidity = units::set_units(min_relative_humidity, `%`),
+        max_relative_humidity = units::set_units(max_relative_humidity, `%`),
+        precipitation = units::set_units(precipitation, L/m2),
+        insolation = units::set_units(insolation, h)
+      ) %>%
+      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name', 'station_province')) %>%
+      sf::st_as_sf()
+
+  }
+
+  # meteogalicia monthly ----------------------------------------------------------------------------------
+
+  if (api_options$resolution == 'monthly') {
+
+    # As in the daily, we have a double nested dataframe
+    res <-
+      response_content$listDatosMensuais %>%
+      tidyr::unnest(listaEstacions) %>%
+      tidyr::unnest(listaMedidas) %>%
+      # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
+      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
+      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      # now, some stations can have errors in the sense of duplicated precipitation values.
+      # We get the first record
+      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      # When querying stations, it can happen that some stations lack some variables, making the further
+      # select step to fail. We create missing variables and populate them with NAs to avoid this error
+      .create_missing_vars(
+        var_names = c(
+          'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'VV_AVG_2m',
+          'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+        )
+      ) %>%
+      dplyr::select(
+        timestamp = data, station_id = idEstacion, station_name = estacion, station_province = provincia,
+        temperature = TA_AVG_1.5m,
+        min_temperature = TA_MIN_1.5m,
+        max_temperature = TA_MAX_1.5m,
+        wind_speed = VV_AVG_2m,
+        relative_humidity = HR_AVG_1.5m,
+        precipitation = PP_SUM_1.5m,
+        insolation = HSOL_SUM_1.5m
+      ) %>%
+      dplyr::mutate(
+        timestamp = lubridate::as_date(timestamp),
+        station_id = as.character(station_id),
+        temperature = units::set_units(temperature, degree_C),
+        min_temperature = units::set_units(min_temperature, degree_C),
+        max_temperature = units::set_units(max_temperature, degree_C),
+        wind_speed = units::set_units(wind_speed, m/s),
+        relative_humidity = units::set_units(relative_humidity, `%`),
+        precipitation = units::set_units(precipitation, L/m2),
+        insolation = units::set_units(insolation, h)
+      ) %>%
+      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name', 'station_province')) %>%
+      sf::st_as_sf()
+
   }
 
   return(res)

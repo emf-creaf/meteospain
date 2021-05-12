@@ -20,3 +20,15 @@ legal_note_style <- crayon::blue$bold$underline
     glue_string
   }
 }
+
+.create_missing_vars <- function(df, var_names) {
+
+  missing_var_names <- var_names[which(!var_names %in% names(df))]
+
+  for (missing_var in missing_var_names) {
+    df <- dplyr::mutate(df, {{ missing_var }} := rlang::na_dbl)
+  }
+
+  return(df)
+
+}

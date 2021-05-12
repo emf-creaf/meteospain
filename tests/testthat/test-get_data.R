@@ -135,5 +135,11 @@ test_that("meteoclimatic errors, warnings and messages are correctly raised", {
 })
 
 # error in meteogalicia with the wind
-api_options <- meteogalicia_options('current_day', stations = c("10045", "10046", "10050"))
-.get_data_meteogalicia(api_options)
+api_options <- meteospain::meteogalicia_options('current_day', stations = c("10045", "10046", "10050"))
+meteospain:::.get_data_meteogalicia(api_options)
+
+api_options <- meteospain::meteogalicia_options(
+  'daily', stations = c("10045", "10046", "10050"),
+  start_date = as.Date('2001-04-25'), end_date = as.Date('2001-09-25')
+)
+meteospain:::.get_data_meteogalicia(api_options)
