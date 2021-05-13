@@ -1,0 +1,62 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# meteospain
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+`meteospain` aims to offer access to different spanish meteorological stations data in an uniform way.
+
+## Installation
+
+`meteospain` is yet in active development. You can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("emf-creaf/meteospain")
+```
+
+## Services
+
+The following meteorological stations services are available:
+
+  - [AEMET](http://www.aemet.es/en/portada), the spanish State Meteorological Agency.
+  - [MeteoGalicia](https://www.meteogalicia.gal/web/inicio.action), the galician meteorological service.
+  - [Meteoclimatic](https://www.meteoclimatic.net/), the spanish non-professional meteorological stations 
+  network.
+
+
+## Examples
+
+Access to the services is done with the `get_meteo_from` function, providing the name of the service and
+the options. Each service has a dedicated options function to guide thorugh the especifics of each service:
+
+```{r example}
+library(meteospain)
+
+mg_options <- meteogalicia_options(resolution = 'current_day')
+get_meteo_from('meteogalicia', mg_options)
+```
+
+Returned objects are spatial objects thanks to the [`sf`](https://r-spatial.github.io/sf/) R package. So we
+can easily plot the results directly.
+
+```{r plot_stations}
+library(sf)
+plot(get_meteo_from('meteogalicia', mg_options))
+```
+
