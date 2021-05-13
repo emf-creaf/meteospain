@@ -14,7 +14,7 @@ Authors@R:
              email = "m.caceres@creaf.uab.cat",
              comment = c(ORCID = "0000-0001-7132-2080"))
     )
-Description: Access to different spanish metereological stations data services and APIs (AMET, SMC, MG, 
+Description: Access to different spanish metereological stations data services and APIs (AEMET, SMC, MG, 
   Meteoclimatic...).
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -25,10 +25,17 @@ Suggests:
     keyring,
     testthat (>= 3.0.0)
 Imports: 
-    dplyr,
     assertthat,
-    rlang,
     crayon,
-    xml2,
-    stringr
+    dplyr,
+    glue,
+    httr,
+    jsonlite,
+    lubridate,
+    rlang,
+    sf,
+    stringr,
+    tidyr,
+    units,
+    xml2
 Config/testthat/edition: 3
