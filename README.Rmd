@@ -52,11 +52,19 @@ mg_options <- meteogalicia_options(resolution = 'current_day')
 get_meteo_from('meteogalicia', mg_options)
 ```
 
-Returned objects are spatial objects thanks to the [`sf`](https://r-spatial.github.io/sf/) R package. So we
-can easily plot the results directly.
+Stations info can be accessed with `get_stations_info_from` function:
+
+```{r stations_info}
+get_stations_info_from('meteogalicia', mg_options)
+```
+
+Returned objects are spatial objects (thanks to the [`sf`](https://r-spatial.github.io/sf/) R package), so we
+can plot the results directly.
 
 ```{r plot_stations}
 library(sf)
+mg_options <- meteogalicia_options(resolution = 'daily', start_date = as.Date('2021-04-25'))
 plot(get_meteo_from('meteogalicia', mg_options))
-```
 
+plot(get_stations_info_from('meteogalicia', mg_options))
+```
