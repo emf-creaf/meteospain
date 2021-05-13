@@ -29,12 +29,12 @@
 #'   end_date = as.Date('2012-02-01'),
 #'   api_key = key_get('aemet')
 #' )
-#' get_data_from('aemet', options_for_aemet)
+#' get_meteo_from('aemet', options_for_aemet)
 #'
 #' @return An sf (spatial) object with the stations meteorological data.
 #'
 #' @export
-get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogalicia'), options) {
+get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogalicia'), options) {
   # check arguments
   service <- rlang::arg_match(service)
 
@@ -56,11 +56,12 @@ get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogal
 #'
 #' Depending on the service the metadata available can be different. Also, some services only offer
 #' info for active stations (i.e. AEMET), not historical stations, so some mismatch can occur between
-#' the stations returned by this function and the stations returned by \code{\link{get_data_from}} for
+#' the stations returned by this function and the stations returned by \code{\link{get_meteo_from}} for
 #' historical dates.
 #'
 #' @param service Character with the service name (in lower case).
-#' @param api_key API key in case the service needs one. NULL by default.
+#' @param options List with the needed service options. See \code{\link{service_options}} to have more info
+#'   about the different services and their options.
 #'
 #' @examples
 #' library(meteospain)
@@ -68,14 +69,15 @@ get_data_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogal
 #'
 #' # AEMET (we need a key)
 #' key_set('aemet', user = 'me')
-#' get_station_info_from('aemet', key_get('aemet'))
+#' api_options <- aemet_options(api_key = key_get('aemet'))
+#' get_station_info_from('aemet', api_options)
 #'
 #' @return An sf (spatial) object with the stations metadata.
 #'
 #' @export
 get_stations_info_from <- function(
   service = c('aemet', 'smc', 'meteoclimatic', 'meteogalicia'),
-  api_key = NULL
+  options
 ) {
   # check arguments
   service <- rlang::arg_match(service)
@@ -83,7 +85,8 @@ get_stations_info_from <- function(
   # dispatch the correct function depending on the service selected
   res <- switch(
     service,
-    'aemet' = .get_info_aemet(list(api_key = api_key)),
+    'aemet' = .get_info_aemet(options),
+    'meteoclimatic' = .get_info_meteoclimatic(options),
     'meteogalicia' = .get_info_meteogalicia()
   )
 

@@ -6,13 +6,14 @@
 \usage{
 get_stations_info_from(
   service = c("aemet", "smc", "meteoclimatic", "meteogalicia"),
-  api_key = NULL
+  options
 )
 }
 \arguments{
 \item{service}{Character with the service name (in lower case).}
 
-\item{api_key}{API key in case the service needs one. NULL by default.}
+\item{options}{List with the needed service options. See \code{\link{service_options}} to have more info
+about the different services and their options.}
 }
 \value{
 An sf (spatial) object with the stations metadata.
@@ -23,7 +24,7 @@ Obtain info and metadata for the available stations in the different services
 \details{
 Depending on the service the metadata available can be different. Also, some services only offer
 info for active stations (i.e. AEMET), not historical stations, so some mismatch can occur between
-the stations returned by this function and the stations returned by \code{\link{get_data_from}} for
+the stations returned by this function and the stations returned by \code{\link{get_meteo_from}} for
 historical dates.
 }
 \examples{
@@ -32,6 +33,7 @@ library(keyring)
 
 # AEMET (we need a key)
 key_set('aemet', user = 'me')
-get_station_info_from('aemet', key_get('aemet'))
+api_options <- aemet_options(api_key = key_get('aemet'))
+get_station_info_from('aemet', api_options)
 
 }

@@ -2,7 +2,7 @@
 
 export("%>%")
 export(aemet_options)
-export(get_data_from)
+export(get_meteo_from)
 export(get_stations_info_from)
 export(meteoclimatic_options)
 export(meteogalicia_options)

@@ -23,7 +23,7 @@ smc_options(
   api_key
 )
 
-meteoclimatic_options(stations = NULL, resolution = c("current_day"))
+meteoclimatic_options(resolution = c("current_day"), stations = NULL)
 
 meteogalicia_options(
   resolution = c("instant", "current_day", "daily", "monthly"),

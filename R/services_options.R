@@ -155,8 +155,8 @@ smc_options <- function(
 #'
 #' @export
 meteoclimatic_options <- function(
-  stations = NULL,
-  resolution = c('current_day')
+  resolution = c('current_day'),
+  stations = NULL
 ) {
   # check arguments
   resolution <- rlang::arg_match(resolution)
@@ -172,8 +172,8 @@ meteoclimatic_options <- function(
 
   # build list
   list(
-    stations = stations,
-    resolution = resolution
+    resolution = resolution,
+    stations = stations
   )
 }
 
