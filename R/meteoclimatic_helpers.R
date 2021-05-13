@@ -94,7 +94,20 @@
       min_relative_humidity = units::set_units(min_relative_humidity, `%`),
       precipitation = units::set_units(precipitation, mm)
     ) %>%
-    sf::st_as_sf(crs = 4326)
+    dplyr::arrange(timestamp, station_id) %>%
+    sf::st_as_sf(crs = 4326) %>%
+    # reorder variables to be consistent among all services
+    dplyr::relocate(
+      dplyr::contains('timestamp'),
+      dplyr::contains('station'),
+      dplyr::contains('altitude'),
+      dplyr::contains('temperature'),
+      dplyr::contains('humidity'),
+      dplyr::contains('precipitation'),
+      dplyr::contains('wind'),
+      dplyr::contains('sol'),
+      geometry
+    )
 
   message(
     copyright_style("Meteoclimatic is a non-professional network of automatic meteorological stations.\n"),

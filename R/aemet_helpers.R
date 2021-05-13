@@ -182,8 +182,8 @@
         temperature = ta,
         min_temperature = tamin,
         max_temperature = tamax,
-        precipitation = prec,
         relative_humidity = hr,
+        precipitation = prec,
         wind_speed = vv,
         wind_direction = dv,
         longitude = lon, latitude = lat,
@@ -194,12 +194,25 @@
         temperature = units::set_units(temperature, degree_C),
         min_temperature = units::set_units(min_temperature, degree_C),
         max_temperature = units::set_units(max_temperature, degree_C),
-        precipitation = units::set_units(precipitation, mm),
         relative_humidity = units::set_units(relative_humidity, `%`),
+        precipitation = units::set_units(precipitation, mm),
         wind_speed = units::set_units(wind_speed, m/s),
         wind_direction = units::set_units(wind_direction, degree)
       ) %>%
-      sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
+      dplyr::arrange(timestamp, station_id) %>%
+      sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326) %>%
+      # reorder variables to be consistent among all services
+      dplyr::relocate(
+        dplyr::contains('timestamp'),
+        dplyr::contains('station'),
+        dplyr::contains('altitude'),
+        dplyr::contains('temperature'),
+        dplyr::contains('humidity'),
+        dplyr::contains('precipitation'),
+        dplyr::contains('wind'),
+        dplyr::contains('sol'),
+        geometry
+      )
   }
 
   # aemet daily -------------------------------------------------------------------------------------------
@@ -243,7 +256,20 @@
         # wind_direction = units::set_units(wind_direction, degree),
         insolation = units::set_units(insolation, h)
       ) %>%
+      dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(stations_info, by = c('station_id', 'station_name')) %>%
+      # reorder variables to be consistent among all services
+      dplyr::relocate(
+        dplyr::contains('timestamp'),
+        dplyr::contains('station'),
+        dplyr::contains('altitude'),
+        dplyr::contains('temperature'),
+        dplyr::contains('humidity'),
+        dplyr::contains('precipitation'),
+        dplyr::contains('wind'),
+        dplyr::contains('sol'),
+        geometry
+      ) %>%
       sf::st_as_sf()
   }
 

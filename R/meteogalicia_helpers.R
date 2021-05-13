@@ -227,6 +227,18 @@
       ) %>%
       dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
+      # reorder variables to be consistent among all services
+      dplyr::relocate(
+        dplyr::contains('timestamp'),
+        dplyr::contains('station'),
+        dplyr::contains('altitude'),
+        dplyr::contains('temperature'),
+        dplyr::contains('humidity'),
+        dplyr::contains('precipitation'),
+        dplyr::contains('wind'),
+        dplyr::contains('sol'),
+        geometry
+      ) %>%
       sf::st_as_sf()
   }
 
@@ -281,6 +293,18 @@
       ) %>%
       dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
+      # reorder variables to be consistent among all services
+      dplyr::relocate(
+        dplyr::contains('timestamp'),
+        dplyr::contains('station'),
+        dplyr::contains('altitude'),
+        dplyr::contains('temperature'),
+        dplyr::contains('humidity'),
+        dplyr::contains('precipitation'),
+        dplyr::contains('wind'),
+        dplyr::contains('sol'),
+        geometry
+      ) %>%
       sf::st_as_sf()
   }
 
@@ -337,6 +361,18 @@
       ) %>%
       dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name', 'station_province')) %>%
+      # reorder variables to be consistent among all services
+      dplyr::relocate(
+        dplyr::contains('timestamp'),
+        dplyr::contains('station'),
+        dplyr::contains('altitude'),
+        dplyr::contains('temperature'),
+        dplyr::contains('humidity'),
+        dplyr::contains('precipitation'),
+        dplyr::contains('wind'),
+        dplyr::contains('sol'),
+        geometry
+      ) %>%
       sf::st_as_sf()
 
   }
@@ -387,6 +423,18 @@
       ) %>%
       dplyr::arrange(timestamp, station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name', 'station_province')) %>%
+      # reorder variables to be consistent among all services
+      dplyr::relocate(
+        dplyr::contains('timestamp'),
+        dplyr::contains('station'),
+        dplyr::contains('altitude'),
+        dplyr::contains('temperature'),
+        dplyr::contains('humidity'),
+        dplyr::contains('precipitation'),
+        dplyr::contains('wind'),
+        dplyr::contains('sol'),
+        geometry
+      ) %>%
       sf::st_as_sf()
 
   }

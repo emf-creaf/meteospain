@@ -6,7 +6,7 @@ test_that("aemet current works", {
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "altitude", "temperature", "min_temperature", "max_temperature",
-    "precipitation", "relative_humidity", "wind_speed", "wind_direction", "geometry"
+    "relative_humidity", "precipitation", "wind_speed", "wind_direction", "geometry"
   )
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
@@ -30,9 +30,9 @@ test_that("aemet daily works", {
   )
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province",
+    "timestamp", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
-    "precipitation", "mean_wind_speed", "insolation", "altitude", "geometry"
+    "precipitation", "mean_wind_speed", "insolation", "geometry"
   )
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)

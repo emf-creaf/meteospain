@@ -4,11 +4,12 @@ test_that("meteogalicia instant works", {
   api_options <- meteogalicia_options('instant')
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name",
+    "timestamp", "station_id", "station_name", "station_province", "altitude",
     "temperature",
+    "relative_humidity", "precipitation",
     "wind_direction", "wind_speed",
-    "relative_humidity", "precipitation", "insolation", "global_solar_radiation",
-    "station_province", "altitude", "geometry"
+    "insolation", "global_solar_radiation",
+    "geometry"
   )
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
@@ -28,11 +29,12 @@ test_that("meteogalicia current works", {
   api_options <- meteogalicia_options('current_day')
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name",
+    "timestamp", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "precipitation",
     "wind_direction", "wind_speed",
-    "relative_humidity", "precipitation", "insolation",
-    "station_province", "altitude", "geometry"
+    "insolation",
+    "geometry"
   )
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
@@ -52,12 +54,12 @@ test_that("meteogalicia daily works", {
   api_options <- meteogalicia_options('daily', start_date = Sys.Date() - 30, end_date = Sys.Date())
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province",
+    "timestamp", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "min_relative_humidity", "max_relative_humidity", "precipitation",
     "wind_direction", "wind_speed",
-    "relative_humidity", "min_relative_humidity", "max_relative_humidity",
-    "precipitation", "insolation",
-    "altitude", "geometry"
+    "insolation",
+    "geometry"
   )
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
@@ -96,12 +98,12 @@ test_that("meteogalicia monthly works", {
   api_options <- meteogalicia_options('monthly', start_date = Sys.Date() - 365, end_date = Sys.Date())
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province",
+    "timestamp", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "precipitation",
     "wind_speed",
-    "relative_humidity",
-    "precipitation", "insolation",
-    "altitude", "geometry"
+    "insolation",
+    "geometry"
   )
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
