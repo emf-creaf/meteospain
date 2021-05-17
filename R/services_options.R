@@ -91,8 +91,11 @@ aemet_options <- function(
   assertthat::assert_that(
     assertthat::is.date(start_date),
     assertthat::is.date(end_date),
-    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
     rlang::is_character(api_key)
+  )
+  assertthat::assert_that(
+    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
+    msg = "'stations' must be a character vector"
   )
 
   # build list
@@ -170,7 +173,8 @@ meteoclimatic_options <- function(
   resolution <- rlang::arg_match(resolution)
   assertthat::assert_that(
     dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
-    dplyr::if_else(rlang::is_null(stations), TRUE, !length(stations) > 1)
+    dplyr::if_else(rlang::is_null(stations), TRUE, !length(stations) > 1),
+    msg = "'stations' must be a character vector of length 1"
   )
 
   # check if stations is NULL, then return all spanish stations
@@ -226,8 +230,11 @@ meteogalicia_options <- function(
   resolution <- rlang::arg_match(resolution)
   assertthat::assert_that(
     assertthat::is.date(start_date),
-    assertthat::is.date(end_date),
-    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations))
+    assertthat::is.date(end_date)
+  )
+  assertthat::assert_that(
+    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
+    msg = "'stations' must be a character vector"
   )
 
   # build list

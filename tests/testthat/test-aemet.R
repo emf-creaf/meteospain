@@ -1,3 +1,21 @@
+# aemet service options tests ---------------------------------------------------------------------------
+
+test_that("aemet service options works", {
+  expected_names <- c("resolution", "start_date", "end_date", "stations", "api_key")
+  expect_type(aemet_options(api_key = 'tururu'), 'list')
+  expect_named(aemet_options(api_key = 'tururu'), expected_names)
+  expect_identical(
+    aemet_options(api_key = 'tururu'),
+    aemet_options(resolution = 'current_day', start_date = Sys.Date(), end_date = Sys.Date(), api_key = 'tururu')
+  )
+
+  # errors
+  expect_error(aemet_options(resolution = 'not_valid_resolution', api_key = 'tururu'), "must be one of")
+  expect_error(aemet_options(), "is missing, with no default")
+  expect_error(aemet_options(stations = c(25, 26, 27), api_key = 'tururu'), "must be a character vector")
+
+})
+
 # aemet get meteo tests ----------------------------------------------------------------------------------
 
 test_that("aemet current works", {

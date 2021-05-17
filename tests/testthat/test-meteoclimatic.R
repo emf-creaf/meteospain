@@ -1,3 +1,17 @@
+# meteoclimatic service options tests -------------------------------------------------------------------
+
+test_that("meteoclimatic options works", {
+  expected_names <- c("resolution", "stations")
+  expect_type(meteoclimatic_options(), 'list')
+  expect_identical(meteoclimatic_options(), meteoclimatic_options('current_day', 'ES'))
+  expect_named(meteoclimatic_options(), expected_names)
+  # errors
+  expect_error(meteoclimatic_options('not_valid_resolution'), "must be one of")
+  expect_error(meteoclimatic_options(stations = c('ESCAT', 'ESCYL')), 'length 1')
+  expect_error(meteoclimatic_options(stations = c(25, 26, 27)), "must be a character vector")
+
+})
+
 # meteoclimatic get meteo tests --------------------------------------------------------------------------
 
 test_that("Meteoclimatic works as expected", {
@@ -12,7 +26,7 @@ test_that("Meteoclimatic works as expected", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   # one station
-  api_options$stations <- test_object[['station_id']][1]
+  api_options$stations <- test_object[['station_id']][11]
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) == 1)

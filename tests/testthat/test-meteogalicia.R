@@ -1,3 +1,20 @@
+# meteogalicia service options tests ---------------------------------------------------------------------------
+
+test_that("meteogalicia service options works", {
+  expected_names <- c("resolution", "start_date", "end_date", "stations")
+  expect_type(meteogalicia_options(), 'list')
+  expect_named(meteogalicia_options(), expected_names)
+  expect_identical(
+    meteogalicia_options(),
+    meteogalicia_options(resolution = 'instant', start_date = Sys.Date(), end_date = Sys.Date())
+  )
+
+  # errors
+  expect_error(meteogalicia_options(resolution = 'not_valid_resolution'), "must be one of")
+  expect_error(meteogalicia_options(stations = c(25, 26, 27)), "must be a character vector")
+
+})
+
 # meteogalicia get meteo tests ---------------------------------------------------------------------------
 test_that("meteogalicia instant works", {
   # all stations
