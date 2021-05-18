@@ -32,3 +32,13 @@ legal_note_style <- crayon::blue$bold$underline
   return(df)
 
 }
+
+# test helpers ------------------------------------------------------------------------------------------
+
+skip_if_no_auth <- function(service) {
+  if (identical(Sys.getenv(service), "")) {
+    skip(glue::glue("No authentication available for {service}"))
+  } else {
+    message(glue::glue("{service} key found, running tests"))
+  }
+}

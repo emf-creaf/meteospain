@@ -1,3 +1,7 @@
+# skip if no key ----------------------------------------------------------------------------------------
+
+skip_if_no_auth('aemet')
+
 # aemet service options tests ---------------------------------------------------------------------------
 
 test_that("aemet service options works", {
