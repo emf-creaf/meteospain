@@ -31,6 +31,10 @@ test_that("meteogalicia instant works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -39,6 +43,10 @@ test_that("meteogalicia instant works", {
   expect_true(nrow(test_object) > 1)
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 })
 
 test_that("meteogalicia current works", {
@@ -56,6 +64,10 @@ test_that("meteogalicia current works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -64,6 +76,10 @@ test_that("meteogalicia current works", {
   expect_true(nrow(test_object) > 1)
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 })
 
 test_that("meteogalicia daily works", {
@@ -82,6 +98,10 @@ test_that("meteogalicia daily works", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -91,6 +111,10 @@ test_that("meteogalicia daily works", {
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
   expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 
   # all stations 2000s
   api_options <- meteogalicia_options('daily', start_date = as.Date('2000-01-25'), end_date = as.Date('2000-01-30'))
@@ -99,6 +123,10 @@ test_that("meteogalicia daily works", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -108,6 +136,10 @@ test_that("meteogalicia daily works", {
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
   expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 })
 
 test_that("meteogalicia monthly works", {
@@ -126,6 +158,10 @@ test_that("meteogalicia monthly works", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   expect_length(unique(test_object$timestamp), 12)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -135,6 +171,10 @@ test_that("meteogalicia monthly works", {
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
   expect_length(unique(test_object$timestamp), 12)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 
   # all stations 2000s
   api_options <- meteogalicia_options('monthly', start_date = as.Date('2000-01-01'), end_date = as.Date('2000-12-01'))
@@ -143,6 +183,10 @@ test_that("meteogalicia monthly works", {
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
   expect_length(unique(test_object$timestamp), 12)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -152,6 +196,10 @@ test_that("meteogalicia monthly works", {
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
   expect_length(unique(test_object$timestamp), 12)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 })
 
 test_that("meteogalicia API errors, messages, warnings are correctly raised", {

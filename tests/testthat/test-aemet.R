@@ -33,6 +33,10 @@ test_that("aemet current works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -41,6 +45,10 @@ test_that("aemet current works", {
   expect_true(nrow(test_object) > 1)
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$temperature, 'units')
+  expect_identical(units(test_object$temperature)$numerator, "°C")
 })
 
 test_that("aemet daily works", {
@@ -59,6 +67,10 @@ test_that("aemet daily works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$mean_temperature, 'units')
+  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
@@ -67,6 +79,10 @@ test_that("aemet daily works", {
   expect_true(nrow(test_object) > 1)
   expect_equal(unique(test_object$station_id), stations_to_check)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$mean_temperature, 'units')
+  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
   # all stations 2000's
   api_options <- aemet_options(
     'daily',
@@ -77,6 +93,10 @@ test_that("aemet daily works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$mean_temperature, 'units')
+  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
   # all stations 1990's
   api_options <- aemet_options(
     'daily',
@@ -87,6 +107,10 @@ test_that("aemet daily works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
+  expect_s3_class(test_object$mean_temperature, 'units')
+  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
 })
 
 test_that("aemet API errors, messages, warnings are correctly raised", {
@@ -135,4 +159,6 @@ test_that("aemet get info works", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$altitude, 'units')
+  expect_identical(units(test_object$altitude)$numerator, "m")
 })

@@ -25,12 +25,16 @@ test_that("Meteoclimatic works as expected", {
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) > 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$max_temperature, 'units')
+  expect_identical(units(test_object$max_temperature)$numerator, "°C")
   # one station
   api_options$stations <- test_object[['station_id']][11]
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
   expect_s3_class(test_object, 'sf')
   expect_true(nrow(test_object) == 1)
   expect_named(test_object, expected_names)
+  expect_s3_class(test_object$max_temperature, 'units')
+  expect_identical(units(test_object$max_temperature)$numerator, "°C")
 })
 
 test_that("meteoclimatic errors, warnings and messages are correctly raised", {
