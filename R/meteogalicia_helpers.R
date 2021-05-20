@@ -124,12 +124,12 @@
   response_content$listaEstacionsMeteo %>%
     dplyr::as_tibble() %>%
     dplyr::select(
-      station_id = idEstacion, station_name = estacion, station_province = provincia,
-      altitude, lat, lon
+      station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
+      .data$altitude, .data$lat, .data$lon
     ) %>%
     dplyr::mutate(
-      station_id = as.character(station_id),
-      altitude = units::set_units(altitude, m)
+      station_id = as.character(.data$station_id),
+      altitude = units::set_units(.data$altitude, "m")
     ) %>%
     sf::st_as_sf(coords = c('lon', 'lat'), crs = 4326)
 
@@ -197,35 +197,37 @@
     # data frame, and the inner ones are transposed. So, basically, unnest, remove metadata and pivot wide.
     res <-
       response_content$listUltimos10min %>%
-      tidyr::unnest(listaMedidas) %>%
+      tidyr::unnest(.data$listaMedidas) %>%
       # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
-      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
-      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
+      dplyr::select(-.data$lnCodigoValidacion, -.data$nomeParametro, -.data$unidade) %>%
       # now, some stations can have errors in the sense of duplicated precipitation values.
       # We get the first record
-      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      tidyr::pivot_wider(
+        names_from = .data$codigoParametro, values_from = .data$valor, values_fn = dplyr::first
+      ) %>%
       dplyr::select(
-        timestamp = instanteLecturaUTC, station_id = idEstacion, station_name = estacion,
-        temperature = TA_AVG_1.5m,
-        wind_direction = DV_AVG_2m,
-        wind_speed = VV_AVG_2m,
-        relative_humidity = HR_AVG_1.5m,
-        precipitation = PP_SUM_1.5m,
-        insolation = HSOL_SUM_1.5m,
-        global_solar_radiation = RS_AVG_1.5m
+        timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
+        temperature = .data$TA_AVG_1.5m,
+        wind_direction = .data$DV_AVG_2m,
+        wind_speed = .data$VV_AVG_2m,
+        relative_humidity = .data$HR_AVG_1.5m,
+        precipitation = .data$PP_SUM_1.5m,
+        insolation = .data$HSOL_SUM_1.5m,
+        global_solar_radiation = .data$RS_AVG_1.5m
       ) %>%
       dplyr::mutate(
-        timestamp = lubridate::as_date(timestamp),
-        station_id = as.character(station_id),
-        temperature = units::set_units(temperature, degree_C),
-        wind_direction = units::set_units(wind_direction, degree),
-        wind_speed = units::set_units(wind_speed, m/s),
-        relative_humidity = units::set_units(relative_humidity, `%`),
-        precipitation = units::set_units(precipitation, L/m2),
-        insolation = units::set_units(insolation, h),
-        global_solar_radiation = units::set_units(global_solar_radiation, W/m2)
+        timestamp = lubridate::as_date(.data$timestamp),
+        station_id = as.character(.data$station_id),
+        temperature = units::set_units(.data$temperature, "degree_C"),
+        wind_direction = units::set_units(.data$wind_direction, "degree"),
+        wind_speed = units::set_units(.data$wind_speed, "m/s"),
+        relative_humidity = units::set_units(.data$relative_humidity, "%"),
+        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        insolation = units::set_units(.data$insolation, "h"),
+        global_solar_radiation = units::set_units(.data$global_solar_radiation, "W/m2")
       ) %>%
-      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::arrange(.data$timestamp, .data$station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
       # reorder variables to be consistent among all services
       dplyr::relocate(
@@ -237,7 +239,7 @@
         dplyr::contains('precipitation'),
         dplyr::contains('wind'),
         dplyr::contains('sol'),
-        geometry
+        .data$geometry
       ) %>%
       sf::st_as_sf()
   }
@@ -252,14 +254,16 @@
 
     res <-
       response_content$listHorarios %>%
-      tidyr::unnest(listaInstantes) %>%
-      tidyr::unnest(listaMedidas) %>%
+      tidyr::unnest(.data$listaInstantes) %>%
+      tidyr::unnest(.data$listaMedidas) %>%
       # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
-      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
-      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
+      dplyr::select(-.data$lnCodigoValidacion, -.data$nomeParametro, -.data$unidade) %>%
       # now, some stations can have errors in the sense of duplicated precipitation values.
       # We get the first record
-      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      tidyr::pivot_wider(
+        names_from = .data$codigoParametro, values_from = .data$valor, values_fn = dplyr::first
+      ) %>%
       # When querying stations, it can happen that some stations lack some variables, making the further
       # select step to fail. We create missing variables and populate them with NAs to avoid this error
       .create_missing_vars(
@@ -269,29 +273,29 @@
         )
       ) %>%
       dplyr::select(
-        timestamp = instanteLecturaUTC, station_id = idEstacion, station_name = estacion,
-        temperature = TA_AVG_1.5m,
-        min_temperature = TA_MIN_1.5m,
-        max_temperature = TA_MAX_1.5m,
-        wind_direction = DV_AVG_2m,
-        wind_speed = VV_AVG_2m,
-        relative_humidity = HR_AVG_1.5m,
-        precipitation = PP_SUM_1.5m,
-        insolation = HSOL_SUM_1.5m
+        timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
+        temperature = .data$TA_AVG_1.5m,
+        min_temperature = .data$TA_MIN_1.5m,
+        max_temperature = .data$TA_MAX_1.5m,
+        wind_direction = .data$DV_AVG_2m,
+        wind_speed = .data$VV_AVG_2m,
+        relative_humidity = .data$HR_AVG_1.5m,
+        precipitation = .data$PP_SUM_1.5m,
+        insolation = .data$HSOL_SUM_1.5m
       ) %>%
       dplyr::mutate(
-        timestamp = lubridate::as_datetime(timestamp),
-        station_id = as.character(station_id),
-        temperature = units::set_units(temperature, degree_C),
-        min_temperature = units::set_units(min_temperature, degree_C),
-        max_temperature = units::set_units(max_temperature, degree_C),
-        wind_direction = units::set_units(wind_direction, degree),
-        wind_speed = units::set_units(wind_speed, m/s),
-        relative_humidity = units::set_units(relative_humidity, `%`),
-        precipitation = units::set_units(precipitation, L/m2),
-        insolation = units::set_units(insolation, h)
+        timestamp = lubridate::as_datetime(.data$timestamp),
+        station_id = as.character(.data$station_id),
+        temperature = units::set_units(.data$temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        wind_direction = units::set_units(.data$wind_direction, "degree"),
+        wind_speed = units::set_units(.data$wind_speed, "m/s"),
+        relative_humidity = units::set_units(.data$relative_humidity, "%"),
+        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        insolation = units::set_units(.data$insolation, "h")
       ) %>%
-      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::arrange(.data$timestamp, .data$station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name')) %>%
       # reorder variables to be consistent among all services
       dplyr::relocate(
@@ -303,7 +307,7 @@
         dplyr::contains('precipitation'),
         dplyr::contains('wind'),
         dplyr::contains('sol'),
-        geometry
+        .data$geometry
       ) %>%
       sf::st_as_sf()
   }
@@ -316,14 +320,16 @@
     # As in the current day, we have a double nested dataframe
     res <-
       response_content$listDatosDiarios %>%
-      tidyr::unnest(listaEstacions) %>%
-      tidyr::unnest(listaMedidas) %>%
+      tidyr::unnest(.data$listaEstacions) %>%
+      tidyr::unnest(.data$listaMedidas) %>%
       # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
-      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
-      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
+      dplyr::select(-.data$lnCodigoValidacion, -.data$nomeParametro, -.data$unidade) %>%
       # now, some stations can have errors in the sense of duplicated precipitation values.
       # We get the first record
-      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      tidyr::pivot_wider(
+        names_from = .data$codigoParametro, values_from = .data$valor, values_fn = dplyr::first
+      ) %>%
       # When querying stations, it can happen that some stations lack some variables, making the further
       # select step to fail. We create missing variables and populate them with NAs to avoid this error
       .create_missing_vars(
@@ -333,33 +339,34 @@
         )
       ) %>%
       dplyr::select(
-        timestamp = data, station_id = idEstacion, station_name = estacion, station_province = provincia,
-        temperature = TA_AVG_1.5m,
-        min_temperature = TA_MIN_1.5m,
-        max_temperature = TA_MAX_1.5m,
-        wind_direction = DV_AVG_2m,
-        wind_speed = VV_AVG_2m,
-        relative_humidity = HR_AVG_1.5m,
-        min_relative_humidity = HR_MIN_1.5m,
-        max_relative_humidity = HR_MAX_1.5m,
-        precipitation = PP_SUM_1.5m,
-        insolation = HSOL_SUM_1.5m
+        timestamp = .data$data,
+        station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
+        temperature = .data$TA_AVG_1.5m,
+        min_temperature = .data$TA_MIN_1.5m,
+        max_temperature = .data$TA_MAX_1.5m,
+        wind_direction = .data$DV_AVG_2m,
+        wind_speed = .data$VV_AVG_2m,
+        relative_humidity = .data$HR_AVG_1.5m,
+        min_relative_humidity = .data$HR_MIN_1.5m,
+        max_relative_humidity = .data$HR_MAX_1.5m,
+        precipitation = .data$PP_SUM_1.5m,
+        insolation = .data$HSOL_SUM_1.5m
       ) %>%
       dplyr::mutate(
-        timestamp = lubridate::as_date(timestamp),
-        station_id = as.character(station_id),
-        temperature = units::set_units(temperature, degree_C),
-        min_temperature = units::set_units(min_temperature, degree_C),
-        max_temperature = units::set_units(max_temperature, degree_C),
-        wind_direction = units::set_units(wind_direction, degree),
-        wind_speed = units::set_units(wind_speed, m/s),
-        relative_humidity = units::set_units(relative_humidity, `%`),
-        min_relative_humidity = units::set_units(min_relative_humidity, `%`),
-        max_relative_humidity = units::set_units(max_relative_humidity, `%`),
-        precipitation = units::set_units(precipitation, L/m2),
-        insolation = units::set_units(insolation, h)
+        timestamp = lubridate::as_date(.data$timestamp),
+        station_id = as.character(.data$station_id),
+        temperature = units::set_units(.data$temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        wind_direction = units::set_units(.data$wind_direction, "degree"),
+        wind_speed = units::set_units(.data$wind_speed, "m/s"),
+        relative_humidity = units::set_units(.data$relative_humidity, "%"),
+        min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
+        max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
+        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        insolation = units::set_units(.data$insolation, "h")
       ) %>%
-      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::arrange(.data$timestamp, .data$station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name', 'station_province')) %>%
       # reorder variables to be consistent among all services
       dplyr::relocate(
@@ -371,7 +378,7 @@
         dplyr::contains('precipitation'),
         dplyr::contains('wind'),
         dplyr::contains('sol'),
-        geometry
+        .data$geometry
       ) %>%
       sf::st_as_sf()
 
@@ -384,14 +391,16 @@
     # As in the daily, we have a double nested dataframe
     res <-
       response_content$listDatosMensuais %>%
-      tidyr::unnest(listaEstacions) %>%
-      tidyr::unnest(listaMedidas) %>%
+      tidyr::unnest(.data$listaEstacions) %>%
+      tidyr::unnest(.data$listaMedidas) %>%
       # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
-      dplyr::filter(!lnCodigoValidacion %in% c(0, 3, 9)) %>%
-      dplyr::select(-lnCodigoValidacion, -nomeParametro, -unidade) %>%
+      dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
+      dplyr::select(-.data$lnCodigoValidacion, -.data$nomeParametro, -.data$unidade) %>%
       # now, some stations can have errors in the sense of duplicated precipitation values.
       # We get the first record
-      tidyr::pivot_wider(names_from = codigoParametro, values_from = valor, values_fn = dplyr::first) %>%
+      tidyr::pivot_wider(
+        names_from = .data$codigoParametro, values_from = .data$valor, values_fn = dplyr::first
+      ) %>%
       # When querying stations, it can happen that some stations lack some variables, making the further
       # select step to fail. We create missing variables and populate them with NAs to avoid this error
       .create_missing_vars(
@@ -401,27 +410,28 @@
         )
       ) %>%
       dplyr::select(
-        timestamp = data, station_id = idEstacion, station_name = estacion, station_province = provincia,
-        temperature = TA_AVG_1.5m,
-        min_temperature = TA_MIN_1.5m,
-        max_temperature = TA_MAX_1.5m,
-        wind_speed = VV_AVG_2m,
-        relative_humidity = HR_AVG_1.5m,
-        precipitation = PP_SUM_1.5m,
-        insolation = HSOL_SUM_1.5m
+        timestamp = .data$data,
+        station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
+        temperature = .data$TA_AVG_1.5m,
+        min_temperature = .data$TA_MIN_1.5m,
+        max_temperature = .data$TA_MAX_1.5m,
+        wind_speed = .data$VV_AVG_2m,
+        relative_humidity = .data$HR_AVG_1.5m,
+        precipitation = .data$PP_SUM_1.5m,
+        insolation = .data$HSOL_SUM_1.5m
       ) %>%
       dplyr::mutate(
-        timestamp = lubridate::as_date(timestamp),
-        station_id = as.character(station_id),
-        temperature = units::set_units(temperature, degree_C),
-        min_temperature = units::set_units(min_temperature, degree_C),
-        max_temperature = units::set_units(max_temperature, degree_C),
-        wind_speed = units::set_units(wind_speed, m/s),
-        relative_humidity = units::set_units(relative_humidity, `%`),
-        precipitation = units::set_units(precipitation, L/m2),
-        insolation = units::set_units(insolation, h)
+        timestamp = lubridate::as_date(.data$timestamp),
+        station_id = as.character(.data$station_id),
+        temperature = units::set_units(.data$temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        wind_speed = units::set_units(.data$wind_speed, "m/s"),
+        relative_humidity = units::set_units(.data$relative_humidity, "%"),
+        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        insolation = units::set_units(.data$insolation, "h")
       ) %>%
-      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::arrange(.data$timestamp, .data$station_id) %>%
       dplyr::left_join(.get_info_meteogalicia(), by = c('station_id', 'station_name', 'station_province')) %>%
       # reorder variables to be consistent among all services
       dplyr::relocate(
@@ -433,7 +443,7 @@
         dplyr::contains('precipitation'),
         dplyr::contains('wind'),
         dplyr::contains('sol'),
-        geometry
+        .data$geometry
       ) %>%
       sf::st_as_sf()
 
@@ -442,9 +452,9 @@
   # Copyright message -------------------------------------------------------------------------------------
   message(
     copyright_style(
-      "A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser",
-      " utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á",
-      " Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
+      "A informaci<U+00F3>n divulgada a trav<U+00E9>s deste servidor ofr<U+00E9>cese gratuitamente aos cidad<U+00E1>ns para que poida ser",
+      " utilizada libremente por eles, co <U+00FA>nico compromiso de mencionar expresamente a MeteoGalicia e <U+00E1>",
+      " Conseller<U+00ED>a de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
       " que as utilice para os usos distintos do particular e privado."
     ),
     '\n',

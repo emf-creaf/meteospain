@@ -6,7 +6,7 @@
 #' services have at least temperature values.
 #'
 #' @param service Character with the service name (in lower case).
-#' @param options List with the needed service options. See \code{\link{service_options}} to have more info
+#' @param options List with the needed service options. See \code{\link{services_options}} to have more info
 #'   about the different services and their options.
 #'
 #' @section API limits:
@@ -22,7 +22,7 @@
 #' library(keyring)
 #'
 #' # AEMET (we need a key)
-#' key_set('aemet', user = 'me')
+#' # key_set('aemet')
 #' options_for_aemet <-aemet_options(
 #'   'daily',
 #'   start_date = as.Date('2012-01-01'),
@@ -60,7 +60,7 @@ get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteoga
 #' historical dates.
 #'
 #' @param service Character with the service name (in lower case).
-#' @param options List with the needed service options. See \code{\link{service_options}} to have more info
+#' @param options List with the needed service options. See \code{\link{services_options}} to have more info
 #'   about the different services and their options.
 #'
 #' @examples
@@ -68,9 +68,9 @@ get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteoga
 #' library(keyring)
 #'
 #' # AEMET (we need a key)
-#' key_set('aemet', user = 'me')
+#' # key_set('aemet')
 #' api_options <- aemet_options(api_key = key_get('aemet'))
-#' get_station_info_from('aemet', api_options)
+#' get_stations_info_from('aemet', api_options)
 #'
 #' @return An sf (spatial) object with the stations metadata.
 #'

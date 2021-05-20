@@ -12,7 +12,7 @@ get_meteo_from(
 \arguments{
 \item{service}{Character with the service name (in lower case).}
 
-\item{options}{List with the needed service options. See \code{\link{service_options}} to have more info
+\item{options}{List with the needed service options. See \code{\link{services_options}} to have more info
 about the different services and their options.}
 }
 \value{
@@ -39,7 +39,7 @@ library(meteospain)
 library(keyring)
 
 # AEMET (we need a key)
-key_set('aemet', user = 'me')
+# key_set('aemet')
 options_for_aemet <-aemet_options(
   'daily',
   start_date = as.Date('2012-01-01'),

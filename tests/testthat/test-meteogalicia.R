@@ -157,7 +157,7 @@ test_that("meteogalicia monthly works", {
 test_that("meteogalicia API errors, messages, warnings are correctly raised", {
   # copyright message
   api_options <- meteogalicia_options('current_day')
-  expect_message(get_meteo_from('meteogalicia', api_options), 'A información divulgada')
+  expect_message(get_meteo_from('meteogalicia', api_options), 'mencionar expresamente a MeteoGalicia')
   # dates out of bounds
   api_options <- meteogalicia_options(
     'daily',

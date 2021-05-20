@@ -86,15 +86,15 @@
       )
     ) %>%
     dplyr::left_join(.get_info_meteoclimatic(api_options), by = 'station_id') %>%
-    dplyr::select(timestamp, station_id, station_name, dplyr::everything()) %>%
+    dplyr::select(.data$timestamp, .data$station_id, .data$station_name, dplyr::everything()) %>%
     dplyr::mutate(
-      max_temperature = units::set_units(max_temperature, degree_C),
-      min_temperature = units::set_units(min_temperature, degree_C),
-      max_relative_humidity = units::set_units(max_relative_humidity, `%`),
-      min_relative_humidity = units::set_units(min_relative_humidity, `%`),
-      precipitation = units::set_units(precipitation, mm)
+      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+      max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
+      min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
+      precipitation = units::set_units(.data$precipitation, "mm")
     ) %>%
-    dplyr::arrange(timestamp, station_id) %>%
+    dplyr::arrange(.data$timestamp, .data$station_id) %>%
     sf::st_as_sf(crs = 4326) %>%
     # reorder variables to be consistent among all services
     dplyr::relocate(
@@ -106,7 +106,7 @@
       dplyr::contains('precipitation'),
       dplyr::contains('wind'),
       dplyr::contains('sol'),
-      geometry
+      .data$geometry
     )
 
   message(

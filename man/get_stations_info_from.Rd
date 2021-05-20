@@ -12,7 +12,7 @@ get_stations_info_from(
 \arguments{
 \item{service}{Character with the service name (in lower case).}
 
-\item{options}{List with the needed service options. See \code{\link{service_options}} to have more info
+\item{options}{List with the needed service options. See \code{\link{services_options}} to have more info
 about the different services and their options.}
 }
 \value{
@@ -32,8 +32,8 @@ library(meteospain)
 library(keyring)
 
 # AEMET (we need a key)
-key_set('aemet', user = 'me')
+# key_set('aemet')
 api_options <- aemet_options(api_key = key_get('aemet'))
-get_station_info_from('aemet', api_options)
+get_stations_info_from('aemet', api_options)
 
 }

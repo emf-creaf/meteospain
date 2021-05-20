@@ -93,21 +93,21 @@
   stations_info %>%
     dplyr::as_tibble() %>%
     dplyr::select(
-      station_id = indicativo, station_name = nombre, altitude = altitud,
-      latitude = latitud, longitude = longitud
+      station_id = .data$indicativo, station_name = .data$nombre, altitude = .data$altitud,
+      latitude = .data$latitud, longitude = .data$longitud
     ) %>%
     dplyr::mutate(
-      altitude = as.numeric(stringr::str_replace_all(altitude, ',', '.')),
-      altitude = units::set_units(altitude, m),
+      altitude = as.numeric(stringr::str_replace_all(.data$altitude, ',', '.')),
+      altitude = units::set_units(.data$altitude, "m"),
       latitude = dplyr::if_else(
-        stringr::str_detect(latitude, 'S'),
-        -as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000,
-        as.numeric(stringr::str_remove_all(latitude, '[A-Za-z]'))/10000
+        stringr::str_detect(.data$latitude, 'S'),
+        -as.numeric(stringr::str_remove_all(.data$latitude, '[A-Za-z]'))/10000,
+        as.numeric(stringr::str_remove_all(.data$latitude, '[A-Za-z]'))/10000
       ),
       longitude = dplyr::if_else(
-        stringr::str_detect(longitude, 'W'),
-        -as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000,
-        as.numeric(stringr::str_remove_all(longitude, '[A-Za-z]'))/10000
+        stringr::str_detect(.data$longitude, 'W'),
+        -as.numeric(stringr::str_remove_all(.data$longitude, '[A-Za-z]'))/10000,
+        as.numeric(stringr::str_remove_all(.data$longitude, '[A-Za-z]'))/10000
       )
     ) %>%
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
@@ -170,36 +170,36 @@
   if (api_options$resolution == 'current_day') {
     # update filter if there is stations supplied
     if (!rlang::is_null(api_options$stations)) {
-      filter_expression <- rlang::expr(idema %in% api_options$stations)
+      filter_expression <- rlang::expr(.data$idema %in% api_options$stations)
     }
 
     res <- stations_data %>%
       dplyr::as_tibble() %>%
       dplyr::filter(!! filter_expression) %>%
       dplyr::select(
-        timestamp = fint, station_id = idema, station_name = ubi,
-        altitude = alt,
-        temperature = ta,
-        min_temperature = tamin,
-        max_temperature = tamax,
-        relative_humidity = hr,
-        precipitation = prec,
-        wind_speed = vv,
-        wind_direction = dv,
-        longitude = lon, latitude = lat,
+        timestamp = .data$fint, station_id = .data$idema, station_name = .data$ubi,
+        altitude = .data$alt,
+        temperature = .data$ta,
+        min_temperature = .data$tamin,
+        max_temperature = .data$tamax,
+        relative_humidity = .data$hr,
+        precipitation = .data$prec,
+        wind_speed = .data$vv,
+        wind_direction = .data$dv,
+        longitude = .data$lon, latitude = .data$lat,
       ) %>%
       # units
       dplyr::mutate(
-        altitude = units::set_units(altitude, m),
-        temperature = units::set_units(temperature, degree_C),
-        min_temperature = units::set_units(min_temperature, degree_C),
-        max_temperature = units::set_units(max_temperature, degree_C),
-        relative_humidity = units::set_units(relative_humidity, `%`),
-        precipitation = units::set_units(precipitation, mm),
-        wind_speed = units::set_units(wind_speed, m/s),
-        wind_direction = units::set_units(wind_direction, degree)
+        altitude = units::set_units(.data$altitude, "m"),
+        temperature = units::set_units(.data$temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        relative_humidity = units::set_units(.data$relative_humidity, "%"),
+        precipitation = units::set_units(.data$precipitation, "mm"),
+        wind_speed = units::set_units(.data$wind_speed, "m/s"),
+        wind_direction = units::set_units(.data$wind_direction, "degree")
       ) %>%
-      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::arrange(.data$timestamp, .data$station_id) %>%
       sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326) %>%
       # reorder variables to be consistent among all services
       dplyr::relocate(
@@ -211,7 +211,7 @@
         dplyr::contains('precipitation'),
         dplyr::contains('wind'),
         dplyr::contains('sol'),
-        geometry
+        .data$geometry
       )
   }
 
@@ -222,41 +222,42 @@
     stations_info <- .get_info_aemet(api_options)
     # update filter if there are stations supplied
     if (!rlang::is_null(api_options$stations)) {
-      filter_expression <- rlang::expr(indicativo %in% api_options$stations)
+      filter_expression <- rlang::expr(.data$indicativo %in% api_options$stations)
     }
     # data
     res <- stations_data %>%
       dplyr::as_tibble() %>%
       dplyr::filter(!! filter_expression) %>%
       dplyr::select(
-        timestamp = fecha, station_id = indicativo, station_name = nombre, station_province = provincia,
-        mean_temperature = tmed,
-        min_temperature = tmin,
-        max_temperature = tmax,
-        precipitation = prec,
-        mean_wind_speed = velmedia,
-        # wind_direction = dir,
-        insolation = sol
+        timestamp = .data$fecha,
+        station_id = .data$indicativo, station_name = .data$nombre, station_province = .data$provincia,
+        mean_temperature = .data$tmed,
+        min_temperature = .data$tmin,
+        max_temperature = .data$tmax,
+        precipitation = .data$prec,
+        mean_wind_speed = .data$velmedia,
+        # wind_direction = .data$dir,
+        insolation = .data$sol
       ) %>%
       # variables are characters, with "," as decimal point, so....
       dplyr::mutate(
-        mean_temperature = as.numeric(stringr::str_replace_all(mean_temperature, ',', '.')),
-        min_temperature = as.numeric(stringr::str_replace_all(min_temperature, ',', '.')),
-        max_temperature = as.numeric(stringr::str_replace_all(max_temperature, ',', '.')),
-        precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(precipitation, ',', '.'))),
-        mean_wind_speed = as.numeric(stringr::str_replace_all(mean_wind_speed, ',', '.')),
-        # wind_direction = as.numeric(stringr::str_replace_all(wind_direction, ',', '.')),
-        insolation = as.numeric(stringr::str_replace_all(insolation, ',', '.')),
+        mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
+        min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
+        max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
+        precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$precipitation, ',', '.'))),
+        mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
+        # wind_direction = as.numeric(stringr::str_replace_all(.data$wind_direction, ',', '.')),
+        insolation = as.numeric(stringr::str_replace_all(.data$insolation, ',', '.')),
         # and set the units also
-        mean_temperature = units::set_units(mean_temperature, degree_C),
-        min_temperature = units::set_units(min_temperature, degree_C),
-        max_temperature = units::set_units(max_temperature, degree_C),
-        precipitation = units::set_units(precipitation, mm),
-        mean_wind_speed = units::set_units(mean_wind_speed, m/s),
-        # wind_direction = units::set_units(wind_direction, degree),
-        insolation = units::set_units(insolation, h)
+        mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        precipitation = units::set_units(.data$precipitation, "mm"),
+        mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
+        # wind_direction = units::set_units(.data$wind_direction, degree),
+        insolation = units::set_units(.data$insolation, "h")
       ) %>%
-      dplyr::arrange(timestamp, station_id) %>%
+      dplyr::arrange(.data$timestamp, .data$station_id) %>%
       dplyr::left_join(stations_info, by = c('station_id', 'station_name')) %>%
       # reorder variables to be consistent among all services
       dplyr::relocate(
@@ -268,7 +269,7 @@
         dplyr::contains('precipitation'),
         dplyr::contains('wind'),
         dplyr::contains('sol'),
-        geometry
+        .data$geometry
       ) %>%
       sf::st_as_sf()
   }

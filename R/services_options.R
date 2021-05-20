@@ -27,13 +27,13 @@
 #' Some services (i.e. AEMET, SMC...) require an API key to access the data. The requirements and process
 #' to obtain the key varies from service to service.
 #' \itemize{
-#'   \item{AEMET: Visit \link{https://opendata.aemet.es/centrodedescargas/inicio} and follow the instructions
+#'   \item{AEMET: Visit \url{https://opendata.aemet.es/centrodedescargas/inicio} and follow the instructions
 #'   at "Obtencion de API Key".}
-#'   \item{SMC: Visit \link{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
+#'   \item{SMC: Visit \url{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
 #' }
 #' It is not advisable to use the keys directly in any script shared or publicly available (github...), neither
-#' store them in plain text files.One option is using the keyring package
-#' (\link{https://github.com/r-lib/keyring}) for managing and accessing keys.
+#' store them in plain text files.One option is using the \href{https://github.com/r-lib/keyring}{keyring}
+#' package for managing and accessing keys.
 #'
 #' @section Stations:
 #' Some services accept querying multiple stations at once, and other only allows one station per query:
@@ -110,47 +110,47 @@ aemet_options <- function(
   return(res)
 }
 
-#' Options for SMC service
-#'
-#' @examples
-#'
-#' ## SMC examples -----------------------------------------------------------
-#'
-#' # setting the key (a prompt will appear in console to supply the API key)
-#' keyring::key_set(service = 'smc')
-#'
-#' # create the options
-#' query_options <- smc_options(
-#'   dates = as_date(as_date('1990-01-01'):as_date('2020-12-31')),
-#'   resolution = 'daily',
-#'   api = keyring::key_get('smc')
-#' )
-#'
-#' @rdname services_options
-#'
-#' @export
-smc_options <- function(
-  dates,
-  stations = NULL,
-  resolution = c('instant', 'hourly', 'daily', 'monthly'),
-  api_key
-) {
-  # check arguments
-  resolution <- rlang::arg_match(resolution)
-  assertthat::assert_that(
-    assertthat::is.date(dates),
-    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
-    rlang::is_character(api_key)
-  )
-
-  # build list
-  list(
-    dates = dates,
-    stations = stations,
-    resolution = resolution,
-    api_key = api_key
-  )
-}
+# #' Options for SMC service
+# #'
+# #' @examples
+# #'
+# #' ## SMC examples -----------------------------------------------------------
+# #'
+# #' # setting the key (a prompt will appear in console to supply the API key)
+# #' keyring::key_set(service = 'smc')
+# #'
+# #' # create the options
+# #' query_options <- smc_options(
+# #'   dates = as_date(as_date('1990-01-01'):as_date('2020-12-31')),
+# #'   resolution = 'daily',
+# #'   api = keyring::key_get('smc')
+# #' )
+# #'
+# #' @rdname services_options
+# #'
+# #' @export
+# smc_options <- function(
+#   dates,
+#   stations = NULL,
+#   resolution = c('instant', 'hourly', 'daily', 'monthly'),
+#   api_key
+# ) {
+#   # check arguments
+#   resolution <- rlang::arg_match(resolution)
+#   assertthat::assert_that(
+#     assertthat::is.date(dates),
+#     dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
+#     rlang::is_character(api_key)
+#   )
+#
+#   # build list
+#   list(
+#     dates = dates,
+#     stations = stations,
+#     resolution = resolution,
+#     api_key = api_key
+#   )
+# }
 
 #' Options for Meteoclimatic service
 #'

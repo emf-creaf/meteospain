@@ -3,7 +3,6 @@
 \name{services_options}
 \alias{services_options}
 \alias{aemet_options}
-\alias{smc_options}
 \alias{meteoclimatic_options}
 \alias{meteogalicia_options}
 \title{Options for meteorological services}
@@ -13,13 +12,6 @@ aemet_options(
   start_date = Sys.Date(),
   end_date = start_date,
   stations = NULL,
-  api_key
-)
-
-smc_options(
-  dates,
-  stations = NULL,
-  resolution = c("instant", "hourly", "daily", "monthly"),
   api_key
 )
 
@@ -71,13 +63,13 @@ to each service. Possible values are:
 Some services (i.e. AEMET, SMC...) require an API key to access the data. The requirements and process
 to obtain the key varies from service to service.
 \itemize{
-\item{AEMET: Visit \link{https://opendata.aemet.es/centrodedescargas/inicio} and follow the instructions
+\item{AEMET: Visit \url{https://opendata.aemet.es/centrodedescargas/inicio} and follow the instructions
 at "Obtencion de API Key".}
-\item{SMC: Visit \link{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
+\item{SMC: Visit \url{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
 }
 It is not advisable to use the keys directly in any script shared or publicly available (github...), neither
-store them in plain text files.One option is using the keyring package
-(\link{https://github.com/r-lib/keyring}) for managing and accessing keys.
+store them in plain text files.One option is using the \href{https://github.com/r-lib/keyring}{keyring}
+package for managing and accessing keys.
 }
 
 \section{Stations}{
@@ -113,19 +105,6 @@ daily_opts <- aemet_options(
   start_date = as.Date('1990-01-01'),
   end_date = as.Date('1990-01-31'),
   api = keyring::key_get('aemet')
-)
-
-
-## SMC examples -----------------------------------------------------------
-
-# setting the key (a prompt will appear in console to supply the API key)
-keyring::key_set(service = 'smc')
-
-# create the options
-query_options <- smc_options(
-  dates = as_date(as_date('1990-01-01'):as_date('2020-12-31')),
-  resolution = 'daily',
-  api = keyring::key_get('smc')
 )
 
 

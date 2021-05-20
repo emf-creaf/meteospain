@@ -4,6 +4,9 @@
 #' @export
 magrittr::`%>%`
 
+#' @importFrom rlang := .data
+NULL
+
 
 # crayon styles -----------------------------------------------------------------------------------------
 
@@ -37,7 +40,7 @@ legal_note_style <- crayon::blue$bold$underline
 
 skip_if_no_auth <- function(service) {
   if (identical(Sys.getenv(service), "")) {
-    skip(glue::glue("No authentication available for {service}"))
+    testthat::skip(glue::glue("No authentication available for {service}"))
   } else {
     message(glue::glue("{service} key found, running tests"))
   }
