@@ -195,7 +195,7 @@
         min_temperature = units::set_units(.data$min_temperature, "degree_C"),
         max_temperature = units::set_units(.data$max_temperature, "degree_C"),
         relative_humidity = units::set_units(.data$relative_humidity, "%"),
-        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
         wind_speed = units::set_units(.data$wind_speed, "m/s"),
         wind_direction = units::set_units(.data$wind_direction, "degree")
       ) %>%
@@ -252,7 +252,7 @@
         mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
         min_temperature = units::set_units(.data$min_temperature, "degree_C"),
         max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
         mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
         # wind_direction = units::set_units(.data$wind_direction, degree),
         insolation = units::set_units(.data$insolation, "h")

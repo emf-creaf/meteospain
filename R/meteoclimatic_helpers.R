@@ -92,7 +92,7 @@
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
       min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
-      precipitation = units::set_units(.data$precipitation, "L/m2")
+      precipitation = units::set_units(.data$precipitation, "L/m^2")
     ) %>%
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
     sf::st_as_sf(crs = 4326) %>%

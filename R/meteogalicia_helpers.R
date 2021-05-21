@@ -223,7 +223,7 @@
         wind_direction = units::set_units(.data$wind_direction, "degree"),
         wind_speed = units::set_units(.data$wind_speed, "m/s"),
         relative_humidity = units::set_units(.data$relative_humidity, "%"),
-        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
         insolation = units::set_units(.data$insolation, "h"),
         global_solar_radiation = units::set_units(.data$global_solar_radiation, "W/m2")
       ) %>%
@@ -292,7 +292,7 @@
         wind_direction = units::set_units(.data$wind_direction, "degree"),
         wind_speed = units::set_units(.data$wind_speed, "m/s"),
         relative_humidity = units::set_units(.data$relative_humidity, "%"),
-        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
         insolation = units::set_units(.data$insolation, "h")
       ) %>%
       dplyr::arrange(.data$timestamp, .data$station_id) %>%
@@ -363,7 +363,7 @@
         relative_humidity = units::set_units(.data$relative_humidity, "%"),
         min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
         max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
-        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
         insolation = units::set_units(.data$insolation, "h")
       ) %>%
       dplyr::arrange(.data$timestamp, .data$station_id) %>%
@@ -428,7 +428,7 @@
         max_temperature = units::set_units(.data$max_temperature, "degree_C"),
         wind_speed = units::set_units(.data$wind_speed, "m/s"),
         relative_humidity = units::set_units(.data$relative_humidity, "%"),
-        precipitation = units::set_units(.data$precipitation, "L/m2"),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
         insolation = units::set_units(.data$insolation, "h")
       ) %>%
       dplyr::arrange(.data$timestamp, .data$station_id) %>%
@@ -452,9 +452,9 @@
   # Copyright message -------------------------------------------------------------------------------------
   message(
     copyright_style(
-      "A informaci<U+00F3>n divulgada a trav<U+00E9>s deste servidor ofr<U+00E9>cese gratuitamente aos cidad<U+00E1>ns para que poida ser",
-      " utilizada libremente por eles, co <U+00FA>nico compromiso de mencionar expresamente a MeteoGalicia e <U+00E1>",
-      " Conseller<U+00ED>a de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
+      "A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser",
+      " utilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1",
+      " Conseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
       " que as utilice para os usos distintos do particular e privado."
     ),
     '\n',
