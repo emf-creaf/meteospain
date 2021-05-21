@@ -1,0 +1,82 @@
+---
+title: "Meteoclimatic service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Meteoclimatic service}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(ggplot2)
+library(ggforce)
+library(sf)
+```
+
+# Meteoclimatic service
+
+[Meteoclimatic](https://www.meteoclimatic.net/) is a non-professional (amateur) network of automatic
+meteorological stations. This network cover all Spain, but does not offer quality testing of the data.
+
+## Meteoclimatic options
+
+### Temporal resolution
+
+Meteoclimatic API only offers aggregated data for the current day, so, in this case the `resolution` parameter
+is limited to "current_day".
+
+### Stations
+
+Meteoclimatic API does not accept multiple stations in the same query. But it has station codes that can
+access the data from several stations in the same geographic area (i.e. "ES" for all stations, "ESCAT" for
+all stations in Catalunya, "ESCAT08" for all stations in Barcelona province). So, the `stations` is limited
+at length one.
+
+### Example
+
+```{r meteoclimatic_options, eval = NOT_CRAN}
+api_options <- meteoclimatic_options(stations = 'ESCAT08')
+api_options
+```
+
+## Meteoclimatic stations info
+
+Accessing station metadata for Meteoclimatic is simple:
+
+```{r meteoclimatic_stations}
+get_stations_info_from('meteoclimatic', options = api_options)
+```
+
+## Meteoclimatic data
+
+```{r meteoclimatic_data}
+current_day_barcelona <- get_meteo_from('meteoclimatic', options = api_options)
+current_day_barcelona
+```
+
+Visually:
+
+```{r meteoclimatic_data_plot, fig.width=7, fig.height=5, fig.align='center'}
+current_day_barcelona %>%
+  units::drop_units() %>%
+  ggplot() +
+  geom_sf(aes(colour = max_temperature))
+
+current_day_barcelona %>%
+  ggplot() +
+  geom_histogram(aes(x = max_relative_humidity))
+```
+

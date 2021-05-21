@@ -23,6 +23,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
     keyring,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Imports: 
     assertthat,
@@ -41,3 +43,4 @@ Imports:
     units,
     xml2
 Config/testthat/edition: 3
+VignetteBuilder: knitr
