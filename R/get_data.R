@@ -23,7 +23,7 @@
 #'
 #' # AEMET (we need a key)
 #' # key_set('aemet')
-#' options_for_aemet <-aemet_options(
+#' options_for_aemet <- aemet_options(
 #'   'daily',
 #'   start_date = as.Date('2012-01-01'),
 #'   end_date = as.Date('2012-02-01'),

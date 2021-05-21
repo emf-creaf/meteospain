@@ -32,7 +32,7 @@
 #'   \item{SMC: Visit \url{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
 #' }
 #' It is not advisable to use the keys directly in any script shared or publicly available (github...), neither
-#' store them in plain text files.One option is using the \href{https://github.com/r-lib/keyring}{keyring}
+#' store them in plain text files. One option is using the \href{https://github.com/r-lib/keyring}{keyring}
 #' package for managing and accessing keys.
 #'
 #' @section Stations:
