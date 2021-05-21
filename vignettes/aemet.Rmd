@@ -1,0 +1,144 @@
+---
+title: "AEMET service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{AEMET service}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(ggplot2)
+library(ggforce)
+library(sf)
+library(keyring)
+```
+
+# AEMET service
+
+[AEMET](http://www.aemet.es/) is the spanish national meteorologic service, and is the national meteorology
+authority providing quality data for public and research use, as well as prediction products and disaster
+warning system. `meteospain` only access to the automatic meteorological stations network data.
+
+## AEMET options
+
+### Temporal resolution
+
+`meteospain` offers access to the AEMET API at different temporal resolutions:
+
+  - "current_day", returning the latest 24 hours of measures for all or selected stations.
+  - "daily", returning the daily aggregated measures for all or selected stations.
+
+In "daily", a `start_date` (and optionally an `end_date`) arguments must be provided, indicating the period
+from which retrieve the data.
+
+### Stations
+
+`meteospain` access the data in the AEMET API collecting all stations. If a character vector of stations codes
+is supplied in the `stations` argument, a filter step is done before returning the data to maintain only
+the stations supplied.
+
+### AEMET API Key
+
+AEMET API only allow access to the data with a personal API Key. This token must be included in the
+`api_key` argument of `aemet_options` function.  
+To obtain the API Key, please visit https://opendata.aemet.es/centrodedescargas/inicio and follow the
+instructions at "Obtencion de API Key".
+
+  > It is not advisable to use the keys directly in any script shared or publicly available (github...),
+  neither store them in plain text files. One option is using the
+  [keyring package](https://github.com/r-lib/keyring) for managing and accessing keys:
+  
+  ```{r aemet_key, eval=FALSE}
+  install.packages('keyring')
+  library(keyring)
+  key_set('aemet') # A prompt asking for the secret (the API Key) will appear.
+  ```
+  
+
+### Examples
+
+```{r aemet_options, eval=NOT_CRAN, results='hide'}
+# current day, all stations
+api_options <- aemet_options(
+  resolution = 'current_day',
+  api_key = key_get('aemet')
+)
+api_options
+```
+
+```{r aemet_options_fake, eval=TRUE, echo=FALSE}
+# current day, all stations
+fake_api <- aemet_options(
+  resolution = 'current_day',
+  api_key = 'my_api_key'
+)
+fake_api
+```
+
+```{r aemet_options_2, eval=NOT_CRAN, results='hide'}
+# daily, all stations
+api_options <- aemet_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25'), end_date = as.Date('2020-05-25'),
+  api_key = key_get('aemet')
+)
+api_options
+```
+
+```{r aemet_options_fake_2, eval=TRUE, echo=FALSE}
+# daily, all stations
+fake_api <- aemet_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25'), end_date = as.Date('2020-05-25'),
+  api_key = 'my_api_key'
+)
+fake_api
+```
+
+## AEMET stations info
+
+Accessing station metadata for AEMET is simple:
+
+```{r aemet_stations, eval = NOT_CRAN}
+get_stations_info_from('aemet', api_options)
+```
+
+## AEMET data
+
+```{r aemet_data, eval = NOT_CRAN}
+api_options <- aemet_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25'),
+  api_key = key_get('aemet')
+)
+spain_20200425 <- get_meteo_from('aemet', options = api_options)
+spain_20200425
+```
+
+Visually:
+
+```{r aemet_data_plot, fig.width=7, fig.height=5, fig.align='center', eval = NOT_CRAN}
+spain_20200425 %>%
+  units::drop_units() %>%
+  ggplot() +
+  geom_sf(aes(colour = mean_temperature))
+
+spain_20200425 %>%
+  ggplot() +
+  geom_histogram(aes(x = precipitation))
+```
+

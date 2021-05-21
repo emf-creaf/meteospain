@@ -28,8 +28,9 @@ library(sf)
 
 # MeteoGalicia service
 
-MeteoGalicia service offers the data of the galician automatic meteorological stations network. This network
-is supported and assesed by the Xunta de Galicia and the data should be trustworthy..
+[MeteoGalicia](https://www.meteogalicia.gal/) service offers the data of the galician automatic meteorological
+stations network. This network is supported and assesed by the Xunta de Galicia and the data should be
+trustworthy.
 
 ## MeteoGalicia options
 
@@ -91,7 +92,7 @@ get_stations_info_from('meteogalicia')
 ## MeteoGalicia data
 
 ```{r meteogalicia_data, eval = NOT_CRAN}
-api_options <- api_options <- meteogalicia_options(
+api_options <- meteogalicia_options(
   resolution = 'daily',
   start_date = as.Date('2020-04-25')
 )
