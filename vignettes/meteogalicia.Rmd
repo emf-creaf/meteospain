@@ -1,0 +1,114 @@
+---
+title: "MeteoGalicia service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MeteoGalicia service}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(ggplot2)
+library(ggforce)
+library(sf)
+```
+
+# MeteoGalicia service
+
+MeteoGalicia service offers the data of the galician automatic meteorological stations network. This network
+is supported and assesed by the Xunta de Galicia and the data should be trustworthy..
+
+## MeteoGalicia options
+
+### Temporal resolution
+
+MeteoGalicia API offers data at different temporal resolutions:
+
+  - "instant", returning the latest measures for all or selected stations.
+  - "current_day", returning the latest 24 hours of measures for all or selected stations.
+  - "daily", returning the daily aggregated measures for all or selected stations.
+  - "monthly", returning the monthly aggregated measures for all or selected stations.
+
+In both, "daily" and "monthly", a `start_date` (and optionally an `end_date`) arguments must be provided,
+indicating the period from which retrieve the data.
+
+### Stations
+
+MeteoGalicia API allows specifying stations code to narrow the data retrieved. So, a character vector of
+station codes can be supplied in the `stations` argument.
+
+### Examples
+
+```{r meteogalicia_options, eval=NOT_CRAN}
+# last measure for all stations
+api_options <- meteogalicia_options()
+api_options
+
+# current day, only some stations
+api_options <- meteogalicia_options(
+  resolution = 'current_day',
+  stations = c('10157', '14000', '10045')
+)
+api_options
+
+# daily, all stations
+api_options <- meteogalicia_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25'), end_date = as.Date('2020-05-25')
+)
+api_options
+
+# monthly, some stations
+api_options <- meteogalicia_options(
+  resolution = 'monthly',
+  start_date = as.Date('2020-04-01'), end_date = as.Date('2020-08-01'),
+  stations = c('10157', '14000', '10045')
+)
+api_options
+```
+
+## MeteoGalicia stations info
+
+Accessing station metadata for MeteoGalicia is simple:
+
+```{r meteogalicia_stations, eval = NOT_CRAN}
+get_stations_info_from('meteogalicia')
+```
+
+## MeteoGalicia data
+
+```{r meteogalicia_data, eval = NOT_CRAN}
+api_options <- api_options <- meteogalicia_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25')
+)
+galicia_20200425 <- get_meteo_from('meteogalicia', options = api_options)
+galicia_20200425
+```
+
+Visually:
+
+```{r meteogalicia_data_plot, fig.width=7, fig.height=5, fig.align='center', eval = NOT_CRAN}
+galicia_20200425 %>%
+  units::drop_units() %>%
+  ggplot() +
+  geom_sf(aes(colour = max_temperature))
+
+galicia_20200425 %>%
+  ggplot() +
+  geom_histogram(aes(x = precipitation))
+```
+
