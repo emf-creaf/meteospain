@@ -1,0 +1,153 @@
+---
+title: "API limits and loops"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{API limits and loops}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(sf)
+```
+
+Some APIs can impose a limit in the data retrieved. For example, AEMET API limit the daily data download to
+31 days:
+
+```{r aemet_limit, error=TRUE, eval=NOT_CRAN}
+# aemet api has a limit for 31 days:
+get_meteo_from(
+  'aemet',
+  aemet_options(
+    api_key = keyring::key_get('aemet'),
+    resolution ='daily',
+    start_date = as.Date('1990-01-01'),
+    end_date = as.Date('1990-12-31')
+  )
+)
+```
+
+This means that with one call to `get_meteo_from` to the AEMET service, one can only download 31 days of data.
+If the period needed is bigger than that, one option is performing all the calls necessary and join the
+results:
+
+```{r, manual, eval=NOT_CRAN}
+res_1990_jan <- get_meteo_from(
+  'aemet',
+  aemet_options(
+    api_key = keyring::key_get('aemet'),
+    resolution ='daily',
+    start_date = as.Date('1990-01-01'),
+    end_date = as.Date('1990-01-31')
+  )
+)
+
+res_1990_feb <- get_meteo_from(
+  'aemet',
+  aemet_options(
+    api_key = keyring::key_get('aemet'),
+    resolution ='daily',
+    start_date = as.Date('1990-02-01'),
+    end_date = as.Date('1990-02-28')
+  )
+)
+
+res <- rbind(res_1990_jan, res_1990_feb)
+res
+```
+
+While for short periods this can be easily done, when needing long periods (years, decades), this can be
+tedious and prone to error (or at least involves a lot of *copy&paste* and generate longer scripts).  
+To avoid this, we can use loops, both in a tidyverse way (`purrr::map`) or in a more classic approach (`for`).
+For both ways, the first thing to do is create the vectors of dates to retrieve:
+
+```{r dates_vecs}
+# First, we prepare the date vectors, with the start and end dates.
+start_dates <- seq(as.Date('1990-01-01'), as.Date('1990-12-01'), 'months')
+end_dates <- seq(as.Date('1990-02-01'), as.Date('1991-01-01'), 'months') - 1
+
+# Both vectors must have the same length
+length(start_dates) == length(end_dates)
+
+# lets see them
+data.frame(start_dates, end_dates)
+```
+
+## tidyverse loop
+
+We are gonna use `purrr::map2_dfr`, to iterate both date vectors at the same time and return a data frame
+with all the results directly:
+
+```{r tidyverse_loop, eval=NOT_CRAN}
+# tidyverse map
+res_tidyverse <-
+  purrr::map2_dfr(
+    .x = start_dates, .y = end_dates,
+    .f = function(start_date, end_date) {
+      res <- get_meteo_from(
+        'aemet',
+        aemet_options(
+          api_key = keyring::key_get('aemet'),
+          resolution ='daily',
+          start_date = start_date,
+          end_date = end_date
+        )
+      )
+      return(res)
+    }
+  )
+
+res_tidyverse
+```
+
+## for loop
+
+We use `base::for`, iterating by the index of the dates vectors:
+
+```{r for_loop, eval=NOT_CRAN}
+# base for loop
+res_for <- data.frame()
+
+for (index in seq_along(start_dates)) {
+  temp_res <- get_meteo_from(
+    'aemet',
+    aemet_options(
+      api_key = keyring::key_get('aemet'),
+      resolution = 'daily',
+      start_date = start_dates[index],
+      end_date = end_dates[index]
+    )
+  )
+  
+  res_for <- rbind(res_for, temp_res)
+}
+
+res_for
+```
+
+
+Both methods return identical results:
+
+```{r identical, eval=NOT_CRAN}
+# both are identical
+identical(res_tidyverse, res_for)
+```
+
+
+
+  > In a loop, no matter if a `purrr::map` or a `for` loop, each iteration will connect with the API, consuming
+  connections from the user quota. Take this into consideration when creating loops for longer periods, as you
+  can reach your API request limits for the day/month... (it depends on the service API).
