@@ -1,3 +1,7 @@
+# skip on cran ----------------------------------------------------------------------------------------
+
+skip_on_cran()
+
 # meteogalicia service options tests ---------------------------------------------------------------------------
 
 test_that("meteogalicia service options works", {

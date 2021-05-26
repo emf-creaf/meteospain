@@ -1,3 +1,7 @@
+# skip on cran ----------------------------------------------------------------------------------------
+
+skip_on_cran()
+
 # meteoclimatic service options tests -------------------------------------------------------------------
 
 test_that("meteoclimatic options works", {
