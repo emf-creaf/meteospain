@@ -38,7 +38,6 @@ aemet_key <- keyring::key_get('aemet')
 ```
 
 ```{r api_key_real, echo=FALSE, eval=NOT_CRAN}
-# keyring::key_set('aemet') # a prompt will appear asking the user for the key
 aemet_key <- Sys.getenv('aemet')
 ```
 
@@ -67,7 +66,7 @@ One option is performing all the calls necessary and join the results:
 res_1990_jan <- get_meteo_from(
   'aemet',
   aemet_options(
-    api_key = keyring::key_get('aemet'),
+    api_key = aemet_key,
     resolution = 'daily',
     start_date = as.Date('1990-01-01'),
     end_date = as.Date('1990-01-31')
@@ -77,7 +76,7 @@ res_1990_jan <- get_meteo_from(
 res_1990_feb <- get_meteo_from(
   'aemet',
   aemet_options(
-    api_key = keyring::key_get('aemet'),
+    api_key = aemet_key,
     resolution = 'daily',
     start_date = as.Date('1990-02-01'),
     end_date = as.Date('1990-02-28')
@@ -122,7 +121,7 @@ res_tidyverse <-
       res <- get_meteo_from(
         'aemet',
         aemet_options(
-          api_key = keyring::key_get('aemet'),
+          api_key = aemet_key,
           resolution = 'daily',
           start_date = start_date,
           end_date = end_date
@@ -147,7 +146,7 @@ for (index in seq_along(start_dates)) {
   temp_res <- get_meteo_from(
     'aemet',
     aemet_options(
-      api_key = keyring::key_get('aemet'),
+      api_key = aemet_key,
       resolution = 'daily',
       start_date = start_dates[index],
       end_date = end_dates[index]

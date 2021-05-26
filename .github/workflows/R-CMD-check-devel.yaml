@@ -3,12 +3,12 @@
 on:
   push:
     branches:
-      - main
+      - devel
   pull_request:
     branches:
-      - main
+      - devel
 
-name: R-CMD-check
+name: R-CMD-check-devel
 
 jobs:
   R-CMD-check:
@@ -30,7 +30,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       aemet: ${{ secrets.aemet }}
-      NOT_CRAN: true
+      NOT_CRAN: false
       R_KEYRING_BACKEND: env
 
     steps:
