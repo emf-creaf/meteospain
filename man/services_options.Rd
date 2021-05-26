@@ -89,7 +89,7 @@ library(keyring)
 library(meteospain)
 
 ## AEMET examples ---------------------------------------------------------
-
+\donttest{
 # setting the key (a prompt will appear in console to supply the API key)
 # keyring::key_set(service = 'aemet')
 
@@ -106,6 +106,7 @@ daily_opts <- aemet_options(
   end_date = as.Date('1990-01-31'),
   api = keyring::key_get('aemet')
 )
+}
 
 
 ## Meteoclimatic examples -------------------------------------------------

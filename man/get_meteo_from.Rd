@@ -35,6 +35,7 @@ query limits per minute.
 }
 
 \examples{
+\donttest{
 library(meteospain)
 library(keyring)
 
@@ -47,5 +48,6 @@ options_for_aemet <- aemet_options(
   api_key = key_get('aemet')
 )
 get_meteo_from('aemet', options_for_aemet)
+}
 
 }

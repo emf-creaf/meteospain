@@ -58,7 +58,7 @@ NULL
 #' library(meteospain)
 #'
 #' ## AEMET examples ---------------------------------------------------------
-#'
+#' \donttest{
 #' # setting the key (a prompt will appear in console to supply the API key)
 #' # keyring::key_set(service = 'aemet')
 #'
@@ -75,6 +75,7 @@ NULL
 #'   end_date = as.Date('1990-01-31'),
 #'   api = keyring::key_get('aemet')
 #' )
+#' }
 #'
 #' @rdname services_options
 #'
