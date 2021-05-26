@@ -110,7 +110,8 @@
   # api response
   api_response <- httr::GET(
     "http://servizos.meteogalicia.es",
-    path = path_resolution
+    path = path_resolution,
+    httr::user_agent('https://github.com/emf-creaf/meteospain')
   )
 
   # Status check ------------------------------------------------------------------------------------------
