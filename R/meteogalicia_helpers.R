@@ -101,22 +101,25 @@
 #' @noRd
 
 .get_info_meteogalicia <- function() {
+
+  # GET ---------------------------------------------------------------------------------------------------
   # path
   path_resolution <- c(
     'rss', 'observacion', 'listaEstacionsMeteo.action'
   )
-
   # api response
   api_response <- httr::GET(
     "http://servizos.meteogalicia.es",
     path = path_resolution
   )
 
-  # check status
+  # Status check ------------------------------------------------------------------------------------------
   if (api_response$status_code != 200) {
     stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
 
+
+  # Data --------------------------------------------------------------------------------------------------
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
 
   # Meteogalicia returns a list, with one element called listaEstacionsMeteo, that is parsed directly to

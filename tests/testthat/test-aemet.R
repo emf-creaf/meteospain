@@ -10,7 +10,9 @@ test_that("aemet service options works", {
   expect_named(aemet_options(api_key = 'tururu'), expected_names)
   expect_identical(
     aemet_options(api_key = 'tururu'),
-    aemet_options(resolution = 'current_day', start_date = Sys.Date(), end_date = Sys.Date(), api_key = 'tururu')
+    aemet_options(
+      resolution = 'current_day', start_date = Sys.Date(), end_date = Sys.Date(), api_key = 'tururu'
+    )
   )
 
   # errors
@@ -27,7 +29,8 @@ test_that("aemet current works", {
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "altitude", "temperature", "min_temperature", "max_temperature",
+    "timestamp", "station_id", "station_name", "altitude",
+    "temperature", "min_temperature", "max_temperature",
     "relative_humidity", "precipitation", "wind_speed", "wind_direction", "geometry"
   )
   expect_s3_class(test_object, 'sf')
@@ -147,7 +150,6 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
   api_options$resolution <- 'monthly'
   expect_error(get_meteo_from('aemet', api_options), "is not a valid temporal resolution")
 })
-
 
 # aemet get info tests ----------------------------------------------------------------------------------
 
