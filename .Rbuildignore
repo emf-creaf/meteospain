@@ -4,3 +4,4 @@
 ^technical_especifications
 ^README\.Rmd$
 ^.Renviron$
+^\.github$

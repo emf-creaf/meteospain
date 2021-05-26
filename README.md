@@ -4,6 +4,8 @@
 # meteospain
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/emf-creaf/meteospain/workflows/R-CMD-check/badge.svg)](https://github.com/emf-creaf/meteospain/actions)
 <!-- badges: end -->
 
 `meteospain` aims to offer access to different spanish meteorological
@@ -42,30 +44,33 @@ library(meteospain)
 
 mg_options <- meteogalicia_options(resolution = 'current_day')
 get_meteo_from('meteogalicia', mg_options)
-#> A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser  utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á  Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez  que as utilice para os usos distintos do particular e privado.
+#> A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser 
+#> utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á 
+#> Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez 
+#> que as utilice para os usos distintos do particular e privado.
 #> https://www.meteogalicia.gal/web/informacion/notaIndex.action
-#> Simple feature collection with 3660 features and 13 fields
+#> Simple feature collection with 3673 features and 13 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 3,660 x 14
+#> # A tibble: 3,673 x 14
 #>    timestamp           station_id station_name     station_province altitude
 #>    <dttm>              <chr>      <chr>            <chr>                 [m]
-#>  1 2021-05-12 13:00:00 10045      Mabegondo        A Coruña               94
-#>  2 2021-05-12 13:00:00 10046      Marco da Curra   A Coruña              651
-#>  3 2021-05-12 13:00:00 10047      Pedro Murias     Lugo                   51
-#>  4 2021-05-12 13:00:00 10048      O Invernadeiro   Ourense              1026
-#>  5 2021-05-12 13:00:00 10049      Corrubedo        A Coruña               30
-#>  6 2021-05-12 13:00:00 10050      CIS Ferrol       A Coruña               37
-#>  7 2021-05-12 13:00:00 10052      Muralla          A Coruña              661
-#>  8 2021-05-12 13:00:00 10053      Campus Lugo      Lugo                  400
-#>  9 2021-05-12 13:00:00 10055      Guitiriz-Mirador Lugo                  684
-#> 10 2021-05-12 13:00:00 10057      Alto do Rodicio  Ourense               981
-#> # … with 3,650 more rows, and 9 more variables: temperature [°C],
+#>  1 2021-05-25 14:00:00 10045      Mabegondo        A Coruña               94
+#>  2 2021-05-25 14:00:00 10046      Marco da Curra   A Coruña              651
+#>  3 2021-05-25 14:00:00 10047      Pedro Murias     Lugo                   51
+#>  4 2021-05-25 14:00:00 10048      O Invernadeiro   Ourense              1026
+#>  5 2021-05-25 14:00:00 10049      Corrubedo        A Coruña               30
+#>  6 2021-05-25 14:00:00 10050      CIS Ferrol       A Coruña               37
+#>  7 2021-05-25 14:00:00 10052      Muralla          A Coruña              661
+#>  8 2021-05-25 14:00:00 10053      Campus Lugo      Lugo                  400
+#>  9 2021-05-25 14:00:00 10055      Guitiriz-Mirador Lugo                  684
+#> 10 2021-05-25 14:00:00 10056      Marroxo          Lugo                  645
+#> # … with 3,663 more rows, and 9 more variables: temperature [°C],
 #> #   min_temperature [°C], max_temperature [°C], relative_humidity [%],
-#> #   precipitation [L/m2], wind_direction [°], wind_speed [m/s], insolation [h],
-#> #   geometry <POINT [°]>
+#> #   precipitation [L/m^2], wind_direction [°], wind_speed [m/s],
+#> #   insolation [h], geometry <POINT [°]>
 ```
 
 Stations info can be accessed with `get_stations_info_from` function:
@@ -99,10 +104,13 @@ results directly.
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.9.1, GDAL 3.2.2, PROJ 8.0.0
+#> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1
 mg_options <- meteogalicia_options(resolution = 'daily', start_date = as.Date('2021-04-25'))
 plot(get_meteo_from('meteogalicia', mg_options))
-#> A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser  utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á  Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez  que as utilice para os usos distintos do particular e privado.
+#> A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser 
+#> utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á 
+#> Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez 
+#> que as utilice para os usos distintos do particular e privado.
 #> https://www.meteogalicia.gal/web/informacion/notaIndex.action
 #> Warning: plotting the first 9 out of 15 attributes; use max.plot = 15 to plot
 #> all
