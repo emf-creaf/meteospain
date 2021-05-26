@@ -24,7 +24,6 @@ library(meteospain)
 library(ggplot2)
 library(ggforce)
 library(sf)
-library(keyring)
 ```
 
 # AEMET service
