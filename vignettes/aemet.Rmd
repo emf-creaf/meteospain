@@ -71,11 +71,20 @@ instructions at "Obtencion de API Key".
 
 ### Examples
 
+```{r aemet_key_fake, eval=FALSE}
+# get the key we stored before
+aemet_key <- keyring::key_get('aemet')
+```
+
+```{r aemet_key_real, echo=FALSE, eval=NOT_CRAN}
+aemet_key <- Sys.getenv('aemet')
+```
+
 ```{r aemet_options, eval=NOT_CRAN, results='hide'}
 # current day, all stations
 api_options <- aemet_options(
   resolution = 'current_day',
-  api_key = key_get('aemet')
+  api_key = aemet_key
 )
 api_options
 ```
@@ -123,7 +132,7 @@ get_stations_info_from('aemet', api_options)
 api_options <- aemet_options(
   resolution = 'daily',
   start_date = as.Date('2020-04-25'),
-  api_key = key_get('aemet')
+  api_key = aemet_key
 )
 spain_20200425 <- get_meteo_from('aemet', options = api_options)
 spain_20200425

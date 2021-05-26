@@ -1,5 +1,5 @@
 Package: meteospain
-Title: Access to spanish meteorological stations services
+Title: Access to Spanish Meteorological Stations Services
 Version: 0.0.0.9000
 Authors@R: 
     c(
