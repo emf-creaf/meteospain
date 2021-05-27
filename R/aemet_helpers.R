@@ -74,7 +74,7 @@
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = list(ssl_cipher_list = 'HIGH:!DH:!aNULL')
+    config = list(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')
   )
 
   if (api_response$status_code == 404) {
@@ -90,7 +90,7 @@
   stations_info <-
     jsonlite::fromJSON(httr::content(
       httr::GET(response_content$datos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-                config = list(ssl_cipher_list = 'HIGH:!DH:!aNULL')),
+                config = list(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')),
       as = 'text', encoding = 'ISO-8859-15'
     ))
 
@@ -139,8 +139,8 @@
     "https://opendata.aemet.es",
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-    , config = list(ssl_cipher_list = 'HIGH:!DH:!aNULL')
+    httr::user_agent('https://github.com/emf-creaf/meteospain'),
+    ssl_cipher_list = 'DEFAULT@SECLEVEL=1'
   )
 
   # Status check ------------------------------------------------------------------------------------------
@@ -164,14 +164,14 @@
   stations_data <-
     jsonlite::fromJSON(httr::content(
       httr::GET(response_content$datos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-                config = list(ssl_cipher_list = 'HIGH:!DH:!aNULL')),
+                config = list(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')),
       as = 'text', encoding = 'ISO-8859-15'
     ))
   # We also need the metadata to show the copyright, and the legal note
   request_metadata <-
     jsonlite::fromJSON(httr::content(
       httr::GET(response_content$metadatos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-                config = list(ssl_cipher_list = 'HIGH:!DH:!aNULL')),
+                config = list(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')),
       as = 'text', encoding = 'ISO-8859-15'
     ))
   # We also need the stations info
