@@ -69,12 +69,19 @@
     'opendata', 'api', 'valores', 'climatologicos', 'inventarioestaciones', 'todasestaciones'
   )
 
+  # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
+  config_httr_aemet <- switch(
+    Sys.info()["sysname"],
+    'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
+    httr::config()
+  )
+
   api_response <- httr::GET(
     "https://opendata.aemet.es",
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')
+    config = config_httr_aemet
   )
 
   if (api_response$status_code == 404) {
@@ -91,7 +98,7 @@
     jsonlite::fromJSON(httr::content(
       httr::GET(
         response_content$datos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-        config = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')
+        config = config_httr_aemet
       ),
       as = 'text', encoding = 'ISO-8859-15'
     ))
@@ -137,12 +144,19 @@
   # create api path
   path_resolution <- .create_aemet_path(api_options)
 
+  # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
+  config_httr_aemet <- switch(
+    Sys.info()["sysname"],
+    'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
+    httr::config()
+  )
+  # get step
   api_response <- httr::GET(
     "https://opendata.aemet.es",
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')
+    config = config_httr_aemet
   )
 
   # Status check ------------------------------------------------------------------------------------------
@@ -167,7 +181,7 @@
     jsonlite::fromJSON(httr::content(
       httr::GET(
         response_content$datos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-        config = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')
+        config = config_httr_aemet
       ),
       as = 'text', encoding = 'ISO-8859-15'
     ))
@@ -176,7 +190,7 @@
     jsonlite::fromJSON(httr::content(
       httr::GET(
         response_content$metadatos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-        config = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1')
+        config = config_httr_aemet
       ),
       as = 'text', encoding = 'ISO-8859-15'
     ))
