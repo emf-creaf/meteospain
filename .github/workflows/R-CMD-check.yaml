@@ -20,6 +20,7 @@ jobs:
 
     strategy:
       fail-fast: false
+      max-parallel: 1 # run each OSs and R versions one by one, to avoid blocking some APIs (looking at you AEMET)
       matrix:
         config:
           - {os: windows-latest, r: 'release'}
