@@ -222,7 +222,7 @@ test_that("meteogalicia API errors, messages, warnings are correctly raised", {
     start_date = as.Date('2020-01-01'), end_date = as.Date('2020-01-02'),
     stations = 'XXXXXX'
   )
-  expect_error(get_meteo_from('meteogalicia', api_options), "bad station ids")
+  expect_error(get_meteo_from('meteogalicia', api_options), "unknown station ids")
   api_options$resolution <- 'yearly'
   expect_error(get_meteo_from('meteogalicia', api_options), "is not a valid temporal resolution")
 })

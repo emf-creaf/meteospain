@@ -175,7 +175,7 @@
     stop(
       "MeteoGalicia API returned an error:\n",
       stringr::str_remove_all(httr::content(api_response, 'text'), '<.*?>|\\t|\\n'),
-      '\nThis ususally happens when bad station ids are supplied.'
+      '\nThis usually happens when unknown station ids are supplied.'
     )
   }
   # response content
