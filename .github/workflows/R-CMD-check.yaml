@@ -30,7 +30,8 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       aemet: ${{ secrets.aemet }}
-      NOT_CRAN: false
+      NOT_CRAN: true
+      R_KEYRING_BACKEND: env
 
     steps:
       - uses: actions/checkout@v2
