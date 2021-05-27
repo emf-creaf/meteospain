@@ -76,8 +76,8 @@ For both ways, the first thing to do is create the vectors of dates to retrieve:
 
 ```{r dates_vecs}
 # First, we prepare the date vectors, with the start and end dates.
-start_dates <- seq(as.Date('1990-01-01'), as.Date('1990-12-01'), 'months')
-end_dates <- seq(as.Date('1990-02-01'), as.Date('1991-01-01'), 'months') - 1
+start_dates <- seq(as.Date('1990-01-01'), as.Date('1990-06-01'), 'months')
+end_dates <- seq(as.Date('1990-02-01'), as.Date('1991-06-30'), 'months') - 1
 
 # Both vectors must have the same length
 length(start_dates) == length(end_dates)

@@ -32,7 +32,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       aemet: ${{ secrets.aemet }}
-      NOT_CRAN: true
+      NOT_CRAN: false
       R_KEYRING_BACKEND: env
 
     steps:
@@ -77,11 +77,6 @@ jobs:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
           options(crayon.enabled = TRUE)
-          print(keyring::default_backend())
-          print(keyring::default_backend()$list('aemet'))
-          print(keyring::key_list('aemet'))
-          foo <- keyring::key_get('aemet')
-          foo != ''
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
