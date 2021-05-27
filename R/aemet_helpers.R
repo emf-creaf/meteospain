@@ -88,6 +88,15 @@
     stop("Unable to connect to AEMET API at ", api_response$url)
   }
 
+  # Check when html with error is returned (bad stations)
+  if (httr::http_type(api_response) != "application/json") {
+    stop(
+      "AEMET API returned an error:\n",
+      stringr::str_remove_all(httr::content(api_response, 'text'), '<.*?>|\\t|\\n'),
+      '\nThis usually happens when API request limit per minute is reached'
+    )
+  }
+
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
 
   if (response_content$estado != 200) {
@@ -166,9 +175,30 @@
   if (api_response$status_code == 404) {
     stop("Unable to connect to AEMET API at ", api_response$url)
   }
+
+  # Check when html with error is returned (bad stations)
+  if (httr::http_type(api_response) != "application/json") {
+    stop(
+      "AEMET API returned an error:\n",
+      stringr::str_remove_all(httr::content(api_response, 'text'), '<.*?>|\\t|\\n'),
+      '\nThis usually happens when API request limit per minute is reached'
+    )
+  }
+
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
   if (response_content$estado != 200) {
     stop("AEMET API returned no data:\n", response_content$descripcion)
+  }
+
+  # Check request limit -----------------------------------------------------------------------------------
+  # we need to check if we are reaching the request limit of the API, and if we are near, take a rest.
+  # If remaining-request-count goes down 100 it can broke, not always with a 426 error, so instead of checking
+  # the error, check the count. Also, if we let it go down 106, next request could reach the limit (is not
+  # 1 per GET, as we need to GET the results again and GET the metadata so we can join), so we specifiy the
+  # limit at 106 to cooldown for 60 seconds.
+  if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
+    message("Reaching the API request limit per minute, taking a cooldown of 60 seconds to reset.")
+    Sys.sleep(60)
   }
 
 
@@ -316,17 +346,6 @@
       "Available stations with data for the actual query are:\n",
       paste0(c(unique(stations_data$indicativo), unique(stations_data$idema)), collapse = ', ')
     )
-  }
-
-  # Check request limit -----------------------------------------------------------------------------------
-  # we need to check if we are reaching the request limit of the API, and if we are near, take a rest.
-  # If remaining-request-count goes down 100 it can broke, not always with a 426 error, so instead of checking
-  # the error, check the count. Also, if we let it go down 106, next request could reach the limit (is not
-  # 1 per GET, as we need to GET the results again and GET the metadata so we can join), so we specifiy the
-  # limit at 106 to cooldown for 60 seconds.
-  if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
-    message("Reaching the API request limit per minute, taking a cooldown of 60 seconds to reset.")
-    Sys.sleep(60)
   }
 
   # Copyright message -------------------------------------------------------------------------------------
