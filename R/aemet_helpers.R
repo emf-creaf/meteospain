@@ -84,17 +84,33 @@
     config = config_httr_aemet
   )
 
+  # Status check ------------------------------------------------------------------------------------------
+  # now we need to check the status of the response (general status), and the status of the AEMET (specific
+  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
+  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
   if (api_response$status_code == 404) {
-    stop("Unable to connect to AEMET API at ", api_response$url)
+    stop(
+      "Unable to connect to AEMET API at ", api_response$url, ': ', httr::http_status(api_response)$message
+    )
+  }
+
+  if (api_response$status_code == 401) {
+    stop("Invalid API Key: ", httr::http_status(api_response)$message)
+  }
+
+  if (api_response$status_code == 429) {
+    message(
+      httr::http_status(api_response)$message,
+      copyright_style("API request limit reached, taking a cooldown of 60 seconds to reset.")
+    )
+    Sys.sleep(60)
+    # recursive call
+    return(.get_info_aemet(api_options))
   }
 
   # Check when html with error is returned (bad stations)
   if (httr::http_type(api_response) != "application/json") {
-    stop(
-      "AEMET API returned an error:\n",
-      stringr::str_remove_all(httr::content(api_response, 'text'), '<.*?>|\\t|\\n'),
-      '\nThis usually happens when API request limit per minute is reached'
-    )
+    stop("AEMET API returned an error:\n", httr::content(api_response, 'text'))
   }
 
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
@@ -173,19 +189,32 @@
   # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
   # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
   if (api_response$status_code == 404) {
-    stop("Unable to connect to AEMET API at ", api_response$url)
+    stop(
+      "Unable to connect to AEMET API at ", api_response$url, ': ', httr::http_status(api_response)$message
+    )
+  }
+
+  if (api_response$status_code == 401) {
+    stop("Invalid API Key: ", httr::http_status(api_response)$message)
+  }
+
+  if (api_response$status_code == 429) {
+    message(
+      httr::http_status(api_response)$message,
+      copyright_style("API request limit reached, taking a cooldown of 60 seconds to reset.")
+    )
+    Sys.sleep(60)
+    # recursive call
+    return(.get_data_aemet(api_options))
   }
 
   # Check when html with error is returned (bad stations)
   if (httr::http_type(api_response) != "application/json") {
-    stop(
-      "AEMET API returned an error:\n",
-      stringr::str_remove_all(httr::content(api_response, 'text'), '<.*?>|\\t|\\n'),
-      '\nThis usually happens when API request limit per minute is reached'
-    )
+    stop("AEMET API returned an error:\n", httr::content(api_response, 'text'))
   }
 
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
+
   if (response_content$estado != 200) {
     stop("AEMET API returned no data:\n", response_content$descripcion)
   }
@@ -196,10 +225,10 @@
   # the error, check the count. Also, if we let it go down 106, next request could reach the limit (is not
   # 1 per GET, as we need to GET the results again and GET the metadata so we can join), so we specifiy the
   # limit at 106 to cooldown for 60 seconds.
-  if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
-    message("Reaching the API request limit per minute, taking a cooldown of 60 seconds to reset.")
-    Sys.sleep(60)
-  }
+  # if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
+  #   message("Reaching the API request limit per minute, taking a cooldown of 60 seconds to reset.")
+  #   Sys.sleep(60)
+  # }
 
 
   # Stations data and metadata GET steps ------------------------------------------------------------------

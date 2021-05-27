@@ -122,7 +122,7 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
   expect_message(get_meteo_from('aemet', api_options), 'Autorizado el uso')
   # invalid key
   api_options <- aemet_options('current_day', api_key = 'tururu')
-  expect_error(get_meteo_from('aemet', api_options), "API key invalido")
+  expect_error(get_meteo_from('aemet', api_options), "Invalid API Key")
   # dates out of bounds
   api_options <- aemet_options(
     'daily',

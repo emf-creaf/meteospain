@@ -85,6 +85,7 @@ autonomous communities.}
 }
 
 \examples{
+\donttest{
 library(keyring)
 library(meteospain)
 
@@ -106,6 +107,7 @@ daily_opts <- aemet_options(
   end_date = as.Date('1990-01-31'),
   api = keyring::key_get('aemet')
 )
+}
 
 
 ## Meteoclimatic examples -------------------------------------------------
