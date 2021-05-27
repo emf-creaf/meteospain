@@ -19,56 +19,37 @@ knitr::opts_chunk$set(
 )
 ```
 
-Some APIs can impose limits to the data retrieved in one query. For example, AEMET API limit the daily data
-downloaded at the same time to 31 days. Let's see what happens if we query a period longer than that.
-
-First of all, we need the library loaded
-
 ```{r setup}
 library(meteospain)
+library(sf)
 ```
 
-Also, before querying the AEMET API, we need the API Key. See `?aemet_options` and
-`vignette('aemet', package = 'meteospain)` for more info or visit
-https://opendata.aemet.es/centrodedescargas/inicio to get an API Key if you don't have one already.
+Some APIs can impose a limit in the data retrieved. For example, AEMET API limit the daily data download to
+31 days:
 
-```{r api_key, eval=FALSE}
-# keyring::key_set('aemet') # a prompt will appear asking the user for the key
-aemet_key <- keyring::key_get('aemet')
-```
-
-```{r api_key_real, echo=FALSE, eval=NOT_CRAN}
-# keyring::key_set('aemet') # a prompt will appear asking the user for the key
-aemet_key <- Sys.getenv('aemet')
-```
-
-And now we are ready to retrieve the daily data for the year 1990:
-
-```{r aemet_limit, eval=NOT_CRAN, error=TRUE}
+```{r aemet_limit, error=TRUE, eval=NOT_CRAN}
+# aemet api has a limit for 31 days:
 get_meteo_from(
   'aemet',
   aemet_options(
-    api_key = aemet_key,
-    resolution = 'daily',
+    api_key = keyring::key_get('aemet'),
+    resolution ='daily',
     start_date = as.Date('1990-01-01'),
     end_date = as.Date('1990-12-31')
   )
 )
 ```
 
-As we can see, an error occurred. This means that with one call to `get_meteo_from` to the AEMET service,
-we can only download 31 days of data. If we need a longer period, we can follow several ways.
-
-## As much calls as needed
-
-One option is performing all the calls necessary and join the results:
+This means that with one call to `get_meteo_from` to the AEMET service, one can only download 31 days of data.
+If the period needed is bigger than that, one option is performing all the calls necessary and join the
+results:
 
 ```{r, manual, eval=NOT_CRAN}
 res_1990_jan <- get_meteo_from(
   'aemet',
   aemet_options(
     api_key = keyring::key_get('aemet'),
-    resolution = 'daily',
+    resolution ='daily',
     start_date = as.Date('1990-01-01'),
     end_date = as.Date('1990-01-31')
   )
@@ -78,7 +59,7 @@ res_1990_feb <- get_meteo_from(
   'aemet',
   aemet_options(
     api_key = keyring::key_get('aemet'),
-    resolution = 'daily',
+    resolution ='daily',
     start_date = as.Date('1990-02-01'),
     end_date = as.Date('1990-02-28')
   )
@@ -89,14 +70,11 @@ res
 ```
 
 While for short periods this can be easily done, when needing long periods (years, decades), this can be
-tedious as it involves a lot of *copy&paste* and generate longer scripts.  
-
-## Loops
-
+tedious and prone to error (or at least involves a lot of *copy&paste* and generate longer scripts).  
 To avoid this, we can use loops, both in a tidyverse way (`purrr::map`) or in a more classic approach (`for`).
 For both ways, the first thing to do is create the vectors of dates to retrieve:
 
-```{r dates_vecs, eval=NOT_CRAN}
+```{r dates_vecs}
 # First, we prepare the date vectors, with the start and end dates.
 start_dates <- seq(as.Date('1990-01-01'), as.Date('1990-12-01'), 'months')
 end_dates <- seq(as.Date('1990-02-01'), as.Date('1991-01-01'), 'months') - 1
@@ -108,7 +86,7 @@ length(start_dates) == length(end_dates)
 data.frame(start_dates, end_dates)
 ```
 
-### `tidyverse` loop
+## tidyverse loop
 
 We are gonna use `purrr::map2_dfr`, to iterate both date vectors at the same time and return a data frame
 with all the results directly:
@@ -123,7 +101,7 @@ res_tidyverse <-
         'aemet',
         aemet_options(
           api_key = keyring::key_get('aemet'),
-          resolution = 'daily',
+          resolution ='daily',
           start_date = start_date,
           end_date = end_date
         )
@@ -135,7 +113,7 @@ res_tidyverse <-
 res_tidyverse
 ```
 
-### `for` loop
+## for loop
 
 We use `base::for`, iterating by the index of the dates vectors:
 
@@ -167,6 +145,7 @@ Both methods return identical results:
 # both are identical
 identical(res_tidyverse, res_for)
 ```
+
 
 
   > In a loop, no matter if a `purrr::map` or a `for` loop, each iteration will connect with the API, consuming
