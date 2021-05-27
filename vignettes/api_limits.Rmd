@@ -33,7 +33,7 @@ get_meteo_from(
   'aemet',
   aemet_options(
     api_key = keyring::key_get('aemet'),
-    resolution ='daily',
+    resolution = 'daily',
     start_date = as.Date('1990-01-01'),
     end_date = as.Date('1990-12-31')
   )
@@ -49,7 +49,7 @@ res_1990_jan <- get_meteo_from(
   'aemet',
   aemet_options(
     api_key = keyring::key_get('aemet'),
-    resolution ='daily',
+    resolution = 'daily',
     start_date = as.Date('1990-01-01'),
     end_date = as.Date('1990-01-31')
   )
@@ -59,7 +59,7 @@ res_1990_feb <- get_meteo_from(
   'aemet',
   aemet_options(
     api_key = keyring::key_get('aemet'),
-    resolution ='daily',
+    resolution = 'daily',
     start_date = as.Date('1990-02-01'),
     end_date = as.Date('1990-02-28')
   )
@@ -101,7 +101,7 @@ res_tidyverse <-
         'aemet',
         aemet_options(
           api_key = keyring::key_get('aemet'),
-          resolution ='daily',
+          resolution = 'daily',
           start_date = start_date,
           end_date = end_date
         )
