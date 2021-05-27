@@ -137,7 +137,6 @@
   # create api path
   path_resolution <- .create_aemet_path(api_options)
 
-  browser()
   api_response <- httr::GET(
     "https://opendata.aemet.es",
     httr::add_headers(api_key = api_options$api_key),
