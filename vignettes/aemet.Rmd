@@ -103,7 +103,7 @@ fake_api
 api_options <- aemet_options(
   resolution = 'daily',
   start_date = as.Date('2020-04-25'), end_date = as.Date('2020-05-25'),
-  api_key = aemet_key
+  api_key = key_get('aemet')
 )
 api_options
 ```
