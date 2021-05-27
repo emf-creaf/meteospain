@@ -28,7 +28,6 @@ the stations returned by this function and the stations returned by \code{\link{
 historical dates.
 }
 \examples{
-\donttest{
 library(meteospain)
 library(keyring)
 
@@ -36,6 +35,5 @@ library(keyring)
 # key_set('aemet')
 api_options <- aemet_options(api_key = key_get('aemet'))
 get_stations_info_from('aemet', api_options)
-}
 
 }

@@ -18,7 +18,6 @@
 #'
 #'
 #' @examples
-#' \donttest{
 #' library(meteospain)
 #' library(keyring)
 #'
@@ -31,7 +30,6 @@
 #'   api_key = key_get('aemet')
 #' )
 #' get_meteo_from('aemet', options_for_aemet)
-#' }
 #'
 #' @return An sf (spatial) object with the stations meteorological data.
 #'
@@ -66,7 +64,6 @@ get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteoga
 #'   about the different services and their options.
 #'
 #' @examples
-#' \donttest{
 #' library(meteospain)
 #' library(keyring)
 #'
@@ -74,7 +71,6 @@ get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteoga
 #' # key_set('aemet')
 #' api_options <- aemet_options(api_key = key_get('aemet'))
 #' get_stations_info_from('aemet', api_options)
-#' }
 #'
 #' @return An sf (spatial) object with the stations metadata.
 #'
