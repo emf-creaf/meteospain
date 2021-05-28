@@ -57,6 +57,130 @@
   )
 }
 
+#' Check status and errors for AEMET
+#'
+#' Check status and erros for AEMET
+#'
+#' In the AEMET API we have to do a lot of GETs and checking the status of the response before
+#' parsing it to avoid errors (html responses instead of json due to limits, among other things).
+#' Why this? Easy, AEMET API does not return data and metadata directly, but a link to a transitory
+#' page with the metadata and another link to a transitory page with the data. This means that for
+#' a normal daily query the process is the following:
+#' \itemize{
+#'   \item{1. GET to the correct daily path}
+#'   \item{2. Check statuses and response}
+#'   \item{3. GET to the data link}
+#'   \item{4. Check statuses and response}
+#'   \item{5. GET to the metadata link}
+#'   \item{6. Check statuses and response}
+#'   \item{7. GET to the stations info, to get coords, internally using .get_info helper}
+#'   \item{8. Check statuse and response}
+#'   \item{9. GET to the stations info data link}
+#'   \item{10. Check statuses and response}
+#'   \item{11. GET to the stations info metadata link}
+#'   \item{12. Check statuses and response}
+#' }
+#' This makes 6 calls, each of one has the code to check the statuses, because checking only the
+#' main call does not avoid getting errors due to limits in the following calls to data or metadata.
+#' This means, 6 times repeating the code for checking the statuses and changing lines in 6 places
+#' when trying to debug or change something.
+#'
+#' @section Rationale:
+#' So, the rationale is the following, a function accepting \code{...} that will be passed to
+#' httr::GET, and internally checking statuses. If error, return the error code and the message.
+#' In the main function, if the error returned is API limit, wait 60 seconds, if other, stop
+#' and give the correct message.
+#'
+#' @param ... <[`dynamic-dots`][rlang::dyn-dots]> Arguments for httr::GET
+#'
+#' @noRd
+.check_status_aemet <- function(...) {
+
+  # GET step
+  api_response <- httr::GET(...)
+  response_status <- httr::status_code(api_response)
+
+  # and now the status checks
+  if (response_status == 404) {
+    res <- list(
+      status = 'Error',
+      code = response_status,
+      message = glue::glue(
+        "Unable to connect to AEMET API at {api_response$url}: {httr::http_status(api_response)$message}"
+      )
+    )
+    return(res)
+  }
+
+  if (response_status == 401) {
+    res <- list(
+      status = 'Error',
+      code = response_status,
+      message = glue::glue("Invalid API Key: {httr::http_status(api_response)$message}")
+    )
+    return(res)
+  }
+
+  if (response_status == 429) {
+    res <- list(
+      status = 'Error',
+      code = response_status,
+      message = glue::glue(
+        "{httr::http_status(api_response)$message}",
+        "API request limit reached, taking a cooldown of 60 seconds to reset."
+      )
+    )
+    return(res)
+  }
+
+  # the content check
+  if (stringr::str_detect(httr::http_type(api_response), "html")) {
+
+    # uupps, an html was returned, instead of a json or plain text.
+    html_text <- httr::content(api_response, 'text')
+
+    # this can be an html with the infamous hidden 429 error, so we check that
+    if (stringr::str_detect(html_text, "429 Too Many Requests")) {
+      res <- list(
+        status = 'Error',
+        code = 429,
+        message = "API request limit reached, taking a cooldown of 60 seconds to reset."
+      )
+    } else {
+      res <- list(
+        status = 'Error',
+        code =  response_status,
+        message = glue::glue("AEMET API returned an error: {html_text}")
+      )
+    }
+
+    return(res)
+  }
+
+  # Now, finally, we are able to access the response content (because now we are sure is json)
+  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text', encoding = 'ISO-8859-15'))
+
+  # the last check, even with 200 code (ok) it can be no data
+  if (!rlang::is_null(response_content$estado) && response_content$estado != 200) {
+    res <- list(
+      status = 'Error',
+      code = response_content$estado,
+      message = glue::glue("AEMET API returned no data: {response_content$descripcion}")
+    )
+    return(res)
+  }
+
+  # If we reach here, is because everything went well
+  res <- list(
+    status = 'OK',
+    code = response_status,
+    message = "Data received",
+    content = response_content
+  )
+
+  return(res)
+}
+
 #' Get info for the aemet stations
 #'
 #' Get info for the aemet stations
@@ -76,7 +200,13 @@
     httr::config()
   )
 
-  api_response <- httr::GET(
+  # Status check ------------------------------------------------------------------------------------------
+  # now we need to check the status of the response (general status), and the status of the AEMET (specific
+  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
+  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
+  # This is done with .check_status_aemet helper, which return a list with the status, and if success the
+  # content parsed already
+  api_status_check <- .check_status_aemet(
     "https://opendata.aemet.es",
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution,
@@ -84,56 +214,49 @@
     config = config_httr_aemet
   )
 
-  # Status check ------------------------------------------------------------------------------------------
-  # now we need to check the status of the response (general status), and the status of the AEMET (specific
-  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
-  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
-  if (api_response$status_code == 404) {
-    stop(
-      "Unable to connect to AEMET API at ", api_response$url, ': ', httr::http_status(api_response)$message
-    )
+  if (api_status_check$status != 'OK') {
+    # if api request limit reached, do a recursive call to the function after 60 seconds
+    if (api_status_check$code == 429) {
+      message(copyright_style(api_status_check$message))
+      Sys.sleep(60)
+      return(.get_info_aemet(api_options))
+    } else {
+      stop(api_status_check$code, ':\n', api_status_check$message)
+    }
   }
 
-  if (api_response$status_code == 401) {
-    stop("Invalid API Key: ", httr::http_status(api_response)$message)
+  response_content <- api_status_check$content
+
+  # Response data and metadata ----------------------------------------------------------------------------
+  # Now, as stated in the .check_status_aemet rationale, we need to access data (in this case we don't need
+  # metadata)
+  stations_info_check <- .check_status_aemet(
+    response_content$datos,
+    httr::user_agent('https://github.com/emf-creaf/meteospain'),
+    config = config_httr_aemet
+  )
+
+  if (stations_info_check$status != 'OK') {
+    # if api request limit reached, do a recursive call to the function after 60 seconds
+    if (stations_info_check$code == 429) {
+      message(copyright_style(stations_info_check$message))
+      Sys.sleep(60)
+      return(.get_info_aemet(api_options))
+    } else {
+      stop(stations_info_check$code, ':\n', stations_info_check$message)
+    }
   }
 
-  if (api_response$status_code == 429) {
-    message(
-      httr::http_status(api_response)$message,
-      copyright_style("API request limit reached, taking a cooldown of 60 seconds to reset.")
-    )
-    Sys.sleep(60)
-    # recursive call
-    return(.get_info_aemet(api_options))
-  }
-
-  # Check when html with error is returned (bad stations)
-  if (httr::http_type(api_response) != "application/json") {
-    stop("AEMET API returned an error:\n", httr::content(api_response, 'text'))
-  }
-
-  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
-
-  if (response_content$estado != 200) {
-    stop("AEMET API returned no data:\n", response_content$descripcion)
-  }
-
-  stations_info <-
-    jsonlite::fromJSON(httr::content(
-      httr::GET(
-        response_content$datos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-        config = config_httr_aemet
-      ),
-      as = 'text', encoding = 'ISO-8859-15'
-    ))
-
-  stations_info %>%
+  # Data transformation ----------------------------------------------------------------------------------
+  # We can finally take the station info data frame and do the necessary transformations
+  stations_info_check$content %>%
     dplyr::as_tibble() %>%
     dplyr::select(
       station_id = .data$indicativo, station_name = .data$nombre, altitude = .data$altitud,
       latitude = .data$latitud, longitude = .data$longitud
     ) %>%
+    # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
+    # and negative when S or W.
     dplyr::mutate(
       altitude = as.numeric(stringr::str_replace_all(.data$altitude, ',', '.')),
       altitude = units::set_units(.data$altitude, "m"),
@@ -165,7 +288,7 @@
 #'
 #' @noRd
 .get_data_aemet <- function(api_options) {
-  # GET ------------------------------------------------------------------------
+  # All necessary things for the GET ----------------------------------------------------------------------
   # create api path
   path_resolution <- .create_aemet_path(api_options)
 
@@ -175,8 +298,14 @@
     'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
     httr::config()
   )
-  # get step
-  api_response <- httr::GET(
+
+  # GET and Status check ------------------------------------------------------------------------------------------
+  # now we need to check the status of the response (general status), and the status of the AEMET (specific
+  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
+  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
+  # This is done with .check_status_aemet helper, which return a list with the status, and if success the
+  # content parsed already
+  api_status_check <- .check_status_aemet(
     "https://opendata.aemet.es",
     httr::add_headers(api_key = api_options$api_key),
     path = path_resolution,
@@ -184,75 +313,54 @@
     config = config_httr_aemet
   )
 
-  # Status check ------------------------------------------------------------------------------------------
-  # now we need to check the status of the response (general status), and the status of the AEMET (specific
-  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
-  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
-  if (api_response$status_code == 404) {
-    stop(
-      "Unable to connect to AEMET API at ", api_response$url, ': ', httr::http_status(api_response)$message
-    )
+  if (api_status_check$status != 'OK') {
+    # if api request limit reached, do a recursive call to the function after 60 seconds
+    if (api_status_check$code == 429) {
+      message(copyright_style(api_status_check$message))
+      Sys.sleep(60)
+      return(.get_data_aemet(api_options))
+    } else {
+      stop(api_status_check$code, ':\n', api_status_check$message)
+    }
   }
 
-  if (api_response$status_code == 401) {
-    stop("Invalid API Key: ", httr::http_status(api_response)$message)
+  response_content <- api_status_check$content
+
+  # Response data and metadata ----------------------------------------------------------------------------
+  # Now, as stated in the .check_status_aemet rationale, we need to access data and metadata
+  stations_data_check <- .check_status_aemet(
+    response_content$datos,
+    httr::user_agent('https://github.com/emf-creaf/meteospain'),
+    config = config_httr_aemet
+  )
+
+  if (stations_data_check$status != 'OK') {
+    # if api request limit reached, do a recursive call to the function after 60 seconds
+    if (stations_data_check$code == 429) {
+      message(copyright_style(stations_data_check$message))
+      Sys.sleep(60)
+      return(.get_data_aemet(api_options))
+    } else {
+      stop(stations_data_check$code, ':\n', stations_data_check$message)
+    }
   }
 
-  if (api_response$status_code == 429) {
-    message(
-      httr::http_status(api_response)$message,
-      copyright_style("API request limit reached, taking a cooldown of 60 seconds to reset.")
-    )
-    Sys.sleep(60)
-    # recursive call
-    return(.get_data_aemet(api_options))
+  stations_metadata_check <- .check_status_aemet(
+    response_content$metadatos,
+    httr::user_agent('https://github.com/emf-creaf/meteospain'),
+    config = config_httr_aemet
+  )
+
+  if (stations_metadata_check$status != 'OK') {
+    # if api request limit reached, do a recursive call to the function after 60 seconds
+    if (stations_metadata_check$code == 429) {
+      message(copyright_style(stations_metadata_check$message))
+      Sys.sleep(60)
+      return(.get_data_aemet(api_options))
+    } else {
+      stop(stations_metadata_check$code, ':\n', stations_metadata_check$message)
+    }
   }
-
-  # Check when html with error is returned (bad stations)
-  if (httr::http_type(api_response) != "application/json") {
-    stop("AEMET API returned an error:\n", httr::content(api_response, 'text'))
-  }
-
-  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
-
-  if (response_content$estado != 200) {
-    stop("AEMET API returned no data:\n", response_content$descripcion)
-  }
-
-  # Check request limit -----------------------------------------------------------------------------------
-  # we need to check if we are reaching the request limit of the API, and if we are near, take a rest.
-  # If remaining-request-count goes down 100 it can broke, not always with a 426 error, so instead of checking
-  # the error, check the count. Also, if we let it go down 106, next request could reach the limit (is not
-  # 1 per GET, as we need to GET the results again and GET the metadata so we can join), so we specifiy the
-  # limit at 106 to cooldown for 60 seconds.
-  # if (as.numeric(api_response$headers$`remaining-request-count`) <= 106) {
-  #   message("Reaching the API request limit per minute, taking a cooldown of 60 seconds to reset.")
-  #   Sys.sleep(60)
-  # }
-
-
-  # Stations data and metadata GET steps ------------------------------------------------------------------
-  # And now the data. This is somewhat redundant, but AEMET API does not return the data directly, but a
-  # temporary link to the data (it will expire in a few minutes). So we need to repeat the steps again, but
-  # this time with a trick. AEMET data seems to be codified in ISO-8859-15, but this generates errors in
-  # retrieving the data, so we need to supply the correct encoding.
-  stations_data <-
-    jsonlite::fromJSON(httr::content(
-      httr::GET(
-        response_content$datos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-        config = config_httr_aemet
-      ),
-      as = 'text', encoding = 'ISO-8859-15'
-    ))
-  # We also need the metadata to show the copyright, and the legal note
-  request_metadata <-
-    jsonlite::fromJSON(httr::content(
-      httr::GET(
-        response_content$metadatos, httr::user_agent('https://github.com/emf-creaf/meteospain'),
-        config = config_httr_aemet
-      ),
-      as = 'text', encoding = 'ISO-8859-15'
-    ))
   # We also need the stations info
   stations_info <- .get_info_aemet(api_options)
 
@@ -344,7 +452,7 @@
   # I tried to communicate with them, No solution offered :(
 
   # Data transformation -----------------------------------------------------------------------------------
-  res <- stations_data %>%
+  res <- stations_data_check$content %>%
     dplyr::as_tibble() %>%
     # remove unwanted stations
     dplyr::filter(!! filter_expression) %>%
@@ -368,17 +476,24 @@
     )
 
 
-  # Check stations ----------------------------------------------------------------------------------------
+  # Check if any stations were returned -------------------------------------------------------------------
   if ((!is.null(api_options$stations)) & nrow(res) < 1) {
     stop(
       "Station(s) provided have no data for the dates selected.\n",
       "Available stations with data for the actual query are:\n",
-      paste0(c(unique(stations_data$indicativo), unique(stations_data$idema)), collapse = ', ')
+      glue::glue_collapse(
+        c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
+        sep = ', ', last = ' and '
+      )
     )
   }
 
   # Copyright message -------------------------------------------------------------------------------------
-  message(copyright_style(request_metadata$copyright), '\n', legal_note_style(request_metadata$notaLegal))
+  message(
+    copyright_style(stations_metadata_check$content$copyright),
+    '\n',
+    legal_note_style(stations_metadata_check$content$notaLegal)
+  )
 
   # Return ------------------------------------------------------------------------------------------------
   return(res)
