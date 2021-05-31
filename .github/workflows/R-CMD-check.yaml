@@ -31,6 +31,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       aemet: ${{ secrets.aemet }}
+      meteocat: ${{ secrets.meteocat }}
       NOT_CRAN: true
       R_KEYRING_BACKEND: env
 
