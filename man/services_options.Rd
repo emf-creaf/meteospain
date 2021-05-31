@@ -3,6 +3,7 @@
 \name{services_options}
 \alias{services_options}
 \alias{aemet_options}
+\alias{meteocat_options}
 \alias{meteoclimatic_options}
 \alias{meteogalicia_options}
 \title{Options for meteorological services}
@@ -11,6 +12,13 @@ aemet_options(
   resolution = c("current_day", "daily"),
   start_date = Sys.Date(),
   end_date = start_date,
+  stations = NULL,
+  api_key
+)
+
+meteocat_options(
+  resolution = c("instant", "hourly", "daily", "monthly", "yearly"),
+  start_date = Sys.Date(),
   stations = NULL,
   api_key
 )
@@ -60,12 +68,12 @@ to each service. Possible values are:
 
 \section{Keys}{
 
-Some services (i.e. AEMET, SMC...) require an API key to access the data. The requirements and process
+Some services (i.e. AEMET, MeteoCat...) require an API key to access the data. The requirements and process
 to obtain the key varies from service to service.
 \itemize{
 \item{AEMET: Visit \url{https://opendata.aemet.es/centrodedescargas/inicio} and follow the instructions
 at "Obtencion de API Key".}
-\item{SMC: Visit \url{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
+\item{MeteoCat: Visit \url{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
 }
 It is not advisable to use the keys directly in any script shared or publicly available (github...), neither
 store them in plain text files. One option is using the \href{https://github.com/r-lib/keyring}{keyring}
@@ -81,6 +89,7 @@ Some services accept querying multiple stations at once, and other only allows o
 \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 autonomous communities.}
+\item{MeteoCat: Only one station can be provided.}
 }
 }
 
@@ -108,6 +117,19 @@ daily_opts <- aemet_options(
   api = keyring::key_get('aemet')
 )
 }
+
+
+## MeteoCat examples -----------------------------------------------------------
+
+# setting the key (a prompt will appear in console to supply the API key)
+keyring::key_set(service = 'meteocat')
+
+# create the options
+query_options <- meteocat_options(
+  date = as_date('2020-12-31'),
+  resolution = 'hourly',
+  api = keyring::key_get('meteocat')
+)
 
 
 ## Meteoclimatic examples -------------------------------------------------

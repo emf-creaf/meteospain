@@ -80,7 +80,7 @@ get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteoga
 #'
 #' @export
 get_stations_info_from <- function(
-  service = c('aemet', 'smc', 'meteoclimatic', 'meteogalicia'),
+  service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia'),
   options
 ) {
   # check arguments
@@ -90,6 +90,7 @@ get_stations_info_from <- function(
   res <- switch(
     service,
     'aemet' = .get_info_aemet(options),
+    'meteocat' = .get_info_meteocat(options),
     'meteoclimatic' = .get_info_meteoclimatic(options),
     'meteogalicia' = .get_info_meteogalicia()
   )
