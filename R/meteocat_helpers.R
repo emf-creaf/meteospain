@@ -270,17 +270,23 @@
 
   coords_df <- response_content[['coordenades']]
   province_df <- response_content[['provincia']]['nom'] %>%
-    dplyr::rename(station_province = nom)
+    dplyr::rename(station_province = .data$nom)
 
   response_content %>%
     dplyr::as_tibble() %>%
-    dplyr::select(-coordenades, -municipi, -comarca, -provincia, -xarxa, -estats, -tipus, -emplacament) %>%
+    dplyr::select(
+      !dplyr::any_of(c(
+        'coordenades', 'municipi', 'comarca', 'provincia',
+        'xarxa', 'estats', 'tipus', 'emplacament'
+      ))
+    ) %>%
     dplyr::bind_cols(coords_df, province_df) %>%
     dplyr::select(
-      station_id = codi, station_name = nom, station_province, altitude = altitud, longitud, latitud
+      station_id = .data$codi, station_name = .data$nom, station_province,
+      altitude = .data$altitud, .data$longitud, .data$latitud
     ) %>%
     dplyr::mutate(
-      altitude = units::set_units(altitude, 'm')
+      altitude = units::set_units(.data$altitude, 'm')
     ) %>%
     sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
 

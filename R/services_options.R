@@ -120,7 +120,7 @@ aemet_options <- function(
 #' ## MeteoCat examples -----------------------------------------------------------
 #'
 #' # setting the key (a prompt will appear in console to supply the API key)
-#' keyring::key_set(service = 'meteocat')
+#' # keyring::key_set(service = 'meteocat')
 #'
 #' # create the options
 #' query_options <- meteocat_options(
