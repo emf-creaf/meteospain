@@ -212,8 +212,16 @@
   )
   resolution_specific_carpentry <- switch(
     api_options$resolution,
-    'instant' = function(.data) {
-      .data %>%
+    'instant' = function(data) {
+      data %>%
+        # When querying stations, it can happen that some stations lack some variables, making the further
+        # select step to fail. We create missing variables and populate them with NAs to avoid this error
+        .create_missing_vars(
+          var_names = c(
+            'TA_AVG_1.5m', 'DV_AVG_2m', 'VV_AVG_2m', 'HR_AVG_1.5m',
+            'PP_SUM_1.5m', 'HSOL_SUM_1.5m', 'RS_AVG_1.5m'
+          )
+        ) %>%
         dplyr::select(
           timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
           temperature = .data$TA_AVG_1.5m,
@@ -236,8 +244,8 @@
           global_solar_radiation = units::set_units(.data$global_solar_radiation, "W/m2")
         )
     },
-    'current_day' = function(.data) {
-      .data %>%
+    'current_day' = function(data) {
+      data %>%
         # When querying stations, it can happen that some stations lack some variables, making the further
         # select step to fail. We create missing variables and populate them with NAs to avoid this error
         .create_missing_vars(
@@ -270,8 +278,8 @@
           insolation = units::set_units(.data$insolation, "h")
         )
     },
-    'daily' = function(.data) {
-      .data %>%
+    'daily' = function(data) {
+      data %>%
         # When querying stations, it can happen that some stations lack some variables, making the further
         # select step to fail. We create missing variables and populate them with NAs to avoid this error
         .create_missing_vars(
@@ -309,8 +317,8 @@
           insolation = units::set_units(.data$insolation, "h")
         )
     },
-    'monthly' = function(.data) {
-      .data %>%
+    'monthly' = function(data) {
+      data %>%
         # When querying stations, it can happen that some stations lack some variables, making the further
         # select step to fail. We create missing variables and populate them with NAs to avoid this error
         .create_missing_vars(

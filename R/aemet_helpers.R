@@ -383,8 +383,8 @@
   # The latter will simplify adding monthly in the future, so lets do it:
   resolution_specific_carpentry <- switch(
     api_options$resolution,
-    'current_day' = function(.data) {
-      .data %>%
+    'current_day' = function(data) {
+      data %>%
         dplyr::select(
           timestamp = .data$fint, station_id = .data$idema, station_name = .data$ubi,
           altitude = .data$alt,
@@ -410,8 +410,8 @@
         ) %>%
         sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
     },
-    'daily' = function(.data) {
-      .data %>%
+    'daily' = function(data) {
+      data %>%
         dplyr::select(
           timestamp = .data$fecha,
           station_id = .data$indicativo, station_name = .data$nombre, station_province = .data$provincia,

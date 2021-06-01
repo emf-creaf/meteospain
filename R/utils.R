@@ -36,6 +36,63 @@ legal_note_style <- crayon::blue$bold$underline
 
 }
 
+.meteocat_var_codes_2_names <- function(codes) {
+
+  code_dictionary <- c(
+    # instant and hourly
+    '32' = 'temperature',
+    '33' = 'relative_humidity',
+    '35' = 'precipitation',
+    '36' = 'global_solar_radiation',
+    '46' = 'wind_speed',
+    '47' = 'wind_direction',
+    # daily
+    '1000' = 'mean_temperature',
+    '1001' = 'max_temperature',
+    '1002' = 'min_temperature',
+    '1100' = 'mean_relative_humidity',
+    '1101' = 'max_relative_humidity',
+    '1102' = 'min_relative_humidity',
+    '1300' = 'precipitation',
+    '1400' = 'global_solar_radiation',
+    '1505' = 'mean_wind_speed',
+    '1511' = 'mean_wind_direction',
+    # monthly
+    '2000' = 'mean_temperature',
+    '2001' = 'max_temperature_absolute',
+    '2002' = 'min_temperature_absolute',
+    '2003' = 'max_temperature_mean',
+    '2004' = 'min_temperature_mean',
+    '2100' = 'mean_relative_humidity',
+    '2101' = 'max_relative_humidity_absolute',
+    '2102' = 'min_relative_humidity_absolute',
+    '2103' = 'max_relative_humidity_mean',
+    '2104' = 'min_relative_humidity_mean',
+    '2300' = 'precipitation',
+    '2400' = 'global_solar_radiation',
+    '2505' = 'mean_wind_speed',
+    '2511' = 'mean_wind_direction',
+    # yearly
+    '3000' = 'mean_temperature',
+    '3001' = 'max_temperature_absolute',
+    '3002' = 'min_temperature_absolute',
+    '3003' = 'max_temperature_mean',
+    '3004' = 'min_temperature_mean',
+    '3100' = 'mean_relative_humidity',
+    '3101' = 'max_relative_humidity_absolute',
+    '3102' = 'min_relative_humidity_absolute',
+    '3103' = 'max_relative_humidity_mean',
+    '3104' = 'min_relative_humidity_mean',
+    '3300' = 'precipitation',
+    '3400' = 'global_solar_radiation',
+    '3505' = 'mean_wind_speed',
+    '3511' = 'mean_wind_direction'
+  )
+
+  code_dictionary[as.character(codes)]
+
+}
+
 # test helpers ------------------------------------------------------------------------------------------
 
 skip_if_no_auth <- function(service) {

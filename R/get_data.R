@@ -36,7 +36,7 @@
 #' @return An sf (spatial) object with the stations meteorological data.
 #'
 #' @export
-get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteogalicia'), options) {
+get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia'), options) {
   # check arguments
   service <- rlang::arg_match(service)
 
@@ -44,6 +44,7 @@ get_meteo_from <- function(service = c('aemet', 'smc', 'meteoclimatic', 'meteoga
   api_function <- switch(
     service,
     'aemet' = .get_data_aemet,
+    'meteocat' = .get_data_meteocat,
     'meteoclimatic' = .get_data_meteoclimatic,
     'meteogalicia' = .get_data_meteogalicia
   )

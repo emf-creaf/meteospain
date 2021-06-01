@@ -118,7 +118,7 @@ daily_opts <- aemet_options(
 )
 }
 
-
+\donttest{
 ## MeteoCat examples -----------------------------------------------------------
 
 # setting the key (a prompt will appear in console to supply the API key)
@@ -130,6 +130,7 @@ query_options <- meteocat_options(
   start_date = as.Date('2020-12-31'),
   api = keyring::key_get('meteocat')
 )
+}#'
 
 
 ## Meteoclimatic examples -------------------------------------------------
