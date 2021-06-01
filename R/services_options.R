@@ -116,7 +116,7 @@ aemet_options <- function(
 #' Options for MeteoCat service
 #'
 #' @examples
-#'
+#' \donttest{
 #' ## MeteoCat examples -----------------------------------------------------------
 #'
 #' # setting the key (a prompt will appear in console to supply the API key)
@@ -128,6 +128,7 @@ aemet_options <- function(
 #'   start_date = as.Date('2020-12-31'),
 #'   api = keyring::key_get('meteocat')
 #' )
+#' }#'
 #'
 #' @rdname services_options
 #'
