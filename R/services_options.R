@@ -124,8 +124,8 @@ aemet_options <- function(
 #'
 #' # create the options
 #' query_options <- meteocat_options(
-#'   date = as_date('2020-12-31'),
 #'   resolution = 'hourly',
+#'   start_date = as.Date('2020-12-31'),
 #'   api = keyring::key_get('meteocat')
 #' )
 #'

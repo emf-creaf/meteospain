@@ -235,15 +235,6 @@
   # query
   query_resolution <- c(glue::glue("estat=ope&data={meteocat_stamp(api_options$start_date)}"))
 
-  # api response
-  # api_response <- httr::GET(
-  #   "https://api.meteo.cat",
-  #   httr::add_headers(`x-api-key` = api_options$api_key),
-  #   path = path_resolution,
-  #   query = query_resolution,
-  #   httr::user_agent('https://github.com/emf-creaf/meteospain')
-  # )
-
   # Status check ------------------------------------------------------------------------------------------
   api_status_check <- .check_status_meteocat(
     "https://api.meteo.cat",
@@ -282,7 +273,7 @@
     ) %>%
     dplyr::bind_cols(coords_df, province_df) %>%
     dplyr::select(
-      station_id = .data$codi, station_name = .data$nom, station_province,
+      station_id = .data$codi, station_name = .data$nom, .data$station_province,
       altitude = .data$altitud, .data$longitud, .data$latitud
     ) %>%
     dplyr::mutate(
