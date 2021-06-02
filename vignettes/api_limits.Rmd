@@ -24,8 +24,12 @@ library(meteospain)
 library(sf)
 ```
 
-Some APIs can impose a limit in the data retrieved. For example, AEMET API limit the daily data download to
-31 days:
+The following APIs impose a period limit in the data retrieved, not allowing querying more than the
+predetermined period in each API.
+
+## AEMET API
+
+AEMET API limit the daily data download to 31 days:
 
 ```{r aemet_limit, error=TRUE, eval=NOT_CRAN}
 # aemet api has a limit for 31 days:
@@ -86,7 +90,7 @@ length(start_dates) == length(end_dates)
 data.frame(start_dates, end_dates)
 ```
 
-## tidyverse loop
+### tidyverse loop
 
 We are gonna use `purrr::map2_dfr`, to iterate both date vectors at the same time and return a data frame
 with all the results directly:
@@ -113,7 +117,7 @@ res_tidyverse <-
 res_tidyverse
 ```
 
-## for loop
+### for loop
 
 We use `base::for`, iterating by the index of the dates vectors:
 
@@ -151,3 +155,139 @@ identical(res_tidyverse, res_for)
   > In a loop, no matter if a `purrr::map` or a `for` loop, each iteration will connect with the API, consuming
   connections from the user quota. Take this into consideration when creating loops for longer periods, as you
   can reach your API request limits for the day/month... (it depends on the service API).
+
+## MeteoCat
+
+When using MeteoCat in `daily`, `monthly` and `yearly` there are restrictions on the period that can be
+accesed.
+
+### `daily`
+
+`daily` always returns the whole month the date selected is in, i.e. for `start_date = as.Date('2020-04-10')`
+it will return all days in April, 2020:
+  
+```{r meteocat_daily, eval=NOT_CRAN}
+api_options <- meteocat_options(
+  'daily', start_date = as.Date('2020-04-10'),
+  api_key = keyring::key_get('meteocat')
+)
+april_2020 <- get_meteo_from('meteocat', api_options)
+unique(april_2020$timestamp)
+```
+
+This means that if we want more than one month, we need to use loops in a similar way as described previously
+for AEMET:
+
+```{r meteocat_daily_loops, eval=NOT_CRAN}
+start_dates <- seq(as.Date('2020-01-01'), as.Date('2020-04-01'), 'months')
+# tidyverse map
+meteocat_2020q1_tidyverse <-
+  purrr::map_dfr(
+    .x = start_dates,
+    .f = function(start_date) {
+      res <- get_meteo_from(
+        'meteocat',
+        meteocat_options(
+          api_key = keyring::key_get('meteocat'),
+          resolution = 'daily',
+          start_date = start_date
+        )
+      )
+      return(res)
+    }
+  )
+meteocat_2020q1_tidyverse
+
+# base for loop
+meteocat_2020q1_for <- data.frame()
+
+for (index in seq_along(start_dates)) {
+  temp_res <- get_meteo_from(
+    'meteocat',
+    meteocat_options(
+      api_key = keyring::key_get('meteocat'),
+      resolution = 'daily',
+      start_date = start_dates[index]
+    )
+  )
+  
+  meteocat_2020q1_for <- rbind(meteocat_2020q1_for, temp_res)
+}
+meteocat_2020q1_for
+
+# both are identical
+identical(meteocat_2020q1_tidyverse, meteocat_2020q1_for)
+```
+
+### `monthly`
+
+`monthly` always returns the whole year the date selected is in, i.e. for `start_date = as.Date('2020-04-10')`
+it will return all months in 2020:
+  
+```{r meteocat_monthly, eval=NOT_CRAN}
+api_options <- meteocat_options(
+  'monthly', start_date = as.Date('2020-04-10'),
+  api_key = keyring::key_get('meteocat')
+)
+year_2020 <- get_meteo_from('meteocat', api_options)
+unique(year_2020$timestamp)
+```
+
+Which means that if we need more than one year of monthly data, we need to use loops again:
+
+```{r meteocat_monthly_loops, eval=NOT_CRAN}
+start_dates <- seq(as.Date('2019-01-01'), as.Date('2020-01-01'), 'years')
+# tidyverse map
+meteocat_2019_20_tidyverse <-
+  purrr::map_dfr(
+    .x = start_dates,
+    .f = function(start_date) {
+      res <- get_meteo_from(
+        'meteocat',
+        meteocat_options(
+          api_key = keyring::key_get('meteocat'),
+          resolution = 'monthly',
+          start_date = start_date
+        )
+      )
+      return(res)
+    }
+  )
+meteocat_2019_20_tidyverse
+
+# base for loop
+meteocat_2019_20_for <- data.frame()
+
+for (index in seq_along(start_dates)) {
+  temp_res <- get_meteo_from(
+    'meteocat',
+    meteocat_options(
+      api_key = keyring::key_get('meteocat'),
+      resolution = 'monthly',
+      start_date = start_dates[index]
+    )
+  )
+  
+  meteocat_2019_20_for <- rbind(meteocat_2019_20_for, temp_res)
+}
+meteocat_2019_20_for
+
+# both are identical
+identical(meteocat_2019_20_tidyverse, meteocat_2019_20_for)
+```
+
+### `yearly`
+
+`yearly` always returns all available years and `start_date` argument is ignored, i.e. using
+`start_date = as.Date('2020-04-10')` will return all years, independently of the date supplied:
+  
+```{r meteocat_yearly, eval=NOT_CRAN}
+api_options <- meteocat_options(
+  'yearly', start_date = as.Date('2020-04-10'),
+  api_key = keyring::key_get('meteocat')
+)
+all_years <- get_meteo_from('meteocat', api_options)
+unique(all_years$timestamp)
+```
+
+This means that with yearly we always get all the data available, so there is no need of loops.
