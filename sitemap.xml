@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/index.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/reference/get_meteo_from.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/reference/get_stations_info_from.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/reference/services_options.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/articles/aemet.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/articles/api_limits.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/articles/meteocat.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/articles/meteoclimatic.html</loc>
+  </url>
+  <url>
+    <loc>https://emf-creaf.github.io/meteospain/articles/meteogalicia.html</loc>
+  </url>
+</urlset>
