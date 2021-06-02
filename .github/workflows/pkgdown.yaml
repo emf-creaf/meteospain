@@ -10,6 +10,9 @@ jobs:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      aemet: ${{ secrets.aemet }}
+      meteocat: ${{ secrets.meteocat }}
+      R_KEYRING_BACKEND: env
     steps:
       - uses: actions/checkout@v2
 
