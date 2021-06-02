@@ -1,0 +1,154 @@
+---
+title: "MeteoCat service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MeteoCat service}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(dplyr)
+library(ggplot2)
+library(ggforce)
+library(sf)
+library(keyring)
+```
+
+# MeteoCat service
+
+[MeteoCat](https://www.meteo.cat/) is the Catalonian meteorologic service. It offers access to different
+meteorological data and information, being one of their main missions to curate and divulgate data from
+meteorlogical stations. `meteospain` only access to the automatic meteorological stations network data.
+
+## MeteoCat options
+
+### Temporal resolution
+
+`meteospain` offers access to the MeteoCat API at different temporal resolutions:
+
+  - "instant", returning the latest 4 hours of measures for all or selected stations.
+  - "hourly", returning all measures (some stations has timesteps of 30 min, others 60 min, others more) for
+  all or selected stations.
+  - "daily", returning daily aggregates for the month in the date provided, i.e. if '2020-04-10' is provided
+  as start_date, all daily values for April 2020 will be returned.
+  - "monthly", returning monthly aggregates for the year in the date provided, i.e. if '2020-04-10' is
+  provided as start_date, all monthly values for 2020 will be returned.
+  - "yearly", returning yearly aggregates for all years available. In this case date provided is ignored.
+
+In "daily" and "monthly", a `start_date` argument must be provided, indicating the date from which retrieve
+the data as explained earlier. For more info see `vignette('api_limits', package = 'meteospain')`.
+
+### Stations
+
+`meteospain` access the data in the MeteoCat API collecting all stations. If a character vector of stations codes
+is supplied in the `stations` argument, a filter step is done before returning the data to maintain only
+the stations supplied.
+
+### MeteoCat API Key
+
+MeteoCat API only allow access to the data with a personal API Key. This token must be included in the
+`api_key` argument of `meteocat_options` function.  
+To obtain the API Key, please visit https://apidocs.meteocat.gencat.cat/ and follow the instructions there.
+
+  > It is not advisable to use the keys directly in any script shared or publicly available (github...),
+  neither store them in plain text files. One option is using the
+  [keyring package](https://github.com/r-lib/keyring) for managing and accessing keys:
+  
+  ```{r meteocat_key, eval=FALSE}
+  install.packages('keyring')
+  library(keyring)
+  key_set('meteocat') # A prompt asking for the secret (the API Key) will appear.
+  ```
+  
+
+### Examples
+
+```{r meteocat_options, eval=NOT_CRAN, results='hide'}
+# current day, all stations
+api_options <- meteocat_options(
+  resolution = 'instant',
+  api_key = key_get('meteocat')
+)
+api_options
+```
+
+```{r meteocat_options_fake, eval=TRUE, echo=FALSE}
+# current day, all stations
+fake_api <- meteocat_options(
+  resolution = 'instant',
+  api_key = 'my_api_key'
+)
+fake_api
+```
+
+```{r meteocat_options_2, eval=NOT_CRAN, results='hide'}
+# daily, all stations
+api_options <- meteocat_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-10'),
+  api_key = key_get('meteocat')
+)
+api_options
+```
+
+```{r meteocat_options_fake_2, eval=TRUE, echo=FALSE}
+# daily, all stations
+fake_api <- meteocat_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25'),
+  api_key = 'my_api_key'
+)
+fake_api
+```
+
+## MeteoCat stations info
+
+Accessing station metadata for MeteoCat is simple:
+
+```{r meteocat_stations, eval = NOT_CRAN}
+get_stations_info_from('meteocat', api_options)
+```
+
+## MeteoCat data
+
+```{r meteocat_data, eval = NOT_CRAN}
+api_options <- meteocat_options(
+  resolution = 'monthly',
+  start_date = as.Date('2020-04-01'),
+  api_key = key_get('meteocat')
+)
+catalunya_2020 <- get_meteo_from('meteocat', options = api_options)
+catalunya_2020
+```
+
+Visually:
+
+```{r meteocat_data_plot, fig.width=7, fig.height=7, fig.align='center', eval = NOT_CRAN}
+catalunya_2020 %>%
+  units::drop_units() %>%
+  mutate(month = lubridate::month(timestamp, label = TRUE)) %>%
+  ggplot() +
+  geom_sf(aes(colour = mean_temperature)) +
+  facet_wrap(vars(month), ncol = 4)
+
+catalunya_2020 %>%
+  mutate(month = lubridate::month(timestamp, label = TRUE)) %>%
+  ggplot() +
+  geom_histogram(aes(x = precipitation)) +
+  facet_wrap(vars(month), ncol = 4)
+```
+
