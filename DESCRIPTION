@@ -43,6 +43,7 @@ Imports:
     stringr,
     tidyr,
     units,
-    xml2
+    xml2,
+    vctrs
 Config/testthat/edition: 3
 VignetteBuilder: knitr
