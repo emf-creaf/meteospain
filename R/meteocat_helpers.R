@@ -493,7 +493,7 @@
 
   # Copyright message -------------------------------------------------------------------------------------
   message(
-    copyright_style("Data provided by meteo.cat © Servei Meteorològic de Catalunya"),
+    copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorològic de Catalunya"),
     '\n',
     legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
   )
