@@ -27,6 +27,7 @@ The following meteorological stations services are available:
 
 -   [AEMET](http://www.aemet.es/en/portada), the spanish State
     Meteorological Agency.
+-   [MeteoCat](https://meteo.cat), the Catalan Meteorology Service.
 -   [MeteoGalicia](https://www.meteogalicia.gal/web/inicio.action), the
     galician meteorological service.
 -   [Meteoclimatic](https://www.meteoclimatic.net/), the spanish
@@ -49,25 +50,25 @@ get_meteo_from('meteogalicia', mg_options)
 #> Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez 
 #> que as utilice para os usos distintos do particular e privado.
 #> https://www.meteogalicia.gal/web/informacion/notaIndex.action
-#> Simple feature collection with 3673 features and 13 fields
+#> Simple feature collection with 3681 features and 13 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 3,673 x 14
+#> # A tibble: 3,681 x 14
 #>    timestamp           station_id station_name     station_province altitude
 #>    <dttm>              <chr>      <chr>            <chr>                 [m]
-#>  1 2021-05-25 14:00:00 10045      Mabegondo        A Coruña               94
-#>  2 2021-05-25 14:00:00 10046      Marco da Curra   A Coruña              651
-#>  3 2021-05-25 14:00:00 10047      Pedro Murias     Lugo                   51
-#>  4 2021-05-25 14:00:00 10048      O Invernadeiro   Ourense              1026
-#>  5 2021-05-25 14:00:00 10049      Corrubedo        A Coruña               30
-#>  6 2021-05-25 14:00:00 10050      CIS Ferrol       A Coruña               37
-#>  7 2021-05-25 14:00:00 10052      Muralla          A Coruña              661
-#>  8 2021-05-25 14:00:00 10053      Campus Lugo      Lugo                  400
-#>  9 2021-05-25 14:00:00 10055      Guitiriz-Mirador Lugo                  684
-#> 10 2021-05-25 14:00:00 10056      Marroxo          Lugo                  645
-#> # … with 3,663 more rows, and 9 more variables: temperature [°C],
+#>  1 2021-06-01 13:00:00 10045      Mabegondo        A Coruña               94
+#>  2 2021-06-01 13:00:00 10046      Marco da Curra   A Coruña              651
+#>  3 2021-06-01 13:00:00 10047      Pedro Murias     Lugo                   51
+#>  4 2021-06-01 13:00:00 10048      O Invernadeiro   Ourense              1026
+#>  5 2021-06-01 13:00:00 10049      Corrubedo        A Coruña               30
+#>  6 2021-06-01 13:00:00 10050      CIS Ferrol       A Coruña               37
+#>  7 2021-06-01 13:00:00 10053      Campus Lugo      Lugo                  400
+#>  8 2021-06-01 13:00:00 10055      Guitiriz-Mirador Lugo                  684
+#>  9 2021-06-01 13:00:00 10056      Marroxo          Lugo                  645
+#> 10 2021-06-01 13:00:00 10057      Alto do Rodicio  Ourense               981
+#> # … with 3,671 more rows, and 9 more variables: temperature [°C],
 #> #   min_temperature [°C], max_temperature [°C], relative_humidity [%],
 #> #   precipitation [L/m^2], wind_direction [°], wind_speed [m/s],
 #> #   insolation [h], geometry <POINT [°]>
@@ -77,12 +78,12 @@ Stations info can be accessed with `get_stations_info_from` function:
 
 ``` r
 get_stations_info_from('meteogalicia', mg_options)
-#> Simple feature collection with 154 features and 4 fields
+#> Simple feature collection with 156 features and 4 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 154 x 5
+#> # A tibble: 156 x 5
 #>    station_id station_name     station_province altitude                geometry
 #>  * <chr>      <chr>            <chr>                 [m]             <POINT [°]>
 #>  1 10157      Coruña-Torre de… A Coruña               21    (-8.409202 43.38276)
@@ -95,7 +96,7 @@ get_stations_info_from('meteogalicia', mg_options)
 #>  8 10095      Sergude          A Coruña              231    (-8.461246 42.82283)
 #>  9 10800      Camariñas        A Coruña                5    (-9.178318 43.12445)
 #> 10 19001      Rus              A Coruña              134    (-8.685357 43.15616)
-#> # … with 144 more rows
+#> # … with 146 more rows
 ```
 
 Returned objects are spatial objects (thanks to the

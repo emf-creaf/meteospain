@@ -18,9 +18,11 @@
 #' to each service. Possible values are:
 #' \itemize{
 #'   \item{\code{current_day} returns the last 24h of measures.}
-#'   \item{\code{instant} returns the last measure available.}
+#'   \item{\code{instant} returns the last measures available.}
+#'   \item{\code{hourly} returns the hourly measures.}
 #'   \item{\code{daily} returns any past date/s with daily aggregation.}
 #'   \item{\code{monthly} returns any past date/s with monthly aggregation.}
+#'   \item{\code{yearly} returns any past date/s with yearly aggregation.}
 #' }
 #'
 #' @section Keys:
@@ -39,11 +41,11 @@
 #' Some services accept querying multiple stations at once, and other only allows one station per query:
 #' \itemize{
 #'   \item{AEMET: One or more stations can be provided in a character vector.}
+#'   \item{MeteoCat: One or more stations can be provided in a character vector.}
 #'   \item{MeteoGalicia: One or more stations can be provided in a character vector.}
 #'   \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 #'   common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 #'   autonomous communities.}
-#'   \item{MeteoCat: Only one station can be provided.}
 #' }
 #'
 #'
@@ -128,7 +130,7 @@ aemet_options <- function(
 #'   start_date = as.Date('2020-12-31'),
 #'   api = keyring::key_get('meteocat')
 #' )
-#' }#'
+#' }
 #'
 #' @rdname services_options
 #'

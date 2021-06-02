@@ -5,3 +5,6 @@
 ^README\.Rmd$
 ^.Renviron$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
