@@ -1,1 +1,15 @@
 url: https://emf-creaf.github.io/meteospain
+
+articles:
+- title: Services
+  navbar: ~
+  contents:
+  - aemet
+  - meteocat
+  - meteogalicia
+  - meteoclimatic
+- title: Workflows
+  navbar: ~
+  contents:
+  - api_limits
+  - concordance
