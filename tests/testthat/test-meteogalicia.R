@@ -39,6 +39,8 @@ test_that("meteogalicia instant works", {
   expect_identical(units(test_object$altitude)$numerator, "m")
   expect_s3_class(test_object$temperature, 'units')
   expect_identical(units(test_object$temperature)$numerator, "°C")
+  expect_identical(units(test_object$global_solar_radiation)$numerator, "MJ")
+  expect_identical(units(test_object$global_solar_radiation)$denominator, c('m', 'm'))
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check

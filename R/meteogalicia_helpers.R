@@ -241,7 +241,9 @@
           relative_humidity = units::set_units(.data$relative_humidity, "%"),
           precipitation = units::set_units(.data$precipitation, "L/m^2"),
           insolation = units::set_units(.data$insolation, "h"),
-          global_solar_radiation = units::set_units(.data$global_solar_radiation, "W/m2")
+          global_solar_radiation = units::set_units(
+            units::set_units(.data$global_solar_radiation, "J/s/m^2") * insolation, 'MJ/m^2'
+          )
         )
     },
     'current_day' = function(data) {
