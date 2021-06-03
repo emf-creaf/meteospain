@@ -29,30 +29,22 @@ test_that("meteogalicia instant works", {
     "temperature",
     "relative_humidity", "precipitation",
     "wind_direction", "wind_speed",
-    "insolation", "global_solar_radiation",
+    "insolation", #"global_solar_radiation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
-  expect_identical(units(test_object$global_solar_radiation)$numerator, "MJ")
-  expect_identical(units(test_object$global_solar_radiation)$denominator, c('m', 'm'))
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature,
+  )
+  # expect_identical(units(test_object$global_solar_radiation)$numerator, "MJ")
+  # expect_identical(units(test_object$global_solar_radiation)$denominator, c('m', 'm'))
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteogalicia current works", {
@@ -67,25 +59,17 @@ test_that("meteogalicia current works", {
     "insolation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature
+  )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteogalicia daily works", {
@@ -94,58 +78,41 @@ test_that("meteogalicia daily works", {
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "station_province", "altitude",
-    "temperature", "min_temperature", "max_temperature",
-    "relative_humidity", "min_relative_humidity", "max_relative_humidity", "precipitation",
-    "wind_direction", "wind_speed",
+    "mean_temperature", "min_temperature", "max_temperature",
+    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "precipitation",
+    "mean_wind_direction", "mean_wind_speed",
     "insolation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
+  expect_equal(as.Date(unique(test_object$timestamp)), seq(api_options$start_date, api_options$end_date, 1))
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature,
+    stations_to_check = stations_to_check
+  )
+  expect_equal(as.Date(unique(test_object$timestamp)), seq(api_options$start_date, api_options$end_date, 1))
 
   # all stations 2000s
   api_options <- meteogalicia_options('daily', start_date = as.Date('2000-01-25'), end_date = as.Date('2000-01-30'))
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
+  expect_equal(as.Date(unique(test_object$timestamp)), seq(api_options$start_date, api_options$end_date, 1))
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_equal(unique(test_object$timestamp), seq(api_options$start_date, api_options$end_date, 1))
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
+  expect_equal(as.Date(unique(test_object$timestamp)), seq(api_options$start_date, api_options$end_date, 1))
 })
 
 test_that("meteogalicia monthly works", {
@@ -154,58 +121,40 @@ test_that("meteogalicia monthly works", {
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "station_province", "altitude",
-    "temperature", "min_temperature", "max_temperature",
-    "relative_humidity", "precipitation",
-    "wind_speed",
+    "mean_temperature", "min_temperature", "max_temperature",
+    "mean_relative_humidity", "precipitation",
+    "mean_wind_speed",
     "insolation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_length(unique(test_object$timestamp), 12)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_length(unique(test_object$timestamp), 12)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature,
+    stations_to_check = stations_to_check
+  )
 
   # all stations 2000s
   api_options <- meteogalicia_options('monthly', start_date = as.Date('2000-01-01'), end_date = as.Date('2000-12-01'))
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
   expect_length(unique(test_object$timestamp), 12)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteogalicia', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature,
+    stations_to_check = stations_to_check
+  )
   expect_length(unique(test_object$timestamp), 12)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
 })
 
 test_that("meteogalicia API errors, messages, warnings are correctly raised", {
@@ -236,8 +185,7 @@ test_that("meteogalicia get info works", {
   api_options <- meteogalicia_options()
   test_object <- suppressMessages(get_stations_info_from('meteogalicia', api_options))
   expected_names <- c("station_id", "station_name", "station_province", "altitude", "geometry")
-
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
+  main_test_battery(
+    test_object, expected_names = expected_names
+  )
 })

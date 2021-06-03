@@ -23,22 +23,21 @@ test_that("Meteoclimatic works as expected", {
   api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "max_temperature", "min_temperature",
-    "max_relative_humidity", "min_relative_humidity", "precipitation", "geometry"
+    "timestamp", "station_id", "station_name", "min_temperature", "max_temperature",
+    "min_relative_humidity", "max_relative_humidity", "precipitation", "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$max_temperature, 'units')
-  expect_identical(units(test_object$max_temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = min_temperature,
+    meteoclimatic = TRUE
+  )
   # one station
-  api_options$stations <- test_object[['station_id']][11]
+  stations_to_check <- test_object[['station_id']][11]
+  api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) == 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$max_temperature, 'units')
-  expect_identical(units(test_object$max_temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = min_temperature,
+    stations_to_check = stations_to_check, meteoclimatic = TRUE
+  )
 })
 
 test_that("meteoclimatic errors, warnings and messages are correctly raised", {
@@ -55,8 +54,7 @@ test_that("meteoclimatic get info works", {
   api_options <- meteoclimatic_options()
   test_object <- suppressMessages(get_stations_info_from('meteoclimatic', api_options))
   expected_names <- c("station_id", "station_name", "geometry")
-
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
+  main_test_battery(
+    test_object, expected_names = expected_names, meteoclimatic = TRUE
+  )
 })

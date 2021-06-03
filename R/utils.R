@@ -93,6 +93,30 @@ legal_note_style <- crayon::blue$bold$underline
 
 }
 
+#' Relocate all vars in the same way for any service/resolution combination
+#' @noRd
+relocate_vars <- function(data) {
+  data %>%
+    dplyr::relocate(
+      dplyr::contains('timestamp'),
+      dplyr::contains('station'),
+      dplyr::contains('altitude'),
+      dplyr::starts_with('temperature'),
+      dplyr::starts_with('mean_temperature'),
+      dplyr::starts_with('min_temperature'),
+      dplyr::starts_with('max_temperature'),
+      dplyr::starts_with('relative_humidity'),
+      dplyr::starts_with('mean_relative_humidity'),
+      dplyr::starts_with('min_relative_humidity'),
+      dplyr::starts_with('max_relative_humidity'),
+      dplyr::contains('precipitation'),
+      dplyr::contains('direction'),
+      dplyr::contains('speed'),
+      dplyr::contains('sol'),
+      .data$geometry
+    )
+}
+
 # test helpers ------------------------------------------------------------------------------------------
 
 skip_if_no_auth <- function(service) {
@@ -100,5 +124,36 @@ skip_if_no_auth <- function(service) {
     testthat::skip(glue::glue("No authentication available for {service}"))
   } else {
     message(glue::glue("{service} key found, running tests"))
+  }
+}
+
+main_test_battery <- function(test_object, ...) {
+  args <- rlang::enquos(...)
+
+  # general tests, common for data and stations info
+  # is a sf
+  testthat::expect_s3_class(test_object, 'sf')
+  # has data, more than zero rows
+  testthat::expect_true(nrow(test_object) > 0)
+  # has expected names
+  testthat::expect_named(test_object, rlang::eval_tidy(args$expected_names))
+
+  # conditional tests.
+  # units in altitude ON ALL SERVICES EXCEPT FOR METEOCLIMATIC
+  if (is.null(args$meteoclimatic)) {
+    testthat::expect_s3_class(test_object$altitude, 'units')
+    testthat::expect_identical(units(test_object$altitude)$numerator, "m")
+  }
+
+  # units in temperature and timestamp: ONLY IN DATA, NOT STATIONS
+  if (!is.null(args$temperature)) {
+    testthat::expect_s3_class(rlang::eval_tidy(args$temperature, data = test_object), 'units')
+    testthat::expect_identical(units(rlang::eval_tidy(args$temperature, data = test_object))$numerator, "°C")
+    testthat::expect_s3_class(test_object$timestamp, 'POSIXct')
+    testthat::expect_false(all(is.na(test_object$timestamp)))
+  }
+  # selected stations: ONLY IN DATA WHEN SUBSETTING STATIONS
+  if (!is.null(args$stations_to_check)) {
+    testthat::expect_equal(unique(test_object$station_id), rlang::eval_tidy(args$stations_to_check))
   }
 }

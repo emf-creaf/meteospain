@@ -95,19 +95,20 @@
       precipitation = units::set_units(.data$precipitation, "L/m^2")
     ) %>%
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
-    sf::st_as_sf(crs = 4326) %>%
     # reorder variables to be consistent among all services
-    dplyr::relocate(
-      dplyr::contains('timestamp'),
-      dplyr::contains('station'),
-      dplyr::contains('altitude'),
-      dplyr::contains('temperature'),
-      dplyr::contains('humidity'),
-      dplyr::contains('precipitation'),
-      dplyr::contains('wind'),
-      dplyr::contains('sol'),
-      .data$geometry
-    )
+    relocate_vars() %>%
+    sf::st_as_sf(crs = 4326)
+    # dplyr::relocate(
+    #   dplyr::contains('timestamp'),
+    #   dplyr::contains('station'),
+    #   dplyr::contains('altitude'),
+    #   dplyr::contains('temperature'),
+    #   dplyr::contains('humidity'),
+    #   dplyr::contains('precipitation'),
+    #   dplyr::contains('wind'),
+    #   dplyr::contains('sol'),
+    #   .data$geometry
+    # )
 
   message(
     copyright_style("Meteoclimatic is a non-professional network of automatic meteorological stations.\n"),

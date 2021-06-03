@@ -467,20 +467,22 @@
     dplyr::left_join(stations_info, by = 'station_id') %>%
     # arrange data
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
-    # ensure we have an sf
-    sf::st_as_sf() %>%
     # reorder variables to be consistent among all services
-    dplyr::relocate(
-      dplyr::contains('timestamp'),
-      dplyr::contains('station'),
-      dplyr::contains('altitude'),
-      dplyr::contains('temperature'),
-      dplyr::contains('humidity'),
-      dplyr::contains('precipitation'),
-      dplyr::contains('wind'),
-      dplyr::contains('sol'),
-      .data$geometry
-    )
+    relocate_vars() %>%
+    # ensure we have an sf
+    sf::st_as_sf()
+    # dplyr::relocate(
+    #   dplyr::contains('timestamp'),
+    #   dplyr::contains('station'),
+    #   dplyr::contains('altitude'),
+    #   dplyr::contains('temperature'),
+    #   dplyr::contains('humidity'),
+    #   dplyr::contains('precipitation'),
+    #   dplyr::contains('direction'),
+    #   dplyr::contains('speed'),
+    #   dplyr::contains('sol'),
+    #   .data$geometry
+    # )
 
   # Check if any stations were returned -------------------------------------------------------------------
   if ((!is.null(api_options$stations)) & nrow(res) < 1) {

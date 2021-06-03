@@ -28,12 +28,7 @@ test_that("meteocat get info works", {
   api_options <- meteocat_options(api_key = keyring::key_get('meteocat'))
   test_object <- suppressMessages(get_stations_info_from('meteocat', api_options))
   expected_names <- c("station_id", "station_name", "station_province", "altitude", "geometry")
-
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
+  main_test_battery(test_object, expected_names = expected_names)
 })
 
 # meteocat get meteo tests ---------------------------------------------------------------------------
@@ -45,31 +40,21 @@ test_that("meteocat instant works", {
     "timestamp", "station_id", "station_name", "station_province", "altitude",
     "temperature",
     "relative_humidity", "precipitation",
-    "wind_speed", "wind_direction",
+    "wind_direction", "wind_speed",
     "global_solar_radiation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
-  expect_false(all(is.na(test_object$timestamp)))
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature
+  )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  # expect_equal(nrow(test_object), length(stations_to_check)) # one row with the latest measure by station
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteocat hourly works", {
@@ -82,31 +67,21 @@ test_that("meteocat hourly works", {
     "timestamp", "station_id", "station_name", "station_province", "altitude",
     "temperature",
     "relative_humidity", "precipitation",
-    "wind_speed", "wind_direction",
+    "wind_direction", "wind_speed",
     "global_solar_radiation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
-  expect_false(all(is.na(test_object$timestamp)))
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature
+  )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(nrow(test_object), length(stations_to_check)*48) # stations*48 measures (as measures are every 30 min)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$temperature, 'units')
-  expect_identical(units(test_object$temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteocat daily works", {
@@ -117,34 +92,24 @@ test_that("meteocat daily works", {
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", 'max_temperature', 'min_temperature',
-    "mean_relative_humidity", "max_relative_humidity", "min_relative_humidity",
+    "mean_temperature", "min_temperature", 'max_temperature',
+    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
     "precipitation",
-    "mean_wind_speed", "mean_wind_direction",
+    "mean_wind_direction", "mean_wind_speed",
     "global_solar_radiation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$mean_temperature, 'units')
-  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
-  expect_false(all(is.na(test_object$timestamp)))
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(nrow(test_object), length(stations_to_check)*30) # stations * 30 (one measure per day in April)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$mean_temperature, 'units')
-  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteocat monthly works", {
@@ -155,36 +120,28 @@ test_that("meteocat monthly works", {
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", 'max_temperature_absolute', 'min_temperature_absolute',
-    'max_temperature_mean', 'min_temperature_mean',
-    "mean_relative_humidity", "max_relative_humidity_absolute", "min_relative_humidity_absolute",
-    "max_relative_humidity_mean", "min_relative_humidity_mean",
+    "mean_temperature",
+    "min_temperature_absolute", "min_temperature_mean",
+    "max_temperature_absolute", "max_temperature_mean",
+    "mean_relative_humidity",
+    "min_relative_humidity_absolute", "min_relative_humidity_mean",
+    "max_relative_humidity_absolute", "max_relative_humidity_mean",
     "precipitation",
-    "mean_wind_speed", "mean_wind_direction",
+    "mean_wind_direction", "mean_wind_speed",
     "global_solar_radiation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$mean_temperature, 'units')
-  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
-  expect_false(all(is.na(test_object$timestamp)))
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(nrow(test_object), length(stations_to_check)*12) # stations * 12 (one measure per month in 2020)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$mean_temperature, 'units')
-  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteocat yearly works", {
@@ -195,35 +152,28 @@ test_that("meteocat yearly works", {
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
     "timestamp", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", 'max_temperature_absolute', 'min_temperature_absolute',
-    'max_temperature_mean', 'min_temperature_mean',
-    "mean_relative_humidity", "max_relative_humidity_absolute", "min_relative_humidity_absolute",
-    "max_relative_humidity_mean", "min_relative_humidity_mean",
+    "mean_temperature",
+    "min_temperature_absolute", "min_temperature_mean",
+    "max_temperature_absolute", "max_temperature_mean",
+    "mean_relative_humidity",
+    "min_relative_humidity_absolute", "min_relative_humidity_mean",
+    "max_relative_humidity_absolute", "max_relative_humidity_mean",
     "precipitation",
-    "mean_wind_speed", "mean_wind_direction",
+    "mean_wind_direction", "mean_wind_speed",
     "global_solar_radiation",
     "geometry"
   )
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$mean_temperature, 'units')
-  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
-  expect_false(all(is.na(test_object$timestamp)))
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature
+  )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
-  expect_s3_class(test_object, 'sf')
-  expect_true(nrow(test_object) > 1)
-  expect_equal(unique(test_object$station_id), stations_to_check)
-  expect_named(test_object, expected_names)
-  expect_s3_class(test_object$altitude, 'units')
-  expect_identical(units(test_object$altitude)$numerator, "m")
-  expect_s3_class(test_object$mean_temperature, 'units')
-  expect_identical(units(test_object$mean_temperature)$numerator, "°C")
+  main_test_battery(
+    test_object, expected_names = expected_names, temperature = mean_temperature,
+    stations_to_check = stations_to_check
+  )
 })
 
 test_that("meteocat API errors, messages, warnings are correctly raised", {

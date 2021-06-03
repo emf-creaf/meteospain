@@ -399,6 +399,7 @@
         ) %>%
         # units
         dplyr::mutate(
+          timestamp = lubridate::as_datetime(timestamp),
           altitude = units::set_units(.data$altitude, "m"),
           temperature = units::set_units(.data$temperature, "degree_C"),
           min_temperature = units::set_units(.data$min_temperature, "degree_C"),
@@ -425,6 +426,7 @@
         ) %>%
         # variables are characters, with "," as decimal point, so....
         dplyr::mutate(
+          timestamp = lubridate::as_datetime(timestamp),
           mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
           min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
           max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
@@ -460,20 +462,21 @@
     resolution_specific_carpentry() %>%
     # arrange data
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
-    # ensure we have an sf
-    sf::st_as_sf() %>%
     # reorder variables to be consistent among all services
-    dplyr::relocate(
-      dplyr::contains('timestamp'),
-      dplyr::contains('station'),
-      dplyr::contains('altitude'),
-      dplyr::contains('temperature'),
-      dplyr::contains('humidity'),
-      dplyr::contains('precipitation'),
-      dplyr::contains('wind'),
-      dplyr::contains('sol'),
-      .data$geometry
-    )
+    relocate_vars() %>%
+    # ensure we have an sf
+    sf::st_as_sf()
+    # dplyr::relocate(
+    #   dplyr::contains('timestamp'),
+    #   dplyr::contains('station'),
+    #   dplyr::contains('altitude'),
+    #   dplyr::contains('temperature'),
+    #   dplyr::contains('humidity'),
+    #   dplyr::contains('precipitation'),
+    #   dplyr::contains('wind'),
+    #   dplyr::contains('sol'),
+    #   .data$geometry
+    # )
 
 
   # Check if any stations were returned -------------------------------------------------------------------
