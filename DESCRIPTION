@@ -10,9 +10,14 @@ Authors@R:
              comment = c(ORCID = "0000-0002-0469-1991")),
       person(given = "Miquel",
              family = "de Caceres", 
-             role = c("aut"),
+             role = c("ctb"),
              email = "m.caceres@creaf.uab.cat",
-             comment = c(ORCID = "0000-0001-7132-2080"))
+             comment = c(ORCID = "0000-0001-7132-2080")),
+      person(given = "Aitor",
+             family = "Ameztegui", 
+             role = c("ctb"),
+             email = "aitor.ameztegui@udl.cat",
+             comment = c(ORCID = "0000-0003-2006-1559"))
     )
 Description: Access to different spanish metereological stations data services and APIs (AEMET, SMC, MG, 
   Meteoclimatic...).
