@@ -148,7 +148,7 @@ main_test_battery <- function(test_object, ...) {
   # units in temperature and timestamp: ONLY IN DATA, NOT STATIONS
   if (!is.null(args$temperature)) {
     testthat::expect_s3_class(rlang::eval_tidy(args$temperature, data = test_object), 'units')
-    testthat::expect_identical(units(rlang::eval_tidy(args$temperature, data = test_object))$numerator, "°C")
+    testthat::expect_identical(units(rlang::eval_tidy(args$temperature, data = test_object))$numerator, "\u00B0C")
     testthat::expect_s3_class(test_object$timestamp, 'POSIXct')
     testthat::expect_false(all(is.na(test_object$timestamp)))
   }

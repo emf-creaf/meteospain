@@ -399,7 +399,7 @@
         ) %>%
         # units
         dplyr::mutate(
-          timestamp = lubridate::as_datetime(timestamp),
+          timestamp = lubridate::as_datetime(.data$timestamp),
           altitude = units::set_units(.data$altitude, "m"),
           temperature = units::set_units(.data$temperature, "degree_C"),
           min_temperature = units::set_units(.data$min_temperature, "degree_C"),
@@ -426,7 +426,7 @@
         ) %>%
         # variables are characters, with "," as decimal point, so....
         dplyr::mutate(
-          timestamp = lubridate::as_datetime(timestamp),
+          timestamp = lubridate::as_datetime(.data$timestamp),
           mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
           min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
           max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
