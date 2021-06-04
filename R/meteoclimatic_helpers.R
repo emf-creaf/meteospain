@@ -32,6 +32,7 @@
   # station_info
   raw_station_info <- xml2::read_xml(path_resolution)
   res <- dplyr::tibble(
+    service = 'meteoclimatic',
     # station_id is special, we need obtain it from the link, so we need to remove all the link previous to the code
     station_id = substr(xml2::xml_text(xml2::xml_find_all(raw_station_info, '//item/link')), start = 37, stop = 100),
     # name, lat and long are elements in each node/item, so we extract them
@@ -76,6 +77,7 @@
     nodes %>%
     purrr::map_dfr(
       ~ dplyr::tibble(
+        service = 'meteoclimatic',
         timestamp = lubridate::parse_date_time(xml2::xml_text(xml2::xml_find_first(data_xml_body, paste0(.x, '/pubDate'))), orders = 'a, d b Y H:M:S z'),
         station_id = xml2::xml_text(xml2::xml_find_first(data_xml_body, paste0(.x, '/id'))),
         max_temperature = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/max')))),
@@ -85,7 +87,7 @@
         precipitation = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/rain/total'))))
       )
     ) %>%
-    dplyr::left_join(.get_info_meteoclimatic(api_options), by = 'station_id') %>%
+    dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) %>%
     dplyr::select(.data$timestamp, .data$station_id, .data$station_name, dplyr::everything()) %>%
     dplyr::mutate(
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),

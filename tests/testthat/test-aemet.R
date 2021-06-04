@@ -22,6 +22,15 @@ test_that("aemet service options works", {
 
 })
 
+# aemet get info tests ----------------------------------------------------------------------------------
+
+test_that("aemet get info works", {
+  api_options <- aemet_options(api_key = keyring::key_get('aemet'))
+  test_object <- suppressMessages(get_stations_info_from('aemet', api_options))
+  expected_names <- c("service", "station_id", "station_name", "altitude", "geometry")
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names)
+})
+
 # aemet get meteo tests ----------------------------------------------------------------------------------
 
 test_that("aemet current works", {
@@ -29,18 +38,18 @@ test_that("aemet current works", {
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "altitude",
+    "timestamp", "service", "station_id", "station_name", "altitude",
     "temperature", "min_temperature", "max_temperature",
     "relative_humidity", "precipitation",
     "wind_direction", "wind_speed", "geometry"
   )
-  main_test_battery(test_object, expected_names = expected_names, temperature = temperature)
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = temperature)
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   main_test_battery(
-    test_object,
+    test_object, service = 'aemet',
     expected_names = expected_names, stations_to_check = stations_to_check, temperature = temperature
   )
 })
@@ -54,17 +63,17 @@ test_that("aemet daily works", {
   )
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
     "precipitation", "mean_wind_speed", "insolation", "geometry"
   )
-  main_test_battery(test_object, expected_names = expected_names, temperature = mean_temperature)
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
   main_test_battery(
-    test_object,
+    test_object, service = 'aemet',
     expected_names = expected_names, stations_to_check = stations_to_check, temperature = mean_temperature
   )
   # all stations 2000's
@@ -74,7 +83,7 @@ test_that("aemet daily works", {
     api_key = keyring::key_get('aemet')
   )
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
-  main_test_battery(test_object, expected_names = expected_names, temperature = mean_temperature)
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # all stations 1990's
   api_options <- aemet_options(
     'daily',
@@ -82,7 +91,7 @@ test_that("aemet daily works", {
     api_key = keyring::key_get('aemet')
   )
   test_object <- suppressMessages(get_meteo_from('aemet', api_options))
-  main_test_battery(test_object, expected_names = expected_names, temperature = mean_temperature)
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
 })
 
 test_that("aemet API errors, messages, warnings are correctly raised", {
@@ -118,13 +127,4 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
   )
   api_options$resolution <- 'monthly'
   expect_error(get_meteo_from('aemet', api_options), "is not a valid temporal resolution")
-})
-
-# aemet get info tests ----------------------------------------------------------------------------------
-
-test_that("aemet get info works", {
-  api_options <- aemet_options(api_key = keyring::key_get('aemet'))
-  test_object <- suppressMessages(get_stations_info_from('aemet', api_options))
-  expected_names <- c("station_id", "station_name", "altitude", "geometry")
-  main_test_battery(test_object, expected_names = expected_names)
 })

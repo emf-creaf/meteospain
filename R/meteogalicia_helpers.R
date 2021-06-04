@@ -127,8 +127,9 @@
   # a data.frame with all the info. We work with that.
   response_content$listaEstacionsMeteo %>%
     dplyr::as_tibble() %>%
+    dplyr::mutate(service = 'meteogalicia') %>%
     dplyr::select(
-      station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
+      .data$service, station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
       .data$altitude, .data$lat, .data$lon
     ) %>%
     dplyr::mutate(
@@ -234,6 +235,7 @@
         ) %>%
         dplyr::mutate(
           timestamp = lubridate::as_datetime(.data$timestamp),
+          service = 'meteogalicia',
           station_id = as.character(.data$station_id),
           temperature = units::set_units(.data$temperature, "degree_C"),
           wind_direction = units::set_units(.data$wind_direction, "degree"),
@@ -269,6 +271,7 @@
         ) %>%
         dplyr::mutate(
           timestamp = lubridate::as_datetime(.data$timestamp),
+          service = 'meteogalicia',
           station_id = as.character(.data$station_id),
           temperature = units::set_units(.data$temperature, "degree_C"),
           min_temperature = units::set_units(.data$min_temperature, "degree_C"),
@@ -306,6 +309,7 @@
         ) %>%
         dplyr::mutate(
           timestamp = lubridate::as_datetime(.data$timestamp),
+          service = 'meteogalicia',
           station_id = as.character(.data$station_id),
           mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
           min_temperature = units::set_units(.data$min_temperature, "degree_C"),
@@ -342,6 +346,7 @@
         ) %>%
         dplyr::mutate(
           timestamp = lubridate::as_datetime(.data$timestamp),
+          service = 'meteogalicia',
           station_id = as.character(.data$station_id),
           mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
           min_temperature = units::set_units(.data$min_temperature, "degree_C"),
@@ -354,7 +359,7 @@
     }
   )
 
-  resolution_specific_joinvars <- c('station_id', 'station_name')
+  resolution_specific_joinvars <- c('service', 'station_id', 'station_name')
   if (api_options$resolution %in% c('daily', 'monthly')) {
     resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
   }

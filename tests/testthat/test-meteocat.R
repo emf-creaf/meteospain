@@ -27,8 +27,8 @@ test_that("meteocat service options works", {
 test_that("meteocat get info works", {
   api_options <- meteocat_options(api_key = keyring::key_get('meteocat'))
   test_object <- suppressMessages(get_stations_info_from('meteocat', api_options))
-  expected_names <- c("station_id", "station_name", "station_province", "altitude", "geometry")
-  main_test_battery(test_object, expected_names = expected_names)
+  expected_names <- c("service", "station_id", "station_name", "station_province", "altitude", "geometry")
+  main_test_battery(test_object, service = 'meteocat', expected_names = expected_names)
 })
 
 # meteocat get meteo tests ---------------------------------------------------------------------------
@@ -37,7 +37,7 @@ test_that("meteocat instant works", {
   api_options <- meteocat_options('instant', api_key = keyring::key_get('meteocat'))
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
     "relative_humidity", "precipitation",
     "wind_direction", "wind_speed",
@@ -45,14 +45,14 @@ test_that("meteocat instant works", {
     "geometry"
   )
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = temperature
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = temperature,
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
   )
 })
@@ -64,7 +64,7 @@ test_that("meteocat hourly works", {
   )
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
     "relative_humidity", "precipitation",
     "wind_direction", "wind_speed",
@@ -72,14 +72,14 @@ test_that("meteocat hourly works", {
     "geometry"
   )
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = temperature
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = temperature,
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
   )
 })
@@ -91,7 +91,7 @@ test_that("meteocat daily works", {
   )
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", 'max_temperature',
     "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
     "precipitation",
@@ -100,14 +100,14 @@ test_that("meteocat daily works", {
     "geometry"
   )
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = mean_temperature
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = mean_temperature,
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
   )
 })
@@ -119,7 +119,7 @@ test_that("meteocat monthly works", {
   )
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature",
     "min_temperature_absolute", "min_temperature_mean",
     "max_temperature_absolute", "max_temperature_mean",
@@ -132,14 +132,14 @@ test_that("meteocat monthly works", {
     "geometry"
   )
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = mean_temperature
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = mean_temperature,
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
   )
 })
@@ -151,7 +151,7 @@ test_that("meteocat yearly works", {
   )
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "station_province", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature",
     "min_temperature_absolute", "min_temperature_mean",
     "max_temperature_absolute", "max_temperature_mean",
@@ -164,14 +164,14 @@ test_that("meteocat yearly works", {
     "geometry"
   )
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = mean_temperature
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = mean_temperature,
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
   )
 })

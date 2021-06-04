@@ -73,7 +73,8 @@ Visually:
 current_day_barcelona %>%
   units::drop_units() %>%
   ggplot() +
-  geom_sf(aes(colour = max_temperature))
+  geom_sf(aes(colour = max_temperature)) +
+  scale_colour_viridis_c()
 
 current_day_barcelona %>%
   ggplot() +

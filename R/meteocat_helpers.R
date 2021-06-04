@@ -314,6 +314,8 @@
 
   response_content %>%
     dplyr::as_tibble() %>%
+    # add service name, to identify the data if joining with other services
+    dplyr::mutate(service = 'meteocat') %>%
     dplyr::select(
       !dplyr::any_of(c(
         'coordenades', 'municipi', 'comarca', 'provincia',
@@ -322,7 +324,7 @@
     ) %>%
     dplyr::bind_cols(coords_df, province_df) %>%
     dplyr::select(
-      station_id = .data$codi, station_name = .data$nom, .data$station_province,
+      .data$service, station_id = .data$codi, station_name = .data$nom, .data$station_province,
       altitude = .data$altitud, .data$longitud, .data$latitud
     ) %>%
     dplyr::mutate(
@@ -449,8 +451,9 @@
       -.data$variable_code,
       names_from = .data$variable_name, values_from = .data$valor
     ) %>%
-    # set date and units
+    # set service, date and units
     dplyr::mutate(
+      service = 'meteocat',
       timestamp = lubridate::parse_date_time(.data$timestamp, orders = c('ymdHMS', 'Ymz'), truncated = 5),
       dplyr::across(dplyr::contains('temperature'), ~ units::set_units(.x, 'degree_C')),
       dplyr::across(dplyr::contains('humidity'), ~ units::set_units(.x, '%')),
@@ -464,7 +467,7 @@
     # remove unwanted stations
     dplyr::filter(!! filter_expression) %>%
     # join stations_info
-    dplyr::left_join(stations_info, by = 'station_id') %>%
+    dplyr::left_join(stations_info, by = c('service', 'station_id')) %>%
     # arrange data
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
     # reorder variables to be consistent among all services

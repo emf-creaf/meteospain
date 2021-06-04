@@ -106,7 +106,8 @@ Visually:
 galicia_20200425 %>%
   units::drop_units() %>%
   ggplot() +
-  geom_sf(aes(colour = max_temperature))
+  geom_sf(aes(colour = max_temperature)) +
+  scale_colour_viridis_c()
 
 galicia_20200425 %>%
   ggplot() +

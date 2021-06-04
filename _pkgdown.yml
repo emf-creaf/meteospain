@@ -13,4 +13,4 @@ articles:
   desc: Vignettes aimed to describe possible workflows
   contents:
   - api_limits
-  - concordance
+  - compatibility

@@ -98,7 +98,8 @@ legal_note_style <- crayon::blue$bold$underline
 relocate_vars <- function(data) {
   data %>%
     dplyr::relocate(
-      dplyr::contains('timestamp'),
+      dplyr::matches('timestamp'),
+      dplyr::matches('service'),
       dplyr::contains('station'),
       dplyr::contains('altitude'),
       dplyr::starts_with('temperature'),
@@ -137,6 +138,8 @@ main_test_battery <- function(test_object, ...) {
   testthat::expect_true(nrow(test_object) > 0)
   # has expected names
   testthat::expect_named(test_object, rlang::eval_tidy(args$expected_names))
+  # has the correct service value
+  testthat::expect_identical(unique(test_object$service), rlang::eval_tidy(args$service))
 
   # conditional tests.
   # units in altitude ON ALL SERVICES EXCEPT FOR METEOCLIMATIC

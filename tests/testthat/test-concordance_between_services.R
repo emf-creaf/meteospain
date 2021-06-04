@@ -17,6 +17,7 @@ test_that("instant concordance exists", {
       sf::st_as_sf()
   )
   expect_s3_class(test_object, 'sf')
+  expect_identical(unique(test_object$service), c('meteocat', 'meteogalicia'))
 })
 
 test_that("current concordance exists", {
@@ -45,6 +46,7 @@ test_that("current concordance exists", {
   ) %>%
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
+  expect_identical(unique(test_object$service), c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia'))
 })
 
 test_that("daily concordance exists", {
@@ -71,6 +73,7 @@ test_that("daily concordance exists", {
   ) %>%
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
+  expect_identical(unique(test_object$service), c('aemet', 'meteocat', 'meteogalicia'))
 })
 
 test_that("monthly concordance exists", {
@@ -98,4 +101,5 @@ test_that("monthly concordance exists", {
   ) %>%
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
+  expect_identical(unique(test_object$service), c('meteocat', 'meteogalicia'))
 })

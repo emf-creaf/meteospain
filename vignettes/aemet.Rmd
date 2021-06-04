@@ -135,7 +135,8 @@ Visually:
 spain_20200425 %>%
   units::drop_units() %>%
   ggplot() +
-  geom_sf(aes(colour = mean_temperature))
+  geom_sf(aes(colour = mean_temperature)) +
+  scale_colour_viridis_c()
 
 spain_20200425 %>%
   ggplot() +

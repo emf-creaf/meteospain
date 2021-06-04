@@ -1,0 +1,108 @@
+---
+title: "Compatibility betweeen services"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Compatibility betweeen services}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(sf)
+library(purrr)
+library(dplyr)
+library(ggplot2)
+library(units)
+
+# provide keys for aemet and meteocat if not done already
+# keyring::key_set('aemet')
+# keyring::key_set('meteocat')
+```
+
+`meteospain` aims to return stations data in a compatible format between services. This means:
+
+  - Names of meteorological and metadata variables are standardized between services and temporal
+  resolutions.
+  - Units of numerical variables are standardized between services.
+  - Same output format for all services, an `sf` object.
+
+This ease combining data from different services. Let's see an example.
+
+### April 2020 daily data
+
+We are gonna download daily data for April, 2020 for all services providing this information, and combine
+them in one object:
+
+  > Don't forget to store the keys for AEMET and MeteoCat if not done already (see code above)
+
+```{r daily_april_2020, eval=NOT_CRAN}
+aemet_daily <- get_meteo_from(
+    'aemet', aemet_options(
+      'daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'),
+      api_key = keyring::key_get('aemet')
+    )
+)
+
+meteocat_daily <- get_meteo_from(
+  'meteocat',
+  meteocat_options('daily', start_date = as.Date('2020-04-01'), api_key = keyring::key_get('meteocat'))
+)
+
+meteogalicia_daily <- get_meteo_from(
+  'meteogalicia',
+  meteogalicia_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+)
+```
+
+Now we have all daily data for April, lets join them. We are gonna use the purrr package to do it in one
+pipe.  
+Here we convert the data to tibble before the join, that way we are not joining by the spatial data, but
+by timestamp and the stations metadata. After the join we convert back to `sf`.
+
+```{r join_step, eval=NOT_CRAN}
+april_2020_spain <- list(
+  dplyr::as_tibble(aemet_daily),
+  dplyr::as_tibble(meteocat_daily),
+  dplyr::as_tibble(meteogalicia_daily)
+) %>%
+  purrr::reduce(dplyr::full_join) %>%
+  sf::st_as_sf()
+
+april_2020_spain
+```
+
+We can visualize the data, only one day.  
+
+#### By service
+
+```{r plot_map, eval=NOT_CRAN, fig.height=5, fig.width=7, fig.align='center'}
+april_2020_spain %>%
+  dplyr::filter(lubridate::day(timestamp) == 25) %>%
+  units::drop_units() %>%
+  ggplot(aes(colour = service)) +
+  geom_sf() +
+  scale_colour_viridis_d()
+```
+
+#### By one variable
+
+```{r plot_map_2, eval=NOT_CRAN, fig.height=5, fig.width=7, fig.align='center'}
+april_2020_spain %>%
+  dplyr::filter(lubridate::day(timestamp) == 25) %>%
+  units::drop_units() %>%
+  ggplot(aes(colour = mean_temperature)) +
+  geom_sf() +
+  scale_colour_viridis_c()

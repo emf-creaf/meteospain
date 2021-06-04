@@ -251,8 +251,10 @@
   # We can finally take the station info data frame and do the necessary transformations
   stations_info_check$content %>%
     dplyr::as_tibble() %>%
+    # add service name, to identify the data if joining with other services
+    dplyr::mutate(service = 'aemet') %>%
     dplyr::select(
-      station_id = .data$indicativo, station_name = .data$nombre, altitude = .data$altitud,
+      .data$service, station_id = .data$indicativo, station_name = .data$nombre, altitude = .data$altitud,
       latitude = .data$latitud, longitude = .data$longitud
     ) %>%
     # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
@@ -399,6 +401,7 @@
         ) %>%
         # units
         dplyr::mutate(
+          service = 'aemet',
           timestamp = lubridate::as_datetime(.data$timestamp),
           altitude = units::set_units(.data$altitude, "m"),
           temperature = units::set_units(.data$temperature, "degree_C"),
@@ -426,6 +429,7 @@
         ) %>%
         # variables are characters, with "," as decimal point, so....
         dplyr::mutate(
+          service = 'aemet',
           timestamp = lubridate::as_datetime(.data$timestamp),
           mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
           min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
@@ -443,7 +447,7 @@
           # wind_direction = units::set_units(.data$wind_direction, degree),
           insolation = units::set_units(.data$insolation, "h")
         ) %>%
-        dplyr::left_join(stations_info, by = c('station_id', 'station_name'))
+        dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name'))
     }
   )
 

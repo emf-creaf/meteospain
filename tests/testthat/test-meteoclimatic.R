@@ -16,6 +16,17 @@ test_that("meteoclimatic options works", {
 
 })
 
+# meteoclimatic get info tests ----------------------------------------------------------------------------------
+
+test_that("meteoclimatic get info works", {
+  api_options <- meteoclimatic_options()
+  test_object <- suppressMessages(get_stations_info_from('meteoclimatic', api_options))
+  expected_names <- c("service", "station_id", "station_name", "geometry")
+  main_test_battery(
+    test_object, service = 'meteoclimatic', expected_names = expected_names, meteoclimatic = TRUE
+  )
+})
+
 # meteoclimatic get meteo tests --------------------------------------------------------------------------
 
 test_that("Meteoclimatic works as expected", {
@@ -23,11 +34,11 @@ test_that("Meteoclimatic works as expected", {
   api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "min_temperature", "max_temperature",
+    "timestamp", "service", "station_id", "station_name", "min_temperature", "max_temperature",
     "min_relative_humidity", "max_relative_humidity", "precipitation", "geometry"
   )
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = min_temperature,
+    test_object, service = 'meteoclimatic', expected_names = expected_names, temperature = min_temperature,
     meteoclimatic = TRUE
   )
   # one station
@@ -35,7 +46,7 @@ test_that("Meteoclimatic works as expected", {
   api_options$stations <- stations_to_check
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
   main_test_battery(
-    test_object, expected_names = expected_names, temperature = min_temperature,
+    test_object, service = 'meteoclimatic', expected_names = expected_names, temperature = min_temperature,
     stations_to_check = stations_to_check, meteoclimatic = TRUE
   )
 })
@@ -46,15 +57,4 @@ test_that("meteoclimatic errors, warnings and messages are correctly raised", {
   expect_message(get_meteo_from('meteoclimatic', api_options), 'non-professional')
   api_options$stations <- 'tururu'
   expect_error(get_meteo_from('meteoclimatic', api_options), 'not found in Meteoclimatic')
-})
-
-# meteoclimatic get info tests ----------------------------------------------------------------------------------
-
-test_that("meteoclimatic get info works", {
-  api_options <- meteoclimatic_options()
-  test_object <- suppressMessages(get_stations_info_from('meteoclimatic', api_options))
-  expected_names <- c("station_id", "station_name", "geometry")
-  main_test_battery(
-    test_object, expected_names = expected_names, meteoclimatic = TRUE
-  )
 })
