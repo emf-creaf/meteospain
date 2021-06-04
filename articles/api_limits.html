@@ -53,20 +53,27 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/aemet.html">AEMET service</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Services</li>
     <li>
-      <a href="../articles/api_limits.html">API limits and loops</a>
+      <a href="../articles/aemet.html">AEMET service</a>
     </li>
     <li>
       <a href="../articles/meteocat.html">MeteoCat service</a>
     </li>
     <li>
-      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
-      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
+      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Workflows</li>
+    <li>
+      <a href="../articles/api_limits.html">API limits and loops</a>
+    </li>
+    <li>
+      <a href="../articles/compatibility.html">Compatibility betweeen services</a>
     </li>
   </ul>
 </li>
@@ -154,27 +161,27 @@
 
 <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">res_1990_jan</span>, <span class="va">res_1990_feb</span><span class="op">)</span>
 <span class="va">res</span>
-<span class="co">#&gt; Simple feature collection with 7015 features and 11 fields</span>
+<span class="co">#&gt; Simple feature collection with 7015 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.532 ymin: 27.4908 xmax: 4.1256 ymax: 43.3401</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 7,015 x 12</span>
-<span class="co">#&gt;    timestamp  station_id station_name station_province altitude mean_temperature</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]             [°C]</span>
-<span class="co">#&gt;  1 1990-01-01 0002I      "VANDELLÒS … TARRAGONA              32             11.2</span>
-<span class="co">#&gt;  2 1990-01-01 0016A      "REUS AEROP… TARRAGONA              71              9.0</span>
-<span class="co">#&gt;  3 1990-01-01 0076       "BARCELONA … BARCELONA               4              9.2</span>
-<span class="co">#&gt;  4 1990-01-01 0200E      "BARCELONA,… BARCELONA             408              9.2</span>
-<span class="co">#&gt;  5 1990-01-01 0229I      "SABADELL A… BARCELONA             146              7.0</span>
-<span class="co">#&gt;  6 1990-01-01 0324A      "RIPOLL"     GIRONA                675              4.5</span>
-<span class="co">#&gt;  7 1990-01-01 0367       "GIRONA AER… GIRONA                143              7.0</span>
-<span class="co">#&gt;  8 1990-01-01 1014       "HONDARRIBI… GIPUZKOA                4             11.2</span>
-<span class="co">#&gt;  9 1990-01-01 1024E      "DONOSTIA/S… GIPUZKOA              251             10.8</span>
-<span class="co">#&gt; 10 1990-01-01 1082       "BILBAO AER… BIZKAIA                42              9.8</span>
-<span class="co">#&gt; # … with 7,005 more rows, and 6 more variables: min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 7,015 x 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS … TARRAGONA              32</span>
+<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROP… TARRAGONA              71</span>
+<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA … BARCELONA               4</span>
+<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA,… BARCELONA             408</span>
+<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL A… BARCELONA             146</span>
+<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"     GIRONA                675</span>
+<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AER… GIRONA                143</span>
+<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBI… GIPUZKOA                4</span>
+<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/S… GIPUZKOA              251</span>
+<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AER… BIZKAIA                42</span>
+<span class="co">#&gt; # … with 7,005 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>While for short periods this can be easily done, when needing long periods (years, decades), this can be tedious and prone to error (or at least involves a lot of <em>copy&amp;paste</em> and generate longer scripts).<br>
 To avoid this, we can use loops, both in a tidyverse way (<code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map</a></code>) or in a more classic approach (<code>for</code>). For both ways, the first thing to do is create the vectors of dates to retrieve:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -217,6 +224,7 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
       <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
     <span class="op">}</span>
   <span class="op">)</span>
+<span class="co">#&gt; API request limit reached, taking a cooldown of 60 seconds to reset.</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
@@ -231,27 +239,27 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 
 <span class="va">res_tidyverse</span>
-<span class="co">#&gt; Simple feature collection with 21553 features and 11 fields</span>
+<span class="co">#&gt; Simple feature collection with 21553 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.532 ymin: 27.4908 xmax: 4.1256 ymax: 43.3401</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 21,553 x 12</span>
-<span class="co">#&gt;    timestamp  station_id station_name station_province altitude mean_temperature</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]             [°C]</span>
-<span class="co">#&gt;  1 1990-01-01 0002I      "VANDELLÒS … TARRAGONA              32             11.2</span>
-<span class="co">#&gt;  2 1990-01-01 0016A      "REUS AEROP… TARRAGONA              71              9.0</span>
-<span class="co">#&gt;  3 1990-01-01 0076       "BARCELONA … BARCELONA               4              9.2</span>
-<span class="co">#&gt;  4 1990-01-01 0200E      "BARCELONA,… BARCELONA             408              9.2</span>
-<span class="co">#&gt;  5 1990-01-01 0229I      "SABADELL A… BARCELONA             146              7.0</span>
-<span class="co">#&gt;  6 1990-01-01 0324A      "RIPOLL"     GIRONA                675              4.5</span>
-<span class="co">#&gt;  7 1990-01-01 0367       "GIRONA AER… GIRONA                143              7.0</span>
-<span class="co">#&gt;  8 1990-01-01 1014       "HONDARRIBI… GIPUZKOA                4             11.2</span>
-<span class="co">#&gt;  9 1990-01-01 1024E      "DONOSTIA/S… GIPUZKOA              251             10.8</span>
-<span class="co">#&gt; 10 1990-01-01 1082       "BILBAO AER… BIZKAIA                42              9.8</span>
-<span class="co">#&gt; # … with 21,543 more rows, and 6 more variables: min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 21,553 x 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS … TARRAGONA              32</span>
+<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROP… TARRAGONA              71</span>
+<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA … BARCELONA               4</span>
+<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA,… BARCELONA             408</span>
+<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL A… BARCELONA             146</span>
+<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"     GIRONA                675</span>
+<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AER… GIRONA                143</span>
+<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBI… GIPUZKOA                4</span>
+<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/S… GIPUZKOA              251</span>
+<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AER… BIZKAIA                42</span>
+<span class="co">#&gt; # … with 21,543 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 </div>
 <div id="for-loop" class="section level3">
 <h3 class="hasAnchor">
@@ -280,7 +288,6 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; Client error: (429) Too Many Requests (RFC 6585)API request limit reached, taking a cooldown of 60 seconds to reset.</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
@@ -289,27 +296,27 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 
 <span class="va">res_for</span>
-<span class="co">#&gt; Simple feature collection with 21553 features and 11 fields</span>
+<span class="co">#&gt; Simple feature collection with 21553 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.532 ymin: 27.4908 xmax: 4.1256 ymax: 43.3401</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 21,553 x 12</span>
-<span class="co">#&gt;    timestamp  station_id station_name station_province altitude mean_temperature</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]             [°C]</span>
-<span class="co">#&gt;  1 1990-01-01 0002I      "VANDELLÒS … TARRAGONA              32             11.2</span>
-<span class="co">#&gt;  2 1990-01-01 0016A      "REUS AEROP… TARRAGONA              71              9.0</span>
-<span class="co">#&gt;  3 1990-01-01 0076       "BARCELONA … BARCELONA               4              9.2</span>
-<span class="co">#&gt;  4 1990-01-01 0200E      "BARCELONA,… BARCELONA             408              9.2</span>
-<span class="co">#&gt;  5 1990-01-01 0229I      "SABADELL A… BARCELONA             146              7.0</span>
-<span class="co">#&gt;  6 1990-01-01 0324A      "RIPOLL"     GIRONA                675              4.5</span>
-<span class="co">#&gt;  7 1990-01-01 0367       "GIRONA AER… GIRONA                143              7.0</span>
-<span class="co">#&gt;  8 1990-01-01 1014       "HONDARRIBI… GIPUZKOA                4             11.2</span>
-<span class="co">#&gt;  9 1990-01-01 1024E      "DONOSTIA/S… GIPUZKOA              251             10.8</span>
-<span class="co">#&gt; 10 1990-01-01 1082       "BILBAO AER… BIZKAIA                42              9.8</span>
-<span class="co">#&gt; # … with 21,543 more rows, and 6 more variables: min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 21,553 x 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS … TARRAGONA              32</span>
+<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROP… TARRAGONA              71</span>
+<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA … BARCELONA               4</span>
+<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA,… BARCELONA             408</span>
+<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL A… BARCELONA             146</span>
+<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"     GIRONA                675</span>
+<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AER… GIRONA                143</span>
+<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBI… GIPUZKOA                4</span>
+<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/S… GIPUZKOA              251</span>
+<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AER… BIZKAIA                42</span>
+<span class="co">#&gt; # … with 21,543 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Both methods return identical results:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># both are identical</span>
@@ -374,28 +381,28 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">meteocat_2020q1_tidyverse</span>
-<span class="co">#&gt; Simple feature collection with 22748 features and 15 fields (with 121 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 22748 features and 16 fields (with 121 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 22,748 x 16</span>
-<span class="co">#&gt;    timestamp           station_id station_name         station_province altitude</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-01-01 00:00:00 C6         Castellnou de Seana  Lleida              264.0</span>
-<span class="co">#&gt;  2 2020-01-01 00:00:00 C7         Tàrrega              Lleida              427.0</span>
-<span class="co">#&gt;  3 2020-01-01 00:00:00 C8         Cervera              Lleida              554.0</span>
-<span class="co">#&gt;  4 2020-01-01 00:00:00 C9         Mas de Barberans     Tarragona           240.0</span>
-<span class="co">#&gt;  5 2020-01-01 00:00:00 CC         Orís                 Barcelona           626.0</span>
-<span class="co">#&gt;  6 2020-01-01 00:00:00 CD         la Seu d'Urgell - B… Lleida              849.0</span>
-<span class="co">#&gt;  7 2020-01-01 00:00:00 CE         els Hostalets de Pi… Barcelona           316.0</span>
-<span class="co">#&gt;  8 2020-01-01 00:00:00 CG         Molló - Fabert       Girona             1405.0</span>
-<span class="co">#&gt;  9 2020-01-01 00:00:00 CI         Sant Pau de Segúries Girona              852.0</span>
-<span class="co">#&gt; 10 2020-01-01 00:00:00 CJ         Organyà              Lleida              566.5</span>
+<span class="co">#&gt; # A tibble: 22,748 x 17</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-01-01 00:00:00 meteoc… C6         Castellnou … Lleida              264.0</span>
+<span class="co">#&gt;  2 2020-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida              427.0</span>
+<span class="co">#&gt;  3 2020-01-01 00:00:00 meteoc… C8         Cervera      Lleida              554.0</span>
+<span class="co">#&gt;  4 2020-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona           240.0</span>
+<span class="co">#&gt;  5 2020-01-01 00:00:00 meteoc… CC         Orís         Barcelona           626.0</span>
+<span class="co">#&gt;  6 2020-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida              849.0</span>
+<span class="co">#&gt;  7 2020-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona           316.0</span>
+<span class="co">#&gt;  8 2020-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona             1405.0</span>
+<span class="co">#&gt;  9 2020-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona              852.0</span>
+<span class="co">#&gt; 10 2020-01-01 00:00:00 meteoc… CJ         Organyà      Lleida              566.5</span>
 <span class="co">#&gt; # … with 22,738 more rows, and 11 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], min_temperature [°C], mean_relative_humidity [%],</span>
-<span class="co">#&gt; #   max_relative_humidity [%], min_relative_humidity [%],</span>
-<span class="co">#&gt; #   precipitation [L/m^2], mean_wind_speed [m/s], mean_wind_direction [°],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], mean_relative_humidity [%],</span>
+<span class="co">#&gt; #   min_relative_humidity [%], max_relative_humidity [%],</span>
+<span class="co">#&gt; #   precipitation [L/m^2], mean_wind_direction [°], mean_wind_speed [m/s],</span>
 <span class="co">#&gt; #   global_solar_radiation [MJ/m^2], geometry &lt;POINT [°]&gt;</span>
 
 <span class="co"># base for loop</span>
@@ -422,28 +429,28 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">meteocat_2020q1_for</span>
-<span class="co">#&gt; Simple feature collection with 22748 features and 15 fields (with 121 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 22748 features and 16 fields (with 121 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 22,748 x 16</span>
-<span class="co">#&gt;    timestamp           station_id station_name         station_province altitude</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-01-01 00:00:00 C6         Castellnou de Seana  Lleida              264.0</span>
-<span class="co">#&gt;  2 2020-01-01 00:00:00 C7         Tàrrega              Lleida              427.0</span>
-<span class="co">#&gt;  3 2020-01-01 00:00:00 C8         Cervera              Lleida              554.0</span>
-<span class="co">#&gt;  4 2020-01-01 00:00:00 C9         Mas de Barberans     Tarragona           240.0</span>
-<span class="co">#&gt;  5 2020-01-01 00:00:00 CC         Orís                 Barcelona           626.0</span>
-<span class="co">#&gt;  6 2020-01-01 00:00:00 CD         la Seu d'Urgell - B… Lleida              849.0</span>
-<span class="co">#&gt;  7 2020-01-01 00:00:00 CE         els Hostalets de Pi… Barcelona           316.0</span>
-<span class="co">#&gt;  8 2020-01-01 00:00:00 CG         Molló - Fabert       Girona             1405.0</span>
-<span class="co">#&gt;  9 2020-01-01 00:00:00 CI         Sant Pau de Segúries Girona              852.0</span>
-<span class="co">#&gt; 10 2020-01-01 00:00:00 CJ         Organyà              Lleida              566.5</span>
+<span class="co">#&gt; # A tibble: 22,748 x 17</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-01-01 00:00:00 meteoc… C6         Castellnou … Lleida              264.0</span>
+<span class="co">#&gt;  2 2020-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida              427.0</span>
+<span class="co">#&gt;  3 2020-01-01 00:00:00 meteoc… C8         Cervera      Lleida              554.0</span>
+<span class="co">#&gt;  4 2020-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona           240.0</span>
+<span class="co">#&gt;  5 2020-01-01 00:00:00 meteoc… CC         Orís         Barcelona           626.0</span>
+<span class="co">#&gt;  6 2020-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida              849.0</span>
+<span class="co">#&gt;  7 2020-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona           316.0</span>
+<span class="co">#&gt;  8 2020-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona             1405.0</span>
+<span class="co">#&gt;  9 2020-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona              852.0</span>
+<span class="co">#&gt; 10 2020-01-01 00:00:00 meteoc… CJ         Organyà      Lleida              566.5</span>
 <span class="co">#&gt; # … with 22,738 more rows, and 11 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], min_temperature [°C], mean_relative_humidity [%],</span>
-<span class="co">#&gt; #   max_relative_humidity [%], min_relative_humidity [%],</span>
-<span class="co">#&gt; #   precipitation [L/m^2], mean_wind_speed [m/s], mean_wind_direction [°],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], mean_relative_humidity [%],</span>
+<span class="co">#&gt; #   min_relative_humidity [%], max_relative_humidity [%],</span>
+<span class="co">#&gt; #   precipitation [L/m^2], mean_wind_direction [°], mean_wind_speed [m/s],</span>
 <span class="co">#&gt; #   global_solar_radiation [MJ/m^2], geometry &lt;POINT [°]&gt;</span>
 
 <span class="co"># both are identical</span>
@@ -491,31 +498,31 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">meteocat_2019_20_tidyverse</span>
-<span class="co">#&gt; Simple feature collection with 4521 features and 19 fields (with 33 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 4521 features and 20 fields (with 33 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 4,521 x 20</span>
-<span class="co">#&gt;    timestamp           station_id station_name         station_province altitude</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2019-01-01 00:00:00 C6         Castellnou de Seana  Lleida              264.0</span>
-<span class="co">#&gt;  2 2019-01-01 00:00:00 C7         Tàrrega              Lleida              427.0</span>
-<span class="co">#&gt;  3 2019-01-01 00:00:00 C8         Cervera              Lleida              554.0</span>
-<span class="co">#&gt;  4 2019-01-01 00:00:00 C9         Mas de Barberans     Tarragona           240.0</span>
-<span class="co">#&gt;  5 2019-01-01 00:00:00 CC         Orís                 Barcelona           626.0</span>
-<span class="co">#&gt;  6 2019-01-01 00:00:00 CD         la Seu d'Urgell - B… Lleida              849.0</span>
-<span class="co">#&gt;  7 2019-01-01 00:00:00 CE         els Hostalets de Pi… Barcelona           316.0</span>
-<span class="co">#&gt;  8 2019-01-01 00:00:00 CG         Molló - Fabert       Girona             1405.0</span>
-<span class="co">#&gt;  9 2019-01-01 00:00:00 CI         Sant Pau de Segúries Girona              852.0</span>
-<span class="co">#&gt; 10 2019-01-01 00:00:00 CJ         Organyà              Lleida              566.5</span>
+<span class="co">#&gt; # A tibble: 4,521 x 21</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2019-01-01 00:00:00 meteoc… C6         Castellnou … Lleida              264.0</span>
+<span class="co">#&gt;  2 2019-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida              427.0</span>
+<span class="co">#&gt;  3 2019-01-01 00:00:00 meteoc… C8         Cervera      Lleida              554.0</span>
+<span class="co">#&gt;  4 2019-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona           240.0</span>
+<span class="co">#&gt;  5 2019-01-01 00:00:00 meteoc… CC         Orís         Barcelona           626.0</span>
+<span class="co">#&gt;  6 2019-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida              849.0</span>
+<span class="co">#&gt;  7 2019-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona           316.0</span>
+<span class="co">#&gt;  8 2019-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona             1405.0</span>
+<span class="co">#&gt;  9 2019-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona              852.0</span>
+<span class="co">#&gt; 10 2019-01-01 00:00:00 meteoc… CJ         Organyà      Lleida              566.5</span>
 <span class="co">#&gt; # … with 4,511 more rows, and 15 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature_absolute [°C], min_temperature_absolute [°C],</span>
-<span class="co">#&gt; #   max_temperature_mean [°C], min_temperature_mean [°C],</span>
-<span class="co">#&gt; #   mean_relative_humidity [%], max_relative_humidity_absolute [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_absolute [%], max_relative_humidity_mean [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_mean [%], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_speed [m/s], mean_wind_direction [°],</span>
+<span class="co">#&gt; #   min_temperature_absolute [°C], min_temperature_mean [°C],</span>
+<span class="co">#&gt; #   max_temperature_absolute [°C], max_temperature_mean [°C],</span>
+<span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity_absolute [%],</span>
+<span class="co">#&gt; #   min_relative_humidity_mean [%], max_relative_humidity_absolute [%],</span>
+<span class="co">#&gt; #   max_relative_humidity_mean [%], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_direction [°], mean_wind_speed [m/s],</span>
 <span class="co">#&gt; #   global_solar_radiation [MJ/m^2], geometry &lt;POINT [°]&gt;</span>
 
 <span class="co"># base for loop</span>
@@ -538,31 +545,31 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">meteocat_2019_20_for</span>
-<span class="co">#&gt; Simple feature collection with 4521 features and 19 fields (with 33 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 4521 features and 20 fields (with 33 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 4,521 x 20</span>
-<span class="co">#&gt;    timestamp           station_id station_name         station_province altitude</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2019-01-01 00:00:00 C6         Castellnou de Seana  Lleida              264.0</span>
-<span class="co">#&gt;  2 2019-01-01 00:00:00 C7         Tàrrega              Lleida              427.0</span>
-<span class="co">#&gt;  3 2019-01-01 00:00:00 C8         Cervera              Lleida              554.0</span>
-<span class="co">#&gt;  4 2019-01-01 00:00:00 C9         Mas de Barberans     Tarragona           240.0</span>
-<span class="co">#&gt;  5 2019-01-01 00:00:00 CC         Orís                 Barcelona           626.0</span>
-<span class="co">#&gt;  6 2019-01-01 00:00:00 CD         la Seu d'Urgell - B… Lleida              849.0</span>
-<span class="co">#&gt;  7 2019-01-01 00:00:00 CE         els Hostalets de Pi… Barcelona           316.0</span>
-<span class="co">#&gt;  8 2019-01-01 00:00:00 CG         Molló - Fabert       Girona             1405.0</span>
-<span class="co">#&gt;  9 2019-01-01 00:00:00 CI         Sant Pau de Segúries Girona              852.0</span>
-<span class="co">#&gt; 10 2019-01-01 00:00:00 CJ         Organyà              Lleida              566.5</span>
+<span class="co">#&gt; # A tibble: 4,521 x 21</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2019-01-01 00:00:00 meteoc… C6         Castellnou … Lleida              264.0</span>
+<span class="co">#&gt;  2 2019-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida              427.0</span>
+<span class="co">#&gt;  3 2019-01-01 00:00:00 meteoc… C8         Cervera      Lleida              554.0</span>
+<span class="co">#&gt;  4 2019-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona           240.0</span>
+<span class="co">#&gt;  5 2019-01-01 00:00:00 meteoc… CC         Orís         Barcelona           626.0</span>
+<span class="co">#&gt;  6 2019-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida              849.0</span>
+<span class="co">#&gt;  7 2019-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona           316.0</span>
+<span class="co">#&gt;  8 2019-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona             1405.0</span>
+<span class="co">#&gt;  9 2019-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona              852.0</span>
+<span class="co">#&gt; 10 2019-01-01 00:00:00 meteoc… CJ         Organyà      Lleida              566.5</span>
 <span class="co">#&gt; # … with 4,511 more rows, and 15 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature_absolute [°C], min_temperature_absolute [°C],</span>
-<span class="co">#&gt; #   max_temperature_mean [°C], min_temperature_mean [°C],</span>
-<span class="co">#&gt; #   mean_relative_humidity [%], max_relative_humidity_absolute [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_absolute [%], max_relative_humidity_mean [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_mean [%], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_speed [m/s], mean_wind_direction [°],</span>
+<span class="co">#&gt; #   min_temperature_absolute [°C], min_temperature_mean [°C],</span>
+<span class="co">#&gt; #   max_temperature_absolute [°C], max_temperature_mean [°C],</span>
+<span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity_absolute [%],</span>
+<span class="co">#&gt; #   min_relative_humidity_mean [%], max_relative_humidity_absolute [%],</span>
+<span class="co">#&gt; #   max_relative_humidity_mean [%], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_direction [°], mean_wind_speed [m/s],</span>
 <span class="co">#&gt; #   global_solar_radiation [MJ/m^2], geometry &lt;POINT [°]&gt;</span>
 
 <span class="co"># both are identical</span>
@@ -583,10 +590,10 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "2008-06-02 UTC" "2009-06-02 UTC" "2010-06-02 UTC" "2011-06-02 UTC"</span>
-<span class="co">#&gt;  [5] "2012-06-02 UTC" "2013-06-02 UTC" "2014-06-02 UTC" "2015-06-02 UTC"</span>
-<span class="co">#&gt;  [9] "2016-06-02 UTC" "2017-06-02 UTC" "2018-06-02 UTC" "2019-06-02 UTC"</span>
-<span class="co">#&gt; [13] "2020-06-02 UTC"</span></code></pre></div>
+<span class="co">#&gt;  [1] "2008-06-04 UTC" "2009-06-04 UTC" "2010-06-04 UTC" "2011-06-04 UTC"</span>
+<span class="co">#&gt;  [5] "2012-06-04 UTC" "2013-06-04 UTC" "2014-06-04 UTC" "2015-06-04 UTC"</span>
+<span class="co">#&gt;  [9] "2016-06-04 UTC" "2017-06-04 UTC" "2018-06-04 UTC" "2019-06-04 UTC"</span>
+<span class="co">#&gt; [13] "2020-06-04 UTC"</span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so there is no need of loops.</p>
 </div>
 </div>
@@ -603,7 +610,7 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 
 
       <footer><div class="copyright">
-  <p>Developed by Victor Granda, Miquel de Caceres.</p>
+  <p>Developed by Victor Granda.</p>
 </div>
 
 <div class="pkgdown">

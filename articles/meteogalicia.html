@@ -53,20 +53,27 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/aemet.html">AEMET service</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Services</li>
     <li>
-      <a href="../articles/api_limits.html">API limits and loops</a>
+      <a href="../articles/aemet.html">AEMET service</a>
     </li>
     <li>
       <a href="../articles/meteocat.html">MeteoCat service</a>
     </li>
     <li>
-      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
-      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
+      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Workflows</li>
+    <li>
+      <a href="../articles/api_limits.html">API limits and loops</a>
+    </li>
+    <li>
+      <a href="../articles/compatibility.html">Compatibility betweeen services</a>
     </li>
   </ul>
 </li>
@@ -145,10 +152,10 @@
 <span class="co">#&gt; [1] "instant"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2021-06-02"</span>
+<span class="co">#&gt; [1] "2021-06-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2021-06-02"</span>
+<span class="co">#&gt; [1] "2021-06-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; NULL</span>
@@ -163,10 +170,10 @@
 <span class="co">#&gt; [1] "current_day"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2021-06-02"</span>
+<span class="co">#&gt; [1] "2021-06-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2021-06-02"</span>
+<span class="co">#&gt; [1] "2021-06-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; [1] "10157" "14000" "10045"</span>
@@ -215,25 +222,25 @@
 <p>Accessing station metadata for MeteoGalicia is simple:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 156 features and 4 fields</span>
+<span class="co">#&gt; Simple feature collection with 155 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 156 x 5</span>
-<span class="co">#&gt;    station_id station_name     station_province altitude                geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;                 [m]             &lt;POINT [°]&gt;</span>
-<span class="co">#&gt;  1 10157      Coruña-Torre de… A Coruña               21    (-8.409202 43.38276)</span>
-<span class="co">#&gt;  2 14000      Coruña-Dique     A Coruña                5    (-8.374706 43.36506)</span>
-<span class="co">#&gt;  3 10045      Mabegondo        A Coruña               94    (-8.262225 43.24137)</span>
-<span class="co">#&gt;  4 14003      Punta Langostei… A Coruña                5    (-8.531179 43.34723)</span>
-<span class="co">#&gt;  5 10144      Arzúa            A Coruña              362     (-8.17469 42.93196)</span>
-<span class="co">#&gt;  6 19005      Guísamo          A Coruña              175    (-8.276487 43.30799)</span>
-<span class="co">#&gt;  7 19012      Cespón           A Coruña               59    (-8.854571 42.67466)</span>
-<span class="co">#&gt;  8 10095      Sergude          A Coruña              231    (-8.461246 42.82283)</span>
-<span class="co">#&gt;  9 10800      Camariñas        A Coruña                5    (-9.178318 43.12445)</span>
-<span class="co">#&gt; 10 19001      Rus              A Coruña              134    (-8.685357 43.15616)</span>
-<span class="co">#&gt; # … with 146 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 155 x 6</span>
+<span class="co">#&gt;    service      station_id station_name             station_province altitude</span>
+<span class="co">#&gt;  * &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                    &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 meteogalicia 10157      Coruña-Torre de Hércules A Coruña               21</span>
+<span class="co">#&gt;  2 meteogalicia 14000      Coruña-Dique             A Coruña                5</span>
+<span class="co">#&gt;  3 meteogalicia 10045      Mabegondo                A Coruña               94</span>
+<span class="co">#&gt;  4 meteogalicia 14003      Punta Langosteira        A Coruña                5</span>
+<span class="co">#&gt;  5 meteogalicia 10144      Arzúa                    A Coruña              362</span>
+<span class="co">#&gt;  6 meteogalicia 19005      Guísamo                  A Coruña              175</span>
+<span class="co">#&gt;  7 meteogalicia 19012      Cespón                   A Coruña               59</span>
+<span class="co">#&gt;  8 meteogalicia 10095      Sergude                  A Coruña              231</span>
+<span class="co">#&gt;  9 meteogalicia 10800      Camariñas                A Coruña                5</span>
+<span class="co">#&gt; 10 meteogalicia 19001      Rus                      A Coruña              134</span>
+<span class="co">#&gt; # … with 145 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
 </div>
 <div id="meteogalicia-data" class="section level2">
 <h2 class="hasAnchor">
@@ -250,34 +257,36 @@
 <span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span>
 <span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span>
 <span class="va">galicia_20200425</span>
-<span class="co">#&gt; Simple feature collection with 160 features and 15 fields (with 7 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 160 features and 16 fields (with 7 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 160 x 16</span>
-<span class="co">#&gt;    timestamp  station_id station_name     station_province altitude temperature</span>
-<span class="co">#&gt;    &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;                 [m]        [°C]</span>
-<span class="co">#&gt;  1 2020-04-25 10045      Mabegondo        A Coruña               94       14.32</span>
-<span class="co">#&gt;  2 2020-04-25 10046      Marco da Curra   A Coruña              651       11.04</span>
-<span class="co">#&gt;  3 2020-04-25 10047      Pedro Murias     Lugo                   51       14.64</span>
-<span class="co">#&gt;  4 2020-04-25 10048      O Invernadeiro   Ourense              1026       11.94</span>
-<span class="co">#&gt;  5 2020-04-25 10049      Corrubedo        A Coruña               30       14.47</span>
-<span class="co">#&gt;  6 2020-04-25 10050      CIS Ferrol       A Coruña               37       14.98</span>
-<span class="co">#&gt;  7 2020-04-25 10052      Muralla          A Coruña              661       10.68</span>
-<span class="co">#&gt;  8 2020-04-25 10053      Campus Lugo      Lugo                  400       14.01</span>
-<span class="co">#&gt;  9 2020-04-25 10055      Guitiriz-Mirador Lugo                  684       11.08</span>
-<span class="co">#&gt; 10 2020-04-25 10056      Marroxo          Lugo                  645       12.74</span>
-<span class="co">#&gt; # … with 150 more rows, and 10 more variables: min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], relative_humidity [%], min_relative_humidity [%],</span>
-<span class="co">#&gt; #   max_relative_humidity [%], precipitation [L/m^2], wind_direction [°],</span>
-<span class="co">#&gt; #   wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 160 x 17</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-04-25 00:00:00 meteog… 10045      Mabegondo    A Coruña               94</span>
+<span class="co">#&gt;  2 2020-04-25 00:00:00 meteog… 10046      Marco da Cu… A Coruña              651</span>
+<span class="co">#&gt;  3 2020-04-25 00:00:00 meteog… 10047      Pedro Murias Lugo                   51</span>
+<span class="co">#&gt;  4 2020-04-25 00:00:00 meteog… 10048      O Invernade… Ourense              1026</span>
+<span class="co">#&gt;  5 2020-04-25 00:00:00 meteog… 10049      Corrubedo    A Coruña               30</span>
+<span class="co">#&gt;  6 2020-04-25 00:00:00 meteog… 10050      CIS Ferrol   A Coruña               37</span>
+<span class="co">#&gt;  7 2020-04-25 00:00:00 meteog… 10052      Muralla      A Coruña              661</span>
+<span class="co">#&gt;  8 2020-04-25 00:00:00 meteog… 10053      Campus Lugo  Lugo                  400</span>
+<span class="co">#&gt;  9 2020-04-25 00:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684</span>
+<span class="co">#&gt; 10 2020-04-25 00:00:00 meteog… 10056      Marroxo      Lugo                  645</span>
+<span class="co">#&gt; # … with 150 more rows, and 11 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], mean_relative_humidity [%],</span>
+<span class="co">#&gt; #   min_relative_humidity [%], max_relative_humidity [%],</span>
+<span class="co">#&gt; #   precipitation [L/m^2], mean_wind_direction [°], mean_wind_speed [m/s],</span>
+<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">galicia_20200425</span> <span class="op">%&gt;%</span>
   <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">max_temperature</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">max_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="meteogalicia_files/figure-html/meteogalicia_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -301,7 +310,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Victor Granda, Miquel de Caceres.</p>
+  <p>Developed by Victor Granda.</p>
 </div>
 
 <div class="pkgdown">

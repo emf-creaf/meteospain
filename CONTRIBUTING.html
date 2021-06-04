@@ -93,20 +93,27 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Services</li>
     <li>
       <a href="articles/aemet.html">AEMET service</a>
-    </li>
-    <li>
-      <a href="articles/api_limits.html">API limits and loops</a>
     </li>
     <li>
       <a href="articles/meteocat.html">MeteoCat service</a>
     </li>
     <li>
-      <a href="articles/meteoclimatic.html">Meteoclimatic service</a>
+      <a href="articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
-      <a href="articles/meteogalicia.html">MeteoGalicia service</a>
+      <a href="articles/meteoclimatic.html">Meteoclimatic service</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Workflows</li>
+    <li>
+      <a href="articles/api_limits.html">API limits and loops</a>
+    </li>
+    <li>
+      <a href="articles/compatibility.html">Compatibility betweeen services</a>
     </li>
   </ul>
 </li>
@@ -170,6 +177,56 @@
 <p>Any interaction with a meteorological API must be done with <code>httr</code> and/or <code>jsonlite</code> and/or <code>xml2</code>, as they are already dependencies of <code>meteospain</code>. See DESCRIPTION file for a list of available dependencies.</p>
 </div>
 </div>
+<div id="service-code-guide" class="section level2">
+<h2 class="hasAnchor">
+<a href="#service-code-guide" class="anchor"></a>Service code guide</h2>
+<p>When adding a new service to <code>meteospain</code>, there are some conventions to follow:</p>
+<div id="helpers" class="section level3">
+<h3 class="hasAnchor">
+<a href="#helpers" class="anchor"></a>Helpers</h3>
+<p>Each service has an R file associated, <code>[service_name]_helpers.R</code>. In this file we will put all helpers needed to access the service API:</p>
+<ul>
+<li><p><code>.create_[service]_path(api_options)</code>: to build the vector with the path, usually depending on the temporal resolution.</p></li>
+<li><p><code>.create_[service]_query(api_options)</code>: some APIs need the parameters supplied as queries.</p></li>
+<li><p><code>.check_status_[service](api_options)</code>: logic to check the response statuses (200, 429, 500…).</p></li>
+<li><p><code>.get_info_[service](api_options)</code>: Access, transform and return the stations info and metadata.</p></li>
+<li><p><code>.get_data_[service](api_options)</code>: Access, transform and return the data based on the api options provided (temporal resolution, stations…). This function will use the <code>.create_*</code> and <code>.check_status_[service]</code> helpers.</p></li>
+</ul>
+<p>Data must be transformed to sf, adding the stations metadata. Numerical data must be converted to units and variables names standardized among all services.</p>
+</div>
+<div id="options" class="section level3">
+<h3 class="hasAnchor">
+<a href="#options" class="anchor"></a>Options</h3>
+<p>Each service must have a dedicated function to create the API options, <code>[service]_options</code>. This function will control which parameters are needed:</p>
+<ul>
+<li>
+<code>resolution</code>: Temporal resolution for the data (hourly, daily…), used to build paths, queries…</li>
+<li>
+<code>start_date</code>: Starting date for the desired data, used to build paths, queries…. If the API only accepts one date (see MeteoCat for example), use this one.</li>
+<li>
+<code>end_date</code>: End date for the desired data, used to build paths, queries…. If the API only accepts one date, this argument is not necessary.</li>
+<li>
+<code>stations</code>: Character vector with stations IDs to use in paths or queries before retrieving the data or filters after.</li>
+</ul>
+<blockquote>
+<p>NOTE: When the API only accepts one station when querying by stations, but there is a path to obtain all stations, this one must be used and the desired stations filtered afterwards. This way we reduce the calls to the API, as we dont need to create a loop to return every station in <code>stations</code> argument. If no path exists for getting data from all stations, then a loop should be used.</p>
+</blockquote>
+<ul>
+<li>
+<code>api_key</code>: If the API needs a key, add this argument for the user to supply the key.</li>
+</ul>
+<blockquote>
+<p>NOTE: <code>meteospain</code> does not store or encrypt in any way the supplied key. Is the user responsability to manage their keys. We recommend the keyring package for this in all docs and functions help.</p>
+</blockquote>
+</div>
+<div id="tests" class="section level3">
+<h3 class="hasAnchor">
+<a href="#tests" class="anchor"></a>Tests</h3>
+<p><code>tests/testthat/test-concordance_between_services.R</code> adds tests for joining data between services.</p>
+<p><code>tests/testthat/test-[service].R</code> adds tests for each service.</p>
+<p>In <code>utils.R</code> there is a helper function for the main test battery applied to each service: <code>main_test_battery()</code>. See examples of use in the test files of services already implemented.</p>
+</div>
+</div>
 </div>
 
   </div>
@@ -186,7 +243,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Victor Granda, Miquel de Caceres.</p>
+  <p>Developed by Victor Granda.</p>
 </div>
 
 <div class="pkgdown">

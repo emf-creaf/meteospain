@@ -53,20 +53,27 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/aemet.html">AEMET service</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Services</li>
     <li>
-      <a href="../articles/api_limits.html">API limits and loops</a>
+      <a href="../articles/aemet.html">AEMET service</a>
     </li>
     <li>
       <a href="../articles/meteocat.html">MeteoCat service</a>
     </li>
     <li>
-      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
-      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
+      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Workflows</li>
+    <li>
+      <a href="../articles/api_limits.html">API limits and loops</a>
+    </li>
+    <li>
+      <a href="../articles/compatibility.html">Compatibility betweeen services</a>
     </li>
   </ul>
 </li>
@@ -172,7 +179,7 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 #&gt; [1] "instant"
 #&gt; 
 #&gt; $start_date
-#&gt; [1] "2021-06-02"
+#&gt; [1] "2021-06-04"
 #&gt; 
 #&gt; $stations
 #&gt; NULL
@@ -206,25 +213,25 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 <p>Accessing station metadata for MeteoCat is simple:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 234 features and 4 fields</span>
+<span class="co">#&gt; Simple feature collection with 234 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55219 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 234 x 5</span>
-<span class="co">#&gt;    station_id station_name     station_province altitude                geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;                 [m]             &lt;POINT [°]&gt;</span>
-<span class="co">#&gt;  1 AN         Barcelona - Av.… Barcelona             7.5      (2.18091 41.39004)</span>
-<span class="co">#&gt;  2 CA         Clariana de Car… Lleida              693.0       (1.5851 41.95378)</span>
-<span class="co">#&gt;  3 CB         les Llosses      Girona              700.0      (2.19914 42.15085)</span>
-<span class="co">#&gt;  4 CC         Orís             Barcelona           626.0      (2.20862 42.07398)</span>
-<span class="co">#&gt;  5 CD         la Seu d'Urgell… Lleida              849.0      (1.43277 42.37083)</span>
-<span class="co">#&gt;  6 CE         els Hostalets d… Barcelona           316.0      (1.80813 41.53109)</span>
-<span class="co">#&gt;  7 CF         Lloret de Mar    Girona               63.3      (2.84282 41.72346)</span>
-<span class="co">#&gt;  8 CG         Molló - Fabert   Girona             1405.0      (2.41456 42.37717)</span>
-<span class="co">#&gt;  9 CH         Falset - Escola  Tarragona           350.0      (0.82357 41.15076)</span>
-<span class="co">#&gt; 10 CI         Sant Pau de Seg… Girona              852.0      (2.36429 42.25839)</span>
-<span class="co">#&gt; # … with 224 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 234 x 6</span>
+<span class="co">#&gt;    service  station_id station_name                   station_province altitude</span>
+<span class="co">#&gt;  * &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                          &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 meteocat AN         Barcelona - Av. Lluís Companys Barcelona             7.5</span>
+<span class="co">#&gt;  2 meteocat CA         Clariana de Cardener           Lleida              693.0</span>
+<span class="co">#&gt;  3 meteocat CB         les Llosses                    Girona              700.0</span>
+<span class="co">#&gt;  4 meteocat CC         Orís                           Barcelona           626.0</span>
+<span class="co">#&gt;  5 meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849.0</span>
+<span class="co">#&gt;  6 meteocat CE         els Hostalets de Pierola       Barcelona           316.0</span>
+<span class="co">#&gt;  7 meteocat CF         Lloret de Mar                  Girona               63.3</span>
+<span class="co">#&gt;  8 meteocat CG         Molló - Fabert                 Girona             1405.0</span>
+<span class="co">#&gt;  9 meteocat CH         Falset - Escola                Tarragona           350.0</span>
+<span class="co">#&gt; 10 meteocat CI         Sant Pau de Segúries           Girona              852.0</span>
+<span class="co">#&gt; # … with 224 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
 </div>
 <div id="meteocat-data" class="section level2">
 <h2 class="hasAnchor">
@@ -239,31 +246,31 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">catalunya_2020</span>
-<span class="co">#&gt; Simple feature collection with 2256 features and 19 fields (with 12 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 2256 features and 20 fields (with 12 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 2,256 x 20</span>
-<span class="co">#&gt;    timestamp           station_id station_name         station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-01-01 00:00:00 C6         Castellnou de Seana  Lleida              264.0</span>
-<span class="co">#&gt;  2 2020-01-01 00:00:00 C7         Tàrrega              Lleida              427.0</span>
-<span class="co">#&gt;  3 2020-01-01 00:00:00 C8         Cervera              Lleida              554.0</span>
-<span class="co">#&gt;  4 2020-01-01 00:00:00 C9         Mas de Barberans     Tarragona           240.0</span>
-<span class="co">#&gt;  5 2020-01-01 00:00:00 CC         Orís                 Barcelona           626.0</span>
-<span class="co">#&gt;  6 2020-01-01 00:00:00 CD         la Seu d'Urgell - B… Lleida              849.0</span>
-<span class="co">#&gt;  7 2020-01-01 00:00:00 CE         els Hostalets de Pi… Barcelona           316.0</span>
-<span class="co">#&gt;  8 2020-01-01 00:00:00 CG         Molló - Fabert       Girona             1405.0</span>
-<span class="co">#&gt;  9 2020-01-01 00:00:00 CI         Sant Pau de Segúries Girona              852.0</span>
-<span class="co">#&gt; 10 2020-01-01 00:00:00 CJ         Organyà              Lleida              566.5</span>
+<span class="co">#&gt; # A tibble: 2,256 x 21</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-01-01 00:00:00 meteoc… C6         Castellnou … Lleida              264.0</span>
+<span class="co">#&gt;  2 2020-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida              427.0</span>
+<span class="co">#&gt;  3 2020-01-01 00:00:00 meteoc… C8         Cervera      Lleida              554.0</span>
+<span class="co">#&gt;  4 2020-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona           240.0</span>
+<span class="co">#&gt;  5 2020-01-01 00:00:00 meteoc… CC         Orís         Barcelona           626.0</span>
+<span class="co">#&gt;  6 2020-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida              849.0</span>
+<span class="co">#&gt;  7 2020-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona           316.0</span>
+<span class="co">#&gt;  8 2020-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona             1405.0</span>
+<span class="co">#&gt;  9 2020-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona              852.0</span>
+<span class="co">#&gt; 10 2020-01-01 00:00:00 meteoc… CJ         Organyà      Lleida              566.5</span>
 <span class="co">#&gt; # … with 2,246 more rows, and 15 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature_absolute [°C], min_temperature_absolute [°C],</span>
-<span class="co">#&gt; #   max_temperature_mean [°C], min_temperature_mean [°C],</span>
-<span class="co">#&gt; #   mean_relative_humidity [%], max_relative_humidity_absolute [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_absolute [%], max_relative_humidity_mean [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_mean [%], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_speed [m/s], mean_wind_direction [°],</span>
+<span class="co">#&gt; #   min_temperature_absolute [°C], min_temperature_mean [°C],</span>
+<span class="co">#&gt; #   max_temperature_absolute [°C], max_temperature_mean [°C],</span>
+<span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity_absolute [%],</span>
+<span class="co">#&gt; #   min_relative_humidity_mean [%], max_relative_humidity_absolute [%],</span>
+<span class="co">#&gt; #   max_relative_humidity_mean [%], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_direction [°], mean_wind_speed [m/s],</span>
 <span class="co">#&gt; #   global_solar_radiation [MJ/m^2], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -272,7 +279,8 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="meteocat_files/figure-html/meteocat_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -299,7 +307,7 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 
 
       <footer><div class="copyright">
-  <p>Developed by Victor Granda, Miquel de Caceres.</p>
+  <p>Developed by Victor Granda.</p>
 </div>
 
 <div class="pkgdown">

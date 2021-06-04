@@ -53,20 +53,27 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/aemet.html">AEMET service</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Services</li>
     <li>
-      <a href="../articles/api_limits.html">API limits and loops</a>
+      <a href="../articles/aemet.html">AEMET service</a>
     </li>
     <li>
       <a href="../articles/meteocat.html">MeteoCat service</a>
     </li>
     <li>
-      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
-      <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
+      <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Workflows</li>
+    <li>
+      <a href="../articles/api_limits.html">API limits and loops</a>
+    </li>
+    <li>
+      <a href="../articles/compatibility.html">Compatibility betweeen services</a>
     </li>
   </ul>
 </li>
@@ -160,10 +167,10 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 #&gt; [1] "current_day"
 #&gt; 
 #&gt; $start_date
-#&gt; [1] "2021-06-02"
+#&gt; [1] "2021-06-04"
 #&gt; 
 #&gt; $end_date
-#&gt; [1] "2021-06-02"
+#&gt; [1] "2021-06-04"
 #&gt; 
 #&gt; $stations
 #&gt; NULL
@@ -200,24 +207,24 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 <p>Accessing station metadata for AEMET is simple:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 291 features and 3 fields</span>
+<span class="co">#&gt; Simple feature collection with 291 features and 4 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.471</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 291 x 4</span>
-<span class="co">#&gt;    station_id station_name           altitude         geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;                       [m]      &lt;POINT [°]&gt;</span>
-<span class="co">#&gt;  1 0252D      ARENYS DE MAR                74 (2.3224 41.3515)</span>
-<span class="co">#&gt;  2 0076       BARCELONA AEROPUERTO          4 (2.0412 41.1734)</span>
-<span class="co">#&gt;  3 0200E      BARCELONA, FABRA            408 (2.0727 41.2506)</span>
-<span class="co">#&gt;  4 0201D      BARCELONA                     6   (2.12 41.2326)</span>
-<span class="co">#&gt;  5 0149X      MANRESA                     291 (1.5025 41.4312)</span>
-<span class="co">#&gt;  6 0229I      SABADELL AEROPUERTO         146 (2.0611 41.3125)</span>
-<span class="co">#&gt;  7 0255B      SANTA SUSANNA                40 (2.4149 41.3903)</span>
-<span class="co">#&gt;  8 0367       GIRONA AEROPUERTO           143 (2.4548 41.5442)</span>
-<span class="co">#&gt;  9 0370B      GIRONA, ANTIC INSTITUT       95 (2.4931 41.5848)</span>
-<span class="co">#&gt; 10 0372C      PORQUERES                   157 (2.4549 42.0616)</span>
+<span class="co">#&gt; # A tibble: 291 x 5</span>
+<span class="co">#&gt;    service station_id station_name           altitude         geometry</span>
+<span class="co">#&gt;  * &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                       [m]      &lt;POINT [°]&gt;</span>
+<span class="co">#&gt;  1 aemet   0252D      ARENYS DE MAR                74 (2.3224 41.3515)</span>
+<span class="co">#&gt;  2 aemet   0076       BARCELONA AEROPUERTO          4 (2.0412 41.1734)</span>
+<span class="co">#&gt;  3 aemet   0200E      BARCELONA, FABRA            408 (2.0727 41.2506)</span>
+<span class="co">#&gt;  4 aemet   0201D      BARCELONA                     6   (2.12 41.2326)</span>
+<span class="co">#&gt;  5 aemet   0149X      MANRESA                     291 (1.5025 41.4312)</span>
+<span class="co">#&gt;  6 aemet   0229I      SABADELL AEROPUERTO         146 (2.0611 41.3125)</span>
+<span class="co">#&gt;  7 aemet   0255B      SANTA SUSANNA                40 (2.4149 41.3903)</span>
+<span class="co">#&gt;  8 aemet   0367       GIRONA AEROPUERTO           143 (2.4548 41.5442)</span>
+<span class="co">#&gt;  9 aemet   0370B      GIRONA, ANTIC INSTITUT       95 (2.4931 41.5848)</span>
+<span class="co">#&gt; 10 aemet   0372C      PORQUERES                   157 (2.4549 42.0616)</span>
 <span class="co">#&gt; # … with 281 more rows</span></code></pre></div>
 </div>
 <div id="aemet-data" class="section level2">
@@ -233,33 +240,34 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="va">spain_20200425</span>
-<span class="co">#&gt; Simple feature collection with 237 features and 11 fields</span>
+<span class="co">#&gt; Simple feature collection with 237 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4859 xmax: 4.1256 ymax: 43.471</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 237 x 12</span>
-<span class="co">#&gt;    timestamp  station_id station_name station_province altitude mean_temperature</span>
-<span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]             [°C]</span>
-<span class="co">#&gt;  1 2020-04-25 0016A      REUS AEROPU… TARRAGONA              71             15.0</span>
-<span class="co">#&gt;  2 2020-04-25 0076       BARCELONA A… BARCELONA               4             16.0</span>
-<span class="co">#&gt;  3 2020-04-25 0149X      MANRESA      BARCELONA             291             15.1</span>
-<span class="co">#&gt;  4 2020-04-25 0200E      BARCELONA, … BARCELONA             408             16.2</span>
-<span class="co">#&gt;  5 2020-04-25 0201D      BARCELONA    BARCELONA               6             16.0</span>
-<span class="co">#&gt;  6 2020-04-25 0252D      ARENYS DE M… BARCELONA              74             15.6</span>
-<span class="co">#&gt;  7 2020-04-25 0255B      SANTA SUSAN… BARCELONA              40             14.1</span>
-<span class="co">#&gt;  8 2020-04-25 0324A      RIPOLL       GIRONA                675             13.6</span>
-<span class="co">#&gt;  9 2020-04-25 0367       GIRONA AERO… GIRONA                143             15.3</span>
-<span class="co">#&gt; 10 2020-04-25 0372C      PORQUERES    GIRONA                157             15.4</span>
-<span class="co">#&gt; # … with 227 more rows, and 6 more variables: min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 237 x 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-04-25 00:00:00 aemet   0016A      REUS AEROPU… TARRAGONA              71</span>
+<span class="co">#&gt;  2 2020-04-25 00:00:00 aemet   0076       BARCELONA A… BARCELONA               4</span>
+<span class="co">#&gt;  3 2020-04-25 00:00:00 aemet   0149X      MANRESA      BARCELONA             291</span>
+<span class="co">#&gt;  4 2020-04-25 00:00:00 aemet   0200E      BARCELONA, … BARCELONA             408</span>
+<span class="co">#&gt;  5 2020-04-25 00:00:00 aemet   0201D      BARCELONA    BARCELONA               6</span>
+<span class="co">#&gt;  6 2020-04-25 00:00:00 aemet   0252D      ARENYS DE M… BARCELONA              74</span>
+<span class="co">#&gt;  7 2020-04-25 00:00:00 aemet   0255B      SANTA SUSAN… BARCELONA              40</span>
+<span class="co">#&gt;  8 2020-04-25 00:00:00 aemet   0324A      RIPOLL       GIRONA                675</span>
+<span class="co">#&gt;  9 2020-04-25 00:00:00 aemet   0367       GIRONA AERO… GIRONA                143</span>
+<span class="co">#&gt; 10 2020-04-25 00:00:00 aemet   0372C      PORQUERES    GIRONA                157</span>
+<span class="co">#&gt; # … with 227 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">spain_20200425</span> <span class="op">%&gt;%</span>
   <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="aemet_files/figure-html/aemet_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -284,7 +292,7 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 
 
       <footer><div class="copyright">
-  <p>Developed by Victor Granda, Miquel de Caceres.</p>
+  <p>Developed by Victor Granda.</p>
 </div>
 
 <div class="pkgdown">
