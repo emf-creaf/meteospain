@@ -179,7 +179,7 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 #&gt; [1] "instant"
 #&gt; 
 #&gt; $start_date
-#&gt; [1] "2021-06-04"
+#&gt; [1] "2021-09-07"
 #&gt; 
 #&gt; $stations
 #&gt; NULL
@@ -218,19 +218,19 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55219 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 234 x 6</span>
+<span class="co">#&gt; # A tibble: 234 × 6</span>
 <span class="co">#&gt;    service  station_id station_name                   station_province altitude</span>
 <span class="co">#&gt;  * &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                          &lt;chr&gt;                 [m]</span>
 <span class="co">#&gt;  1 meteocat AN         Barcelona - Av. Lluís Companys Barcelona             7.5</span>
-<span class="co">#&gt;  2 meteocat CA         Clariana de Cardener           Lleida              693.0</span>
-<span class="co">#&gt;  3 meteocat CB         les Llosses                    Girona              700.0</span>
-<span class="co">#&gt;  4 meteocat CC         Orís                           Barcelona           626.0</span>
-<span class="co">#&gt;  5 meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849.0</span>
-<span class="co">#&gt;  6 meteocat CE         els Hostalets de Pierola       Barcelona           316.0</span>
+<span class="co">#&gt;  2 meteocat CA         Clariana de Cardener           Lleida              693  </span>
+<span class="co">#&gt;  3 meteocat CB         les Llosses                    Girona              700  </span>
+<span class="co">#&gt;  4 meteocat CC         Orís                           Barcelona           626  </span>
+<span class="co">#&gt;  5 meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849  </span>
+<span class="co">#&gt;  6 meteocat CE         els Hostalets de Pierola       Barcelona           316  </span>
 <span class="co">#&gt;  7 meteocat CF         Lloret de Mar                  Girona               63.3</span>
-<span class="co">#&gt;  8 meteocat CG         Molló - Fabert                 Girona             1405.0</span>
-<span class="co">#&gt;  9 meteocat CH         Falset - Escola                Tarragona           350.0</span>
-<span class="co">#&gt; 10 meteocat CI         Sant Pau de Segúries           Girona              852.0</span>
+<span class="co">#&gt;  8 meteocat CG         Molló - Fabert                 Girona             1405  </span>
+<span class="co">#&gt;  9 meteocat CH         Falset - Escola                Tarragona           350  </span>
+<span class="co">#&gt; 10 meteocat CI         Sant Pau de Segúries           Girona              852  </span>
 <span class="co">#&gt; # … with 224 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
 </div>
 <div id="meteocat-data" class="section level2">
@@ -251,27 +251,26 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 2,256 x 21</span>
-<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-01-01 00:00:00 meteoc… C6         Castellnou … Lleida              264.0</span>
-<span class="co">#&gt;  2 2020-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida              427.0</span>
-<span class="co">#&gt;  3 2020-01-01 00:00:00 meteoc… C8         Cervera      Lleida              554.0</span>
-<span class="co">#&gt;  4 2020-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona           240.0</span>
-<span class="co">#&gt;  5 2020-01-01 00:00:00 meteoc… CC         Orís         Barcelona           626.0</span>
-<span class="co">#&gt;  6 2020-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida              849.0</span>
-<span class="co">#&gt;  7 2020-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona           316.0</span>
-<span class="co">#&gt;  8 2020-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona             1405.0</span>
-<span class="co">#&gt;  9 2020-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona              852.0</span>
-<span class="co">#&gt; 10 2020-01-01 00:00:00 meteoc… CJ         Organyà      Lleida              566.5</span>
+<span class="co">#&gt; # A tibble: 2,256 × 21</span>
+<span class="co">#&gt;    timestamp           service  station_id station_name station_province altitude</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-01-01 00:00:00 meteocat C6         Castellnou … Lleida               264 </span>
+<span class="co">#&gt;  2 2020-01-01 00:00:00 meteocat C7         Tàrrega      Lleida               427 </span>
+<span class="co">#&gt;  3 2020-01-01 00:00:00 meteocat C8         Cervera      Lleida               554 </span>
+<span class="co">#&gt;  4 2020-01-01 00:00:00 meteocat C9         Mas de Barb… Tarragona            240 </span>
+<span class="co">#&gt;  5 2020-01-01 00:00:00 meteocat CC         Orís         Barcelona            626 </span>
+<span class="co">#&gt;  6 2020-01-01 00:00:00 meteocat CD         la Seu d'Ur… Lleida               849 </span>
+<span class="co">#&gt;  7 2020-01-01 00:00:00 meteocat CE         els Hostale… Barcelona            316 </span>
+<span class="co">#&gt;  8 2020-01-01 00:00:00 meteocat CG         Molló - Fab… Girona              1405 </span>
+<span class="co">#&gt;  9 2020-01-01 00:00:00 meteocat CI         Sant Pau de… Girona               852 </span>
+<span class="co">#&gt; 10 2020-01-01 00:00:00 meteocat CJ         Organyà      Lleida               566.</span>
 <span class="co">#&gt; # … with 2,246 more rows, and 15 more variables: mean_temperature [°C],</span>
 <span class="co">#&gt; #   min_temperature_absolute [°C], min_temperature_mean [°C],</span>
 <span class="co">#&gt; #   max_temperature_absolute [°C], max_temperature_mean [°C],</span>
 <span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity_absolute [%],</span>
 <span class="co">#&gt; #   min_relative_humidity_mean [%], max_relative_humidity_absolute [%],</span>
 <span class="co">#&gt; #   max_relative_humidity_mean [%], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_direction [°], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   global_solar_radiation [MJ/m^2], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; #   mean_wind_direction [°], mean_wind_speed [m/s], …</span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalunya_2020</span> <span class="op">%&gt;%</span>

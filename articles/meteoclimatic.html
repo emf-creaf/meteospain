@@ -153,25 +153,25 @@
 <p>Accessing station metadata for Meteoclimatic is simple:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteoclimatic'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 205 features and 3 fields</span>
+<span class="co">#&gt; Simple feature collection with 207 features and 3 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: 1.58 ymin: 41.22 xmax: 2.72 ymax: 42.25</span>
+<span class="co">#&gt; Bounding box:  xmin: 1.58 ymin: 41.22 xmax: 2.72 ymax: 42.28</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 205 x 4</span>
-<span class="co">#&gt;    service      station_id         station_name                         geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;        &lt;chr&gt;              &lt;chr&gt;                             &lt;POINT [°]&gt;</span>
-<span class="co">#&gt;  1 meteoclimat… ESCAT080000000859… Aiguafreda (Barcelona)           (2.25 41.77)</span>
-<span class="co">#&gt;  2 meteoclimat… ESCAT080000000832… Alella (Barcelona)               (2.29 41.49)</span>
-<span class="co">#&gt;  3 meteoclimat… ESCAT080000000832… Alella-Mirador (Barcelona)       (2.29 41.49)</span>
-<span class="co">#&gt;  4 meteoclimat… ESCAT080000000835… Arenys de Mar (Barcelona)        (2.56 41.59)</span>
-<span class="co">#&gt;  5 meteoclimat… ESCAT080000000835… Arenys de Munt (Barcelona)       (2.54 41.61)</span>
-<span class="co">#&gt;  6 meteoclimat… ESCAT080000000831… Argentona (Barcelona)            (2.39 41.56)</span>
-<span class="co">#&gt;  7 meteoclimat… ESCAT080000000891… Badalona - Bufalà (Barcelona)    (2.24 41.46)</span>
-<span class="co">#&gt;  8 meteoclimat… ESCAT080000000891… Badalona - Centre (Barcelona)    (2.25 41.45)</span>
-<span class="co">#&gt;  9 meteoclimat… ESCAT080000000891… Badalona - Dalt la Vila (Barc…   (2.26 41.46)</span>
-<span class="co">#&gt; 10 meteoclimat… ESCAT080000000891… Badalona - La Pau (Barcelona)    (2.22 41.45)</span>
-<span class="co">#&gt; # … with 195 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 207 × 4</span>
+<span class="co">#&gt;    service       station_id          station_name                       geometry</span>
+<span class="co">#&gt;  * &lt;chr&gt;         &lt;chr&gt;               &lt;chr&gt;                           &lt;POINT [°]&gt;</span>
+<span class="co">#&gt;  1 meteoclimatic ESCAT0800000008591A Aiguafreda (Barcelona)         (2.25 41.77)</span>
+<span class="co">#&gt;  2 meteoclimatic ESCAT0800000008328E Alella (Barcelona)             (2.29 41.49)</span>
+<span class="co">#&gt;  3 meteoclimatic ESCAT0800000008328F Alella-Mirador (Barcelona)     (2.29 41.49)</span>
+<span class="co">#&gt;  4 meteoclimatic ESCAT0800000008350A Arenys de Mar (Barcelona)      (2.56 41.59)</span>
+<span class="co">#&gt;  5 meteoclimatic ESCAT0800000008358A Arenys de Munt (Barcelona)     (2.54 41.61)</span>
+<span class="co">#&gt;  6 meteoclimatic ESCAT0800000008310B Argentona (Barcelona)          (2.39 41.56)</span>
+<span class="co">#&gt;  7 meteoclimatic ESCAT0800000008915A Badalona - Bufalà (Barcelona)  (2.24 41.46)</span>
+<span class="co">#&gt;  8 meteoclimatic ESCAT0800000008912A Badalona - Centre (Barcelona)  (2.25 41.45)</span>
+<span class="co">#&gt;  9 meteoclimatic ESCAT0800000008911C Badalona - Dalt la Vila (Barc… (2.26 41.46)</span>
+<span class="co">#&gt; 10 meteoclimatic ESCAT0800000008080A Badalona - Llefià (Barcelona)  (2.23 41.44)</span>
+<span class="co">#&gt; # … with 197 more rows</span></code></pre></div>
 </div>
 <div id="meteoclimatic-data" class="section level2">
 <h2 class="hasAnchor">
@@ -182,25 +182,25 @@
 <span class="co">#&gt; No quality check is performed in this data, and errors in measures or coordinates of stations can be present.</span>
 <span class="co">#&gt; https://www.meteoclimatic.net/index</span>
 <span class="va">current_day_barcelona</span>
-<span class="co">#&gt; Simple feature collection with 205 features and 9 fields</span>
+<span class="co">#&gt; Simple feature collection with 207 features and 9 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: 1.58 ymin: 41.22 xmax: 2.72 ymax: 42.25</span>
+<span class="co">#&gt; Bounding box:  xmin: 1.58 ymin: 41.22 xmax: 2.72 ymax: 42.28</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 205 x 10</span>
-<span class="co">#&gt;    timestamp           service   station_id   station_name       min_temperature</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                         [°C]</span>
-<span class="co">#&gt;  1 2021-06-04 12:05:00 meteocli… ESCAT080000… Barcelona - betev…            20.2</span>
-<span class="co">#&gt;  2 2021-06-04 12:15:00 meteocli… ESCAT080000… La Pobla de Lille…            10.2</span>
-<span class="co">#&gt;  3 2021-06-04 12:17:00 meteocli… ESCAT080000… Vilassar de Mar (…            19.8</span>
-<span class="co">#&gt;  4 2021-06-04 12:18:00 meteocli… ESCAT080000… Vallromanes (Cal …            16.4</span>
-<span class="co">#&gt;  5 2021-06-04 12:19:00 meteocli… ESCAT080000… Bagà (centre) (Ba…            11.6</span>
-<span class="co">#&gt;  6 2021-06-04 12:20:00 meteocli… ESCAT080000… Barcelona - Vallc…            17.6</span>
-<span class="co">#&gt;  7 2021-06-04 12:20:00 meteocli… ESCAT080000… Centelles (Barcel…            12.4</span>
-<span class="co">#&gt;  8 2021-06-04 12:20:49 meteocli… ESCAT080000… Collsuspina - Cen…            10.4</span>
-<span class="co">#&gt;  9 2021-06-04 12:21:00 meteocli… ESCAT080000… Barcelona - Recto…            16.4</span>
-<span class="co">#&gt; 10 2021-06-04 12:21:00 meteocli… ESCAT080000… Montmeló-T.de la …            18.1</span>
-<span class="co">#&gt; # … with 195 more rows, and 5 more variables: max_temperature [°C],</span>
+<span class="co">#&gt; # A tibble: 207 × 10</span>
+<span class="co">#&gt;    timestamp           service       station_id          station_name min_temperature</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;         &lt;chr&gt;               &lt;chr&gt;                   [°C]</span>
+<span class="co">#&gt;  1 2021-09-07 09:25:00 meteoclimatic ESCAT0800000008402A Granollers …            22.4</span>
+<span class="co">#&gt;  2 2021-09-07 09:30:00 meteoclimatic ESCAT0800000008470A Sant Celoni…            20.3</span>
+<span class="co">#&gt;  3 2021-09-07 09:30:00 meteoclimatic ESCAT0800000008696A La Pobla de…            13.2</span>
+<span class="co">#&gt;  4 2021-09-07 09:33:00 meteoclimatic ESCAT0800000008188C Vallromanes…            21.3</span>
+<span class="co">#&gt;  5 2021-09-07 09:34:00 meteoclimatic ESCAT0800000008017D Barcelona -…            20.6</span>
+<span class="co">#&gt;  6 2021-09-07 09:34:00 meteoclimatic ESCAT0800000008591A Aiguafreda …            19.1</span>
+<span class="co">#&gt;  7 2021-09-07 09:34:00 meteoclimatic ESCAT0800000008695E Cadí Est2-2…            12.1</span>
+<span class="co">#&gt;  8 2021-09-07 09:35:00 meteoclimatic ESCAT0800000008035D Barcelona -…            22.4</span>
+<span class="co">#&gt;  9 2021-09-07 09:35:00 meteoclimatic ESCAT0800000008540B Centelles (…            18.3</span>
+<span class="co">#&gt; 10 2021-09-07 09:35:00 meteoclimatic ESCAT0800000008672A Gaià (Barce…            17.9</span>
+<span class="co">#&gt; # … with 197 more rows, and 5 more variables: max_temperature [°C],</span>
 <span class="co">#&gt; #   min_relative_humidity [%], max_relative_humidity [%],</span>
 <span class="co">#&gt; #   precipitation [L/m^2], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>
