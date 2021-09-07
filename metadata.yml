@@ -1,0 +1,24 @@
+id: meteospain
+emf_type: softwork
+emf_public: true
+emf_automatized: true
+emf_reproducible: false
+emf_draft: false
+nodes: ''
+authors:
+- vgranda
+- mcaceres
+- emf
+authors_aff:
+- CREAF
+- CREAF
+- CREAF
+resource_link: softworks/meteospain
+thematic: data_access
+tags:
+- meteo
+- R
+- data
+requirements: ''
+description: Access to Spanish Meteorological Stations Services
+
