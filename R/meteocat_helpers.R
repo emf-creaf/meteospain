@@ -407,32 +407,9 @@
   # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
   # differently. It also differs in the select step as in the latter group there is no repetition of column
   # names after the unnest step.
-  resolution_specific_unnest <- function(data) {
-    data %>%
-      purrr::map_dfr(function(variable_data) {
-        tidyr::unnest(
-          variable_data, cols = .data$variables,
-          # names_repair = 'universal'
-          names_repair = ~ vctrs::vec_as_names(.x, repair = 'universal', quiet = TRUE)
-        ) %>%
-          tidyr::unnest(cols = .data$lectures, names_repair = 'universal')
-      }) %>%
-      dplyr::select(
-        timestamp = .data$data, station_id = .data$codi...1, variable_code = .data$codi...2, .data$valor
-      )
-  }
-
+  resolution_specific_unnest <- .meteocat_short_carpentry
   if (api_options$resolution %in% c('daily', 'monthly', 'yearly')) {
-    resolution_specific_unnest <- function(data) {
-      data %>%
-        purrr::map_dfr(function(variable_data) {
-          tidyr::unnest(variable_data, cols = .data$valors, names_repair = 'universal')
-        }) %>%
-        dplyr::select(
-          timestamp = .data$data, station_id = .data$codiEstacio, variable_code = .data$codiVariable,
-          .data$valor
-        )
-    }
+    resolution_specific_unnest <- .meteocat_long_carpentry
   }
 
   # Stations info for getting coords ----------------------------------------------------------------------
@@ -474,18 +451,6 @@
     relocate_vars() %>%
     # ensure we have an sf
     sf::st_as_sf()
-    # dplyr::relocate(
-    #   dplyr::contains('timestamp'),
-    #   dplyr::contains('station'),
-    #   dplyr::contains('altitude'),
-    #   dplyr::contains('temperature'),
-    #   dplyr::contains('humidity'),
-    #   dplyr::contains('precipitation'),
-    #   dplyr::contains('direction'),
-    #   dplyr::contains('speed'),
-    #   dplyr::contains('sol'),
-    #   .data$geometry
-    # )
 
   # Check if any stations were returned -------------------------------------------------------------------
   if ((!is.null(api_options$stations)) & nrow(res) < 1) {
@@ -504,4 +469,34 @@
   )
 
   return(res)
+}
+
+
+
+# resolution_specific_carpentry -------------------------------------------------------------------------
+
+.meteocat_short_carpentry <- function(data) {
+  data %>%
+    purrr::map_dfr(function(variable_data) {
+      tidyr::unnest(
+        variable_data, cols = .data$variables,
+        # names_repair = 'universal'
+        names_repair = ~ vctrs::vec_as_names(.x, repair = 'universal', quiet = TRUE)
+      ) %>%
+        tidyr::unnest(cols = .data$lectures, names_repair = 'universal')
+    }) %>%
+    dplyr::select(
+      timestamp = .data$data, station_id = .data$codi...1, variable_code = .data$codi...2, .data$valor
+    )
+}
+
+.meteocat_long_carpentry <- function(data) {
+  data %>%
+    purrr::map_dfr(function(variable_data) {
+      tidyr::unnest(variable_data, cols = .data$valors, names_repair = 'universal')
+    }) %>%
+    dplyr::select(
+      timestamp = .data$data, station_id = .data$codiEstacio, variable_code = .data$codiVariable,
+      .data$valor
+    )
 }
