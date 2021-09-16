@@ -195,175 +195,22 @@
   # for a more complete rationale)
   resolution_specific_unnesting <- switch(
     api_options$resolution,
-    'instant' = function(response_content) {
-      response_content$listUltimos10min
-    },
-    'current_day' = function(response_content) {
-      response_content$listHorarios %>%
-        tidyr::unnest(.data$listaInstantes)
-    },
-    'daily' = function(response_content) {
-      response_content$listDatosDiarios %>%
-        tidyr::unnest(.data$listaEstacions)
-    },
-    'monthly' = function(response_content) {
-      response_content$listDatosMensuais %>%
-        tidyr::unnest(.data$listaEstacions)
-    }
+    'instant' = .meteogalicia_instant_unnesting,
+    'current_day' = .meteogalicia_current_day_unnesting,
+    'daily' = .meteogalicia_daily_unnesting,
+    'monthly' = .meteogalicia_monthly_unnesting
   )
   resolution_specific_carpentry <- switch(
     api_options$resolution,
-    'instant' = function(data) {
-      data %>%
-        # When querying stations, it can happen that some stations lack some variables, making the further
-        # select step to fail. We create missing variables and populate them with NAs to avoid this error
-        .create_missing_vars(
-          var_names = c(
-            'TA_AVG_1.5m', 'DV_AVG_2m', 'VV_AVG_2m', 'HR_AVG_1.5m',
-            'PP_SUM_1.5m', 'HSOL_SUM_1.5m', 'RS_AVG_1.5m'
-          )
-        ) %>%
-        dplyr::select(
-          timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
-          temperature = .data$TA_AVG_1.5m,
-          wind_direction = .data$DV_AVG_2m,
-          wind_speed = .data$VV_AVG_2m,
-          relative_humidity = .data$HR_AVG_1.5m,
-          precipitation = .data$PP_SUM_1.5m,
-          insolation = .data$HSOL_SUM_1.5m
-          # global_solar_radiation = .data$RS_AVG_1.5m
-        ) %>%
-        dplyr::mutate(
-          timestamp = lubridate::as_datetime(.data$timestamp),
-          service = 'meteogalicia',
-          station_id = as.character(.data$station_id),
-          temperature = units::set_units(.data$temperature, "degree_C"),
-          wind_direction = units::set_units(.data$wind_direction, "degree"),
-          wind_speed = units::set_units(.data$wind_speed, "m/s"),
-          relative_humidity = units::set_units(.data$relative_humidity, "%"),
-          precipitation = units::set_units(.data$precipitation, "L/m^2"),
-          insolation = units::set_units(.data$insolation, "h")
-          # global_solar_radiation = units::set_units(
-          #   units::set_units(.data$global_solar_radiation, "J/s/m^2") * insolation, 'MJ/m^2'
-          # )
-        )
-    },
-    'current_day' = function(data) {
-      data %>%
-        # When querying stations, it can happen that some stations lack some variables, making the further
-        # select step to fail. We create missing variables and populate them with NAs to avoid this error
-        .create_missing_vars(
-          var_names = c(
-            'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
-            'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
-          )
-        ) %>%
-        dplyr::select(
-          timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
-          temperature = .data$TA_AVG_1.5m,
-          min_temperature = .data$TA_MIN_1.5m,
-          max_temperature = .data$TA_MAX_1.5m,
-          wind_direction = .data$DV_AVG_2m,
-          wind_speed = .data$VV_AVG_2m,
-          relative_humidity = .data$HR_AVG_1.5m,
-          precipitation = .data$PP_SUM_1.5m,
-          insolation = .data$HSOL_SUM_1.5m
-        ) %>%
-        dplyr::mutate(
-          timestamp = lubridate::as_datetime(.data$timestamp),
-          service = 'meteogalicia',
-          station_id = as.character(.data$station_id),
-          temperature = units::set_units(.data$temperature, "degree_C"),
-          min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-          max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-          wind_direction = units::set_units(.data$wind_direction, "degree"),
-          wind_speed = units::set_units(.data$wind_speed, "m/s"),
-          relative_humidity = units::set_units(.data$relative_humidity, "%"),
-          precipitation = units::set_units(.data$precipitation, "L/m^2"),
-          insolation = units::set_units(.data$insolation, "h")
-        )
-    },
-    'daily' = function(data) {
-      data %>%
-        # When querying stations, it can happen that some stations lack some variables, making the further
-        # select step to fail. We create missing variables and populate them with NAs to avoid this error
-        .create_missing_vars(
-          var_names = c(
-            'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
-            'HR_AVG_1.5m', 'HR_MIN_1.5m', 'HR_MAX_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
-          )
-        ) %>%
-        dplyr::select(
-          timestamp = .data$data,
-          station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
-          mean_temperature = .data$TA_AVG_1.5m,
-          min_temperature = .data$TA_MIN_1.5m,
-          max_temperature = .data$TA_MAX_1.5m,
-          mean_wind_direction = .data$DV_AVG_2m,
-          mean_wind_speed = .data$VV_AVG_2m,
-          mean_relative_humidity = .data$HR_AVG_1.5m,
-          min_relative_humidity = .data$HR_MIN_1.5m,
-          max_relative_humidity = .data$HR_MAX_1.5m,
-          precipitation = .data$PP_SUM_1.5m,
-          insolation = .data$HSOL_SUM_1.5m
-        ) %>%
-        dplyr::mutate(
-          timestamp = lubridate::as_datetime(.data$timestamp),
-          service = 'meteogalicia',
-          station_id = as.character(.data$station_id),
-          mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
-          min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-          max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-          mean_wind_direction = units::set_units(.data$mean_wind_direction, "degree"),
-          mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
-          mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-          min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
-          max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
-          precipitation = units::set_units(.data$precipitation, "L/m^2"),
-          insolation = units::set_units(.data$insolation, "h")
-        )
-    },
-    'monthly' = function(data) {
-      data %>%
-        # When querying stations, it can happen that some stations lack some variables, making the further
-        # select step to fail. We create missing variables and populate them with NAs to avoid this error
-        .create_missing_vars(
-          var_names = c(
-            'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'VV_AVG_2m',
-            'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
-          )
-        ) %>%
-        dplyr::select(
-          timestamp = .data$data,
-          station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
-          mean_temperature = .data$TA_AVG_1.5m,
-          min_temperature = .data$TA_MIN_1.5m,
-          max_temperature = .data$TA_MAX_1.5m,
-          mean_wind_speed = .data$VV_AVG_2m,
-          mean_relative_humidity = .data$HR_AVG_1.5m,
-          precipitation = .data$PP_SUM_1.5m,
-          insolation = .data$HSOL_SUM_1.5m
-        ) %>%
-        dplyr::mutate(
-          timestamp = lubridate::as_datetime(.data$timestamp),
-          service = 'meteogalicia',
-          station_id = as.character(.data$station_id),
-          mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
-          min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-          max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-          mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
-          mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-          precipitation = units::set_units(.data$precipitation, "L/m^2"),
-          insolation = units::set_units(.data$insolation, "h")
-        )
-    }
+    'instant' = .meteogalicia_instant_carpentry,
+    'current_day' = .meteogalicia_current_day_carpentry,
+    'daily' = .meteogalicia_daily_carpentry,
+    'monthly' = .meteogalicia_monthly_carpentry
   )
-
   resolution_specific_joinvars <- c('service', 'station_id', 'station_name')
   if (api_options$resolution %in% c('daily', 'monthly')) {
     resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
   }
-
 
   # Data transformation -----------------------------------------------------------------------------------
   res <-
@@ -385,17 +232,6 @@
     dplyr::left_join(.get_info_meteogalicia(), by = resolution_specific_joinvars) %>%
     # reorder variables to be consistent among all services
     relocate_vars() %>%
-    # dplyr::relocate(
-    #   dplyr::contains('timestamp'),
-    #   dplyr::contains('station'),
-    #   dplyr::contains('altitude'),
-    #   dplyr::contains('temperature'),
-    #   dplyr::contains('humidity'),
-    #   dplyr::contains('precipitation'),
-    #   dplyr::contains('wind'),
-    #   dplyr::contains('sol'),
-    #   .data$geometry
-    # ) %>%
     sf::st_as_sf()
 
   # Copyright message -------------------------------------------------------------------------------------
@@ -411,4 +247,179 @@
   )
 
   return(res)
+}
+
+
+# resolution_specific_unnesting --------------------------------------------------------------------------
+.meteogalicia_instant_unnesting <- function(response_content) {
+  return(response_content$listUltimos10min)
+}
+
+.meteogalicia_current_day_unnesting <- function(response_content) {
+  res <- response_content$listHorarios %>%
+    tidyr::unnest(.data$listaInstantes)
+
+  return(res)
+}
+
+.meteogalicia_daily_unnesting <- function(response_content) {
+  res <- response_content$listDatosDiarios %>%
+    tidyr::unnest(.data$listaEstacions)
+
+  return(res)
+}
+
+.meteogalicia_monthly_unnesting <- function(response_content) {
+  res <- response_content$listDatosMensuais %>%
+    tidyr::unnest(.data$listaEstacions)
+
+  return(res)
+}
+
+
+# resolution_specific_carpentry -------------------------------------------------------------------------
+
+.meteogalicia_instant_carpentry <- function(data) {
+  data %>%
+    # When querying stations, it can happen that some stations lack some variables, making the further
+    # select step to fail. We create missing variables and populate them with NAs to avoid this error
+    .create_missing_vars(
+      var_names = c(
+        'TA_AVG_1.5m', 'DV_AVG_2m', 'VV_AVG_2m', 'HR_AVG_1.5m',
+        'PP_SUM_1.5m', 'HSOL_SUM_1.5m', 'RS_AVG_1.5m'
+      )
+    ) %>%
+    dplyr::select(
+      timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
+      temperature = .data$TA_AVG_1.5m,
+      wind_direction = .data$DV_AVG_2m,
+      wind_speed = .data$VV_AVG_2m,
+      relative_humidity = .data$HR_AVG_1.5m,
+      precipitation = .data$PP_SUM_1.5m,
+      insolation = .data$HSOL_SUM_1.5m
+      # global_solar_radiation = .data$RS_AVG_1.5m
+    ) %>%
+    dplyr::mutate(
+      timestamp = lubridate::as_datetime(.data$timestamp),
+      service = 'meteogalicia',
+      station_id = as.character(.data$station_id),
+      temperature = units::set_units(.data$temperature, "degree_C"),
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      relative_humidity = units::set_units(.data$relative_humidity, "%"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      insolation = units::set_units(.data$insolation, "h")
+      # global_solar_radiation = units::set_units(
+      #   units::set_units(.data$global_solar_radiation, "J/s/m^2") * insolation, 'MJ/m^2'
+      # )
+    )
+}
+.meteogalicia_current_day_carpentry <- function(data) {
+  data %>%
+    # When querying stations, it can happen that some stations lack some variables, making the further
+    # select step to fail. We create missing variables and populate them with NAs to avoid this error
+    .create_missing_vars(
+      var_names = c(
+        'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
+        'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+      )
+    ) %>%
+    dplyr::select(
+      timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
+      temperature = .data$TA_AVG_1.5m,
+      min_temperature = .data$TA_MIN_1.5m,
+      max_temperature = .data$TA_MAX_1.5m,
+      wind_direction = .data$DV_AVG_2m,
+      wind_speed = .data$VV_AVG_2m,
+      relative_humidity = .data$HR_AVG_1.5m,
+      precipitation = .data$PP_SUM_1.5m,
+      insolation = .data$HSOL_SUM_1.5m
+    ) %>%
+    dplyr::mutate(
+      timestamp = lubridate::as_datetime(.data$timestamp),
+      service = 'meteogalicia',
+      station_id = as.character(.data$station_id),
+      temperature = units::set_units(.data$temperature, "degree_C"),
+      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      relative_humidity = units::set_units(.data$relative_humidity, "%"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      insolation = units::set_units(.data$insolation, "h")
+    )
+}
+.meteogalicia_daily_carpentry <- function(data) {
+  data %>%
+    # When querying stations, it can happen that some stations lack some variables, making the further
+    # select step to fail. We create missing variables and populate them with NAs to avoid this error
+    .create_missing_vars(
+      var_names = c(
+        'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
+        'HR_AVG_1.5m', 'HR_MIN_1.5m', 'HR_MAX_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+      )
+    ) %>%
+    dplyr::select(
+      timestamp = .data$data,
+      station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
+      mean_temperature = .data$TA_AVG_1.5m,
+      min_temperature = .data$TA_MIN_1.5m,
+      max_temperature = .data$TA_MAX_1.5m,
+      mean_wind_direction = .data$DV_AVG_2m,
+      mean_wind_speed = .data$VV_AVG_2m,
+      mean_relative_humidity = .data$HR_AVG_1.5m,
+      min_relative_humidity = .data$HR_MIN_1.5m,
+      max_relative_humidity = .data$HR_MAX_1.5m,
+      precipitation = .data$PP_SUM_1.5m,
+      insolation = .data$HSOL_SUM_1.5m
+    ) %>%
+    dplyr::mutate(
+      timestamp = lubridate::as_datetime(.data$timestamp),
+      service = 'meteogalicia',
+      station_id = as.character(.data$station_id),
+      mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      mean_wind_direction = units::set_units(.data$mean_wind_direction, "degree"),
+      mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
+      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+      min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
+      max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      insolation = units::set_units(.data$insolation, "h")
+    )
+}
+.meteogalicia_monthly_carpentry <- function(data) {
+  data %>%
+    # When querying stations, it can happen that some stations lack some variables, making the further
+    # select step to fail. We create missing variables and populate them with NAs to avoid this error
+    .create_missing_vars(
+      var_names = c(
+        'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'VV_AVG_2m',
+        'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+      )
+    ) %>%
+    dplyr::select(
+      timestamp = .data$data,
+      station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
+      mean_temperature = .data$TA_AVG_1.5m,
+      min_temperature = .data$TA_MIN_1.5m,
+      max_temperature = .data$TA_MAX_1.5m,
+      mean_wind_speed = .data$VV_AVG_2m,
+      mean_relative_humidity = .data$HR_AVG_1.5m,
+      precipitation = .data$PP_SUM_1.5m,
+      insolation = .data$HSOL_SUM_1.5m
+    ) %>%
+    dplyr::mutate(
+      timestamp = lubridate::as_datetime(.data$timestamp),
+      service = 'meteogalicia',
+      station_id = as.character(.data$station_id),
+      mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
+      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      insolation = units::set_units(.data$insolation, "h")
+    )
 }
