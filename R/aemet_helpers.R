@@ -385,70 +385,8 @@
   # The latter will simplify adding monthly in the future, so lets do it:
   resolution_specific_carpentry <- switch(
     api_options$resolution,
-    'current_day' = function(data) {
-      data %>%
-        dplyr::select(
-          timestamp = .data$fint, station_id = .data$idema, station_name = .data$ubi,
-          altitude = .data$alt,
-          temperature = .data$ta,
-          min_temperature = .data$tamin,
-          max_temperature = .data$tamax,
-          relative_humidity = .data$hr,
-          precipitation = .data$prec,
-          wind_speed = .data$vv,
-          wind_direction = .data$dv,
-          longitude = .data$lon, latitude = .data$lat,
-        ) %>%
-        # units
-        dplyr::mutate(
-          service = 'aemet',
-          timestamp = lubridate::as_datetime(.data$timestamp),
-          altitude = units::set_units(.data$altitude, "m"),
-          temperature = units::set_units(.data$temperature, "degree_C"),
-          min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-          max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-          relative_humidity = units::set_units(.data$relative_humidity, "%"),
-          precipitation = units::set_units(.data$precipitation, "L/m^2"),
-          wind_speed = units::set_units(.data$wind_speed, "m/s"),
-          wind_direction = units::set_units(.data$wind_direction, "degree")
-        ) %>%
-        sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
-    },
-    'daily' = function(data) {
-      data %>%
-        dplyr::select(
-          timestamp = .data$fecha,
-          station_id = .data$indicativo, station_name = .data$nombre, station_province = .data$provincia,
-          mean_temperature = .data$tmed,
-          min_temperature = .data$tmin,
-          max_temperature = .data$tmax,
-          precipitation = .data$prec,
-          mean_wind_speed = .data$velmedia,
-          # wind_direction = .data$dir,
-          insolation = .data$sol
-        ) %>%
-        # variables are characters, with "," as decimal point, so....
-        dplyr::mutate(
-          service = 'aemet',
-          timestamp = lubridate::as_datetime(.data$timestamp),
-          mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
-          min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
-          max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
-          precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$precipitation, ',', '.'))),
-          mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
-          # wind_direction = as.numeric(stringr::str_replace_all(.data$wind_direction, ',', '.')),
-          insolation = as.numeric(stringr::str_replace_all(.data$insolation, ',', '.')),
-          # and set the units also
-          mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
-          min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-          max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-          precipitation = units::set_units(.data$precipitation, "L/m^2"),
-          mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
-          # wind_direction = units::set_units(.data$wind_direction, degree),
-          insolation = units::set_units(.data$insolation, "h")
-        ) %>%
-        dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name'))
-    }
+    'current_day' = .aemet_current_day_carpentry,
+    'daily' = .aemet_daily_carpentry
   )
 
   # NOTE::
@@ -470,17 +408,6 @@
     relocate_vars() %>%
     # ensure we have an sf
     sf::st_as_sf()
-    # dplyr::relocate(
-    #   dplyr::contains('timestamp'),
-    #   dplyr::contains('station'),
-    #   dplyr::contains('altitude'),
-    #   dplyr::contains('temperature'),
-    #   dplyr::contains('humidity'),
-    #   dplyr::contains('precipitation'),
-    #   dplyr::contains('wind'),
-    #   dplyr::contains('sol'),
-    #   .data$geometry
-    # )
 
 
   # Check if any stations were returned -------------------------------------------------------------------
@@ -504,4 +431,71 @@
 
   # Return ------------------------------------------------------------------------------------------------
   return(res)
+}
+
+
+# resolution_specific_carpentry -------------------------------------------------------------------------
+.aemet_current_day_carpentry <- function(data) {
+  data %>%
+    dplyr::select(
+      timestamp = .data$fint, station_id = .data$idema, station_name = .data$ubi,
+      altitude = .data$alt,
+      temperature = .data$ta,
+      min_temperature = .data$tamin,
+      max_temperature = .data$tamax,
+      relative_humidity = .data$hr,
+      precipitation = .data$prec,
+      wind_speed = .data$vv,
+      wind_direction = .data$dv,
+      longitude = .data$lon, latitude = .data$lat,
+    ) %>%
+    # units
+    dplyr::mutate(
+      service = 'aemet',
+      timestamp = lubridate::as_datetime(.data$timestamp),
+      altitude = units::set_units(.data$altitude, "m"),
+      temperature = units::set_units(.data$temperature, "degree_C"),
+      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      relative_humidity = units::set_units(.data$relative_humidity, "%"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      wind_direction = units::set_units(.data$wind_direction, "degree")
+    ) %>%
+    sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
+}
+.aemet_daily_carpentry <- function(data) {
+  data %>%
+    dplyr::select(
+      timestamp = .data$fecha,
+      station_id = .data$indicativo, station_name = .data$nombre, station_province = .data$provincia,
+      mean_temperature = .data$tmed,
+      min_temperature = .data$tmin,
+      max_temperature = .data$tmax,
+      precipitation = .data$prec,
+      mean_wind_speed = .data$velmedia,
+      # wind_direction = .data$dir,
+      insolation = .data$sol
+    ) %>%
+    # variables are characters, with "," as decimal point, so....
+    dplyr::mutate(
+      service = 'aemet',
+      timestamp = lubridate::as_datetime(.data$timestamp),
+      mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
+      min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
+      max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
+      precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$precipitation, ',', '.'))),
+      mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
+      # wind_direction = as.numeric(stringr::str_replace_all(.data$wind_direction, ',', '.')),
+      insolation = as.numeric(stringr::str_replace_all(.data$insolation, ',', '.')),
+      # and set the units also
+      mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
+      # wind_direction = units::set_units(.data$wind_direction, degree),
+      insolation = units::set_units(.data$insolation, "h")
+    ) %>%
+    dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name'))
 }
