@@ -401,7 +401,7 @@
     # remove unwanted stations
     dplyr::filter(!! filter_expression) %>%
     # apply the resolution-specific transformations
-    resolution_specific_carpentry() %>%
+    resolution_specific_carpentry(stations_info) %>%
     # arrange data
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
     # reorder variables to be consistent among all services
@@ -435,7 +435,7 @@
 
 
 # resolution_specific_carpentry -------------------------------------------------------------------------
-.aemet_current_day_carpentry <- function(data) {
+.aemet_current_day_carpentry <- function(data, stations_info) {
   data %>%
     dplyr::select(
       timestamp = .data$fint, station_id = .data$idema, station_name = .data$ubi,
@@ -464,7 +464,7 @@
     ) %>%
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 }
-.aemet_daily_carpentry <- function(data) {
+.aemet_daily_carpentry <- function(data, stations_info) {
   data %>%
     dplyr::select(
       timestamp = .data$fecha,
