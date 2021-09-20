@@ -128,6 +128,7 @@
   response_content$listaEstacionsMeteo %>%
     dplyr::as_tibble() %>%
     dplyr::mutate(service = 'meteogalicia') %>%
+    .info_table_checker() %>%
     dplyr::select(
       .data$service, station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
       .data$altitude, .data$lat, .data$lon
@@ -422,4 +423,21 @@
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
       insolation = units::set_units(.data$insolation, "h")
     )
+}
+
+
+# info table checker ------------------------------------------------------------------------------------
+
+.info_table_checker <- function(data) {
+
+  mandatory_names <- c("service", "idEstacion", "estacion", "provincia", "altitude", "lat", "lon")
+  names_ok <- mandatory_names %in% names(data)
+
+  if (!all(names_ok)) {
+    stop(glue::glue(
+      "Oops, something went wrong and some info about stations is missing: {glue::glue_collapse(mandatory_names[names_ok], sep = ', )}"
+    ))
+  }
+
+  return(data)
 }
