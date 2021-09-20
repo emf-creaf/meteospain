@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
       </span>
     </div>
 
@@ -144,7 +144,6 @@
     end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-31'</span><span class="op">)</span>
   <span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; Client error: (429) Too Many Requests (RFC 6585)API request limit reached, taking a cooldown of 60 seconds to reset.</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="va">res_1990_feb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span>
@@ -224,16 +223,15 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
   <span class="op">)</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; Client error: (429) Too Many Requests (RFC 6585)API request limit reached, taking a cooldown of 60 seconds to reset.</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; API request limit reached, taking a cooldown of 60 seconds to reset.</span>
+<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
+<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
+<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
+<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="va">res_tidyverse</span>
@@ -284,14 +282,12 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; Client error: (429) Too Many Requests (RFC 6585)API request limit reached, taking a cooldown of 60 seconds to reset.</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; API request limit reached, taking a cooldown of 60 seconds to reset.</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="va">res_for</span>
