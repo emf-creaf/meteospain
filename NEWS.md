@@ -1,3 +1,7 @@
+# meteospain (development version)
+
+* Better error for when MeteoGalicia stations info does not return all the columns needed
+
 # meteospain 0.0.1
 
 * Initial version of the package
