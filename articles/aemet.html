@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -167,10 +167,10 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 #&gt; [1] "current_day"
 #&gt; 
 #&gt; $start_date
-#&gt; [1] "2021-09-07"
+#&gt; [1] "2021-09-20"
 #&gt; 
 #&gt; $end_date
-#&gt; [1] "2021-09-07"
+#&gt; [1] "2021-09-20"
 #&gt; 
 #&gt; $stations
 #&gt; NULL
@@ -237,6 +237,7 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
   api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">spain_20200425</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span>
+<span class="co">#&gt; Client error: (429) Too Many Requests (RFC 6585)API request limit reached, taking a cooldown of 60 seconds to reset.</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="va">spain_20200425</span>
@@ -270,8 +271,7 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="aemet_files/figure-html/aemet_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">spain_20200425</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">spain_20200425</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>
