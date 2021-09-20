@@ -8,10 +8,12 @@ nodes: ''
 authors:
 - vgranda
 - mcaceres
+- aameztegui
 - emf
 authors_aff:
 - CREAF
 - CREAF
+- Lleida University
 - CREAF
 resource_link: softworks/meteospain
 thematic: data_access
