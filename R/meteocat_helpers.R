@@ -327,6 +327,7 @@
       .data$service, station_id = .data$codi, station_name = .data$nom, .data$station_province,
       altitude = .data$altitud, .data$longitud, .data$latitud
     ) %>%
+    dplyr::distinct() %>%
     dplyr::mutate(
       altitude = units::set_units(.data$altitude, 'm')
     ) %>%
