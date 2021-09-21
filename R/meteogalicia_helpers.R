@@ -217,7 +217,7 @@
   res <-
     resolution_specific_unnesting(response_content) %>%
     # final unnest, common to all resolutions
-    tidyr::unnest(.data$listaMedidas) %>%
+    unnest_debug(.data$listaMedidas) %>%
     # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
     dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
     # remove unwanted variables
@@ -258,21 +258,21 @@
 
 .meteogalicia_current_day_unnesting <- function(response_content) {
   res <- response_content$listHorarios %>%
-    tidyr::unnest(.data$listaInstantes)
+    unnest_debug(.data$listaInstantes)
 
   return(res)
 }
 
 .meteogalicia_daily_unnesting <- function(response_content) {
   res <- response_content$listDatosDiarios %>%
-    tidyr::unnest(.data$listaEstacions)
+    unnest_debug(.data$listaEstacions)
 
   return(res)
 }
 
 .meteogalicia_monthly_unnesting <- function(response_content) {
   res <- response_content$listDatosMensuais %>%
-    tidyr::unnest(.data$listaEstacions)
+    unnest_debug(.data$listaEstacions)
 
   return(res)
 }

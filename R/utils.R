@@ -160,3 +160,15 @@ main_test_battery <- function(test_object, ...) {
     testthat::expect_equal(unique(test_object$station_id), rlang::eval_tidy(args$stations_to_check))
   }
 }
+
+unnest_debug <- function(x, ...) {
+
+  if (inherits(x, 'list')) {
+    stop(glue::glue(
+      "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n'}"
+    ))
+  }
+
+  return(tidyr::unnest(x, ...))
+
+}
