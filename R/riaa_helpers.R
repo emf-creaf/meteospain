@@ -7,8 +7,6 @@
 #' @noRd
 .check_status_riaa <- function(...) {
 
-  browser()
-
   # GET step
   api_response <- httr::GET(...)
   response_status <- httr::status_code(api_response)
@@ -24,8 +22,9 @@
       message = glue::glue(
         "Unable to obtain data from RIAA API:\n",
         "{httr::http_status(api_response)$message}\n",
-        "{jsonlite::fromJSON(httr::content(api_response, as = 'text', encoding = 'UTF-8'))$message}"
-      )
+        "{rawToChar(api_response$content)}"
+      ),
+      station_url = api_response$url
     )
     return(res)
   }
@@ -36,7 +35,8 @@
     status = 'OK',
     code = response_status,
     message = "Data received",
-    content = response_content
+    content = response_content,
+    station_url = api_response$url
   )
 
   return(res)
@@ -86,45 +86,45 @@
   # we need the resolution to create the corresponding path
   resolution <- api_options$resolution
 
-  # depending on resolution, the variables list is different
-  variables_list <- switch(
-    api_options$resolution,
-    'instant' = c(32, 33, 35, 36, 46, 47),
-    'hourly' = c(32, 33, 35, 36, 46, 47),
-    'daily' = c(1000:1002, 1100:1102, 1300, 1400, 1505, 1511),
-    'monthly' = c(2000:2004, 2100:2104, 2300, 2400, 2505, 2511),
-    'yearly' = c(3000:3004, 3100:3104, 3300, 3400, 3505, 3511)
-  )
+  riaa_stamp <- lubridate::stamp("2001-12-25", orders = "Ymd0", quiet = TRUE)
+
+  month_and_years <- tibble::tibble(
+    year = lubridate::year(seq(api_options$start_date, api_options$end_date, 'months')),
+    month = lubridate::month(seq(api_options$start_date, api_options$end_date, 'months'))
+  ) %>%
+    dplyr::group_by(year) %>%
+    dplyr::mutate(min_month = min(month), max_month = max(month)) %>%
+    dplyr::select(-month) %>%
+    dplyr::distinct() %>%
+    as.list()
+
 
   # now the path vectors for the resolutions
   paths_resolution <- switch(
     api_options$resolution,
-    'instant' = purrr::map(
-      variables_list,
-      function(variable) { c('xema', 'v1', 'variables', 'mesurades', variable, 'ultimes') }
-    ),
-    'hourly' = purrr::map(
-      variables_list,
-      function(variable) {
+    # for daily and monthly, stations are paths.
+    'daily' = purrr::map2(
+      api_options$provinces, api_options$stations,
+      function(province, station) {
         c(
-          'xema', 'v1', 'variables', 'mesurades', variable, lubridate::year(api_options$start_date),
-          format(api_options$start_date,"%m"), format(api_options$start_date,"%d")
+          'agriculturaypesca', 'ifapa', 'riaws', 'datosdiarios', 'forceEt0', province, station,
+          riaa_stamp(api_options$start_date), riaa_stamp(api_options$end_date)
         )
       }
     ),
-    # for daily and monthly, dates are query parameters not path ones.
-    'daily' = purrr::map(
-      variables_list,
-      function(variable) { c('xema', 'v1', 'variables', 'estadistics', 'diaris', variable) }
-    ),
-    'monthly' = purrr::map(
-      variables_list,
-      function(variable) { c('xema', 'v1', 'variables', 'estadistics', 'mensuals', variable) }
-    ),
-    'yearly' = purrr::map(
-      variables_list,
-      function(variable) { c('xema', 'v1', 'variables', 'estadistics', 'anuals', variable) }
-    ),
+    'monthly' = purrr::flatten(purrr::map2(
+      api_options$provinces, api_options$stations,
+      function(province, station) {
+        province_station_path <-
+          c('agriculturaypesca', 'ifapa', 'riaws', 'datosmensuales', province, station)
+        purrr::pmap(
+          month_and_years,
+          function(year, min_month, max_month) {
+            c(province_station_path, year, min_month, max_month)
+          }
+        )
+      }
+    )),
     list()
   )
 
@@ -137,4 +137,232 @@
   }
 
   return(paths_resolution)
+}
+
+#' Get info for the riaa stations
+#'
+#' Get info for the riaa stations
+#'
+#' @noRd
+
+.get_info_riaa <- function(api_options) {
+
+  # GET parts needed --------------------------------------------------------------------------------------
+  # path
+  path_resolution <- c('agriculturaypesca', 'ifapa', 'riaws', 'estaciones')
+
+  # Status check ------------------------------------------------------------------------------------------
+  api_status_check <- .check_status_riaa(
+    'https://www.juntadeandalucia.es',
+    path = path_resolution,
+    httr::user_agent('https://github.com/emf-creaf/meteospain')
+  )
+
+  if (api_status_check$status != 'OK') {
+    stop(api_status_check$code, ':\n', api_status_check$message)
+  }
+
+  # Data --------------------------------------------------------------------------------------------------
+  # riaa returns a data frame, but some variables are data frames themselves. We need to work on that
+  response_content <- api_status_check$content
+
+  province_df <- response_content[['provincia']]['nombre'] %>%
+    dplyr::rename(station_province = .data$nombre)
+
+  response_content %>%
+    dplyr::as_tibble() %>%
+    # add service name, to identify the data if joining with other services
+    dplyr::mutate(service = 'riaa') %>%
+    dplyr::select(-provincia) %>%
+    dplyr::bind_cols(province_df) %>%
+    dplyr::select(
+      .data$service, station_id = .data$codigoEstacion, station_name = .data$nombre, station_province,
+      altitude = .data$altitud, .data$longitud, .data$latitud, under_plastic = .data$bajoplastico
+    ) %>%
+    dplyr::distinct() %>%
+    dplyr::mutate(
+      altitude = units::set_units(.data$altitude, 'm'),
+      latitud = as.numeric(stringr::str_remove_all(.data$latitud, '[^0-9]')) / 1e7,
+      longitud = as.numeric(stringr::str_remove_all(.data$longitud, '[^0-9]')) / 1e7
+    ) %>%
+    sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
+
+}
+
+#' Get data from RIAA
+#'
+#' Get data from RIAA service
+#'
+#' For all resolutions, if no stations are provided all stations will be retrieved
+#'
+#' @param api_options Option list as generated by \link{\code{riaa_options}}
+#'
+#' @noRd
+.get_data_riaa <- function(api_options) {
+
+  # All necessary things for the GET ----------------------------------------------------------------------
+  # stations_info and update api_options
+  # we need the stations id and their province
+  stations_info <- .get_info_riaa(api_options) %>%
+    dplyr::left_join(.get_provinces_riaa(api_options), by = c('station_province' = 'nombre')) %>%
+    dplyr::rename('province_id' = 'id')
+
+  if (is.null(api_options$stations)) {
+    api_options$stations <- stations_info[['station_id']]
+    api_options$provinces <- stations_info[['province_id']]
+  } else {
+    api_options$stations <- stations_info %>%
+      dplyr::filter(station_id %in% api_options$stations) %>%
+      dplyr::pull(station_id)
+    api_options$provinces <- stations_info %>%
+      dplyr::filter(station_id %in% api_options$stations) %>%
+      dplyr::pull(province_id)
+  }
+  # create api paths
+  paths_resolution <- .create_riaa_path(api_options)
+
+  # GET and Status check ----------------------------------------------------------------------------------
+  # Here the things are a little convoluted. riaa, for returning all stations only allows one variable
+  # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
+  # checking statuses and retrieving data if everything is ok.
+  api_statuses <- paths_resolution %>%
+    purrr::map(
+      ~ .check_status_riaa(
+        "https://www.juntadeandalucia.es",
+        path = .x,
+        httr::user_agent('https://github.com/emf-creaf/meteospain')
+      )
+    )
+
+  riaa_statuses <- purrr::map_depth(api_statuses, 1, 'status') %>%
+    purrr::flatten_chr()
+  riaa_codes <- purrr::map_depth(api_statuses, 1, 'code') %>%
+    purrr::flatten_dbl()
+  riaa_messages <- purrr::map_depth(api_statuses, 1, 'message') %>%
+    purrr::flatten_chr()
+  riaa_urls <- purrr::map_depth(api_statuses, 1, 'station_url') %>%
+    purrr::flatten_chr()
+
+  messages_to_show <- riaa_messages[which(riaa_codes != 200)] %>% unique()
+  urls_to_show <- riaa_urls[which(riaa_codes != 200)] %>% unique()
+
+  if (all(riaa_statuses != 'OK')) {
+    stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
+  }
+
+  if (any(riaa_statuses != 'OK')) {
+    warning(
+      glue::glue_collapse(messages_to_show, sep = ', also:\n'),
+      "\nFor the following stations and dates:\n",
+      glue::glue_collapse(urls_to_show, sep = ', \n')
+    )
+  }
+
+  # Resolution specific carpentry -------------------------------------------------------------------------
+  # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
+  # differently. It also differs in the select step as in the latter group there is no repetition of column
+  # names after the unnest step.
+  resolution_specific_unnest <- switch(
+    'daily' = .riaa_daily_carpentry,
+    'monthly' = .riaa_monthly_carpentry
+  )
+
+  .riaa.monthly_carpentry <- function(api_statuses) {
+    riaa_urls <- purrr::map_depth(api_statuses, 1, 'station_url') %>%
+      purrr::flatten_chr()
+
+    purrr::map_depth(api_statuses, 1, 'content') %>%
+      magrittr::set_names(riaa_urls) %>%
+      purrr::discard(is.null) %>%
+      purrr::imap_dfr(
+        ~ dplyr::mutate(.x, station_id = .riaa_url2station(.y))
+      ) %>%
+      dplyr::select(
+        year = .data$anyo,, month = .data$mes, station_id,
+        mean_temperature = .data$tempMedia, min_temperature = .data$tempMin, max_temperature = .data$tempMax,
+        mean_relative_humidity = .data$humedadMedia, min_relative_humidity = .data$humedadMin,
+        max_relative_humidity = .data$humedadMax,
+        mean_wind_speed = .data$velViento, mean_wind_direction = .data$dirViento,
+        precipitation = .data$precipitacion,
+        solar_radiation = .data$radiacion
+      ) %>%
+      dplyr::mutate(
+        timestamp = as.Date(glue::glue("{year}-{month}-01")),
+        mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+        min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
+        max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
+        mean_wind_speed = units::set_units(.data$mean_wind_speed, 'm/s'),
+        mean_wind_direction = units::set_units(.data$mean_wind_direction, 'degree'),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
+        solar_radiation = units::set_units(.data$solar_radiation, ""),
+      ) %>%
+      dplyr::left_join(stations_info, by = 'station_id') %>%
+      # reorder variables to be consistent among all services
+      relocate_vars() %>%
+      # ensure we have an sf
+      sf::st_as_sf()
+    # TODO: station id is not unique, I need to get a way to implement a unique code (pasting province and id probably)
+
+  }
+
+  # # Stations info for getting coords ----------------------------------------------------------------------
+  # stations_info <- .get_info_riaa(api_options)
+  #
+  # # Data transformation -----------------------------------------------------------------------------------
+  # response_trasformed <- purrr::map_depth(api_statuses, 1, 'content') %>%
+  #   # resolution specific unnesting of raw data
+  #   resolution_specific_unnest() %>%
+  #   # transform variable codes to standard names
+  #   dplyr::mutate(variable_name = .riaa_var_codes_2_names(.data$variable_code)) %>%
+  #   # for daily, monthly and yearly, sometimes there are duplicated rows, remove them
+  #   dplyr::distinct() %>%
+  #   # each variable in its own column
+  #   tidyr::pivot_wider(
+  #     -.data$variable_code,
+  #     names_from = .data$variable_name, values_from = .data$valor
+  #   ) %>%
+  #   # set service, date and units
+  #   dplyr::mutate(
+  #     service = 'riaa',
+  #     timestamp = lubridate::parse_date_time(.data$timestamp, orders = c('ymdHMS', 'Ymz'), truncated = 5),
+  #     dplyr::across(dplyr::contains('temperature'), ~ units::set_units(.x, 'degree_C')),
+  #     dplyr::across(dplyr::contains('humidity'), ~ units::set_units(.x, '%')),
+  #     dplyr::across(dplyr::contains('precipitation'), ~ units::set_units(.x, 'L/m^2')),
+  #     dplyr::across(dplyr::contains('radiation'), ~ units::set_units(.x, 'MJ/m^2')),
+  #     dplyr::across(dplyr::contains('speed'), ~ units::set_units(.x, 'm/s')),
+  #     dplyr::across(dplyr::contains('direction'), ~ units::set_units(.x, 'degree')),
+  #   )
+  #
+  # res <- response_trasformed %>%
+  #   # remove unwanted stations
+  #   dplyr::filter(!! filter_expression) %>%
+  #   # join stations_info
+  #   dplyr::left_join(stations_info, by = c('service', 'station_id')) %>%
+  #   # arrange data
+  #   dplyr::arrange(.data$timestamp, .data$station_id) %>%
+  #   # reorder variables to be consistent among all services
+  #   relocate_vars() %>%
+  #   # ensure we have an sf
+  #   sf::st_as_sf()
+  #
+  # # Check if any stations were returned -------------------------------------------------------------------
+  # if ((!is.null(api_options$stations)) & nrow(res) < 1) {
+  #   stop(
+  #     "Station(s) provided have no data for the dates selected.\n",
+  #     "Available stations with data for the actual query are:\n",
+  #     glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
+  #   )
+  # }
+  #
+  # # Copyright message -------------------------------------------------------------------------------------
+  # message(
+  #   copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
+  #   '\n',
+  #   legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
+  # )
+  #
+  # return(res)
 }

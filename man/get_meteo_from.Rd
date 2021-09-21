@@ -5,7 +5,7 @@
 \title{Get meteorological stations data}
 \usage{
 get_meteo_from(
-  service = c("aemet", "meteocat", "meteoclimatic", "meteogalicia"),
+  service = c("aemet", "meteocat", "meteoclimatic", "meteogalicia", "riaa"),
   options
 )
 }

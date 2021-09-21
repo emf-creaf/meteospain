@@ -34,7 +34,7 @@
 #' @return An sf (spatial) object with the stations meteorological data.
 #'
 #' @export
-get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia'), options) {
+get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia', 'riaa'), options) {
   # check arguments
   service <- rlang::arg_match(service)
 
@@ -44,7 +44,8 @@ get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'me
     'aemet' = .get_data_aemet,
     'meteocat' = .get_data_meteocat,
     'meteoclimatic' = .get_data_meteoclimatic,
-    'meteogalicia' = .get_data_meteogalicia
+    'meteogalicia' = .get_data_meteogalicia,
+    'riaa', .get_data_riaa
   )
 
   return(api_function(options))
@@ -79,7 +80,7 @@ get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'me
 #'
 #' @export
 get_stations_info_from <- function(
-  service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia'),
+  service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia', 'riaa'),
   options
 ) {
   # check arguments
@@ -91,7 +92,8 @@ get_stations_info_from <- function(
     'aemet' = .get_info_aemet(options),
     'meteocat' = .get_info_meteocat(options),
     'meteoclimatic' = .get_info_meteoclimatic(options),
-    'meteogalicia' = .get_info_meteogalicia()
+    'meteogalicia' = .get_info_meteogalicia(),
+    'riaa' = .get_info_riaa(options)
   )
 
   return(res)

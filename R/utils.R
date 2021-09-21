@@ -118,6 +118,16 @@ relocate_vars <- function(data) {
     )
 }
 
+.riaa_url2station <- function(station_url) {
+  if (stringr::str_detect(station_url, 'mensuales')) {
+    stringr::str_remove_all(
+      station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/'
+    ) %>%
+      stringr::str_split('/', n = 3, simplify = TRUE) %>%
+      magrittr::extract(2)
+  }
+}
+
 # test helpers ------------------------------------------------------------------------------------------
 
 skip_if_no_auth <- function(service) {
