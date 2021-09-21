@@ -156,7 +156,7 @@ identical(res_tidyverse, res_for)
   connections from the user quota. Take this into consideration when creating loops for longer periods, as you
   can reach your API request limits for the day/month... (it depends on the service API).
 
-## MeteoCat
+## MeteoCat API
 
 When using MeteoCat in `daily`, `monthly` and `yearly` there are restrictions on the period that can be
 accesed.
