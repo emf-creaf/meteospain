@@ -6,6 +6,7 @@
 \alias{meteocat_options}
 \alias{meteoclimatic_options}
 \alias{meteogalicia_options}
+\alias{riaa_options}
 \title{Options for meteorological services}
 \usage{
 aemet_options(
@@ -28,6 +29,13 @@ meteoclimatic_options(resolution = c("current_day"), stations = NULL)
 meteogalicia_options(
   resolution = c("instant", "current_day", "daily", "monthly"),
   start_date = Sys.Date(),
+  end_date = start_date,
+  stations = NULL
+)
+
+riaa_options(
+  resolution = c("daily", "monthly"),
+  start_date = Sys.Date() - 1,
   end_date = start_date,
   stations = NULL
 )
@@ -92,6 +100,8 @@ Some services accept querying multiple stations at once, and other only allows o
 \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 autonomous communities.}
+\item{RIAA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
+stations provided}
 }
 }
 
@@ -165,5 +175,19 @@ monthly_opts <- meteogalicia_options(
   start_date = as.Date('2000-01-01'),
   end_date = as.Date('2000-12-31')
 )
+
+\donttest{
+library(keyring)
+library(meteospain)
+
+## RIAA examples ---------------------------------------------------------
+
+# Options for daily data for April, 2020
+daily_opts <- riaa_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-01'),
+  end_date = as.Date('2020-04-30')
+)
+}
 
 }

@@ -46,6 +46,8 @@
 #'   \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 #'   common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 #'   autonomous communities.}
+#'   \item{RIAA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
+#'   stations provided}
 #' }
 #'
 #'
@@ -251,6 +253,54 @@ meteogalicia_options <- function(
     resolution = resolution,
     start_date = start_date,
     end_date = dplyr::if_else(rlang::is_null(end_date), start_date, end_date),
+    stations = stations
+  )
+
+  return(res)
+}
+
+#' Options for RIAA service
+#'
+#' @examples
+#' \donttest{
+#' library(keyring)
+#' library(meteospain)
+#'
+#' ## RIAA examples ---------------------------------------------------------
+#'
+#' # Options for daily data for April, 2020
+#' daily_opts <- riaa_options(
+#'   resolution = 'daily',
+#'   start_date = as.Date('2020-04-01'),
+#'   end_date = as.Date('2020-04-30')
+#' )
+#' }
+#'
+#' @rdname services_options
+#'
+#' @export
+riaa_options <- function(
+  resolution = c('daily', 'monthly'),
+  start_date = Sys.Date() - 1,
+  end_date = start_date,
+  stations = NULL
+) {
+  # check arguments
+  resolution <- rlang::arg_match(resolution)
+  assertthat::assert_that(
+    assertthat::is.date(start_date),
+    assertthat::is.date(end_date)
+  )
+  assertthat::assert_that(
+    dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
+    msg = "'stations' must be a character vector"
+  )
+
+  # build list
+  res <- list(
+    resolution = resolution,
+    start_date = start_date,
+    end_date = end_date,
     stations = stations
   )
 
