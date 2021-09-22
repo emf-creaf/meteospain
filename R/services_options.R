@@ -46,7 +46,7 @@
 #'   \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 #'   common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 #'   autonomous communities.}
-#'   \item{RIAA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
+#'   \item{RIA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
 #'   stations provided}
 #' }
 #'
@@ -259,17 +259,17 @@ meteogalicia_options <- function(
   return(res)
 }
 
-#' Options for RIAA service
+#' Options for RIA service
 #'
 #' @examples
 #' \donttest{
 #' library(keyring)
 #' library(meteospain)
 #'
-#' ## RIAA examples ---------------------------------------------------------
+#' ## RIA examples ---------------------------------------------------------
 #'
 #' # Options for daily data for April, 2020
-#' daily_opts <- riaa_options(
+#' daily_opts <- ria_options(
 #'   resolution = 'daily',
 #'   start_date = as.Date('2020-04-01'),
 #'   end_date = as.Date('2020-04-30')
@@ -279,7 +279,7 @@ meteogalicia_options <- function(
 #' @rdname services_options
 #'
 #' @export
-riaa_options <- function(
+ria_options <- function(
   resolution = c('daily', 'monthly'),
   start_date = Sys.Date() - 1,
   end_date = start_date,

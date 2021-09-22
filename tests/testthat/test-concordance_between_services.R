@@ -64,16 +64,20 @@ test_that("daily concordance exists", {
     'meteogalicia',
     meteogalicia_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
   ))
+  ria_daily <- suppressMessages(get_meteo_from(
+    'ria',
+    ria_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+  ))
   test_object <- suppressMessages(purrr::reduce(
     list(
       dplyr::as_tibble(aemet_daily), dplyr::as_tibble(meteocat_daily),
-      dplyr::as_tibble(meteogalicia_daily)
+      dplyr::as_tibble(meteogalicia_daily), dplyr::as_tibble(ria_daily)
     ),
     dplyr::full_join
   ) %>%
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
-  expect_identical(unique(test_object$service), c('aemet', 'meteocat', 'meteogalicia'))
+  expect_identical(unique(test_object$service), c('aemet', 'meteocat', 'meteogalicia', 'ria'))
 })
 
 test_that("monthly concordance exists", {
@@ -91,15 +95,20 @@ test_that("monthly concordance exists", {
     'meteogalicia',
     meteogalicia_options('monthly', start_date = as.Date('2020-01-01'), end_date = as.Date('2020-12-31'))
   ))
+  ria_monthly <- suppressMessages(get_meteo_from(
+    'ria',
+    ria_options('monthly', start_date = as.Date('2020-01-01'), end_date = as.Date('2020-12-31'))
+  ))
   test_object <- suppressMessages(purrr::reduce(
     list(
       # dplyr::as_tibble(aemet_monthly),
       dplyr::as_tibble(meteocat_monthly),
-      dplyr::as_tibble(meteogalicia_monthly)
+      dplyr::as_tibble(meteogalicia_monthly),
+      dplyr::as_tibble(ria_monthly)
     ),
     dplyr::full_join
   ) %>%
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
-  expect_identical(unique(test_object$service), c('meteocat', 'meteogalicia'))
+  expect_identical(unique(test_object$service), c('meteocat', 'meteogalicia', 'ria'))
 })

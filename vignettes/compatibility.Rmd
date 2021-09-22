@@ -65,6 +65,11 @@ meteogalicia_daily <- get_meteo_from(
   'meteogalicia',
   meteogalicia_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
 )
+
+ria_daily <- get_meteo_from(
+  'ria',
+  ria_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+)
 ```
 
 Now we have all daily data for April, lets join them. We are gonna use the purrr package to do it in one
@@ -76,7 +81,8 @@ by timestamp and the stations metadata. After the join we convert back to `sf`.
 april_2020_spain <- list(
   dplyr::as_tibble(aemet_daily),
   dplyr::as_tibble(meteocat_daily),
-  dplyr::as_tibble(meteogalicia_daily)
+  dplyr::as_tibble(meteogalicia_daily),
+  dplyr::as_tibble(ria_daily)
 ) %>%
   purrr::reduce(dplyr::full_join) %>%
   sf::st_as_sf()

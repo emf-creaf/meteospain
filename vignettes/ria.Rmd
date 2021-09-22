@@ -1,0 +1,111 @@
+---
+title: "RIA service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{RIA service}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+# use eval = NOT_CRAN in the chunks connecting to API, to avoid errors or warnings in CRAN checks
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN
+)
+```
+
+```{r setup}
+library(meteospain)
+library(ggplot2)
+library(ggforce)
+library(sf)
+```
+
+# Red de Información Agroclimática de Andalucía (RIA) service
+
+[RIA](https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/) service offers the data of the
+andalucian automatic meteorological stations network. This network is supported and assesed by the
+Junta de Andalucía and the data should be trustworthy.
+
+## RIA options
+
+### Temporal resolution
+
+RIA API offers data at different temporal resolutions:
+
+  - "daily", returning the daily aggregated measures for all or selected stations.
+  - "monthly", returning the monthly aggregated measures for all or selected stations.
+
+In both, "daily" and "monthly", a `start_date` (and optionally an `end_date`) arguments must be provided,
+indicating the period from which retrieve the data.
+
+### Stations
+
+RIA API needs station codes and province codes to retrieve the data. Sadly, RIA doesn't provide unique
+station codes, and the uniqueness comes with the province id and station code together. So, to narrow the
+data retrieving to the desired stations they must be provided as a character vector of
+"province_id-station_code" values (i.e. "14-2") for the `stations` argument. Calling
+`get_stations_info_from('ria', ria_options)` will show the station correct codes in the `station_id` column
+to take as reference.
+
+### Examples
+
+```{r ria_options, eval=NOT_CRAN}
+# default, daily for yesterday
+api_options <- ria_options()
+api_options
+
+# daily, only some stations
+api_options <- ria_options(
+  resolution = 'daily',
+  stations = c('14-2', '4-2')
+)
+api_options
+
+# monthly, some stations
+api_options <- ria_options(
+  resolution = 'monthly',
+  start_date = as.Date('2020-04-01'), end_date = as.Date('2020-08-01'),
+  stations = c('14-2', '4-2')
+)
+api_options
+```
+
+
+## RIA stations info
+
+Accessing station metadata for RIA is simple:
+
+```{r ria_stations, eval = NOT_CRAN}
+get_stations_info_from('ria', ria_options)
+```
+
+## RIA data
+
+```{r ria_data, eval = NOT_CRAN}
+api_options <- ria_options(
+  resolution = 'daily',
+  start_date = as.Date('2020-04-25')
+)
+galicia_20200425 <- get_meteo_from('ria', options = api_options)
+galicia_20200425
+```
+
+Visually:
+
+```{r ria_data_plot, fig.width=7, fig.height=5, fig.align='center', eval = NOT_CRAN}
+galicia_20200425 %>%
+  units::drop_units() %>%
+  ggplot() +
+  geom_sf(aes(colour = max_temperature)) +
+  scale_colour_viridis_c()
+
+galicia_20200425 %>%
+  ggplot() +
+  geom_histogram(aes(x = precipitation))
+```
