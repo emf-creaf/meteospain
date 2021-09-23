@@ -1,5 +1,6 @@
 # meteospain (development version)
 
+* Added RIA (Red de Información Agroclimática de Andalucía) service
 * Better error for when MeteoGalicia stations info does not return all the columns needed
 
 # meteospain 0.0.1
