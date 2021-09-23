@@ -153,12 +153,12 @@
 <p>Accessing station metadata for Meteoclimatic is simple:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteoclimatic'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 206 features and 3 fields</span>
+<span class="co">#&gt; Simple feature collection with 204 features and 3 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 1.58 ymin: 41.22 xmax: 2.72 ymax: 42.28</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 206 × 4</span>
+<span class="co">#&gt; # A tibble: 204 × 4</span>
 <span class="co">#&gt;    service       station_id          station_name                       geometry</span>
 <span class="co">#&gt;  * &lt;chr&gt;         &lt;chr&gt;               &lt;chr&gt;                           &lt;POINT [°]&gt;</span>
 <span class="co">#&gt;  1 meteoclimatic ESCAT0800000008591A Aiguafreda (Barcelona)         (2.25 41.77)</span>
@@ -170,8 +170,8 @@
 <span class="co">#&gt;  7 meteoclimatic ESCAT0800000008915A Badalona - Bufalà (Barcelona)  (2.24 41.46)</span>
 <span class="co">#&gt;  8 meteoclimatic ESCAT0800000008912A Badalona - Centre (Barcelona)  (2.25 41.45)</span>
 <span class="co">#&gt;  9 meteoclimatic ESCAT0800000008911C Badalona - Dalt la Vila (Barc… (2.26 41.46)</span>
-<span class="co">#&gt; 10 meteoclimatic ESCAT0800000008917B Badalona - La Pau (Barcelona)  (2.22 41.45)</span>
-<span class="co">#&gt; # … with 196 more rows</span></code></pre></div>
+<span class="co">#&gt; 10 meteoclimatic ESCAT0800000008080A Badalona - Llefià (Barcelona)  (2.23 41.44)</span>
+<span class="co">#&gt; # … with 194 more rows</span></code></pre></div>
 </div>
 <div id="meteoclimatic-data" class="section level2">
 <h2 class="hasAnchor">
@@ -182,25 +182,25 @@
 <span class="co">#&gt; No quality check is performed in this data, and errors in measures or coordinates of stations can be present.</span>
 <span class="co">#&gt; https://www.meteoclimatic.net/index</span>
 <span class="va">current_day_barcelona</span>
-<span class="co">#&gt; Simple feature collection with 206 features and 9 fields</span>
+<span class="co">#&gt; Simple feature collection with 204 features and 9 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 1.58 ymin: 41.22 xmax: 2.72 ymax: 42.28</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 206 × 10</span>
+<span class="co">#&gt; # A tibble: 204 × 10</span>
 <span class="co">#&gt;    timestamp           service       station_id          station_name min_temperature</span>
 <span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;         &lt;chr&gt;               &lt;chr&gt;                   [°C]</span>
-<span class="co">#&gt;  1 2021-09-20 11:18:00 meteoclimatic ESCAT0800000008160A Montmeló-T.…            14.8</span>
-<span class="co">#&gt;  2 2021-09-20 11:18:00 meteoclimatic ESCAT0800000008188C Vallromanes…            14.2</span>
-<span class="co">#&gt;  3 2021-09-20 11:19:00 meteoclimatic ESCAT0800000008012A Barcelona -…            19.1</span>
-<span class="co">#&gt;  4 2021-09-20 11:19:00 meteoclimatic ESCAT0800000008695E Cadí Est2-2…             2.7</span>
-<span class="co">#&gt;  5 2021-09-20 11:20:00 meteoclimatic ESCAT0800000008035A Barcelona -…            17.1</span>
-<span class="co">#&gt;  6 2021-09-20 11:20:00 meteoclimatic ESCAT0800000008540B Centelles (…            10.9</span>
-<span class="co">#&gt;  7 2021-09-20 11:21:00 meteoclimatic ESCAT0800000008519B Tavèrnoles …            11.2</span>
-<span class="co">#&gt;  8 2021-09-20 11:22:00 meteoclimatic ESCAT0800000008188B Vallromanes…            13.3</span>
-<span class="co">#&gt;  9 2021-09-20 11:23:00 meteoclimatic ESCAT0800000008505A Sentfores (…            10.3</span>
-<span class="co">#&gt; 10 2021-09-20 11:24:00 meteoclimatic ESCAT0800000008591A Aiguafreda …            11.4</span>
-<span class="co">#&gt; # … with 196 more rows, and 5 more variables: max_temperature [°C],</span>
+<span class="co">#&gt;  1 2021-09-23 09:45:00 meteoclimatic ESCAT0800000008696A La Pobla de…             7.8</span>
+<span class="co">#&gt;  2 2021-09-23 09:45:00 meteoclimatic ESCAT0800000008710B S.M.Montbui…            13.1</span>
+<span class="co">#&gt;  3 2021-09-23 09:45:00 meteoclimatic ESCAT0800000008903D Sant Boi - …            15.9</span>
+<span class="co">#&gt;  4 2021-09-23 09:48:00 meteoclimatic ESCAT0800000008188C Vallromanes…            14.9</span>
+<span class="co">#&gt;  5 2021-09-23 09:49:00 meteoclimatic ESCAT0800000008012A Barcelona -…            18.7</span>
+<span class="co">#&gt;  6 2021-09-23 09:49:00 meteoclimatic ESCAT0800000008160A Montmeló-T.…            15.7</span>
+<span class="co">#&gt;  7 2021-09-23 09:49:00 meteoclimatic ESCAT0800000008695C Bagà (centr…             7.6</span>
+<span class="co">#&gt;  8 2021-09-23 09:50:00 meteoclimatic ESCAT0800000008035C Barcelona -…            16.1</span>
+<span class="co">#&gt;  9 2021-09-23 09:51:00 meteoclimatic ESCAT0800000008035A Barcelona -…            17.1</span>
+<span class="co">#&gt; 10 2021-09-23 09:51:00 meteoclimatic ESCAT0800000008540B Centelles (…            12.2</span>
+<span class="co">#&gt; # … with 194 more rows, and 5 more variables: max_temperature [°C],</span>
 <span class="co">#&gt; #   min_relative_humidity [%], max_relative_humidity [%],</span>
 <span class="co">#&gt; #   precipitation [L/m^2], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>

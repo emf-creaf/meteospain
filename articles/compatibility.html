@@ -168,26 +168,59 @@
 <span class="co">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á </span>
 <span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span>
 <span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span>
-<span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></code></pre></div>
+<span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span>
+<span class="va">ria_daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span>
+  <span class="st">'ria'</span>,
+  <span class="fu"><a href="../reference/services_options.html">ria_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="co">#&gt; Unable to obtain data from RIA API:</span>
+<span class="co">#&gt; Client error: (404) Not Found</span>
+<span class="co">#&gt; Response status 404 with reason "Datos diarios no encontrados para la estación en las fechas indicadas." </span>
+<span class="co">#&gt; for the following stations and dates:</span>
+<span class="co">#&gt;  https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/9/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/3/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/5/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/1/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/4/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/106/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/9/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/1/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/10/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/13/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/4/3/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/14/3/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/107/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/4/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/8/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/3/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/9/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/4/9/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/6/2020-04-01/2020-04-30,</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/14/2020-04-01/2020-04-30</span>
+<span class="co">#&gt; Data provided by Red de Información Agroclimática de Andalucía (RIA)</span>
+<span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/</span></code></pre></div>
 <p>Now we have all daily data for April, lets join them. We are gonna use the purrr package to do it in one pipe.<br>
 Here we convert the data to tibble before the join, that way we are not joining by the spatial data, but by timestamp and the stations metadata. After the join we convert back to <code>sf</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">april_2020_spain</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">aemet_daily</span><span class="op">)</span>,
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">meteocat_daily</span><span class="op">)</span>,
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">meteogalicia_daily</span><span class="op">)</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">meteogalicia_daily</span><span class="op">)</span>,
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">ria_daily</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "station_province", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "geometry")</span>
 <span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "station_province", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "insolation", "geometry", "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "mean_wind_direction")</span>
+<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "station_province", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "geometry", "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "mean_wind_direction")</span>
 <span class="va">april_2020_spain</span>
-<span class="co">#&gt; Simple feature collection with 17473 features and 17 fields (with 180 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 20469 features and 19 fields (with 240 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.471</span>
+<span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 17,473 × 18</span>
+<span class="co">#&gt; # A tibble: 20,469 × 20</span>
 <span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
 <span class="co">#&gt;  1 2020-04-01 00:00:00 aemet   0016A      REUS AEROPU… TARRAGONA              71</span>
@@ -200,12 +233,12 @@ Here we convert the data to tibble before the join, that way we are not joining 
 <span class="co">#&gt;  8 2020-04-01 00:00:00 aemet   0324A      RIPOLL       GIRONA                675</span>
 <span class="co">#&gt;  9 2020-04-01 00:00:00 aemet   0367       GIRONA AERO… GIRONA                143</span>
 <span class="co">#&gt; 10 2020-04-01 00:00:00 aemet   0372C      PORQUERES    GIRONA                157</span>
-<span class="co">#&gt; # … with 17,463 more rows, and 12 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; # … with 20,459 more rows, and 14 more variables: mean_temperature [°C],</span>
 <span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
 <span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;,</span>
 <span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity [%],</span>
 <span class="co">#&gt; #   max_relative_humidity [%], mean_wind_direction [°],</span>
-<span class="co">#&gt; #   global_solar_radiation [MJ/m^2]</span></code></pre></div>
+<span class="co">#&gt; #   global_solar_radiation [MJ/m^2], solar_radiation [1], under_plastic &lt;lgl&gt;</span></code></pre></div>
 <p>We can visualize the data, only one day.</p>
 <div id="by-service" class="section level4">
 <h4 class="hasAnchor">

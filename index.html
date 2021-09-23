@@ -127,6 +127,8 @@
 <li>
 <a href="https://www.meteogalicia.gal/web/inicio.action">MeteoGalicia</a>, the galician meteorological service.</li>
 <li>
+<a href="https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/">RIA</a>, the andalucian agroclimatic information network.</li>
+<li>
 <a href="https://www.meteoclimatic.net/">Meteoclimatic</a>, the spanish non-professional meteorological stations network.</li>
 </ul>
 </div>
@@ -144,54 +146,54 @@
 <span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span>
 <span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span>
 <span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span>
-<span class="co">#&gt; Simple feature collection with 3681 features and 13 fields</span>
+<span class="co">#&gt; Simple feature collection with 3602 features and 14 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 3,681 x 14</span>
-<span class="co">#&gt;    timestamp           station_id station_name     station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2021-06-01 13:00:00 10045      Mabegondo        A Coruña               94</span>
-<span class="co">#&gt;  2 2021-06-01 13:00:00 10046      Marco da Curra   A Coruña              651</span>
-<span class="co">#&gt;  3 2021-06-01 13:00:00 10047      Pedro Murias     Lugo                   51</span>
-<span class="co">#&gt;  4 2021-06-01 13:00:00 10048      O Invernadeiro   Ourense              1026</span>
-<span class="co">#&gt;  5 2021-06-01 13:00:00 10049      Corrubedo        A Coruña               30</span>
-<span class="co">#&gt;  6 2021-06-01 13:00:00 10050      CIS Ferrol       A Coruña               37</span>
-<span class="co">#&gt;  7 2021-06-01 13:00:00 10053      Campus Lugo      Lugo                  400</span>
-<span class="co">#&gt;  8 2021-06-01 13:00:00 10055      Guitiriz-Mirador Lugo                  684</span>
-<span class="co">#&gt;  9 2021-06-01 13:00:00 10056      Marroxo          Lugo                  645</span>
-<span class="co">#&gt; 10 2021-06-01 13:00:00 10057      Alto do Rodicio  Ourense               981</span>
-<span class="co">#&gt; # … with 3,671 more rows, and 9 more variables: temperature [°C],</span>
+<span class="co">#&gt; # A tibble: 3,602 x 15</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2021-09-22 07:00:00 meteog… 10045      Mabegondo    A Coruña               94</span>
+<span class="co">#&gt;  2 2021-09-22 07:00:00 meteog… 10046      Marco da Cu… A Coruña              651</span>
+<span class="co">#&gt;  3 2021-09-22 07:00:00 meteog… 10047      Pedro Murias Lugo                   51</span>
+<span class="co">#&gt;  4 2021-09-22 07:00:00 meteog… 10048      O Invernade… Ourense              1026</span>
+<span class="co">#&gt;  5 2021-09-22 07:00:00 meteog… 10049      Corrubedo    A Coruña               30</span>
+<span class="co">#&gt;  6 2021-09-22 07:00:00 meteog… 10050      CIS Ferrol   A Coruña               37</span>
+<span class="co">#&gt;  7 2021-09-22 07:00:00 meteog… 10052      Muralla      A Coruña              661</span>
+<span class="co">#&gt;  8 2021-09-22 07:00:00 meteog… 10053      Campus Lugo  Lugo                  400</span>
+<span class="co">#&gt;  9 2021-09-22 07:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684</span>
+<span class="co">#&gt; 10 2021-09-22 07:00:00 meteog… 10056      Marroxo      Lugo                  645</span>
+<span class="co">#&gt; # … with 3,592 more rows, and 9 more variables: temperature [°C],</span>
 <span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], relative_humidity [%],</span>
 <span class="co">#&gt; #   precipitation [L/m^2], wind_direction [°], wind_speed [m/s],</span>
 <span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Stations info can be accessed with <code>get_stations_info_from</code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 156 features and 4 fields</span>
+<span class="co">#&gt; Simple feature collection with 153 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 156 x 5</span>
-<span class="co">#&gt;    station_id station_name     station_province altitude                geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;                 [m]             &lt;POINT [°]&gt;</span>
-<span class="co">#&gt;  1 10157      Coruña-Torre de… A Coruña               21    (-8.409202 43.38276)</span>
-<span class="co">#&gt;  2 14000      Coruña-Dique     A Coruña                5    (-8.374706 43.36506)</span>
-<span class="co">#&gt;  3 10045      Mabegondo        A Coruña               94    (-8.262225 43.24137)</span>
-<span class="co">#&gt;  4 14003      Punta Langostei… A Coruña                5    (-8.531179 43.34723)</span>
-<span class="co">#&gt;  5 10144      Arzúa            A Coruña              362     (-8.17469 42.93196)</span>
-<span class="co">#&gt;  6 19005      Guísamo          A Coruña              175    (-8.276487 43.30799)</span>
-<span class="co">#&gt;  7 19012      Cespón           A Coruña               59    (-8.854571 42.67466)</span>
-<span class="co">#&gt;  8 10095      Sergude          A Coruña              231    (-8.461246 42.82283)</span>
-<span class="co">#&gt;  9 10800      Camariñas        A Coruña                5    (-9.178318 43.12445)</span>
-<span class="co">#&gt; 10 19001      Rus              A Coruña              134    (-8.685357 43.15616)</span>
-<span class="co">#&gt; # … with 146 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 153 x 6</span>
+<span class="co">#&gt;    service      station_id station_name             station_province altitude</span>
+<span class="co">#&gt;  * &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                    &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 meteogalicia 10157      Coruña-Torre de Hércules A Coruña               21</span>
+<span class="co">#&gt;  2 meteogalicia 14000      Coruña-Dique             A Coruña                5</span>
+<span class="co">#&gt;  3 meteogalicia 10045      Mabegondo                A Coruña               94</span>
+<span class="co">#&gt;  4 meteogalicia 10144      Arzúa                    A Coruña              362</span>
+<span class="co">#&gt;  5 meteogalicia 19005      Guísamo                  A Coruña              175</span>
+<span class="co">#&gt;  6 meteogalicia 19012      Cespón                   A Coruña               59</span>
+<span class="co">#&gt;  7 meteogalicia 10095      Sergude                  A Coruña              231</span>
+<span class="co">#&gt;  8 meteogalicia 10800      Camariñas                A Coruña                5</span>
+<span class="co">#&gt;  9 meteogalicia 19001      Rus                      A Coruña              134</span>
+<span class="co">#&gt; 10 meteogalicia 10143      Cariño                   A Coruña                5</span>
+<span class="co">#&gt; # … with 143 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Returned objects are spatial objects (thanks to the <a href="https://r-spatial.github.io/sf/"><code>sf</code></a> R package), so we can plot the results directly.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</span>
+<span class="co">#&gt; Linking to GEOS 3.9.1, GDAL 3.3.1, PROJ 8.0.1</span>
 <span class="va">mg_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2021-04-25'</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser </span>
@@ -199,7 +201,7 @@
 <span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span>
 <span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span>
 <span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span>
-<span class="co">#&gt; Warning: plotting the first 9 out of 15 attributes; use max.plot = 15 to plot</span>
+<span class="co">#&gt; Warning: plotting the first 9 out of 16 attributes; use max.plot = 16 to plot</span>
 <span class="co">#&gt; all</span></code></pre></div>
 <p><img src="reference/figures/README-plot_stations-1.png" width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">

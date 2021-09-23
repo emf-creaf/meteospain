@@ -173,6 +173,13 @@
   start_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>,
   end_date <span class='op'>=</span> <span class='va'>start_date</span>,
   stations <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
+
+<span class='fu'>ria_options</span><span class='op'>(</span>
+  resolution <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"daily"</span>, <span class='st'>"monthly"</span><span class='op'>)</span>,
+  start_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span>,
+  end_date <span class='op'>=</span> <span class='va'>start_date</span>,
+  stations <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -245,6 +252,8 @@ package for managing and accessing keys.</p>
 <li><p>Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 autonomous communities.</p></li>
+<li><p>RIA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
+stations provided</p></li>
 </ul>
 
 
@@ -318,6 +327,20 @@ autonomous communities.</p></li>
   start_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>'2000-01-01'</span><span class='op'>)</span>,
   end_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>'2000-12-31'</span><span class='op'>)</span>
 <span class='op'>)</span>
+
+<span class='co'># \donttest{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-lib.github.io/keyring/index.html'>keyring</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://emf-creaf.github.io/meteospain'>meteospain</a></span><span class='op'>)</span>
+
+<span class='co'>## RIA examples ---------------------------------------------------------</span>
+
+<span class='co'># Options for daily data for April, 2020</span>
+<span class='va'>daily_opts</span> <span class='op'>&lt;-</span> <span class='fu'>ria_options</span><span class='op'>(</span>
+  resolution <span class='op'>=</span> <span class='st'>'daily'</span>,
+  start_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>'2020-04-01'</span><span class='op'>)</span>,
+  end_date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>'2020-04-30'</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='co'># }</span>
 
 </div></pre>
   </div>
