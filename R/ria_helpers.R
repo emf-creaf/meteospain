@@ -331,7 +331,7 @@
   #
   # Copyright message -------------------------------------------------------------------------------------
   message(
-    copyright_style("Data provided by Red de Información Agroclimática de Andalucía (RIA)"),
+    copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
     '\n',
     legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
   )
