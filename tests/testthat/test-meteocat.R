@@ -199,3 +199,13 @@ test_that("meteocat API errors, messages, warnings are correctly raised", {
   api_options$resolution <- 'tururu'
   expect_error(get_meteo_from('meteocat', api_options), "is not a valid temporal resolution")
 })
+
+
+# meteocat get quota tests ------------------------------------------------------------------------------
+
+test_that("meteocat get_quota works as expected", {
+  api_options <- meteocat_options(api_key = keyring::key_get('meteocat'))
+
+  expect_s3_class((test_object <- get_quota_from('meteocat', api_options)), 'tbl')
+  expect_named(test_object, c('nom', 'periode', 'maxConsultes', 'consultesRestants', 'consultesRealitzades'))
+})

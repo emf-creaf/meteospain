@@ -98,3 +98,41 @@ get_stations_info_from <- function(
 
   return(res)
 }
+
+#' Get api quota info
+#'
+#' Obtain info about the API quota used
+#'
+#' Depending on the service, some APIs allows only a number of data requests. This function access the user
+#' quota numbers in the services that allow for this, \strong{(currently only MeteoCat)}
+#'
+#' @param service Character with the service name (in lower case).
+#' @param options List with the needed service options. See \code{\link{services_options}} to have more info
+#'   about the different services and their options.
+#'
+#' @examples
+#' \donttest{
+#' library(meteospain)
+#' library(keyring)
+#'
+#' # MeteoCat (we need a key)
+#' # key_set('meteocat')
+#' api_options <- meteocat_options(api_key = key_get('meteocat'))
+#' get_quota_from('meteocat', api_options)
+#' }
+#'
+#' @return A data frame with the quota info
+#'
+#' @export
+get_quota_from <- function(service = c('meteocat'), options) {
+  # check arguments
+  service <- rlang::arg_match(service)
+
+  # dispatch the correct function depending on the service selected
+  res <- switch(
+    service,
+    'meteocat' = .get_quota_meteocat(options)
+  )
+
+  return(res)
+}
