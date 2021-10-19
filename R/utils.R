@@ -134,6 +134,24 @@ relocate_vars <- function(data) {
   }
 }
 
+.manage_429_errors <- function(api_status_check, api_options, .f) {
+
+  # if api request limit reached, do a recursive call to the function after 60 seconds
+  # But only once. Is complicated to know if the limit is because too much request per second or
+  # if the quota limit has been reached. So, we repeat once after 60 seconds, and if the error
+  # persists, stop.
+  # For that we use api_options$while_number. If it is null or less than one repeat,
+  # if not, stop
+  while (is.null(api_options$while_number) || api_options$while_number < 1) {
+    message(copyright_style(api_status_check$message))
+    message("Trying again in 60 seconds")
+    Sys.sleep(60)
+    api_options$while_number <- 1
+    return(.f(api_options))
+  }
+  stop(api_status_check$code, ':\n', api_status_check$message)
+}
+
 # test helpers ------------------------------------------------------------------------------------------
 
 skip_if_no_auth <- function(service) {

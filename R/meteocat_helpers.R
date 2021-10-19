@@ -61,6 +61,14 @@
     }
   }
 
+  if (response_status == 429) {
+    res <- list(
+      status = 'Error',
+      code = response_status,
+      message = httr::http_status(api_response)$message
+    )
+  }
+
   if (response_status == 500) {
     res <- list(
       status = 'Error',
@@ -107,9 +115,7 @@
   if (api_status_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (api_status_check$code == 429) {
-      message(copyright_style(api_status_check$message))
-      Sys.sleep(60)
-      return(.get_variables_meteocat(api_options))
+      .manage_429_errors(api_status_check, api_options, .get_quota_meteocat)
     } else {
       stop(api_status_check$code, ':\n', api_status_check$message)
     }
@@ -150,11 +156,7 @@
   if (api_status_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (api_status_check$code == 429) {
-      message(copyright_style(api_status_check$message))
-      Sys.sleep(60)
-      return(.get_variables_meteocat(api_options))
-    } else {
-      stop(api_status_check$code, ':\n', api_status_check$message)
+      .manage_429_errors(api_status_check, api_options, .get_variables_meteocat)
     }
   }
 
@@ -296,9 +298,7 @@
   if (api_status_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (api_status_check$code == 429) {
-      message(copyright_style(api_status_check$message))
-      Sys.sleep(60)
-      return(.get_info_meteocat(api_options))
+      .manage_429_errors(api_status_check, api_options, .get_info_meteocat)
     } else {
       stop(api_status_check$code, ':\n', api_status_check$message)
     }
@@ -383,15 +383,9 @@
   if (any(variables_statuses != 'OK')) {
     if (any(variables_codes == 429)) {
       messages_to_show <- variables_messages[which(variables_codes == 429)] %>% unique()
-      message(copyright_style(messages_to_show[1]))
-      Sys.sleep(60)
-      return(.get_data_meteocat(api_options))
+      .manage_429_errors(list(code = 429, message = messages_to_show[1]), api_options, .get_data_meteocat)
     } else {
       messages_to_show <- variables_messages[which(variables_codes != 200)] %>% unique()
-      # messages_to_show %>%
-      #   purrr::walk(
-      #     ~ message(copyright_style(.x))
-      #   )
       stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
     }
   }
