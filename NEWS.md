@@ -1,5 +1,6 @@
 # meteospain (development version)
 
+* Fixed bug (#9) in managing 429 errors in meteocat and aemet
 * Added RIA (Red de Información Agroclimática de Andalucía) service
 * Better error for when MeteoGalicia stations info does not return all the columns needed
 
