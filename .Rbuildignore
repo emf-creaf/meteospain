@@ -9,3 +9,4 @@
 ^docs$
 ^pkgdown$
 ^metadata\.yml$
+^cran-comments\.md$
