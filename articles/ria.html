@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -65,6 +65,9 @@
       <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
+      <a href="../articles/ria.html">RIA service</a>
+    </li>
+    <li>
       <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
     </li>
     <li class="divider">
@@ -73,7 +76,7 @@
       <a href="../articles/api_limits.html">API limits and loops</a>
     </li>
     <li>
-      <a href="../articles/compatibility.html">Compatibility betweeen services</a>
+      <a href="../articles/compatibility.html">Compatibility between services</a>
     </li>
   </ul>
 </li>
@@ -120,7 +123,7 @@
 <div id="red-de-información-agroclimática-de-andalucía-ria-service" class="section level1">
 <h1 class="hasAnchor">
 <a href="#red-de-informaci%C3%B3n-agroclim%C3%A1tica-de-andaluc%C3%ADa-ria-service" class="anchor"></a>Red de Información Agroclimática de Andalucía (RIA) service</h1>
-<p><a href="https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/">RIA</a> service offers the data of the andalucian automatic meteorological stations network. This network is supported and assesed by the Junta de Andalucía and the data should be trustworthy.</p>
+<p><a href="https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/">RIA</a> service offers the data of the andalucian automatic meteorological stations network. This network is supported and assessed by the Junta de Andalucía and the data should be trustworthy.</p>
 <div id="ria-options" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ria-options" class="anchor"></a>RIA options</h2>
@@ -150,13 +153,14 @@
 <span class="co">#&gt; [1] "daily"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2021-09-22"</span>
+<span class="co">#&gt; [1] "2021-10-20"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2021-09-22"</span>
+<span class="co">#&gt; [1] "2021-10-20"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; NULL</span>
+
 <span class="co"># daily, only some stations</span>
 <span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">ria_options</a></span><span class="op">(</span>
   resolution <span class="op">=</span> <span class="st">'daily'</span>,
@@ -167,13 +171,14 @@
 <span class="co">#&gt; [1] "daily"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2021-09-22"</span>
+<span class="co">#&gt; [1] "2021-10-20"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2021-09-22"</span>
+<span class="co">#&gt; [1] "2021-10-20"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; [1] "14-2" "4-2"</span>
+
 <span class="co"># monthly, some stations</span>
 <span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">ria_options</a></span><span class="op">(</span>
   resolution <span class="op">=</span> <span class="st">'monthly'</span>,
@@ -328,7 +333,8 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="ria_files/figure-html/ria_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">galicia_20200425</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R">
+<span class="va">galicia_20200425</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>

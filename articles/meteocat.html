@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -65,6 +65,9 @@
       <a href="../articles/meteogalicia.html">MeteoGalicia service</a>
     </li>
     <li>
+      <a href="../articles/ria.html">RIA service</a>
+    </li>
+    <li>
       <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
     </li>
     <li class="divider">
@@ -73,7 +76,7 @@
       <a href="../articles/api_limits.html">API limits and loops</a>
     </li>
     <li>
-      <a href="../articles/compatibility.html">Compatibility betweeen services</a>
+      <a href="../articles/compatibility.html">Compatibility between services</a>
     </li>
   </ul>
 </li>
@@ -130,7 +133,7 @@
 <div id="meteocat-service" class="section level1">
 <h1 class="hasAnchor">
 <a href="#meteocat-service" class="anchor"></a>MeteoCat service</h1>
-<p><a href="https://www.meteo.cat/">MeteoCat</a> is the Catalonian meteorologic service. It offers access to different meteorological data and information, being one of their main missions to curate and divulgate data from meteorlogical stations. <code>meteospain</code> only access to the automatic meteorological stations network data.</p>
+<p><a href="https://www.meteo.cat/">MeteoCat</a> is the Catalonian meteorologic service. It offers access to different meteorological data and information, being one of their main missions to curate and divulgate data from meteorological stations. <code>meteospain</code> only access to the automatic meteorological stations network data.</p>
 <div id="meteocat-options" class="section level2">
 <h2 class="hasAnchor">
 <a href="#meteocat-options" class="anchor"></a>MeteoCat options</h2>
@@ -179,7 +182,7 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 #&gt; [1] "instant"
 #&gt; 
 #&gt; $start_date
-#&gt; [1] "2021-09-23"
+#&gt; [1] "2021-10-21"
 #&gt; 
 #&gt; $stations
 #&gt; NULL
@@ -252,18 +255,18 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
 <span class="co">#&gt; # A tibble: 2,256 × 21</span>
-<span class="co">#&gt;    timestamp           service  station_id station_name station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-01-01 00:00:00 meteocat C6         Castellnou … Lleida               264 </span>
-<span class="co">#&gt;  2 2020-01-01 00:00:00 meteocat C7         Tàrrega      Lleida               427 </span>
-<span class="co">#&gt;  3 2020-01-01 00:00:00 meteocat C8         Cervera      Lleida               554 </span>
-<span class="co">#&gt;  4 2020-01-01 00:00:00 meteocat C9         Mas de Barb… Tarragona            240 </span>
-<span class="co">#&gt;  5 2020-01-01 00:00:00 meteocat CC         Orís         Barcelona            626 </span>
-<span class="co">#&gt;  6 2020-01-01 00:00:00 meteocat CD         la Seu d'Ur… Lleida               849 </span>
-<span class="co">#&gt;  7 2020-01-01 00:00:00 meteocat CE         els Hostale… Barcelona            316 </span>
-<span class="co">#&gt;  8 2020-01-01 00:00:00 meteocat CG         Molló - Fab… Girona              1405 </span>
-<span class="co">#&gt;  9 2020-01-01 00:00:00 meteocat CI         Sant Pau de… Girona               852 </span>
-<span class="co">#&gt; 10 2020-01-01 00:00:00 meteocat CJ         Organyà      Lleida               566.</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 2020-01-01 00:00:00 meteoc… C6         Castellnou … Lleida               264 </span>
+<span class="co">#&gt;  2 2020-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida               427 </span>
+<span class="co">#&gt;  3 2020-01-01 00:00:00 meteoc… C8         Cervera      Lleida               554 </span>
+<span class="co">#&gt;  4 2020-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona            240 </span>
+<span class="co">#&gt;  5 2020-01-01 00:00:00 meteoc… CC         Orís         Barcelona            626 </span>
+<span class="co">#&gt;  6 2020-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida               849 </span>
+<span class="co">#&gt;  7 2020-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona            316 </span>
+<span class="co">#&gt;  8 2020-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona              1405 </span>
+<span class="co">#&gt;  9 2020-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona               852 </span>
+<span class="co">#&gt; 10 2020-01-01 00:00:00 meteoc… CJ         Organyà      Lleida               566.</span>
 <span class="co">#&gt; # … with 2,246 more rows, and 15 more variables: mean_temperature [°C],</span>
 <span class="co">#&gt; #   min_temperature_absolute [°C], min_temperature_mean [°C],</span>
 <span class="co">#&gt; #   max_temperature_absolute [°C], max_temperature_mean [°C],</span>
@@ -275,15 +278,16 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalunya_2020</span> <span class="op">%&gt;%</span>
   <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="meteocat_files/figure-html/meteocat_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">catalunya_2020</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R">
+<span class="va">catalunya_2020</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>

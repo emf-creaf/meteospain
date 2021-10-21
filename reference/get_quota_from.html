@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • meteospain</title>
+<title>Get api quota info — get_quota_from • meteospain</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Get api quota info — get_quota_from" />
+<meta property="og:description" content="Obtain info about the API quota used" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -144,43 +145,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/emf-creaf/meteospain/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Get api quota info</h1>
+    <small class="dont-index">Source: <a href='https://github.com/emf-creaf/meteospain/blob/master/R/get_data.R'><code>R/get_data.R</code></a></small>
+    <div class="hidden name"><code>get_quota_from.Rd</code></div>
     </div>
 
-    <div id="meteospain-002" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.2">
-<a href="#meteospain-002" class="anchor"></a>meteospain 0.0.2</h1>
-<ul>
-<li>Fixed bug (<a href='https://github.com/emf-creaf/meteospain/issues/9'>#9</a>) in managing 429 errors in meteocat and aemet</li>
-<li>Added RIA (Red de Información Agroclimática de Andalucía) service</li>
-<li>Better error for when MeteoGalicia stations info does not return all the columns needed</li>
-</ul>
-</div>
-    <div id="meteospain-001" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.1">
-<a href="#meteospain-001" class="anchor"></a>meteospain 0.0.1</h1>
-<ul>
-<li>Initial version of the package</li>
-</ul>
-</div>
-    <div id="meteospain-0009000" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.0.9000">
-<a href="#meteospain-0009000" class="anchor"></a>meteospain 0.0.0.9000</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-<li>Services added: AEMET, MeteoCat, MeteoGalicia, Meteoclimatic.</li>
-<li>Initial version of the package.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Obtain info about the API quota used</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>get_quota_from</span><span class='op'>(</span>service <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"meteocat"</span><span class='op'>)</span>, <span class='va'>options</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>service</th>
+      <td><p>Character with the service name (in lower case).</p></td>
+    </tr>
+    <tr>
+      <th>options</th>
+      <td><p>List with the needed service options. See <code><a href='services_options.html'>services_options</a></code> to have more info
+about the different services and their options.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with the quota info</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Depending on the service, some APIs allows only a number of data requests. This function access the user
+quota numbers in the services that allow for this, <strong>(currently only MeteoCat)</strong></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://emf-creaf.github.io/meteospain'>meteospain</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-lib.github.io/keyring/index.html'>keyring</a></span><span class='op'>)</span>
+
+<span class='co'># MeteoCat (we need a key)</span>
+<span class='co'># key_set('meteocat')</span>
+<span class='va'>api_options</span> <span class='op'>&lt;-</span> <span class='fu'><a href='services_options.html'>meteocat_options</a></span><span class='op'>(</span>api_key <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/keyring/man/key_get.html'>key_get</a></span><span class='op'>(</span><span class='st'>'meteocat'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>get_quota_from</span><span class='op'>(</span><span class='st'>'meteocat'</span>, <span class='va'>api_options</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 5</span>
+#&gt;   nom              periode maxConsultes consultesRestants consultesRealitzades
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Prediccio_8000   Mensual         <span style='text-decoration: underline;'>8</span>000              <span style='text-decoration: underline;'>8</span>000                    0
+#&gt; <span style='color: #BCBCBC;'>2</span> Referència Bàsic Mensual         <span style='text-decoration: underline;'>2</span>000              <span style='text-decoration: underline;'>2</span>000                    0
+#&gt; <span style='color: #BCBCBC;'>3</span> XDDE_1500        Mensual         <span style='text-decoration: underline;'>1</span>500              <span style='text-decoration: underline;'>1</span>500                    0
+#&gt; <span style='color: #BCBCBC;'>4</span> XEMA_20000       Mensual        <span style='text-decoration: underline;'>20</span>000             <span style='text-decoration: underline;'>15</span>683                 <span style='text-decoration: underline;'>4</span>317
+#&gt; <span style='color: #BCBCBC;'>5</span> Quota            Mensual          300               264                   36</div><div class='input'><span class='co'># }</span>
+
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
