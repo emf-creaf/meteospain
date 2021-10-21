@@ -159,7 +159,7 @@ identical(res_tidyverse, res_for)
 ## MeteoCat API
 
 When using MeteoCat in `daily`, `monthly` and `yearly` there are restrictions on the period that can be
-accesed.
+accessed.
 
 ### `daily`
 

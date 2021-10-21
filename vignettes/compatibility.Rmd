@@ -1,8 +1,8 @@
 ---
-title: "Compatibility betweeen services"
+title: "Compatibility between services"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Compatibility betweeen services}
+  %\VignetteIndexEntry{Compatibility between services}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

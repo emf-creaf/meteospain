@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Intro
 
-The idea is to extract the meteorlogical station data download functionality from `meteoland` to this
+The idea is to extract the meteorological station data download functionality from `meteoland` to this
 new package. This will involve also an update in both, the code, and the user interface (more tidy friendly,
 sf...).
 
@@ -139,7 +139,7 @@ sf::st_crs(4326)
 Proposed columns:
 
   - `stationID`: station code as provided by the service (with enough services, ID collision is a possibility).
-  - `service`: service acronym indicating the station origin (aemet, smc...). This avoid collissions betweeen
+  - `service`: service acronym indicating the station origin (aemet, smc...). This avoid collissions between
   stations IDs
   - meteo variables: common names for meteo variables (`temperature`, `temperature_max`, `temperature_min`...)
   - `geometry`: sf geometry column

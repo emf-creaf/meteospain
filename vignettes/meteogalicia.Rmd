@@ -29,7 +29,7 @@ library(sf)
 # MeteoGalicia service
 
 [MeteoGalicia](https://www.meteogalicia.gal/) service offers the data of the galician automatic meteorological
-stations network. This network is supported and assesed by the Xunta de Galicia and the data should be
+stations network. This network is supported and assessed by the Xunta de Galicia and the data should be
 trustworthy.
 
 ## MeteoGalicia options

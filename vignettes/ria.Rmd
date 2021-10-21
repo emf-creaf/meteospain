@@ -29,7 +29,7 @@ library(sf)
 # Red de Información Agroclimática de Andalucía (RIA) service
 
 [RIA](https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/) service offers the data of the
-andalucian automatic meteorological stations network. This network is supported and assesed by the
+andalucian automatic meteorological stations network. This network is supported and assessed by the
 Junta de Andalucía and the data should be trustworthy.
 
 ## RIA options
