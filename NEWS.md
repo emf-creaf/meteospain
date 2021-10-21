@@ -1,4 +1,4 @@
-# meteospain (development version)
+# meteospain 0.0.2
 
 * Fixed bug (#9) in managing 429 errors in meteocat and aemet
 * Added RIA (Red de Información Agroclimática de Andalucía) service
