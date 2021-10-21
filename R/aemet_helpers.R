@@ -126,8 +126,7 @@
       status = 'Error',
       code = response_status,
       message = glue::glue(
-        "{httr::http_status(api_response)$message}",
-        "API request limit reached, taking a cooldown of 60 seconds to reset."
+        "API request limit reached: {httr::http_status(api_response)$message}"
       )
     )
     return(res)
@@ -217,7 +216,7 @@
   if (api_status_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (api_status_check$code == 429) {
-      .manage_429_errors(api_status_check, api_options, .get_info_aemet)
+      return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
     } else {
       stop(api_status_check$code, ':\n', api_status_check$message)
     }
@@ -237,9 +236,7 @@
   if (stations_info_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (stations_info_check$code == 429) {
-      message(copyright_style(stations_info_check$message))
-      Sys.sleep(60)
-      return(.get_info_aemet(api_options))
+      return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
     } else {
       stop(stations_info_check$code, ':\n', stations_info_check$message)
     }
@@ -316,7 +313,7 @@
   if (api_status_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (api_status_check$code == 429) {
-      .manage_429_errors(api_status_check, api_options, .get_data_aemet)
+      return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
     } else {
       stop(api_status_check$code, ':\n', api_status_check$message)
     }
@@ -335,7 +332,7 @@
   if (stations_data_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (stations_data_check$code == 429) {
-      .manage_429_errors(api_status_check, api_options, .get_data_aemet)
+      return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
     } else {
       stop(stations_data_check$code, ':\n', stations_data_check$message)
     }
@@ -350,7 +347,7 @@
   if (stations_metadata_check$status != 'OK') {
     # if api request limit reached, do a recursive call to the function after 60 seconds
     if (stations_metadata_check$code == 429) {
-      .manage_429_errors(api_status_check, api_options, .get_data_aemet)
+      return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
     } else {
       stop(stations_metadata_check$code, ':\n', stations_metadata_check$message)
     }
