@@ -14,4 +14,4 @@ This is a resubmission. In this version I have:
 
 * Fixed possibly invalid URLs
 
-* Fixed mispelled words
+* Fixed misspelled words
