@@ -17,7 +17,7 @@ sf...).
 
 # Expected available workflows
 
-  1. **Data access**: Programmatic access to APIs and RSS feeds to access the different spanish meteorological
+  1. **Data access**: Programmatic access to APIs and RSS feeds to access the different Spanish meteorological
   services, all under the same user interface
   
   1. **Info access**: Programmatic access to APIs and RSS feeds to access services stations info (coordinates,

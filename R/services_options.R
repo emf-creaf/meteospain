@@ -1,6 +1,6 @@
 #' Options for meteorological services
 #'
-#' Set the options for accessing the different spanish meteorological services
+#' Set the options for accessing the different Spanish meteorological services
 #'
 #' @param resolution Character indicating the temporal resolution for the data. Services allows different
 #'   temporal resolutions that can be present or not in each of them (current_day, instant, daily, monthly).
@@ -44,7 +44,7 @@
 #'   \item{MeteoCat: One or more stations can be provided in a character vector.}
 #'   \item{MeteoGalicia: One or more stations can be provided in a character vector.}
 #'   \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
-#'   common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
+#'   common group of stations: "ES" for all Spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 #'   autonomous communities.}
 #'   \item{RIA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
 #'   stations provided}
@@ -188,7 +188,7 @@ meteoclimatic_options <- function(
     msg = "'stations' must be a character vector of length 1"
   )
 
-  # check if stations is NULL, then return all spanish stations
+  # check if stations is NULL, then return all Spanish stations
   if (rlang::is_null(stations)) {
     stations <- 'ES'
   }

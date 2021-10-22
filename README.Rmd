@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/emf-creaf/meteospain/workflows/R-CMD-check/badge.svg)](https://github.com/emf-creaf/meteospain/actions)
 <!-- badges: end -->
 
-`meteospain` aims to offer access to different spanish meteorological stations data in an uniform way.
+`meteospain` aims to offer access to different Spanish meteorological stations data in an uniform way.
 
 ## Installation
 
@@ -35,12 +35,12 @@ remotes::install_github("emf-creaf/meteospain")
 
 The following meteorological stations services are available:
 
-  - [AEMET](http://www.aemet.es/en/portada), the spanish State Meteorological Agency.
+  - [AEMET](https://www.aemet.es/en/portada), the Spanish State Meteorological Agency.
   - [MeteoCat](https://meteo.cat), the Catalan Meteorology Service.
   - [MeteoGalicia](https://www.meteogalicia.gal/web/inicio.action), the Galician Meteorological Service.
   - [RIA](https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/), the Andalucian Agroclimatic
   Information Network.
-  - [Meteoclimatic](https://www.meteoclimatic.net/), the spanish non-professional meteorological stations 
+  - [Meteoclimatic](https://www.meteoclimatic.net/), the Spanish non-professional meteorological stations 
   network.
 
 

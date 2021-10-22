@@ -19,7 +19,7 @@ about the different services and their options.}
 An sf (spatial) object with the stations meteorological data.
 }
 \description{
-Connect and retrieve data from AEMET, SMC and other spanish meteorological stations services.
+Connect and retrieve data from AEMET, SMC and other Spanish meteorological stations services.
 }
 \details{
 Depending on the service and the temporal resolution selected, the variables present can change, but all

@@ -60,7 +60,7 @@ section for more details.}
 A list with the service API options to make the query to obtain the data.
 }
 \description{
-Set the options for accessing the different spanish meteorological services
+Set the options for accessing the different Spanish meteorological services
 }
 \section{Resolution}{
 
@@ -98,7 +98,7 @@ Some services accept querying multiple stations at once, and other only allows o
 \item{MeteoCat: One or more stations can be provided in a character vector.}
 \item{MeteoGalicia: One or more stations can be provided in a character vector.}
 \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
-common group of stations: "ES" for all spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
+common group of stations: "ES" for all Spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 autonomous communities.}
 \item{RIA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
 stations provided}

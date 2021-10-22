@@ -1,6 +1,6 @@
 #' Get meteorological stations data
 #'
-#' Connect and retrieve data from AEMET, SMC and other spanish meteorological stations services.
+#' Connect and retrieve data from AEMET, SMC and other Spanish meteorological stations services.
 #'
 #' Depending on the service and the temporal resolution selected, the variables present can change, but all
 #' services have at least temperature values.

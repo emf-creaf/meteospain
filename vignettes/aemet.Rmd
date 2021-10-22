@@ -29,7 +29,7 @@ library(keyring)
 
 # AEMET service
 
-[AEMET](http://www.aemet.es/) is the spanish national meteorologic service, and is the national meteorology
+[AEMET](https://www.aemet.es/en/portada) is the Spanish national meteorologic service, and is the national meteorology
 authority providing quality data for public and research use, as well as prediction products and disaster
 warning system. `meteospain` only access to the automatic meteorological stations network data.
 

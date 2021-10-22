@@ -19,7 +19,7 @@ Authors@R:
              email = "aitor.ameztegui@udl.cat",
              comment = c(ORCID = "0000-0003-2006-1559"))
     )
-Description: Access to different spanish meteorological stations data services and APIs (AEMET, SMC, MG, 
+Description: Access to different Spanish meteorological stations data services and APIs (AEMET, SMC, MG, 
   Meteoclimatic...).
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -53,5 +53,5 @@ Imports:
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
-URL: https://emf-creaf.github.io/meteospain, https://github.com/emf-creaf/meteospain
+URL: https://emf-creaf.github.io/meteospain/, https://github.com/emf-creaf/meteospain
 BugReports: https://github.com/emf-creaf/meteospain/issues
