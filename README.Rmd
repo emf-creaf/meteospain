@@ -23,7 +23,13 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-`meteospain` is yet in active development. You can install the development version from
+`meteospain` is in CRAN, and can be installed as any other package:
+
+``` r
+install.packages('meteospain')
+```
+
+Also, `meteospain` is in active development. You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
