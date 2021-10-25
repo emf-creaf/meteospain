@@ -113,8 +113,11 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p><code>meteospain</code> is yet in active development. You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<p><code>meteospain</code> is in CRAN, and can be installed as any other package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'meteospain'</span><span class="op">)</span></code></pre></div>
+<p>Also, <code>meteospain</code> is in active development. You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"emf-creaf/meteospain"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -139,7 +142,7 @@
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>Access to the services is done with the <code>get_meteo_from</code> function, providing the name of the service and the options. Each service has a dedicated options function to guide through the especifics of each service:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span>
 
 <span class="va">mg_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'current_day'</span><span class="op">)</span>
@@ -149,30 +152,30 @@
 <span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span>
 <span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span>
 <span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span>
-<span class="co">#&gt; Simple feature collection with 3696 features and 14 fields</span>
+<span class="co">#&gt; Simple feature collection with 3693 features and 14 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 3,696 x 15</span>
+<span class="co">#&gt; # A tibble: 3,693 x 15</span>
 <span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2021-10-21 11:00:00 meteog… 10045      Mabegondo    A Coruña               94</span>
-<span class="co">#&gt;  2 2021-10-21 11:00:00 meteog… 10046      Marco da Cu… A Coruña              651</span>
-<span class="co">#&gt;  3 2021-10-21 11:00:00 meteog… 10047      Pedro Murias Lugo                   51</span>
-<span class="co">#&gt;  4 2021-10-21 11:00:00 meteog… 10048      O Invernade… Ourense              1026</span>
-<span class="co">#&gt;  5 2021-10-21 11:00:00 meteog… 10049      Corrubedo    A Coruña               30</span>
-<span class="co">#&gt;  6 2021-10-21 11:00:00 meteog… 10050      CIS Ferrol   A Coruña               37</span>
-<span class="co">#&gt;  7 2021-10-21 11:00:00 meteog… 10052      Muralla      A Coruña              661</span>
-<span class="co">#&gt;  8 2021-10-21 11:00:00 meteog… 10053      Campus Lugo  Lugo                  400</span>
-<span class="co">#&gt;  9 2021-10-21 11:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684</span>
-<span class="co">#&gt; 10 2021-10-21 11:00:00 meteog… 10056      Marroxo      Lugo                  645</span>
-<span class="co">#&gt; # … with 3,686 more rows, and 9 more variables: temperature [°C],</span>
+<span class="co">#&gt;  1 2021-10-24 08:00:00 meteog… 10045      Mabegondo    A Coruña               94</span>
+<span class="co">#&gt;  2 2021-10-24 08:00:00 meteog… 10046      Marco da Cu… A Coruña              651</span>
+<span class="co">#&gt;  3 2021-10-24 08:00:00 meteog… 10047      Pedro Murias Lugo                   51</span>
+<span class="co">#&gt;  4 2021-10-24 08:00:00 meteog… 10048      O Invernade… Ourense              1026</span>
+<span class="co">#&gt;  5 2021-10-24 08:00:00 meteog… 10049      Corrubedo    A Coruña               30</span>
+<span class="co">#&gt;  6 2021-10-24 08:00:00 meteog… 10050      CIS Ferrol   A Coruña               37</span>
+<span class="co">#&gt;  7 2021-10-24 08:00:00 meteog… 10052      Muralla      A Coruña              661</span>
+<span class="co">#&gt;  8 2021-10-24 08:00:00 meteog… 10053      Campus Lugo  Lugo                  400</span>
+<span class="co">#&gt;  9 2021-10-24 08:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684</span>
+<span class="co">#&gt; 10 2021-10-24 08:00:00 meteog… 10056      Marroxo      Lugo                  645</span>
+<span class="co">#&gt; # … with 3,683 more rows, and 9 more variables: temperature [°C],</span>
 <span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], relative_humidity [%],</span>
 <span class="co">#&gt; #   precipitation [L/m^2], wind_direction [°], wind_speed [m/s],</span>
 <span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Stations info can be accessed with <code>get_stations_info_from</code> function:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 154 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -194,7 +197,7 @@
 <span class="co">#&gt; 10 meteogalicia 19001      Rus                      A Coruña              134</span>
 <span class="co">#&gt; # … with 144 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Returned objects are spatial objects (thanks to the <a href="https://r-spatial.github.io/sf/"><code>sf</code></a> R package), so we can plot the results directly.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
 <span class="co">#&gt; Linking to GEOS 3.9.1, GDAL 3.3.1, PROJ 8.0.1</span>
 <span class="va">mg_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2021-04-25'</span><span class="op">)</span><span class="op">)</span>
@@ -207,7 +210,7 @@
 <span class="co">#&gt; Warning: plotting the first 9 out of 16 attributes; use max.plot = 16 to plot</span>
 <span class="co">#&gt; all</span></code></pre></div>
 <p><img src="reference/figures/README-plot_stations-1.png" width="100%"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-plot_stations-2.png" width="100%"></p>
 </div>
@@ -218,6 +221,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=meteospain">https://​cloud.r-project.org/​package=meteospain</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/emf-creaf/meteospain/">https://​github.com/​emf-creaf/​meteospain/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/emf-creaf/meteospain/issues">https://​github.com/​emf-creaf/​meteospain/​issues</a>

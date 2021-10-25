@@ -229,6 +229,8 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
   <span class="op">)</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
+<span class="co">#&gt; Data received</span>
+<span class="co">#&gt; Trying again in 60 seconds</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
@@ -286,6 +288,8 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="op">}</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
+<span class="co">#&gt; API request limit reached: Client error: (429) Too Many Requests (RFC 6585)</span>
+<span class="co">#&gt; Trying again in 60 seconds</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
@@ -590,10 +594,10 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "2008-10-22 UTC" "2009-10-22 UTC" "2010-10-22 UTC" "2011-10-22 UTC"</span>
-<span class="co">#&gt;  [5] "2012-10-22 UTC" "2013-10-22 UTC" "2014-10-22 UTC" "2015-10-22 UTC"</span>
-<span class="co">#&gt;  [9] "2016-10-22 UTC" "2017-10-22 UTC" "2018-10-22 UTC" "2019-10-22 UTC"</span>
-<span class="co">#&gt; [13] "2020-10-22 UTC"</span></code></pre></div>
+<span class="co">#&gt;  [1] "2008-10-25 UTC" "2009-10-25 UTC" "2010-10-25 UTC" "2011-10-25 UTC"</span>
+<span class="co">#&gt;  [5] "2012-10-25 UTC" "2013-10-25 UTC" "2014-10-25 UTC" "2015-10-25 UTC"</span>
+<span class="co">#&gt;  [9] "2016-10-25 UTC" "2017-10-25 UTC" "2018-10-25 UTC" "2019-10-25 UTC"</span>
+<span class="co">#&gt; [13] "2020-10-25 UTC"</span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so there is no need of loops.</p>
 </div>
 </div>
