@@ -185,7 +185,12 @@ main_test_battery <- function(test_object, ...) {
   # units in temperature and timestamp: ONLY IN DATA, NOT STATIONS
   if (!is.null(args$temperature)) {
     testthat::expect_s3_class(rlang::eval_tidy(args$temperature, data = test_object), 'units')
-    testthat::expect_identical(units(rlang::eval_tidy(args$temperature, data = test_object))$numerator, "\u00B0C")
+    # testthat::expect_identical(units(rlang::eval_tidy(args$temperature, data = test_object))$numerator, "\u00B0C")
+    # The commented test above doesn't work in debian-clang latin-1 CRAN tests, so we test then that it gives
+    # the symbol unit or the text unit:
+    testthat::expect_true(
+      units(rlang::eval_tidy(args$temperature, data = test_object))$numerator %in% c("\u00B0C", "degree_Celsius")
+    )
     testthat::expect_s3_class(test_object$timestamp, 'POSIXct')
     testthat::expect_false(all(is.na(test_object$timestamp)))
   }
