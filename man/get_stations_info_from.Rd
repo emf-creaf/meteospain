@@ -27,6 +27,14 @@ info for active stations (i.e. AEMET), not historical stations, so some mismatch
 the stations returned by this function and the stations returned by \code{\link{get_meteo_from}} for
 historical dates.
 }
+\section{Cache}{
+
+In order to avoid unnecesary API calls, results of this function are cached in memory with
+\code{\link[memoise]{memoise}}. This means that subsequent calls from \code{get_meteo_from} with the same
+arguments will be faster as they will not call the meteorological service API. This cache has a maximum
+size of 1024 MB and persist 24 hours in the same R session after loading the package.
+}
+
 \examples{
 \donttest{
 library(meteospain)

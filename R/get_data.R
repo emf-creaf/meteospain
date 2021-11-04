@@ -14,6 +14,11 @@
 #' only serves daily data for 31 days in one query. See \code{vignette('api_limits', package = 'meteospain')}
 #' for a detailed explanations of those limits and the ways to retrieve longer periods.
 #'
+#' @section Cache:
+#' In order to avoid unnecesary API calls, results of this function are cached in memory with
+#' \code{\link[memoise]{memoise}}. This means that subsequent calls from \code{get_meteo_from} with the same
+#' arguments will be faster as they will not call the meteorological service API. This cache has a maximum
+#' size of 1024 MB and persist 24 hours in the same R session after loading the package.
 #'
 #' @examples
 #' \donttest{
@@ -64,6 +69,12 @@ get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'me
 #' @param service Character with the service name (in lower case).
 #' @param options List with the needed service options. See \code{\link{services_options}} to have more info
 #'   about the different services and their options.
+#'
+#' @section Cache:
+#' In order to avoid unnecesary API calls, results of this function are cached in memory with
+#' \code{\link[memoise]{memoise}}. This means that subsequent calls from \code{get_meteo_from} with the same
+#' arguments will be faster as they will not call the meteorological service API. This cache has a maximum
+#' size of 1024 MB and persist 24 hours in the same R session after loading the package.
 #'
 #' @examples
 #' \donttest{
