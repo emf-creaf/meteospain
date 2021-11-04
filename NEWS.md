@@ -1,7 +1,7 @@
 # meteospain (development version)
 
 * Fixed checks for debian-clang OS
-* Memoization addded for get_meteo_from and get_stations_info_from functions, to avoid excesive calls to APIs
+* Memoization addded for get_meteo_from and get_stations_info_from functions, to avoid excessive calls to APIs
 
 # meteospain 0.0.2
 
