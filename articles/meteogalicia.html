@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
       </span>
     </div>
 
@@ -155,10 +155,10 @@
 <span class="co">#&gt; [1] "instant"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2021-10-25"</span>
+<span class="co">#&gt; [1] "2021-11-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2021-10-25"</span>
+<span class="co">#&gt; [1] "2021-11-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; NULL</span>
@@ -173,10 +173,10 @@
 <span class="co">#&gt; [1] "current_day"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2021-10-25"</span>
+<span class="co">#&gt; [1] "2021-11-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2021-10-25"</span>
+<span class="co">#&gt; [1] "2021-11-04"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; [1] "10157" "14000" "10045"</span>
@@ -285,15 +285,15 @@
 <span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">galicia_20200425</span> <span class="op">%&gt;%</span>
-  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">galicia_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">max_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="meteogalicia_files/figure-html/meteogalicia_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">galicia_20200425</span> <span class="op">%&gt;%</span>
+<span class="va">galicia_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>

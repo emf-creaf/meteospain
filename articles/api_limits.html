@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
       </span>
     </div>
 
@@ -229,12 +229,6 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
   <span class="op">)</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; Data received</span>
-<span class="co">#&gt; Trying again in 60 seconds</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
@@ -286,20 +280,6 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
   
   <span class="va">res_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">res_for</span>, <span class="va">temp_res</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; API request limit reached: Client error: (429) Too Many Requests (RFC 6585)</span>
-<span class="co">#&gt; Trying again in 60 seconds</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
-<span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
-<span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 
 <span class="va">res_for</span>
 <span class="co">#&gt; Simple feature collection with 21553 features and 12 fields</span>
@@ -426,14 +406,6 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
   
   <span class="va">meteocat_2020q1_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">meteocat_2020q1_for</span>, <span class="va">temp_res</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">meteocat_2020q1_for</span>
 <span class="co">#&gt; Simple feature collection with 22748 features and 16 fields (with 121 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -545,10 +517,6 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
   
   <span class="va">meteocat_2019_20_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">meteocat_2019_20_for</span>, <span class="va">temp_res</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="va">meteocat_2019_20_for</span>
 <span class="co">#&gt; Simple feature collection with 4521 features and 20 fields (with 33 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
@@ -594,10 +562,10 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "2008-10-25 UTC" "2009-10-25 UTC" "2010-10-25 UTC" "2011-10-25 UTC"</span>
-<span class="co">#&gt;  [5] "2012-10-25 UTC" "2013-10-25 UTC" "2014-10-25 UTC" "2015-10-25 UTC"</span>
-<span class="co">#&gt;  [9] "2016-10-25 UTC" "2017-10-25 UTC" "2018-10-25 UTC" "2019-10-25 UTC"</span>
-<span class="co">#&gt; [13] "2020-10-25 UTC"</span></code></pre></div>
+<span class="co">#&gt;  [1] "2008-11-04 UTC" "2009-11-04 UTC" "2010-11-04 UTC" "2011-11-04 UTC"</span>
+<span class="co">#&gt;  [5] "2012-11-04 UTC" "2013-11-04 UTC" "2014-11-04 UTC" "2015-11-04 UTC"</span>
+<span class="co">#&gt;  [9] "2016-11-04 UTC" "2017-11-04 UTC" "2018-11-04 UTC" "2019-11-04 UTC"</span>
+<span class="co">#&gt; [13] "2020-11-04 UTC"</span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so there is no need of loops.</p>
 </div>
 </div>

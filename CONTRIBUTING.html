@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
 <ul>
 <li><p>Fork the package and clone onto your computer. If you haven’t done this before, we recommend using <code>usethis::create_from_github("emf-creaf/meteospain", fork = TRUE)</code>.</p></li>
 <li><p>Install all development dependences with <code>devtools::install_dev_deps()</code>, and then make sure the package passes R CMD check by running <code>devtools::check()</code>. If R CMD check doesn’t pass cleanly, it’s a good idea to ask for help before continuing.</p></li>
-<li><p>For passing tests and building vignettes, you will need API keys for AEMET and MeteoCat (see <code><a href="reference/services_options.html">?services_options</a></code>). A workaround to develop without those keys is setting the <code>NOT_CRAN</code> environment variable to <code>false</code> (<code><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv(NOT_CRAN = 'false')</a></code>), but with this, most of the tests and examples will be not run when building, testing and checking.</p></li>
+<li><p>For passing tests and building vignettes, you will need API keys for AEMET and MeteoCat (see <code><a href="reference/services_options.html">?services_options</a></code>). A workaround to develop without those keys is setting the <code>NOT_CRAN</code> environment variable to <code>false</code> (<code>Sys.setenv(NOT_CRAN = 'false')</code>), but with this, most of the tests and examples will be not run when building, testing and checking.</p></li>
 <li><p>Create a Git branch for your pull request (PR). We recommend using <code>usethis::pr_init("brief-description-of-change")</code>.</p></li>
 <li><p>Make your changes, commit to git, and then create a PR by running <code>usethis::pr_push()</code>, and following the prompts in your browser. The title of your PR should briefly describe the change. The body of your PR should contain <code>Fixes #issue-number</code>.</p></li>
 <li><p>For user-facing changes, add a bullet to the top of <code>NEWS.md</code> (i.e. just below the first header). Follow the style described in <a href="https://style.tidyverse.org/news.html" class="uri">https://style.tidyverse.org/news.html</a>.</p></li>
