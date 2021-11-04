@@ -50,7 +50,8 @@ Imports:
     units,
     xml2,
     vctrs,
-    memoise
+    memoise,
+    cachem
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
