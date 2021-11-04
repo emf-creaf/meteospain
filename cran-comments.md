@@ -19,4 +19,4 @@ This is a resubmission. In this version I have:
 * Package now comply with the CRAN policy: 'Packages which use Internet resources should fail
 gracefully with an informative message if the resource is not available or has changed (and not
 give a check warning nor error).' which fixes ERRORs in the CRAN checks at
-<https://cran.r-project.org/web/checks/check_results_meteospain.html>.
+<https://cran.r-project.org/web/checks/check_results_meteospain.html>
