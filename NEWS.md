@@ -1,3 +1,8 @@
+# meteospain (development version)
+
+* Fixed checks for debian-clang OS
+* Memoization addded for get_meteo_from and get_stations_info_from functions, to avoid excesive calls to APIs
+
 # meteospain 0.0.2
 
 * Fixed bug (#9) in managing 429 errors in meteocat and aemet
