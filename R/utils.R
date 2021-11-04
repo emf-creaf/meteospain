@@ -10,8 +10,8 @@ NULL
 
 # crayon styles -----------------------------------------------------------------------------------------
 
-copyright_style <- crayon::yellow$bold
-legal_note_style <- crayon::blue$bold$underline
+copyright_style <- crayon::combine_styles('bold', 'yellow')
+legal_note_style <- crayon::combine_styles('blue', 'bold', 'underline')
 
 
 # swiss knives ------------------------------------------------------------------------------------------
