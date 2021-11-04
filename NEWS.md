@@ -1,5 +1,7 @@
 # meteospain (development version)
 
+* Package now comply with CRAN policy "Packages which use Internet resources should fail
+gracefully with an informative message if the resource is not available or has changed"
 * Fixed checks for debian-clang OS
 * Memoization addded for get_meteo_from and get_stations_info_from functions, to avoid excessive calls to APIs
 
