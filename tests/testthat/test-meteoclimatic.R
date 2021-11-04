@@ -32,7 +32,7 @@ test_that("meteoclimatic get info works", {
 test_that("Meteoclimatic works as expected", {
   # all stations
   api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
-  test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
+  expect_message((test_object <- get_meteo_from('meteoclimatic', api_options)), 'non-professional')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "min_temperature", "max_temperature",
     "min_relative_humidity", "max_relative_humidity", "precipitation", "geometry"
@@ -54,7 +54,6 @@ test_that("Meteoclimatic works as expected", {
 test_that("meteoclimatic errors, warnings and messages are correctly raised", {
   # copyright message
   api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
-  expect_message(get_meteo_from('meteoclimatic', api_options), 'non-professional')
   api_options$stations <- 'tururu'
   expect_error(get_meteo_from('meteoclimatic', api_options), 'not found in Meteoclimatic')
 })
