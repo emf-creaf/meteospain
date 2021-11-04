@@ -10,6 +10,9 @@ NULL
 
 # crayon styles -----------------------------------------------------------------------------------------
 
+#' crayon styles to use
+#' @importFrom  crayon combine_styles
+#' @noRd
 copyright_style <- crayon::combine_styles('bold', 'yellow')
 legal_note_style <- crayon::combine_styles('blue', 'bold', 'underline')
 
