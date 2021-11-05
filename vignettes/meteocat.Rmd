@@ -31,7 +31,7 @@ library(keyring)
 # MeteoCat service
 
 [MeteoCat](https://www.meteo.cat/) is the Catalonian meteorologic service. It offers access to different
-meteorological data and information, being one of their main missions to curate and divulgate data from
+meteorological data and information, being one of their main missions to curate and circulate data from
 meteorological stations. `meteospain` only access to the automatic meteorological stations network data.
 
 ## MeteoCat options

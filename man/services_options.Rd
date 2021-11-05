@@ -100,7 +100,7 @@ Some services accept querying multiple stations at once, and other only allows o
 \item{Meteoclimatic: Only one station can be provided. Nevertheless, some codes can be used to retrieve
 common group of stations: "ES" for all Spanish stations, "ESCAT", "ESCYL", "ESAND"... for the different
 autonomous communities.}
-\item{RIA: API accepts only one station, nontheless, an internal loop is performed to retrieve all the
+\item{RIA: API accepts only one station. Nonetheless, an internal loop is performed to retrieve all the
 stations provided}
 }
 }

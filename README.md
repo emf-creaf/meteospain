@@ -45,7 +45,7 @@ The following meteorological stations services are available:
 
 Access to the services is done with the `get_meteo_from` function,
 providing the name of the service and the options. Each service has a
-dedicated options function to guide through the especifics of each
+dedicated options function to guide through the specifics of each
 service:
 
 ``` r
