@@ -249,8 +249,9 @@
     # add service name, to identify the data if joining with other services
     dplyr::mutate(service = 'aemet') %>%
     dplyr::select(
-      .data$service, station_id = .data$indicativo, station_name = .data$nombre, altitude = .data$altitud,
-      latitude = .data$latitud, longitude = .data$longitud
+      .data$service, station_id = .data$indicativo, station_name = .data$nombre,
+      station_province = .data$provincia, altitude = .data$altitud, latitude = .data$latitud,
+      longitude = .data$longitud
     ) %>%
     # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
     # and negative when S or W.
