@@ -218,32 +218,33 @@ Here we convert the data to tibble before the join, that way we are not joining 
 <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "station_province", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "geometry")</span>
-<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "station_province", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "insolation", "geometry", "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "mean_wind_direction")</span>
-<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "station_province", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "geometry", "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "mean_wind_direction")</span>
+<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "geometry")</span>
+<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "insolation", "geometry", "station_province", "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "mean_wind_direction")</span>
+<span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name", "altitude", "mean_temperature", "min_temperature", "max_temperature", "precipitation", "mean_wind_speed", "geometry", "station_province", "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "mean_wind_direction")</span>
 
 <span class="va">april_2020_spain</span>
-<span class="co">#&gt; Simple feature collection with 20469 features and 19 fields (with 180 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 20469 features and 21 fields (with 150 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 20,469 × 20</span>
-<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-04-01 00:00:00 aemet   0016A      REUS AEROPU… TARRAGONA              71</span>
-<span class="co">#&gt;  2 2020-04-01 00:00:00 aemet   0076       BARCELONA A… BARCELONA               4</span>
-<span class="co">#&gt;  3 2020-04-01 00:00:00 aemet   0149X      MANRESA      BARCELONA             291</span>
-<span class="co">#&gt;  4 2020-04-01 00:00:00 aemet   0200E      BARCELONA, … BARCELONA             408</span>
-<span class="co">#&gt;  5 2020-04-01 00:00:00 aemet   0201D      BARCELONA    BARCELONA               6</span>
-<span class="co">#&gt;  6 2020-04-01 00:00:00 aemet   0252D      ARENYS DE M… BARCELONA              74</span>
-<span class="co">#&gt;  7 2020-04-01 00:00:00 aemet   0255B      SANTA SUSAN… BARCELONA              40</span>
-<span class="co">#&gt;  8 2020-04-01 00:00:00 aemet   0324A      RIPOLL       GIRONA                675</span>
-<span class="co">#&gt;  9 2020-04-01 00:00:00 aemet   0367       GIRONA AERO… GIRONA                143</span>
-<span class="co">#&gt; 10 2020-04-01 00:00:00 aemet   0372C      PORQUERES    GIRONA                157</span>
-<span class="co">#&gt; # … with 20,459 more rows, and 14 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;,</span>
+<span class="co">#&gt; # A tibble: 20,469 × 22</span>
+<span class="co">#&gt;    timestamp           service station_id station_name         station_province…</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;            </span>
+<span class="co">#&gt;  1 2020-04-01 00:00:00 aemet   0016A      REUS AEROPUERTO      TARRAGONA        </span>
+<span class="co">#&gt;  2 2020-04-01 00:00:00 aemet   0076       BARCELONA AEROPUERTO BARCELONA        </span>
+<span class="co">#&gt;  3 2020-04-01 00:00:00 aemet   0149X      MANRESA              BARCELONA        </span>
+<span class="co">#&gt;  4 2020-04-01 00:00:00 aemet   0200E      BARCELONA, FABRA     BARCELONA        </span>
+<span class="co">#&gt;  5 2020-04-01 00:00:00 aemet   0201D      BARCELONA            BARCELONA        </span>
+<span class="co">#&gt;  6 2020-04-01 00:00:00 aemet   0252D      ARENYS DE MAR        BARCELONA        </span>
+<span class="co">#&gt;  7 2020-04-01 00:00:00 aemet   0255B      SANTA SUSANNA        BARCELONA        </span>
+<span class="co">#&gt;  8 2020-04-01 00:00:00 aemet   0324A      RIPOLL               GIRONA           </span>
+<span class="co">#&gt;  9 2020-04-01 00:00:00 aemet   0367       GIRONA AEROPUERTO    GIRONA           </span>
+<span class="co">#&gt; 10 2020-04-01 00:00:00 aemet   0372C      PORQUERES            GIRONA           </span>
+<span class="co">#&gt; # … with 20,459 more rows, and 17 more variables: station_province.y &lt;chr&gt;,</span>
+<span class="co">#&gt; #   altitude [m], mean_temperature [°C], min_temperature [°C],</span>
+<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
+<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;, station_province &lt;chr&gt;,</span>
 <span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity [%],</span>
 <span class="co">#&gt; #   max_relative_humidity [%], mean_wind_direction [°],</span>
 <span class="co">#&gt; #   global_solar_radiation [MJ/m^2], solar_radiation [1], under_plastic &lt;lgl&gt;</span></code></pre></div>

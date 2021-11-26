@@ -191,7 +191,7 @@ for a detailed explanations of those limits and the ways to retrieve longer peri
 
     
 
-<p>In order to avoid unnecesary API calls, results of this function are cached in memory with
+<p>In order to avoid unnecessary API calls, results of this function are cached in memory with
 <code><a href='https://rdrr.io/pkg/memoise/man/memoise.html'>memoise</a></code>. This means that subsequent calls from <code>get_meteo_from</code> with the same
 arguments will be faster as they will not call the meteorological service API. This cache has a maximum
 size of 1024 MB and persist 24 hours in the same R session after loading the package.</p>
@@ -212,27 +212,28 @@ size of 1024 MB and persist 24 hours in the same R session after loading the pac
 <span class='r-in'><span class='fu'>get_meteo_from</span><span class='op'>(</span><span class='st'>'aemet'</span>, <span class='va'>options_for_aemet</span><span class='op'>)</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00; font-weight: bold;'>© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB; font-weight: bold; text-decoration: underline;'>http://www.aemet.es/es/nota_legal</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Simple feature collection with 7529 features and 12 fields</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Simple feature collection with 7529 features and 13 fields</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Geometry type: POINT</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Dimension:     XY</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.471</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Geodetic CRS:  WGS 84</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 7,529 × 13</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    timestamp           service station_id station_name station_province altitude</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494;'>[m]</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0016A      <span style='color: #949494;'>"</span>REUS AEROP… TARRAGONA              71</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0076       <span style='color: #949494;'>"</span>BARCELONA … BARCELONA               4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0149X      <span style='color: #949494;'>"</span>MANRESA<span style='color: #949494;'>"</span>    BARCELONA             291</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0200E      <span style='color: #949494;'>"</span>BARCELONA,… BARCELONA             408</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0367       <span style='color: #949494;'>"</span>GIRONA AER… GIRONA                143</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1002Y      <span style='color: #949494;'>"</span>BAZTAN, IR… NAVARRA               183</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1014       <span style='color: #949494;'>"</span>HONDARRIBI… GIPUZKOA                4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1014A      <span style='color: #949494;'>"</span>SAN SEBAST… GIPUZKOA                4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1024E      <span style='color: #949494;'>"</span>DONOSTIA/S… GIPUZKOA              251</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1037Y      <span style='color: #949494;'>"</span>ZUMARRAGA<span style='color: #949494;'>"</span>  GIPUZKOA              420</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 7,519 more rows, and 7 more variables: mean_temperature [°C],</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 7,529 × 14</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    timestamp           service station_id station_name          station_provinc…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0016A      <span style='color: #949494;'>"</span>REUS AEROPUERTO<span style='color: #949494;'>"</span>     TARRAGONA       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0076       <span style='color: #949494;'>"</span>BARCELONA AEROPUERT… BARCELONA       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0149X      <span style='color: #949494;'>"</span>MANRESA<span style='color: #949494;'>"</span>             BARCELONA       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0200E      <span style='color: #949494;'>"</span>BARCELONA, FABRA<span style='color: #949494;'>"</span>    BARCELONA       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   0367       <span style='color: #949494;'>"</span>GIRONA AEROPUERTO<span style='color: #949494;'>"</span>   GIRONA          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1002Y      <span style='color: #949494;'>"</span>BAZTAN, IRURITA <span style='color: #949494;'>"</span>    NAVARRA         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1014       <span style='color: #949494;'>"</span>HONDARRIBIA, MALKAR… GIPUZKOA        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1014A      <span style='color: #949494;'>"</span>SAN SEBASTIÁN AEROP… GIPUZKOA        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1024E      <span style='color: #949494;'>"</span>DONOSTIA/SAN SEBAST… GIPUZKOA        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 2012-01-01 <span style='color: #949494;'>00:00:00</span> aemet   1037Y      <span style='color: #949494;'>"</span>ZUMARRAGA<span style='color: #949494;'>"</span>           GIPUZKOA        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 7,519 more rows, and 9 more variables: station_province.y &lt;chr&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   altitude [m], mean_temperature [°C], min_temperature [°C],</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   insolation [h], geometry &lt;POINT [°]&gt;</span></span>
 <span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'></span>
 </pre>

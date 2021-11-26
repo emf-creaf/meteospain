@@ -170,10 +170,10 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 #&gt; [1] "current_day"
 #&gt; 
 #&gt; $start_date
-#&gt; [1] "2021-11-04"
+#&gt; [1] "2021-11-26"
 #&gt; 
 #&gt; $end_date
-#&gt; [1] "2021-11-04"
+#&gt; [1] "2021-11-26"
 #&gt; 
 #&gt; $stations
 #&gt; NULL
@@ -210,25 +210,25 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 <p>Accessing station metadata for AEMET is simple:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 291 features and 4 fields</span>
+<span class="co">#&gt; Simple feature collection with 291 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.471</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 291 × 5</span>
-<span class="co">#&gt;    service station_id station_name           altitude         geometry</span>
-<span class="co">#&gt;  * &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                       [m]      &lt;POINT [°]&gt;</span>
-<span class="co">#&gt;  1 aemet   0252D      ARENYS DE MAR                74 (2.3224 41.3515)</span>
-<span class="co">#&gt;  2 aemet   0076       BARCELONA AEROPUERTO          4 (2.0412 41.1734)</span>
-<span class="co">#&gt;  3 aemet   0200E      BARCELONA, FABRA            408 (2.0727 41.2506)</span>
-<span class="co">#&gt;  4 aemet   0201D      BARCELONA                     6   (2.12 41.2326)</span>
-<span class="co">#&gt;  5 aemet   0149X      MANRESA                     291 (1.5025 41.4312)</span>
-<span class="co">#&gt;  6 aemet   0229I      SABADELL AEROPUERTO         146 (2.0611 41.3125)</span>
-<span class="co">#&gt;  7 aemet   0255B      SANTA SUSANNA                40 (2.4149 41.3903)</span>
-<span class="co">#&gt;  8 aemet   0367       GIRONA AEROPUERTO           143 (2.4548 41.5442)</span>
-<span class="co">#&gt;  9 aemet   0370B      GIRONA, ANTIC INSTITUT       95 (2.4931 41.5848)</span>
-<span class="co">#&gt; 10 aemet   0372C      PORQUERES                   157 (2.4549 42.0616)</span>
-<span class="co">#&gt; # … with 281 more rows</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 291 × 6</span>
+<span class="co">#&gt;    service station_id station_name           station_province altitude</span>
+<span class="co">#&gt;  * &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                  &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 aemet   0252D      ARENYS DE MAR          BARCELONA              74</span>
+<span class="co">#&gt;  2 aemet   0076       BARCELONA AEROPUERTO   BARCELONA               4</span>
+<span class="co">#&gt;  3 aemet   0200E      BARCELONA, FABRA       BARCELONA             408</span>
+<span class="co">#&gt;  4 aemet   0201D      BARCELONA              BARCELONA               6</span>
+<span class="co">#&gt;  5 aemet   0149X      MANRESA                BARCELONA             291</span>
+<span class="co">#&gt;  6 aemet   0229I      SABADELL AEROPUERTO    BARCELONA             146</span>
+<span class="co">#&gt;  7 aemet   0255B      SANTA SUSANNA          BARCELONA              40</span>
+<span class="co">#&gt;  8 aemet   0367       GIRONA AEROPUERTO      GIRONA                143</span>
+<span class="co">#&gt;  9 aemet   0370B      GIRONA, ANTIC INSTITUT GIRONA                 95</span>
+<span class="co">#&gt; 10 aemet   0372C      PORQUERES              GIRONA                157</span>
+<span class="co">#&gt; # … with 281 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
 </div>
 <div id="aemet-data" class="section level2">
 <h2 class="hasAnchor">
@@ -243,27 +243,28 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="va">spain_20200425</span>
-<span class="co">#&gt; Simple feature collection with 237 features and 12 fields</span>
+<span class="co">#&gt; Simple feature collection with 237 features and 13 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4859 xmax: 4.1256 ymax: 43.471</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 237 × 13</span>
-<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-04-25 00:00:00 aemet   0016A      REUS AEROPU… TARRAGONA              71</span>
-<span class="co">#&gt;  2 2020-04-25 00:00:00 aemet   0076       BARCELONA A… BARCELONA               4</span>
-<span class="co">#&gt;  3 2020-04-25 00:00:00 aemet   0149X      MANRESA      BARCELONA             291</span>
-<span class="co">#&gt;  4 2020-04-25 00:00:00 aemet   0200E      BARCELONA, … BARCELONA             408</span>
-<span class="co">#&gt;  5 2020-04-25 00:00:00 aemet   0201D      BARCELONA    BARCELONA               6</span>
-<span class="co">#&gt;  6 2020-04-25 00:00:00 aemet   0252D      ARENYS DE M… BARCELONA              74</span>
-<span class="co">#&gt;  7 2020-04-25 00:00:00 aemet   0255B      SANTA SUSAN… BARCELONA              40</span>
-<span class="co">#&gt;  8 2020-04-25 00:00:00 aemet   0324A      RIPOLL       GIRONA                675</span>
-<span class="co">#&gt;  9 2020-04-25 00:00:00 aemet   0367       GIRONA AERO… GIRONA                143</span>
-<span class="co">#&gt; 10 2020-04-25 00:00:00 aemet   0372C      PORQUERES    GIRONA                157</span>
-<span class="co">#&gt; # … with 227 more rows, and 7 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 237 × 14</span>
+<span class="co">#&gt;    timestamp           service station_id station_name         station_province…</span>
+<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;            </span>
+<span class="co">#&gt;  1 2020-04-25 00:00:00 aemet   0016A      REUS AEROPUERTO      TARRAGONA        </span>
+<span class="co">#&gt;  2 2020-04-25 00:00:00 aemet   0076       BARCELONA AEROPUERTO BARCELONA        </span>
+<span class="co">#&gt;  3 2020-04-25 00:00:00 aemet   0149X      MANRESA              BARCELONA        </span>
+<span class="co">#&gt;  4 2020-04-25 00:00:00 aemet   0200E      BARCELONA, FABRA     BARCELONA        </span>
+<span class="co">#&gt;  5 2020-04-25 00:00:00 aemet   0201D      BARCELONA            BARCELONA        </span>
+<span class="co">#&gt;  6 2020-04-25 00:00:00 aemet   0252D      ARENYS DE MAR        BARCELONA        </span>
+<span class="co">#&gt;  7 2020-04-25 00:00:00 aemet   0255B      SANTA SUSANNA        BARCELONA        </span>
+<span class="co">#&gt;  8 2020-04-25 00:00:00 aemet   0324A      RIPOLL               GIRONA           </span>
+<span class="co">#&gt;  9 2020-04-25 00:00:00 aemet   0367       GIRONA AEROPUERTO    GIRONA           </span>
+<span class="co">#&gt; 10 2020-04-25 00:00:00 aemet   0372C      PORQUERES            GIRONA           </span>
+<span class="co">#&gt; # … with 227 more rows, and 9 more variables: station_province.y &lt;chr&gt;,</span>
+<span class="co">#&gt; #   altitude [m], mean_temperature [°C], min_temperature [°C],</span>
+<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
+<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">spain_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
