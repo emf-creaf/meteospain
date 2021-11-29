@@ -452,6 +452,7 @@
       wind_speed = units::set_units(.data$wind_speed, "m/s"),
       wind_direction = units::set_units(.data$wind_direction, "degree")
     ) %>%
+    dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'altitude')) %>%
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 }
 .aemet_daily_carpentry <- function(data, stations_info) {
@@ -487,5 +488,5 @@
       # wind_direction = units::set_units(.data$wind_direction, degree),
       insolation = units::set_units(.data$insolation, "h")
     ) %>%
-    dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name'))
+    dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'station_province'))
 }

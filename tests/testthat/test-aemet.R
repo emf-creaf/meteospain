@@ -27,7 +27,7 @@ test_that("aemet service options works", {
 test_that("aemet get info works", {
   api_options <- aemet_options(api_key = keyring::key_get('aemet'))
   test_object <- suppressMessages(get_stations_info_from('aemet', api_options))
-  expected_names <- c("service", "station_id", "station_name", "altitude", "geometry")
+  expected_names <- c("service", "station_id", "station_name", "station_province", "altitude", "geometry")
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names)
 })
 
@@ -38,7 +38,7 @@ test_that("aemet current works", {
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
   expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
-    "timestamp", "service", "station_id", "station_name", "altitude",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
     "relative_humidity", "precipitation",
     "wind_direction", "wind_speed", "geometry"
