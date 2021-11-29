@@ -164,28 +164,27 @@
 
 <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">res_1990_jan</span>, <span class="va">res_1990_feb</span><span class="op">)</span>
 <span class="va">res</span>
-<span class="co">#&gt; Simple feature collection with 7015 features and 13 fields</span>
+<span class="co">#&gt; Simple feature collection with 7015 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.532 ymin: 27.4908 xmax: 4.1256 ymax: 43.3401</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 7,015 × 14</span>
-<span class="co">#&gt;    timestamp           service station_id station_name          station_provinc…</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                 &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS  "         TARRAGONA       </span>
-<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROPUERTO"     TARRAGONA       </span>
-<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA AEROPUERT… BARCELONA       </span>
-<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA, FABRA"    BARCELONA       </span>
-<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL AEROPUERTO" BARCELONA       </span>
-<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"              GIRONA          </span>
-<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AEROPUERTO"   GIRONA          </span>
-<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBIA, MALKAR… GIPUZKOA        </span>
-<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/SAN SEBAST… GIPUZKOA        </span>
-<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AEROPUERTO"   BIZKAIA         </span>
-<span class="co">#&gt; # … with 7,005 more rows, and 9 more variables: station_province.y &lt;chr&gt;,</span>
-<span class="co">#&gt; #   altitude [m], mean_temperature [°C], min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 7,015 × 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS … TARRAGONA              32</span>
+<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROP… TARRAGONA              71</span>
+<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA … BARCELONA               4</span>
+<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA,… BARCELONA             408</span>
+<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL A… BARCELONA             146</span>
+<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"     GIRONA                675</span>
+<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AER… GIRONA                143</span>
+<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBI… GIPUZKOA                4</span>
+<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/S… GIPUZKOA              251</span>
+<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AER… BIZKAIA                42</span>
+<span class="co">#&gt; # … with 7,005 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>While for short periods this can be easily done, when needing long periods (years, decades), this can be tedious and prone to error (or at least involves a lot of <em>copy&amp;paste</em> and generate longer scripts).<br>
 To avoid this, we can use loops, both in a tidyverse way (<code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map</a></code>) or in a more classic approach (<code>for</code>). For both ways, the first thing to do is create the vectors of dates to retrieve:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -234,32 +233,33 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
+<span class="co">#&gt; Data received</span>
+<span class="co">#&gt; Trying again in 60 seconds</span>
 <span class="co">#&gt; © AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span>
 <span class="co">#&gt; http://www.aemet.es/es/nota_legal</span>
 
 <span class="va">res_tidyverse</span>
-<span class="co">#&gt; Simple feature collection with 21553 features and 13 fields</span>
+<span class="co">#&gt; Simple feature collection with 21553 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.532 ymin: 27.4908 xmax: 4.1256 ymax: 43.3401</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 21,553 × 14</span>
-<span class="co">#&gt;    timestamp           service station_id station_name          station_provinc…</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                 &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS  "         TARRAGONA       </span>
-<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROPUERTO"     TARRAGONA       </span>
-<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA AEROPUERT… BARCELONA       </span>
-<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA, FABRA"    BARCELONA       </span>
-<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL AEROPUERTO" BARCELONA       </span>
-<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"              GIRONA          </span>
-<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AEROPUERTO"   GIRONA          </span>
-<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBIA, MALKAR… GIPUZKOA        </span>
-<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/SAN SEBAST… GIPUZKOA        </span>
-<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AEROPUERTO"   BIZKAIA         </span>
-<span class="co">#&gt; # … with 21,543 more rows, and 9 more variables: station_province.y &lt;chr&gt;,</span>
-<span class="co">#&gt; #   altitude [m], mean_temperature [°C], min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 21,553 × 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS … TARRAGONA              32</span>
+<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROP… TARRAGONA              71</span>
+<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA … BARCELONA               4</span>
+<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA,… BARCELONA             408</span>
+<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL A… BARCELONA             146</span>
+<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"     GIRONA                675</span>
+<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AER… GIRONA                143</span>
+<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBI… GIPUZKOA                4</span>
+<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/S… GIPUZKOA              251</span>
+<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AER… BIZKAIA                42</span>
+<span class="co">#&gt; # … with 21,543 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 </div>
 <div id="for-loop" class="section level3">
 <h3 class="hasAnchor">
@@ -284,28 +284,27 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="op">}</span>
 
 <span class="va">res_for</span>
-<span class="co">#&gt; Simple feature collection with 21553 features and 13 fields</span>
+<span class="co">#&gt; Simple feature collection with 21553 features and 12 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.532 ymin: 27.4908 xmax: 4.1256 ymax: 43.3401</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 21,553 × 14</span>
-<span class="co">#&gt;    timestamp           service station_id station_name          station_provinc…</span>
-<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                 &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS  "         TARRAGONA       </span>
-<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROPUERTO"     TARRAGONA       </span>
-<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA AEROPUERT… BARCELONA       </span>
-<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA, FABRA"    BARCELONA       </span>
-<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL AEROPUERTO" BARCELONA       </span>
-<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"              GIRONA          </span>
-<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AEROPUERTO"   GIRONA          </span>
-<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBIA, MALKAR… GIPUZKOA        </span>
-<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/SAN SEBAST… GIPUZKOA        </span>
-<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AEROPUERTO"   BIZKAIA         </span>
-<span class="co">#&gt; # … with 21,543 more rows, and 9 more variables: station_province.y &lt;chr&gt;,</span>
-<span class="co">#&gt; #   altitude [m], mean_temperature [°C], min_temperature [°C],</span>
-<span class="co">#&gt; #   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span>
-<span class="co">#&gt; #   insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 21,553 × 13</span>
+<span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
+<span class="co">#&gt;  * &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
+<span class="co">#&gt;  1 1990-01-01 00:00:00 aemet   0002I      "VANDELLÒS … TARRAGONA              32</span>
+<span class="co">#&gt;  2 1990-01-01 00:00:00 aemet   0016A      "REUS AEROP… TARRAGONA              71</span>
+<span class="co">#&gt;  3 1990-01-01 00:00:00 aemet   0076       "BARCELONA … BARCELONA               4</span>
+<span class="co">#&gt;  4 1990-01-01 00:00:00 aemet   0200E      "BARCELONA,… BARCELONA             408</span>
+<span class="co">#&gt;  5 1990-01-01 00:00:00 aemet   0229I      "SABADELL A… BARCELONA             146</span>
+<span class="co">#&gt;  6 1990-01-01 00:00:00 aemet   0324A      "RIPOLL"     GIRONA                675</span>
+<span class="co">#&gt;  7 1990-01-01 00:00:00 aemet   0367       "GIRONA AER… GIRONA                143</span>
+<span class="co">#&gt;  8 1990-01-01 00:00:00 aemet   1014       "HONDARRIBI… GIPUZKOA                4</span>
+<span class="co">#&gt;  9 1990-01-01 00:00:00 aemet   1024E      "DONOSTIA/S… GIPUZKOA              251</span>
+<span class="co">#&gt; 10 1990-01-01 00:00:00 aemet   1082       "BILBAO AER… BIZKAIA                42</span>
+<span class="co">#&gt; # … with 21,543 more rows, and 7 more variables: mean_temperature [°C],</span>
+<span class="co">#&gt; #   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span>
+<span class="co">#&gt; #   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></code></pre></div>
 <p>Both methods return identical results:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># both are identical</span>
@@ -565,10 +564,10 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
 <span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "2008-11-26 UTC" "2009-11-26 UTC" "2010-11-26 UTC" "2011-11-26 UTC"</span>
-<span class="co">#&gt;  [5] "2012-11-26 UTC" "2013-11-26 UTC" "2014-11-26 UTC" "2015-11-26 UTC"</span>
-<span class="co">#&gt;  [9] "2016-11-26 UTC" "2017-11-26 UTC" "2018-11-26 UTC" "2019-11-26 UTC"</span>
-<span class="co">#&gt; [13] "2020-11-26 UTC"</span></code></pre></div>
+<span class="co">#&gt;  [1] "2008-11-29 UTC" "2009-11-29 UTC" "2010-11-29 UTC" "2011-11-29 UTC"</span>
+<span class="co">#&gt;  [5] "2012-11-29 UTC" "2013-11-29 UTC" "2014-11-29 UTC" "2015-11-29 UTC"</span>
+<span class="co">#&gt;  [9] "2016-11-29 UTC" "2017-11-29 UTC" "2018-11-29 UTC" "2019-11-29 UTC"</span>
+<span class="co">#&gt; [13] "2020-11-29 UTC"</span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so there is no need of loops.</p>
 </div>
 </div>
