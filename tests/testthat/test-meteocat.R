@@ -83,6 +83,23 @@ test_that("meteocat hourly works", {
     test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
   )
+
+  # 2008 to 2010 stations lack some variables, check it works without those variables
+  api_options <- meteocat_options(
+    'hourly', start_date = as.Date('2008-04-25'), api_key = keyring::key_get('meteocat')
+  )
+  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  expected_names <- c(
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
+    "temperature",
+    "relative_humidity", "precipitation",
+    "wind_speed",
+    "global_solar_radiation",
+    "geometry"
+  )
+  main_test_battery(
+    test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature
+  )
 })
 
 test_that("meteocat daily works", {
@@ -120,7 +137,7 @@ test_that("meteocat daily works", {
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", 'max_temperature',
-    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
+    "mean_relative_humidity", "min_relative_humidity",
     "precipitation",
     "mean_wind_speed",
     "global_solar_radiation",

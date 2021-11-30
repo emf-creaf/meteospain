@@ -168,7 +168,7 @@ unnest_safe <- function(x, ...) {
   # now, we need to check if "x" is NULL. Sometimes the list of dataframes is not complete, with
   # some elements being NULL. This happens for example in meteocat with some variables before 2010.
   # If this happens, we must return something, instead of processing the data with dplyr::unnest.
-  if (is.null(x)) {
+  if (is.null(x) || nrow(x) < 1) {
     return(tibble::tibble())
   }
 
