@@ -1,6 +1,6 @@
 # meteospain (development version)
 
-* Fixed tidy error when retrieving MeteoCat data from 2008 to 2010
+* Fixed tidy error when retrieving MeteoCat data from 2008 to 2010 (#11)
 * Limited dates in meteocat_options to dates available in the API (2008 or greater)
 * Fixed lack of station_province in aemet stations info (#10)
 
