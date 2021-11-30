@@ -169,7 +169,7 @@ unnest_safe <- function(x, ...) {
   # some elements being NULL. This happens for example in meteocat with some variables before 2010.
   # If this happens, we must return something, instead of processing the data with dplyr::unnest.
   if (is.null(x) || nrow(x) < 1) {
-    return(tibble::tibble())
+    return(dplyr::tibble())
   }
 
   return(tidyr::unnest(x, ...))
