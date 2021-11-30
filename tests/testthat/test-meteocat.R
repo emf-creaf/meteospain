@@ -19,6 +19,7 @@ test_that("meteocat service options works", {
   expect_error(meteocat_options(resolution = 'not_valid_resolution', api_key = 'tururu'), "must be one of")
   expect_error(meteocat_options(), "is missing, with no default")
   expect_error(meteocat_options(stations = 25, api_key = 'tururu'), "must be a character vector")
+  expect_error(meteocat_options(start_date = as.Date('2001-04-25'), api_key = 'tururu'), "'2008-01-01'")
 
 })
 

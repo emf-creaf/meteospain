@@ -153,6 +153,10 @@ meteocat_options <- function(
     dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
     msg = "'stations' must be a character vector"
   )
+  assertthat::assert_that(
+    start_date >= as.Date('2008-01-01'),
+    msg = "'start_date' must be equal or greater than '2008-01-01'"
+  )
 
   # build list
   list(
