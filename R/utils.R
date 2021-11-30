@@ -155,6 +155,27 @@ relocate_vars <- function(data) {
   stop(api_status_check$code, ':\n', api_status_check$message)
 }
 
+unnest_safe <- function(x, ...) {
+
+  # if x is a list instead of a dataframe, something went wrong (happens sometimes in
+  # meteogalicia or meteocat).
+  if (inherits(x, 'list')) {
+    stop(glue::glue(
+      "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}"
+    ))
+  }
+
+  # now, we need to check if "x" is NULL. Sometimes the list of dataframes is not complete, with
+  # some elements being NULL. This happens for example in meteocat with some variables before 2010.
+  # If this happens, we must return something, instead of processing the data with dplyr::unnest.
+  if (is.null(x)) {
+    return(tibble::tibble())
+  }
+
+  return(tidyr::unnest(x, ...))
+
+}
+
 # test helpers ------------------------------------------------------------------------------------------
 
 skip_if_no_auth <- function(service) {
@@ -203,14 +224,14 @@ main_test_battery <- function(test_object, ...) {
   }
 }
 
-unnest_debug <- function(x, ...) {
-
-  if (inherits(x, 'list')) {
-    stop(glue::glue(
-      "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}"
-    ))
-  }
-
-  return(tidyr::unnest(x, ...))
-
-}
+# unnest_debug <- function(x, ...) {
+#
+#   if (inherits(x, 'list')) {
+#     stop(glue::glue(
+#       "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}"
+#     ))
+#   }
+#
+#   return(tidyr::unnest(x, ...))
+#
+# }

@@ -473,12 +473,12 @@
 .meteocat_short_carpentry <- function(data) {
   data %>%
     purrr::map_dfr(function(variable_data) {
-      unnest_debug(
+      unnest_safe(
         variable_data, cols = .data$variables,
         # names_repair = 'universal'
         names_repair = ~ vctrs::vec_as_names(.x, repair = 'universal', quiet = TRUE)
       ) %>%
-        unnest_debug(cols = .data$lectures, names_repair = 'universal')
+        unnest_safe(cols = .data$lectures, names_repair = 'universal')
     }) %>%
     dplyr::select(
       timestamp = .data$data, station_id = .data$codi...1, variable_code = .data$codi...2, .data$valor
@@ -488,7 +488,7 @@
 .meteocat_long_carpentry <- function(data) {
   data %>%
     purrr::map_dfr(function(variable_data) {
-      unnest_debug(variable_data, cols = .data$valors, names_repair = 'universal')
+      unnest_safe(variable_data, cols = .data$valors, names_repair = 'universal')
     }) %>%
     dplyr::select(
       timestamp = .data$data, station_id = .data$codiEstacio, variable_code = .data$codiVariable,
