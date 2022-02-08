@@ -1,4 +1,5 @@
 id: meteospain
+title: meteospain
 emf_type: softwork
 emf_public: true
 emf_automatized: true
@@ -10,17 +11,17 @@ authors:
 - mcaceres
 - aameztegui
 - emf
-authors_aff:
-- CREAF
-- CREAF
-- Lleida University
-- CREAF
 resource_link: softworks/meteospain
 thematic: data_access
 tags:
 - meteo
 - R
 - data
-requirements: ''
+requirements:
+- 'R (>= 4.0.0)'
 description: Access to Spanish Meteorological Stations Services
-
+links:
+  url_docs: 'https://emf-creaf.github.io/meteospain/'
+  url_source: 'https://github.com/emf-creaf/meteospain'
+model_repository: ''
+data_repository: ''
