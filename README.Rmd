@@ -2,8 +2,6 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -15,9 +13,7 @@ knitr::opts_chunk$set(
 
 # meteospain
 
-<!-- badges: start -->
 [![R-CMD-check](https://github.com/emf-creaf/meteospain/workflows/R-CMD-check/badge.svg)](https://github.com/emf-creaf/meteospain/actions)
-<!-- badges: end -->
 
 `meteospain` aims to offer access to different Spanish meteorological stations data in an uniform way.
 
