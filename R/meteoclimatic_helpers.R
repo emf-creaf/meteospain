@@ -78,13 +78,28 @@
     purrr::map_dfr(
       ~ dplyr::tibble(
         service = 'meteoclimatic',
-        timestamp = lubridate::parse_date_time(xml2::xml_text(xml2::xml_find_first(data_xml_body, paste0(.x, '/pubDate'))), orders = 'a, d b Y H:M:S z'),
-        station_id = xml2::xml_text(xml2::xml_find_first(data_xml_body, paste0(.x, '/id'))),
-        max_temperature = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/max')))),
-        min_temperature = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/min')))),
-        max_relative_humidity = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/humidity/max')))),
-        min_relative_humidity = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/humidity/min')))),
-        precipitation = xml2::xml_double((xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/rain/total'))))
+        timestamp = lubridate::parse_date_time(
+          xml2::xml_text(xml2::xml_find_first(data_xml_body, paste0(.x, '/pubDate'))),
+          orders = 'dbYHMSz'
+        ),
+        station_id = xml2::xml_text(
+          xml2::xml_find_first(data_xml_body, paste0(.x, '/id'))
+        ),
+        max_temperature = xml2::xml_double(
+          (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/max')))
+        ),
+        min_temperature = xml2::xml_double(
+          (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/min')))
+        ),
+        max_relative_humidity = xml2::xml_double(
+          (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/humidity/max')))
+        ),
+        min_relative_humidity = xml2::xml_double(
+          (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/humidity/min')))
+        ),
+        precipitation = xml2::xml_double(
+          (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/rain/total')))
+        )
       )
     ) %>%
     dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) %>%
