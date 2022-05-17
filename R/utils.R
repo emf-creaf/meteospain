@@ -235,3 +235,40 @@ main_test_battery <- function(test_object, ...) {
 #   return(tidyr::unnest(x, ...))
 #
 # }
+
+
+# httr safe functions -----------------------------------------------------
+
+# Check DNS for google to see if we have connection.
+# We assume google.com always resolves (even if we know this can fail sometimes
+# due to other reasons, but nsl was created as a test of internet connectivity,
+# so...)
+has_internet_connection <- function() {
+  !is.null(nsl("google.com"))
+}
+
+# safe GET
+safeGET <- function(...) {
+
+  # first of all, check internet connection
+  if (!has_internet_connection()) {
+    stop("No internet connection detected")
+  }
+
+  # create safe version
+  sGET <- purrr::safely(httr::GET)
+
+  # get response
+  response <- sGET(...)
+
+  # checks and errors
+  if (is.null(response$result)) {
+    din_dots <- rlang::list2(...)
+    stop(
+      glue::glue("Unable to connect to API at {din_dots[[1]]}: {response$error}\n"),
+      glue::glue("This usually happens when {din_dots[[1]]} is down")
+    )
+  }
+
+  return(response$result)
+}

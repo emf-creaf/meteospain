@@ -97,7 +97,8 @@
 .check_status_aemet <- function(...) {
 
   # GET step
-  api_response <- httr::GET(...)
+  api_response <- safeGET(...)
+  # api_response <- httr::GET(...)
   response_status <- httr::status_code(api_response)
 
   # and now the status checks
