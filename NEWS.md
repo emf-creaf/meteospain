@@ -1,5 +1,8 @@
 # meteospain (development version)
 
+* Added safe version of httr::GET. Now we can check for connection before quering the API, and if the API is down or not reachable, the error is caught.
+* Tests for aemet and meteocat use now env backend for keyring
+* Fixed parsing of dates in meteoclimatic to make independent of locale
 * Fixed tidy error when retrieving MeteoCat data from 2008 to 2010 (#11)
 * Limited dates in meteocat_options to dates available in the API (2008 or greater)
 * Fixed lack of station_province in aemet stations info (#10)
