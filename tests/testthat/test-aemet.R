@@ -1,6 +1,7 @@
 # skip if no key ----------------------------------------------------------------------------------------
 
 skip_if_no_auth('aemet')
+skip_if_no_internet()
 
 # aemet service options tests ---------------------------------------------------------------------------
 withr::local_options(list("keyring_backend" = "env"))

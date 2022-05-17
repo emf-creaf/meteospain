@@ -178,6 +178,12 @@ unnest_safe <- function(x, ...) {
 
 # test helpers ------------------------------------------------------------------------------------------
 
+skip_if_no_internet <- function() {
+  if (!curl::has_internet()) {
+    testthat::skip("No internet connection, skipping tests")
+  }
+}
+
 skip_if_no_auth <- function(service) {
   if (identical(Sys.getenv(service), "")) {
     testthat::skip(glue::glue("No authentication available for {service}"))
@@ -237,7 +243,7 @@ main_test_battery <- function(test_object, ...) {
 # }
 
 
-# httr safe functions -----------------------------------------------------
+# httr adn xml2 safe functions -----------------------------------------------------
 
 # safe GET
 safeGET <- function(...) {
@@ -253,6 +259,35 @@ safeGET <- function(...) {
   # get response
   response <- sGET(...)
 
+  # checks and errors
+  if (is.null(response$result)) {
+    din_dots <- rlang::list2(...)
+    stop(
+      glue::glue("Unable to connect to API at {din_dots[[1]]}: {response$error}\n"),
+      glue::glue("This usually happens when connection with {din_dots[[1]]} is not possible")
+    )
+  }
+
+  return(response$result)
+}
+
+safe_read_xml <- function(...) {
+
+  # first of all, check internet connection
+  if (!curl::has_internet()) {
+    stop("No internet connection detected")
+  }
+
+  # create safe version
+  s_read_xml <- purrr::safely(xml2::read_xml)
+
+  # add user agent
+  response <- httr::with_config(
+    httr::user_agent('https://github.com/emf-creaf/meteospain'),
+    s_read_xml(...)
+  )
+
+  # checks and errors
   # checks and errors
   if (is.null(response$result)) {
     din_dots <- rlang::list2(...)

@@ -1,6 +1,7 @@
 # skip if no key ----------------------------------------------------------------------------------------
 
 skip_if_no_auth('meteocat')
+skip_if_no_internet()
 
 # meteocat service options tests ---------------------------------------------------------------------------
 withr::local_options(list("keyring_backend" = "env"))
