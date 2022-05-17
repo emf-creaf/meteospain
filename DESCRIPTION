@@ -51,7 +51,8 @@ Imports:
     xml2,
     vctrs,
     memoise,
-    cachem
+    cachem,
+    curl
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
