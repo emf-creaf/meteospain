@@ -3,7 +3,7 @@
 skip_if_no_auth('meteocat')
 
 # meteocat service options tests ---------------------------------------------------------------------------
-
+withr::local_options(list("keyring_backend" = "env"))
 test_that("meteocat service options works", {
   expected_names <- c("resolution", "start_date", "stations", "api_key")
   expect_type(meteocat_options(api_key = 'tururu'), 'list')

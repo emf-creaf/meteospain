@@ -3,7 +3,7 @@
 skip_if_no_auth('aemet')
 
 # aemet service options tests ---------------------------------------------------------------------------
-
+withr::local_options(list("keyring_backend" = "env"))
 test_that("aemet service options works", {
   expected_names <- c("resolution", "start_date", "end_date", "stations", "api_key")
   expect_type(aemet_options(api_key = 'tururu'), 'list')

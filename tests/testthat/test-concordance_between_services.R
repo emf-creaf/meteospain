@@ -2,6 +2,8 @@
 skip_if_no_auth('aemet')
 skip_if_no_auth('meteocat')
 
+withr::local_options(list("keyring_backend" = "env"))
+
 # instant_concordance
 test_that("instant concordance exists", {
   meteocat_instant <- suppressMessages(get_meteo_from(
