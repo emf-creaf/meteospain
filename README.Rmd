@@ -49,7 +49,8 @@ The following meteorological stations services are available:
 ## Examples
 
 Access to the services is done with the `get_meteo_from` function, providing the name of the service and
-the options. Each service has a dedicated options function to guide through the specifics of each service:
+the options.
+Each service has a dedicated `*service*_options()` function to guide through the specifics of each service:
 
 ```{r example}
 library(meteospain)
@@ -64,8 +65,8 @@ Stations info can be accessed with `get_stations_info_from` function:
 get_stations_info_from('meteogalicia', mg_options)
 ```
 
-Returned objects are spatial objects (thanks to the [`sf`](https://r-spatial.github.io/sf/) R package), so we
-can plot the results directly.
+Returned objects are spatial objects (using the [`sf`](https://r-spatial.github.io/sf/) R package),
+so results can be plotted directly:
 
 ```{r plot_stations}
 library(sf)
@@ -74,3 +75,4 @@ plot(get_meteo_from('meteogalicia', mg_options))
 
 plot(get_stations_info_from('meteogalicia', mg_options))
 ```
+

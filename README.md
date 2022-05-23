@@ -40,8 +40,8 @@ The following meteorological stations services are available:
 
 Access to the services is done with the `get_meteo_from` function,
 providing the name of the service and the options. Each service has a
-dedicated options function to guide through the specifics of each
-service:
+dedicated `*service*_options()` function to guide through the specifics
+of each service:
 
 ``` r
 library(meteospain)
@@ -61,16 +61,16 @@ get_meteo_from('meteogalicia', mg_options)
 #> # A tibble: 3,696 × 15
 #>    timestamp           service station_id station_name station_province altitude
 #>    <dttm>              <chr>   <chr>      <chr>        <chr>                 [m]
-#>  1 2022-03-28 12:00:00 meteog… 10045      Mabegondo    A Coruña               94
-#>  2 2022-03-28 12:00:00 meteog… 10046      Marco da Cu… A Coruña              651
-#>  3 2022-03-28 12:00:00 meteog… 10047      Pedro Murias Lugo                   51
-#>  4 2022-03-28 12:00:00 meteog… 10048      O Invernade… Ourense              1026
-#>  5 2022-03-28 12:00:00 meteog… 10049      Corrubedo    A Coruña               30
-#>  6 2022-03-28 12:00:00 meteog… 10050      CIS Ferrol   A Coruña               37
-#>  7 2022-03-28 12:00:00 meteog… 10052      Muralla      A Coruña              661
-#>  8 2022-03-28 12:00:00 meteog… 10053      Campus Lugo  Lugo                  400
-#>  9 2022-03-28 12:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684
-#> 10 2022-03-28 12:00:00 meteog… 10056      Marroxo      Lugo                  645
+#>  1 2022-05-22 14:00:00 meteog… 10045      Mabegondo    A Coruña               94
+#>  2 2022-05-22 14:00:00 meteog… 10046      Marco da Cu… A Coruña              651
+#>  3 2022-05-22 14:00:00 meteog… 10047      Pedro Murias Lugo                   51
+#>  4 2022-05-22 14:00:00 meteog… 10048      O Invernade… Ourense              1026
+#>  5 2022-05-22 14:00:00 meteog… 10049      Corrubedo    A Coruña               30
+#>  6 2022-05-22 14:00:00 meteog… 10050      CIS Ferrol   A Coruña               37
+#>  7 2022-05-22 14:00:00 meteog… 10052      Muralla      A Coruña              661
+#>  8 2022-05-22 14:00:00 meteog… 10053      Campus Lugo  Lugo                  400
+#>  9 2022-05-22 14:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684
+#> 10 2022-05-22 14:00:00 meteog… 10056      Marroxo      Lugo                  645
 #> # … with 3,686 more rows, and 9 more variables: temperature [°C],
 #> #   min_temperature [°C], max_temperature [°C], relative_humidity [%],
 #> #   precipitation [L/m^2], wind_direction [°], wind_speed [m/s],
@@ -90,21 +90,21 @@ get_stations_info_from('meteogalicia', mg_options)
 #>    service      station_id station_name             station_province altitude
 #>  * <chr>        <chr>      <chr>                    <chr>                 [m]
 #>  1 meteogalicia 10157      Coruña-Torre de Hércules A Coruña               21
-#>  2 meteogalicia 14000      Coruña-Dique             A Coruña                5
-#>  3 meteogalicia 10045      Mabegondo                A Coruña               94
-#>  4 meteogalicia 14003      Punta Langosteira        A Coruña                5
-#>  5 meteogalicia 10144      Arzúa                    A Coruña              362
-#>  6 meteogalicia 19005      Guísamo                  A Coruña              175
-#>  7 meteogalicia 19012      Cespón                   A Coruña               59
-#>  8 meteogalicia 10095      Sergude                  A Coruña              231
-#>  9 meteogalicia 10800      Camariñas                A Coruña                5
-#> 10 meteogalicia 19001      Rus                      A Coruña              134
+#>  2 meteogalicia 10045      Mabegondo                A Coruña               94
+#>  3 meteogalicia 14003      Punta Langosteira        A Coruña                5
+#>  4 meteogalicia 10144      Arzúa                    A Coruña              362
+#>  5 meteogalicia 19005      Guísamo                  A Coruña              175
+#>  6 meteogalicia 19012      Cespón                   A Coruña               59
+#>  7 meteogalicia 10095      Sergude                  A Coruña              231
+#>  8 meteogalicia 10800      Camariñas                A Coruña                5
+#>  9 meteogalicia 19001      Rus                      A Coruña              134
+#> 10 meteogalicia 10143      Cariño                   A Coruña                5
 #> # … with 144 more rows, and 1 more variable: geometry <POINT [°]>
 ```
 
-Returned objects are spatial objects (thanks to the
-[`sf`](https://r-spatial.github.io/sf/) R package), so we can plot the
-results directly.
+Returned objects are spatial objects (using the
+[`sf`](https://r-spatial.github.io/sf/) R package), so results can be
+plotted directly:
 
 ``` r
 library(sf)
