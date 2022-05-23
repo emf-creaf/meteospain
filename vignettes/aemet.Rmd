@@ -17,12 +17,16 @@ knitr::opts_chunk$set(
   comment = "#>",
   purl = NOT_CRAN
 )
+
+# env keyring
+withr::local_options(list("keyring_backend" = "env"))
 ```
 
 ```{r setup}
 library(meteospain)
 library(ggplot2)
 library(ggforce)
+library(units)
 library(sf)
 library(keyring)
 ```

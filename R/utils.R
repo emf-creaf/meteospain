@@ -275,12 +275,6 @@ main_test_battery <- function(test_object, ...) {
 # return the corresponding safe function for the type of API
 safe_api_access <- function(type = c('rest', 'xml'), ...) {
 
-  # check internet connection
-  # first of all, check internet connection
-  if (!curl::has_internet()) {
-    stop("No internet connection detected")
-  }
-
   # select the api function (.safeGET for REST APIs, .safe_read_xml for xml)
   api_access <- switch(
     type,
