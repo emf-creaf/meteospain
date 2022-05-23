@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,30 +33,25 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li class="dropdown-header">Services</li>
+    </li>
+<li class="dropdown-header">Services</li>
     <li>
       <a href="../articles/aemet.html">AEMET service</a>
     </li>
@@ -71,7 +68,8 @@
       <a href="../articles/meteoclimatic.html">Meteoclimatic service</a>
     </li>
     <li class="divider">
-    <li class="dropdown-header">Workflows</li>
+    </li>
+<li class="dropdown-header">Workflows</li>
     <li>
       <a href="../articles/api_limits.html">API limits and loops</a>
     </li>
@@ -86,7 +84,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/emf-creaf/meteospain/">
+  <a href="https://github.com/emf-creaf/meteospain/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -107,7 +105,7 @@
       <h1 data-toc-skip>MeteoCat service</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/master/vignettes/meteocat.Rmd"><code>vignettes/meteocat.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/HEAD/vignettes/meteocat.Rmd" class="external-link"><code>vignettes/meteocat.Rmd</code></a></small>
       <div class="hidden name"><code>meteocat.Rmd</code></div>
 
     </div>
@@ -115,8 +113,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
 <span class="co">#&gt; The following objects are masked from 'package:stats':</span>
@@ -125,21 +123,23 @@
 <span class="co">#&gt; The following objects are masked from 'package:base':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     intersect, setdiff, setequal, union</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html">keyring</a></span><span class="op">)</span></code></pre></div>
-<div id="meteocat-service" class="section level1">
-<h1 class="hasAnchor">
-<a href="#meteocat-service" class="anchor"></a>MeteoCat service</h1>
-<p><a href="https://www.meteo.cat/">MeteoCat</a> is the Catalonian meteorologic service. It offers access to different meteorological data and information, being one of their main missions to curate and circulate data from meteorological stations. <code>meteospain</code> only access to the automatic meteorological stations network data.</p>
-<div id="meteocat-options" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meteocat-options" class="anchor"></a>MeteoCat options</h2>
-<div id="temporal-resolution" class="section level3">
-<h3 class="hasAnchor">
-<a href="#temporal-resolution" class="anchor"></a>Temporal resolution</h3>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com" class="external-link">ggforce</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/" class="external-link">units</a></span><span class="op">)</span>
+<span class="co">#&gt; udunits database from /Users/runner/work/_temp/Library/units/share/udunits/udunits2.xml</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>
+<span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="meteocat-service">MeteoCat service<a class="anchor" aria-label="anchor" href="#meteocat-service"></a>
+</h2>
+<p><a href="https://www.meteo.cat/" class="external-link">MeteoCat</a> is the Catalonian meteorologic service. It offers access to different meteorological data and information, being one of their main missions to curate and circulate data from meteorological stations. <code>meteospain</code> only access to the automatic meteorological stations network data.</p>
+<div class="section level3">
+<h3 id="meteocat-options">MeteoCat options<a class="anchor" aria-label="anchor" href="#meteocat-options"></a>
+</h3>
+<div class="section level4">
+<h4 id="temporal-resolution">Temporal resolution<a class="anchor" aria-label="anchor" href="#temporal-resolution"></a>
+</h4>
 <p><code>meteospain</code> offers access to the MeteoCat API at different temporal resolutions:</p>
 <ul>
 <li>“instant”, returning the latest 4 hours of measures for all or selected stations.</li>
@@ -150,147 +150,147 @@
 </ul>
 <p>In “daily” and “monthly”, a <code>start_date</code> argument must be provided, indicating the date from which retrieve the data as explained earlier. For more info see <code><a href="../articles/api_limits.html">vignette('api_limits', package = 'meteospain')</a></code>.</p>
 </div>
-<div id="stations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#stations" class="anchor"></a>Stations</h3>
+<div class="section level4">
+<h4 id="stations">Stations<a class="anchor" aria-label="anchor" href="#stations"></a>
+</h4>
 <p><code>meteospain</code> access the data in the MeteoCat API collecting all stations. If a character vector of stations codes is supplied in the <code>stations</code> argument, a filter step is done before returning the data to maintain only the stations supplied.</p>
 </div>
-<div id="meteocat-api-key" class="section level3">
-<h3 class="hasAnchor">
-<a href="#meteocat-api-key" class="anchor"></a>MeteoCat API Key</h3>
+<div class="section level4">
+<h4 id="meteocat-api-key">MeteoCat API Key<a class="anchor" aria-label="anchor" href="#meteocat-api-key"></a>
+</h4>
 <p>MeteoCat API only allow access to the data with a personal API Key. This token must be included in the <code>api_key</code> argument of <code>meteocat_options</code> function.<br>
-To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat/" class="uri">https://apidocs.meteocat.gencat.cat/</a> and follow the instructions there.</p>
+To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat/" class="external-link uri">https://apidocs.meteocat.gencat.cat/</a> and follow the instructions there.</p>
 <blockquote>
-<p>It is not advisable to use the keys directly in any script shared or publicly available (github…), neither store them in plain text files. One option is using the <a href="https://github.com/r-lib/keyring">keyring package</a> for managing and accessing keys:</p>
+<p>It is not advisable to use the keys directly in any script shared or publicly available (github…), neither store them in plain text files. One option is using the <a href="https://github.com/r-lib/keyring" class="external-link">keyring package</a> for managing and accessing keys:</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'keyring'</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html">keyring</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html">key_set</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span> <span class="co"># A prompt asking for the secret (the API Key) will appear.</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'keyring'</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_set</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span> <span class="co"># A prompt asking for the secret (the API Key) will appear.</span></code></pre></div>
 </div>
-<div id="examples" class="section level3">
-<h3 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h3>
+<div class="section level4">
+<h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h4>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># current day, all stations</span>
 <span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span>
   resolution <span class="op">=</span> <span class="st">'instant'</span>,
-  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span>
+  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">api_options</span></code></pre></div>
-<pre><code>#&gt; $resolution
-#&gt; [1] "instant"
-#&gt; 
-#&gt; $start_date
-#&gt; [1] "2021-11-29"
-#&gt; 
-#&gt; $stations
-#&gt; NULL
-#&gt; 
-#&gt; $api_key
-#&gt; [1] "my_api_key"</code></pre>
+<pre><code><span class="co">#&gt; $resolution</span>
+<span class="co">#&gt; [1] "instant"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $start_date</span>
+<span class="co">#&gt; [1] "2022-05-23"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $stations</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $api_key</span>
+<span class="co">#&gt; [1] "my_api_key"</span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># daily, all stations</span>
 <span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span>
   resolution <span class="op">=</span> <span class="st">'daily'</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-10'</span><span class="op">)</span>,
-  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span>
+  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-10'</span><span class="op">)</span>,
+  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">api_options</span></code></pre></div>
-<pre><code>#&gt; $resolution
-#&gt; [1] "daily"
-#&gt; 
-#&gt; $start_date
-#&gt; [1] "2020-04-25"
-#&gt; 
-#&gt; $stations
-#&gt; NULL
-#&gt; 
-#&gt; $api_key
-#&gt; [1] "my_api_key"</code></pre>
+<pre><code><span class="co">#&gt; $resolution</span>
+<span class="co">#&gt; [1] "daily"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $start_date</span>
+<span class="co">#&gt; [1] "2020-04-25"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $stations</span>
+<span class="co">#&gt; NULL</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $api_key</span>
+<span class="co">#&gt; [1] "my_api_key"</span></code></pre>
 </div>
 </div>
-<div id="meteocat-stations-info" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meteocat-stations-info" class="anchor"></a>MeteoCat stations info</h2>
+<div class="section level3">
+<h3 id="meteocat-stations-info">MeteoCat stations info<a class="anchor" aria-label="anchor" href="#meteocat-stations-info"></a>
+</h3>
 <p>Accessing station metadata for MeteoCat is simple:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 234 features and 5 fields</span>
+<span class="co">#&gt; Simple feature collection with 236 features and 5 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55219 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 234 × 6</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 236 × 6</span></span>
 <span class="co">#&gt;    service  station_id station_name                   station_province altitude</span>
-<span class="co">#&gt;  * &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                          &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 meteocat AN         Barcelona - Av. Lluís Companys Barcelona             7.5</span>
-<span class="co">#&gt;  2 meteocat CA         Clariana de Cardener           Lleida              693  </span>
-<span class="co">#&gt;  3 meteocat CB         les Llosses                    Girona              700  </span>
-<span class="co">#&gt;  4 meteocat CC         Orís                           Barcelona           626  </span>
-<span class="co">#&gt;  5 meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849  </span>
-<span class="co">#&gt;  6 meteocat CE         els Hostalets de Pierola       Barcelona           316  </span>
-<span class="co">#&gt;  7 meteocat CF         Lloret de Mar                  Girona               63.3</span>
-<span class="co">#&gt;  8 meteocat CG         Molló - Fabert                 Girona             1405  </span>
-<span class="co">#&gt;  9 meteocat CH         Falset - Escola                Tarragona           350  </span>
-<span class="co">#&gt; 10 meteocat CI         Sant Pau de Segúries           Girona              852  </span>
-<span class="co">#&gt; # … with 224 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></code></pre></div>
+<span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> meteocat AN         Barcelona - Av. Lluís Companys Barcelona             7.5</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> meteocat CA         Clariana de Cardener           Lleida              693  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> meteocat CB         les Llosses                    Girona              700  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> meteocat CC         Orís                           Barcelona           626  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> meteocat CE         els Hostalets de Pierola       Barcelona           316  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> meteocat CF         Lloret de Mar                  Girona               63.3</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> meteocat CG         Molló - Fabert                 Girona             <span style="text-decoration: underline;">1</span>405  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> meteocat CH         Falset - Escola                Tarragona           350  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> meteocat CI         Sant Pau de Segúries           Girona              852  </span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 226 more rows, and 1 more variable: geometry &lt;POINT [°]&gt;</span></span></code></pre></div>
 </div>
-<div id="meteocat-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meteocat-data" class="anchor"></a>MeteoCat data</h2>
+<div class="section level3">
+<h3 id="meteocat-data">MeteoCat data<a class="anchor" aria-label="anchor" href="#meteocat-data"></a>
+</h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span>
   resolution <span class="op">=</span> <span class="st">'monthly'</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>,
-  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span>
+  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>,
+  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">catalunya_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span>
-<span class="co">#&gt; Data provided by meteo.cat © Servei Meteorològic de Catalunya</span>
-<span class="co">#&gt; https://www.meteo.cat/wpweb/avis-legal/#info</span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span>
+<span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span>
 <span class="va">catalunya_2020</span>
-<span class="co">#&gt; Simple feature collection with 2256 features and 20 fields (with 12 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 2255 features and 20 fields (with 11 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; # A tibble: 2,256 × 21</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,255 × 21</span></span>
 <span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
-<span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 [m]</span>
-<span class="co">#&gt;  1 2020-01-01 00:00:00 meteoc… C6         Castellnou … Lleida               264 </span>
-<span class="co">#&gt;  2 2020-01-01 00:00:00 meteoc… C7         Tàrrega      Lleida               427 </span>
-<span class="co">#&gt;  3 2020-01-01 00:00:00 meteoc… C8         Cervera      Lleida               554 </span>
-<span class="co">#&gt;  4 2020-01-01 00:00:00 meteoc… C9         Mas de Barb… Tarragona            240 </span>
-<span class="co">#&gt;  5 2020-01-01 00:00:00 meteoc… CC         Orís         Barcelona            626 </span>
-<span class="co">#&gt;  6 2020-01-01 00:00:00 meteoc… CD         la Seu d'Ur… Lleida               849 </span>
-<span class="co">#&gt;  7 2020-01-01 00:00:00 meteoc… CE         els Hostale… Barcelona            316 </span>
-<span class="co">#&gt;  8 2020-01-01 00:00:00 meteoc… CG         Molló - Fab… Girona              1405 </span>
-<span class="co">#&gt;  9 2020-01-01 00:00:00 meteoc… CI         Sant Pau de… Girona               852 </span>
-<span class="co">#&gt; 10 2020-01-01 00:00:00 meteoc… CJ         Organyà      Lleida               566.</span>
-<span class="co">#&gt; # … with 2,246 more rows, and 15 more variables: mean_temperature [°C],</span>
-<span class="co">#&gt; #   min_temperature_absolute [°C], min_temperature_mean [°C],</span>
-<span class="co">#&gt; #   max_temperature_absolute [°C], max_temperature_mean [°C],</span>
-<span class="co">#&gt; #   mean_relative_humidity [%], min_relative_humidity_absolute [%],</span>
-<span class="co">#&gt; #   min_relative_humidity_mean [%], max_relative_humidity_absolute [%],</span>
-<span class="co">#&gt; #   max_relative_humidity_mean [%], precipitation [L/m^2],</span>
-<span class="co">#&gt; #   mean_wind_direction [°], mean_wind_speed [m/s], …</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C6         Castellnou … Lleida               264 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C7         Tàrrega      Lleida               427 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C8         Cervera      Lleida               554 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C9         Mas de Barb… Tarragona            240 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CC         Orís         Barcelona            626 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CD         la Seu d'Ur… Lleida               849 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CE         els Hostale… Barcelona            316 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CG         Molló - Fab… Girona              <span style="text-decoration: underline;">1</span>405 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CI         Sant Pau de… Girona               852 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CJ         Organyà      Lleida               566.</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 2,245 more rows, and 15 more variables: mean_temperature [°C],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   min_temperature_absolute [°C], min_temperature_mean [°C],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   max_temperature_absolute [°C], max_temperature_mean [°C],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   mean_relative_humidity [%], min_relative_humidity_absolute [%],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity_mean [%], max_relative_humidity_absolute [%],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   max_relative_humidity_mean [%], precipitation [L/m^2],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   mean_wind_direction [°], mean_wind_speed [m/s], …</span></span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">catalunya_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">catalunya_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="meteocat_files/figure-html/meteocat_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">catalunya_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="va">catalunya_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>
 <span class="co">#&gt; Warning: Removed 25 rows containing non-finite values (stat_bin).</span></code></pre></div>
 <p><img src="meteocat_files/figure-html/meteocat_data_plot-2.png" width="672" style="display: block; margin: auto;"></p>
@@ -309,11 +309,13 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 
 
       <footer><div class="copyright">
-  <p>Developed by Victor Granda.</p>
+  <p></p>
+<p>Developed by Victor Granda.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -321,6 +323,8 @@ To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat
 
   
 
+
+  
 
   </body>
 </html>
