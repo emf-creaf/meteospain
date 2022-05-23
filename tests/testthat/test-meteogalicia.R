@@ -35,7 +35,7 @@ test_that("meteogalicia get info works", {
 test_that("meteogalicia instant works", {
   # all stations
   api_options <- meteogalicia_options('instant')
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)))
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
