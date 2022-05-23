@@ -108,7 +108,8 @@
     'rss', 'observacion', 'listaEstacionsMeteo.action'
   )
   # api response
-  api_response <- safeGET(
+  api_response <- safe_api_access(
+    type = 'rest',
     "http://servizos.meteogalicia.es",
     path = path_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain')
@@ -160,7 +161,8 @@
   # get api query
   query_resolution <- .create_meteogalicia_query(api_options)
   # get the api response
-  api_response <- safeGET(
+  api_response <- safe_api_access(
+    type = 'rest',
     "http://servizos.meteogalicia.es",
     path = path_resolution,
     query = query_resolution,

@@ -30,7 +30,7 @@
   # path
   path_resolution <- paste0("http://meteoclimatic.com/feed/rss/", api_options$stations)
   # station_info
-  raw_station_info <- safe_read_xml(path_resolution)
+  raw_station_info <- safe_api_access(type = 'xml', path_resolution)
   res <- dplyr::tibble(
     service = 'meteoclimatic',
     # station_id is special, we need obtain it from the link, so we need to remove all the link previous to the code
@@ -60,10 +60,7 @@
   path_resolution <- .create_meteoclimatic_path(api_options)
 
   # data
-  # TODO:
-  #   - safe version of read_xml as we do with safeGET.
-  #   - user agent as we do with httr::get thorugh safeGET
-  data_xml_body <- safe_read_xml(path_resolution)
+  data_xml_body <- safe_api_access(type = 'xml', path_resolution)
   # data is an xml file. Each station is a node in the xml, so we loop by nodes and build the tibble. Finally
   # we need the stations info, so we join it
   nodes <- xml2::xml_path(xml2::xml_find_all(data_xml_body, '//meteodata/stations/station'))

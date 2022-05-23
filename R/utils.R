@@ -243,15 +243,10 @@ main_test_battery <- function(test_object, ...) {
 # }
 
 
-# httr adn xml2 safe functions -----------------------------------------------------
+# GET and xml2 safe functions -----------------------------------------------------
 
 # safe GET
-safeGET <- function(...) {
-
-  # first of all, check internet connection
-  if (!curl::has_internet()) {
-    stop("No internet connection detected")
-  }
+.safeGET <- function(...) {
 
   # create safe version
   sGET <- purrr::safely(httr::GET)
@@ -259,24 +254,11 @@ safeGET <- function(...) {
   # get response
   response <- sGET(...)
 
-  # checks and errors
-  if (is.null(response$result)) {
-    din_dots <- rlang::list2(...)
-    stop(
-      glue::glue("Unable to connect to API at {din_dots[[1]]}: {response$error}\n"),
-      glue::glue("This usually happens when connection with {din_dots[[1]]} is not possible")
-    )
-  }
-
-  return(response$result)
+  return(response)
 }
 
-safe_read_xml <- function(...) {
-
-  # first of all, check internet connection
-  if (!curl::has_internet()) {
-    stop("No internet connection detected")
-  }
+# safe xml
+.safe_read_xml <- function(...) {
 
   # create safe version
   s_read_xml <- purrr::safely(xml2::read_xml)
@@ -287,7 +269,27 @@ safe_read_xml <- function(...) {
     s_read_xml(...)
   )
 
-  # checks and errors
+  return(response)
+}
+
+# return the corresponding safe function for the type of API
+safe_api_access <- function(type = c('rest', 'xml'), ...) {
+
+  # check internet connection
+  # first of all, check internet connection
+  if (!curl::has_internet()) {
+    stop("No internet connection detected")
+  }
+
+  # select the api function (.safeGET for REST APIs, .safe_read_xml for xml)
+  api_access <- switch(
+    type,
+    'rest' = .safeGET,
+    'xml' = .safe_read_xml
+  )
+
+  response <- api_access(...)
+
   # checks and errors
   if (is.null(response$result)) {
     din_dots <- rlang::list2(...)

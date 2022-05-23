@@ -8,7 +8,7 @@
 .check_status_ria <- function(...) {
 
   # GET step
-  api_response <- safeGET(...)
+  api_response <- safe_api_access(type = 'rest', ...)
   response_status <- httr::status_code(api_response)
 
   # and now the status checks
