@@ -26,6 +26,7 @@ withr::local_options(list("keyring_backend" = "env"))
 library(meteospain)
 library(ggplot2)
 library(ggforce)
+library(units)
 library(sf)
 ```
 

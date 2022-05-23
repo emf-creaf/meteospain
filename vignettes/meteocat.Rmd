@@ -27,6 +27,7 @@ library(meteospain)
 library(dplyr)
 library(ggplot2)
 library(ggforce)
+library(units)
 library(sf)
 library(keyring)
 ```
