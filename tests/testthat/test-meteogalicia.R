@@ -35,7 +35,8 @@ test_that("meteogalicia get info works", {
 test_that("meteogalicia instant works", {
   # all stations
   api_options <- meteogalicia_options('instant')
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)))
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)))
+  test_object <- get_meteo_from('meteogalicia', api_options)
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
@@ -52,7 +53,8 @@ test_that("meteogalicia instant works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
@@ -62,7 +64,8 @@ test_that("meteogalicia instant works", {
 test_that("meteogalicia current works", {
   # all stations
   api_options <- meteogalicia_options('current_day')
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
@@ -77,7 +80,8 @@ test_that("meteogalicia current works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
@@ -87,7 +91,8 @@ test_that("meteogalicia current works", {
 test_that("meteogalicia daily works", {
   # all stations actual
   api_options <- meteogalicia_options('daily', start_date = Sys.Date() - 30, end_date = Sys.Date())
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
@@ -103,7 +108,8 @@ test_that("meteogalicia daily works", {
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
@@ -112,7 +118,8 @@ test_that("meteogalicia daily works", {
 
   # all stations 2000s
   api_options <- meteogalicia_options('daily', start_date = as.Date('2000-01-25'), end_date = as.Date('2000-01-30'))
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = mean_temperature
   )
@@ -120,7 +127,8 @@ test_that("meteogalicia daily works", {
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = mean_temperature
   )
@@ -130,7 +138,8 @@ test_that("meteogalicia daily works", {
 test_that("meteogalicia monthly works", {
   # all stations actual
   api_options <- meteogalicia_options('monthly', start_date = Sys.Date() - 365, end_date = Sys.Date())
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
@@ -145,7 +154,8 @@ test_that("meteogalicia monthly works", {
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
@@ -153,7 +163,8 @@ test_that("meteogalicia monthly works", {
 
   # all stations 2000s
   api_options <- meteogalicia_options('monthly', start_date = as.Date('2000-01-01'), end_date = as.Date('2000-12-01'))
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = mean_temperature
   )
@@ -161,7 +172,8 @@ test_that("meteogalicia monthly works", {
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
+  test_object <- get_meteo_from('meteogalicia', api_options)
+  # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
     test_object, service = 'meteogalicia', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
