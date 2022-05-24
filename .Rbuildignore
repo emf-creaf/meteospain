@@ -11,3 +11,4 @@
 ^metadata\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^revdep$

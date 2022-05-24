@@ -14,3 +14,8 @@
 * checking CRAN incoming feasibility ... NOTE
 
  
+## Reverse/Downstream dependencies
+
+R CMD check was run with no fail for downstream dependencies:
+
+* meteoland
