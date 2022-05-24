@@ -178,10 +178,7 @@
   <span class="st">'ria'</span>,
   <span class="fu"><a href="../reference/services_options.html">ria_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Unable to obtain data from RIA API:</span></span>
-<span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; Client error: (404) Not Found</span></span>
-<span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; Response status 404 with reason "Datos diarios no encontrados para la estación en las fechas indicadas." </span></span>
-<span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; for the following stations and dates:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Some stations didn't return data for some dates:</span></span>
 <span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt;  https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-01/2020-04-30,</span></span>
 <span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/9/2020-04-01/2020-04-30,</span></span>
 <span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/3/2020-04-01/2020-04-30,</span></span>
@@ -232,12 +229,12 @@ Here we convert the data to tibble before the join, that way we are not joining 
 <span class="co">#&gt; "mean_wind_direction")</span>
 
 <span class="va">april_2020_spain</span>
-<span class="co">#&gt; Simple feature collection with 20469 features and 19 fields (with 180 geometries empty)</span>
+<span class="co">#&gt; Simple feature collection with 20470 features and 19 fields (with 180 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 20,469 × 20</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 20,470 × 20</span></span>
 <span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0016A      REUS AEROPU… TARRAGONA              71</span>
@@ -250,7 +247,7 @@ Here we convert the data to tibble before the join, that way we are not joining 
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0324A      RIPOLL       GIRONA                675</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0367       GIRONA AERO… GIRONA                143</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0372C      PORQUERES    GIRONA                157</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 20,459 more rows, and 14 more variables: mean_temperature [°C],</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 20,460 more rows, and 14 more variables: mean_temperature [°C],</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   mean_relative_humidity [%], min_relative_humidity [%],</span></span>

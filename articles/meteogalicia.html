@@ -114,6 +114,15 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'dplyr'</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com" class="external-link">ggforce</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/" class="external-link">units</a></span><span class="op">)</span>
@@ -155,10 +164,10 @@
 <span class="co">#&gt; [1] "instant"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2022-05-23"</span>
+<span class="co">#&gt; [1] "2022-05-24"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2022-05-23"</span>
+<span class="co">#&gt; [1] "2022-05-24"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; NULL</span>
@@ -173,10 +182,10 @@
 <span class="co">#&gt; [1] "current_day"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $start_date</span>
-<span class="co">#&gt; [1] "2022-05-23"</span>
+<span class="co">#&gt; [1] "2022-05-24"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $end_date</span>
-<span class="co">#&gt; [1] "2022-05-23"</span>
+<span class="co">#&gt; [1] "2022-05-24"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $stations</span>
 <span class="co">#&gt; [1] "10157" "14000" "10045"</span>
@@ -250,53 +259,58 @@
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span>
-  resolution <span class="op">=</span> <span class="st">'daily'</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-25'</span><span class="op">)</span>
+  resolution <span class="op">=</span> <span class="st">'monthly'</span>,
+  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span>,
+  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-12-31'</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">galicia_20200425</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span>
+<span class="va">galicia_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser </span></span>
 <span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á </span></span>
 <span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span></span>
 <span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; que as utilice para os usos distintos do particular e privado.</span></span>
 <span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span>
-<span class="va">galicia_20200425</span>
-<span class="co">#&gt; Simple feature collection with 157 features and 16 fields (with 6 geometries empty)</span>
+<span class="va">galicia_2020</span>
+<span class="co">#&gt; Simple feature collection with 1832 features and 13 fields (with 12 geometries empty)</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span>
 <span class="co">#&gt; Geodetic CRS:  WGS 84</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 157 × 17</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,832 × 14</span></span>
 <span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10045      Mabegondo    A Coruña               94</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10046      Marco da Cu… A Coruña              651</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10047      Pedro Murias Lugo                   51</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10048      O Invernade… Ourense              <span style="text-decoration: underline;">1</span>026</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10049      Corrubedo    A Coruña               30</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10050      CIS Ferrol   A Coruña               37</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10052      Muralla      A Coruña              661</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10053      Campus Lugo  Lugo                  400</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10055      Guitiriz-Mi… Lugo                  684</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-04-25 <span style="color: #949494;">00:00:00</span> meteog… 10056      Marroxo      Lugo                  645</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 147 more rows, and 11 more variables: mean_temperature [°C],</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10045      Mabegondo    A Coruña               94</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10046      Marco da Cu… A Coruña              651</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10047      Pedro Murias Lugo                   51</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10048      O Invernade… Ourense              <span style="text-decoration: underline;">1</span>026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10049      Corrubedo    A Coruña               30</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10050      CIS Ferrol   A Coruña               37</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10052      Muralla      A Coruña              661</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10053      Campus Lugo  Lugo                  400</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10055      Guitiriz-Mi… Lugo                  684</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteog… 10056      Marroxo      Lugo                  645</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 1,822 more rows, and 8 more variables: mean_temperature [°C],</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   min_temperature [°C], max_temperature [°C], mean_relative_humidity [%],</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_direction [°], mean_wind_speed [m/s],</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   insolation [h], geometry &lt;POINT [°]&gt;</span></span></code></pre></div>
+<span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;</span></span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">galicia_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">galicia_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">max_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="meteogalicia_files/figure-html/meteogalicia_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">galicia_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<span class="va">galicia_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>
+<span class="co">#&gt; Warning: Removed 1 rows containing non-finite values (stat_bin).</span></code></pre></div>
 <p><img src="meteogalicia_files/figure-html/meteogalicia_data_plot-2.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
