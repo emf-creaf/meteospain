@@ -1,6 +1,7 @@
 # meteospain 0.0.4
 
 * Minor improvements in vignettes
+* Added units to solar_radiation in RIA service
 * Added curl as a dependency. Now we can check for connection before querying the API.
 * Added safe versions of httr::GET and xml2::read_xml. If the API is down or not reachable, the error is caught.
 * Tests for aemet and meteocat use now env backend for keyring

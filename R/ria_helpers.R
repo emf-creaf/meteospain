@@ -310,7 +310,7 @@
       mean_wind_speed = units::set_units(.data$mean_wind_speed, 'm/s'),
       mean_wind_direction = units::set_units(.data$mean_wind_direction, 'degree'),
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      solar_radiation = units::set_units(.data$solar_radiation, ""),
+      solar_radiation = units::set_units(.data$solar_radiation, "MJ/d/m^2"),
       timestamp = lubridate::as_datetime(.data$timestamp),
       station_id = as.character(.data$station_id)
     ) %>%
