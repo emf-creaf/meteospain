@@ -37,7 +37,8 @@ test_that("aemet get info works", {
 test_that("aemet current works", {
   # all stations
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
-  expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
@@ -48,7 +49,8 @@ test_that("aemet current works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   main_test_battery(
     test_object, service = 'aemet',
     expected_names = expected_names, stations_to_check = stations_to_check, temperature = temperature
@@ -62,7 +64,8 @@ test_that("aemet daily works", {
     start_date = as.Date('2020-04-01'), end_date = as.Date('2020-05-01'),
     api_key = keyring::key_get('aemet')
   )
-  expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
@@ -72,7 +75,8 @@ test_that("aemet daily works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   main_test_battery(
     test_object, service = 'aemet',
     expected_names = expected_names, stations_to_check = stations_to_check, temperature = mean_temperature
@@ -83,7 +87,8 @@ test_that("aemet daily works", {
     start_date = as.Date('2005-04-01'), end_date = as.Date('2005-05-01'),
     api_key = keyring::key_get('aemet')
   )
-  expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # all stations 1990's
   api_options <- aemet_options(

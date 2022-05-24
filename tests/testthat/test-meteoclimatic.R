@@ -33,7 +33,8 @@ test_that("meteoclimatic get info works", {
 test_that("Meteoclimatic works as expected", {
   # all stations
   api_options <- meteoclimatic_options(stations = 'ES', 'current_day')
-  expect_message((test_object <- get_meteo_from('meteoclimatic', api_options)), 'non-professional')
+  test_object <- get_meteo_from('meteoclimatic', api_options)
+  # expect_message((test_object <- get_meteo_from('meteoclimatic', api_options)), 'non-professional')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "min_temperature", "max_temperature",
     "min_relative_humidity", "max_relative_humidity", "precipitation", "geometry"

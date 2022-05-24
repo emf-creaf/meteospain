@@ -40,7 +40,8 @@ test_that("ria get info works", {
 test_that("ria daily works", {
   # all stations
   api_options <- ria_options('daily', start_date = Sys.Date() - 1)
-  expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
+  test_object <- get_meteo_from('ria', api_options)
+  # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
@@ -58,7 +59,8 @@ test_that("ria daily works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
+  test_object <- get_meteo_from('ria', api_options)
+  # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   main_test_battery(
     test_object, service = 'ria', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
@@ -68,7 +70,8 @@ test_that("ria daily works", {
 test_that("ria monthly works", {
   # all stations
   api_options <- ria_options('monthly', start_date = Sys.Date() - 120, end_date = Sys.Date() - 1)
-  expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
+  test_object <- get_meteo_from('ria', api_options)
+  # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
@@ -86,7 +89,8 @@ test_that("ria monthly works", {
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
+  test_object <- get_meteo_from('ria', api_options)
+  # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   main_test_battery(
     test_object, service = 'ria', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check

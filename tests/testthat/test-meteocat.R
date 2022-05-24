@@ -37,7 +37,8 @@ test_that("meteocat get info works", {
 test_that("meteocat instant works", {
   # all stations
   api_options <- meteocat_options('instant', api_key = keyring::key_get('meteocat'))
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
@@ -64,7 +65,8 @@ test_that("meteocat hourly works", {
   api_options <- meteocat_options(
     'hourly', start_date = as.Date('2021-04-25'), api_key = keyring::key_get('meteocat')
   )
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
@@ -79,7 +81,8 @@ test_that("meteocat hourly works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
@@ -89,7 +92,8 @@ test_that("meteocat hourly works", {
   api_options <- meteocat_options(
     'hourly', start_date = as.Date('2008-04-25'), api_key = keyring::key_get('meteocat')
   )
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature",
@@ -108,7 +112,8 @@ test_that("meteocat daily works", {
   api_options <- meteocat_options(
     'daily', start_date = as.Date('2021-04-25'), api_key = keyring::key_get('meteocat')
   )
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", 'max_temperature',
@@ -124,7 +129,8 @@ test_that("meteocat daily works", {
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
@@ -134,7 +140,8 @@ test_that("meteocat daily works", {
   api_options <- meteocat_options(
     'daily', start_date = as.Date('2008-04-25'), api_key = keyring::key_get('meteocat')
   )
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", 'max_temperature',
@@ -154,7 +161,8 @@ test_that("meteocat monthly works", {
   api_options <- meteocat_options(
     'monthly', start_date = as.Date('2020-04-25'), api_key = keyring::key_get('meteocat')
   )
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature",
@@ -174,7 +182,8 @@ test_that("meteocat monthly works", {
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
@@ -186,7 +195,8 @@ test_that("meteocat yearly works", {
   api_options <- meteocat_options(
     'yearly', start_date = as.Date('2020-04-25'), api_key = keyring::key_get('meteocat')
   )
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature",
@@ -206,7 +216,8 @@ test_that("meteocat yearly works", {
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- stations_to_check
-  expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
+  test_object <- get_meteo_from('meteocat', api_options)
+  # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature,
     stations_to_check = stations_to_check
@@ -239,7 +250,6 @@ test_that("meteocat API errors, messages, warnings are correctly raised", {
 
 test_that("meteocat get_quota works as expected", {
   api_options <- meteocat_options(api_key = keyring::key_get('meteocat'))
-
   expect_s3_class((test_object <- get_quota_from('meteocat', api_options)), 'tbl')
   expect_named(test_object, c('nom', 'periode', 'maxConsultes', 'consultesRestants', 'consultesRealitzades'))
 })
