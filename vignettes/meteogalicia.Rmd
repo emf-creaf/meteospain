@@ -24,6 +24,7 @@ withr::local_options(list("keyring_backend" = "env"))
 
 ```{r setup}
 library(meteospain)
+library(dplyr)
 library(ggplot2)
 library(ggforce)
 library(units)
@@ -97,24 +98,29 @@ get_stations_info_from('meteogalicia')
 
 ```{r meteogalicia_data, eval = NOT_CRAN}
 api_options <- meteogalicia_options(
-  resolution = 'daily',
-  start_date = as.Date('2020-04-25')
+  resolution = 'monthly',
+  start_date = as.Date('2020-01-01'),
+  end_date = as.Date('2020-12-31')
 )
-galicia_20200425 <- get_meteo_from('meteogalicia', options = api_options)
-galicia_20200425
+galicia_2020 <- get_meteo_from('meteogalicia', options = api_options)
+galicia_2020
 ```
 
 Visually:
 
 ```{r meteogalicia_data_plot, fig.width=7, fig.height=5, fig.align='center', eval = NOT_CRAN}
-galicia_20200425 %>%
+galicia_2020 %>%
   units::drop_units() %>%
+  mutate(month = lubridate::month(timestamp, label = TRUE)) %>%
   ggplot() +
   geom_sf(aes(colour = max_temperature)) +
+  facet_wrap(vars(month), ncol = 4) +
   scale_colour_viridis_c()
 
-galicia_20200425 %>%
+galicia_2020 %>%
+  mutate(month = lubridate::month(timestamp, label = TRUE)) %>%
   ggplot() +
-  geom_histogram(aes(x = precipitation))
+  geom_histogram(aes(x = precipitation)) +
+  facet_wrap(vars(month), ncol = 4)
 ```
 
