@@ -255,10 +255,15 @@
 
   if (any(ria_statuses != 'OK')) {
     message(copyright_style(
-      glue::glue_collapse(messages_to_show, sep = ', also:\n'),
-      "\nfor the following stations and dates:\n",
+      "Some stations didn't return data for some dates:\n",
       glue::glue_collapse(urls_to_show, sep = ',\n'), "\n"
     ))
+
+    # message(copyright_style(
+    #   glue::glue_collapse(messages_to_show, sep = ', also:\n'),
+    #   "\nfor the following stations and dates:\n",
+    #   glue::glue_collapse(urls_to_show, sep = ',\n'), "\n"
+    # ))
   }
 
   # Resolution specific carpentry -------------------------------------------------------------------------
