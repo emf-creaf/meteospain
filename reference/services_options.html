@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4.9000</span>
       </span>
     </div>
 
@@ -85,36 +85,36 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">aemet_options</span><span class="op">(</span>
-  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"current_day"</span>, <span class="st">"daily"</span><span class="op">)</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,
-  end_date <span class="op">=</span> <span class="va">start_date</span>,
-  stations <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">api_key</span>
-<span class="op">)</span>
-
-<span class="fu">meteocat_options</span><span class="op">(</span>
-  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"instant"</span>, <span class="st">"hourly"</span>, <span class="st">"daily"</span>, <span class="st">"monthly"</span>, <span class="st">"yearly"</span><span class="op">)</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,
-  stations <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">api_key</span>
-<span class="op">)</span>
-
-<span class="fu">meteoclimatic_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"current_day"</span><span class="op">)</span>, stations <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">meteogalicia_options</span><span class="op">(</span>
-  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"instant"</span>, <span class="st">"current_day"</span>, <span class="st">"daily"</span>, <span class="st">"monthly"</span><span class="op">)</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,
-  end_date <span class="op">=</span> <span class="va">start_date</span>,
-  stations <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="fu">ria_options</span><span class="op">(</span>
-  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"daily"</span>, <span class="st">"monthly"</span><span class="op">)</span>,
-  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,
-  end_date <span class="op">=</span> <span class="va">start_date</span>,
-  stations <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">aemet_options</span><span class="op">(</span></span>
+<span>  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"current_day"</span>, <span class="st">"daily"</span><span class="op">)</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  end_date <span class="op">=</span> <span class="va">start_date</span>,</span>
+<span>  stations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">api_key</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">meteocat_options</span><span class="op">(</span></span>
+<span>  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"instant"</span>, <span class="st">"hourly"</span>, <span class="st">"daily"</span>, <span class="st">"monthly"</span>, <span class="st">"yearly"</span><span class="op">)</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  stations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">api_key</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">meteoclimatic_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"current_day"</span><span class="op">)</span>, stations <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">meteogalicia_options</span><span class="op">(</span></span>
+<span>  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"instant"</span>, <span class="st">"current_day"</span>, <span class="st">"daily"</span>, <span class="st">"monthly"</span><span class="op">)</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  end_date <span class="op">=</span> <span class="va">start_date</span>,</span>
+<span>  stations <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ria_options</span><span class="op">(</span></span>
+<span>  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"daily"</span>, <span class="st">"monthly"</span><span class="op">)</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,</span>
+<span>  end_date <span class="op">=</span> <span class="va">start_date</span>,</span>
+<span>  stations <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -122,22 +122,33 @@
     <dl><dt>resolution</dt>
 <dd><p>Character indicating the temporal resolution for the data. Services allows different
 temporal resolutions that can be present or not in each of them (current_day, instant, daily, monthly).</p></dd>
+
+
 <dt>start_date</dt>
 <dd><p>Date class object with the start date from which start collecting data. Ignored if
 resolution is one of <code>current_day</code> or <code>instant</code>.</p></dd>
+
+
 <dt>end_date</dt>
 <dd><p>Date class object with the end date from which stop collecting data. By default, same
 date as <code>start_date</code>. Ignored if resolution is one of <code>current_day</code> or <code>instant</code>.</p></dd>
+
+
 <dt>stations</dt>
 <dd><p>Character vector with the stations codes from which extract data from. If NULL (default)
 all available stations are returned. See Stations section for more details.</p></dd>
+
+
 <dt>api_key</dt>
 <dd><p>Character with the API key. NULL by default as not all services require keys. See API Keys
 section for more details.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list with the service API options to make the query to obtain the data.</p>
+    
+
+<p>A list with the service API options to make the query to obtain the data.</p>
     </div>
     <div id="resolution">
     <h2>Resolution</h2>
@@ -179,90 +190,90 @@ stations provided</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## AEMET examples ---------------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># setting the key (a prompt will appear in console to supply the API key)</span></span>
-<span class="r-in"><span class="co"># keyring::key_set(service = 'aemet')</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for the last 24h data</span></span>
-<span class="r-in"><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">aemet_options</span><span class="op">(</span></span>
-<span class="r-in">  resolution <span class="op">=</span> <span class="st">'current_day'</span>,</span>
-<span class="r-in">  api <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for daily data for January, 1990</span></span>
-<span class="r-in"><span class="va">daily_opts</span> <span class="op">&lt;-</span> <span class="fu">aemet_options</span><span class="op">(</span></span>
-<span class="r-in">  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
-<span class="r-in">  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-01'</span><span class="op">)</span>,</span>
-<span class="r-in">  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-31'</span><span class="op">)</span>,</span>
-<span class="r-in">  api <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co">## MeteoCat examples -----------------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># setting the key (a prompt will appear in console to supply the API key)</span></span>
-<span class="r-in"><span class="co"># keyring::key_set(service = 'meteocat')</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create the options</span></span>
-<span class="r-in"><span class="va">query_options</span> <span class="op">&lt;-</span> <span class="fu">meteocat_options</span><span class="op">(</span></span>
-<span class="r-in">  resolution <span class="op">=</span> <span class="st">'hourly'</span>,</span>
-<span class="r-in">  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-12-31'</span><span class="op">)</span>,</span>
-<span class="r-in">  api <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Meteoclimatic examples -------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteoclimatic_options</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># same as before, but more verbose</span></span>
-<span class="r-in"><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteoclimatic_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'current_day'</span>, stations <span class="op">=</span> <span class="st">'ES'</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## MeteoGalicia examples --------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for the last measured data</span></span>
-<span class="r-in"><span class="va">instant_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'instant'</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for the last 24h data</span></span>
-<span class="r-in"><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'current_day'</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># same, with stations</span></span>
-<span class="r-in"><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span><span class="st">'current_day'</span>, stations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'10045'</span>, <span class="st">'10046'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for daily data for January, 2000</span></span>
-<span class="r-in"><span class="va">daily_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span></span>
-<span class="r-in">  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
-<span class="r-in">  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-01-01'</span><span class="op">)</span>,</span>
-<span class="r-in">  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-01-31'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for monthly data for year 2000</span></span>
-<span class="r-in"><span class="va">monthly_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span></span>
-<span class="r-in">  resolution <span class="op">=</span> <span class="st">'monthly'</span>,</span>
-<span class="r-in">  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-01-01'</span><span class="op">)</span>,</span>
-<span class="r-in">  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-12-31'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## RIA examples ---------------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Options for daily data for April, 2020</span></span>
-<span class="r-in"><span class="va">daily_opts</span> <span class="op">&lt;-</span> <span class="fu">ria_options</span><span class="op">(</span></span>
-<span class="r-in">  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
-<span class="r-in">  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>,</span>
-<span class="r-in">  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## AEMET examples ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># setting the key (a prompt will appear in console to supply the API key)</span></span></span>
+<span class="r-in"><span><span class="co"># keyring::key_set(service = 'aemet')</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for the last 24h data</span></span></span>
+<span class="r-in"><span><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">aemet_options</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="st">'current_day'</span>,</span></span>
+<span class="r-in"><span>  api <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for daily data for January, 1990</span></span></span>
+<span class="r-in"><span><span class="va">daily_opts</span> <span class="op">&lt;-</span> <span class="fu">aemet_options</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-01'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-31'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  api <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">## MeteoCat examples -----------------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># setting the key (a prompt will appear in console to supply the API key)</span></span></span>
+<span class="r-in"><span><span class="co"># keyring::key_set(service = 'meteocat')</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create the options</span></span></span>
+<span class="r-in"><span><span class="va">query_options</span> <span class="op">&lt;-</span> <span class="fu">meteocat_options</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="st">'hourly'</span>,</span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-12-31'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  api <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Meteoclimatic examples -------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteoclimatic_options</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># same as before, but more verbose</span></span></span>
+<span class="r-in"><span><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteoclimatic_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'current_day'</span>, stations <span class="op">=</span> <span class="st">'ES'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## MeteoGalicia examples --------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for the last measured data</span></span></span>
+<span class="r-in"><span><span class="va">instant_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'instant'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for the last 24h data</span></span></span>
+<span class="r-in"><span><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'current_day'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># same, with stations</span></span></span>
+<span class="r-in"><span><span class="va">current_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span><span class="st">'current_day'</span>, stations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'10045'</span>, <span class="st">'10046'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for daily data for January, 2000</span></span></span>
+<span class="r-in"><span><span class="va">daily_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-01-01'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-01-31'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for monthly data for year 2000</span></span></span>
+<span class="r-in"><span><span class="va">monthly_opts</span> <span class="op">&lt;-</span> <span class="fu">meteogalicia_options</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="st">'monthly'</span>,</span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-01-01'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000-12-31'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## RIA examples ---------------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Options for daily data for April, 2020</span></span></span>
+<span class="r-in"><span><span class="va">daily_opts</span> <span class="op">&lt;-</span> <span class="fu">ria_options</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -277,7 +288,7 @@ stations provided</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

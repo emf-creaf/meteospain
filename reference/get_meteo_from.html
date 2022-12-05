@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4.9000</span>
       </span>
     </div>
 
@@ -85,23 +85,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_meteo_from</span><span class="op">(</span>
-  service <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aemet"</span>, <span class="st">"meteocat"</span>, <span class="st">"meteoclimatic"</span>, <span class="st">"meteogalicia"</span>, <span class="st">"ria"</span><span class="op">)</span>,
-  <span class="va">options</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_meteo_from</span><span class="op">(</span></span>
+<span>  service <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aemet"</span>, <span class="st">"meteocat"</span>, <span class="st">"meteoclimatic"</span>, <span class="st">"meteogalicia"</span>, <span class="st">"ria"</span><span class="op">)</span>,</span>
+<span>  <span class="va">options</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>service</dt>
 <dd><p>Character with the service name (in lower case).</p></dd>
+
+
 <dt>options</dt>
 <dd><p>List with the needed service options. See <code><a href="services_options.html">services_options</a></code> to have more info
 about the different services and their options.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An sf (spatial) object with the stations meteorological data.</p>
+    
+
+<p>An sf (spatial) object with the stations meteorological data.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -129,19 +134,19 @@ To forgot the cache, <code>memoise::forget(get_meteo_from)</code> can be used.</
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># AEMET (we need a key)</span></span>
-<span class="r-in"><span class="co"># key_set('aemet')</span></span>
-<span class="r-in"><span class="va">options_for_aemet</span> <span class="op">&lt;-</span> <span class="fu"><a href="services_options.html">aemet_options</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">'daily'</span>,</span>
-<span class="r-in">  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2012-01-01'</span><span class="op">)</span>,</span>
-<span class="r-in">  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2012-02-01'</span><span class="op">)</span>,</span>
-<span class="r-in">  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu">get_meteo_from</span><span class="op">(</span><span class="st">'aemet'</span>, <span class="va">options_for_aemet</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># AEMET (we need a key)</span></span></span>
+<span class="r-in"><span><span class="co"># key_set('aemet')</span></span></span>
+<span class="r-in"><span><span class="va">options_for_aemet</span> <span class="op">&lt;-</span> <span class="fu"><a href="services_options.html">aemet_options</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">'daily'</span>,</span></span>
+<span class="r-in"><span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2012-01-01'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2012-02-01'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_meteo_from</span><span class="op">(</span><span class="st">'aemet'</span>, <span class="va">options_for_aemet</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 7529 features and 12 fields</span>
@@ -150,23 +155,25 @@ To forgot the cache, <code>memoise::forget(get_meteo_from)</code> can be used.</
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.471</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7,529 × 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    timestamp           service station_id station_name station_province altitude</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0016A      <span style="color: #949494;">"</span>REUS AEROP… TARRAGONA              71</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA … BARCELONA               4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0149X      <span style="color: #949494;">"</span>MANRESA<span style="color: #949494;">"</span>    BARCELONA             291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0200E      <span style="color: #949494;">"</span>BARCELONA,… BARCELONA             408</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0367       <span style="color: #949494;">"</span>GIRONA AER… GIRONA                143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1002Y      <span style="color: #949494;">"</span>BAZTAN, IR… NAVARRA               183</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1014       <span style="color: #949494;">"</span>HONDARRIBI… GIPUZKOA                4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1014A      <span style="color: #949494;">"</span>SAN SEBAST… GIPUZKOA                4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1024E      <span style="color: #949494;">"</span>DONOSTIA/S… GIPUZKOA              251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1037Y      <span style="color: #949494;">"</span>ZUMARRAGA<span style="color: #949494;">"</span>  GIPUZKOA              420</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 7,519 more rows, and 7 more variables: mean_temperature [°C],</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   min_temperature [°C], max_temperature [°C], precipitation [L/m^2],</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   mean_wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    timestamp           service station…¹ stati…² stati…³ altit…⁴ mean_…⁵ min_t…⁶</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494;">[m]</span>    <span style="color: #949494;">[°C]</span>    <span style="color: #949494;">[°C]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0016A     <span style="color: #949494;">"</span>REUS … TARRAG…      71    11.4     4.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0076      <span style="color: #949494;">"</span>BARCE… BARCEL…       4    12.9     8.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0149X     <span style="color: #949494;">"</span>MANRE… BARCEL…     291     7.6     2.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0200E     <span style="color: #949494;">"</span>BARCE… BARCEL…     408    13       9.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   0367      <span style="color: #949494;">"</span>GIRON… GIRONA      143    11.2     4.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1002Y     <span style="color: #949494;">"</span>BAZTA… NAVARRA     183    12.4     8.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1014      <span style="color: #949494;">"</span>HONDA… GIPUZK…       4    13.2     8.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1014A     <span style="color: #949494;">"</span>SAN S… GIPUZK…       4    12.6     7.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1024E     <span style="color: #949494;">"</span>DONOS… GIPUZK…     251    13.5    10.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2012-01-01 <span style="color: #949494;">00:00:00</span> aemet   1037Y     <span style="color: #949494;">"</span>ZUMAR… GIPUZK…     420     8.8     4.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 7,519 more rows, 5 more variables: max_temperature [°C],</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;, and abbreviated variable names ¹​station_id,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​station_name, ³​station_province, ⁴​altitude, ⁵​mean_temperature,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁶​min_temperature</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -181,7 +188,7 @@ To forgot the cache, <code>memoise::forget(get_meteo_from)</code> can be used.</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
