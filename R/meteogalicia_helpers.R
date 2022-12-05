@@ -15,22 +15,22 @@
 
   # instant
   if (resolution == 'instant') {
-    return(c('rss', 'observacion', 'ultimos10minEstacionsMeteo.action'))
+    return(c('mgrss', 'observacion', 'ultimos10minEstacionsMeteo.action'))
   }
 
   # current day
   if (resolution == 'current_day') {
-    return(c('rss', 'observacion', 'ultimosHorariosEstacions.action'))
+    return(c('mgrss', 'observacion', 'ultimosHorariosEstacions.action'))
   }
 
   # daily
   if (resolution == 'daily') {
-    return(c('rss', 'observacion', 'datosDiariosEstacionsMeteo.action'))
+    return(c('mgrss', 'observacion', 'datosDiariosEstacionsMeteo.action'))
   }
 
   # monthly
   if (resolution == 'monthly') {
-    return(c('rss', 'observacion', 'datosMensuaisEstacionsMeteo.action'))
+    return(c('mgrss', 'observacion', 'datosMensuaisEstacionsMeteo.action'))
   }
 
   # not recognised resolution
@@ -105,12 +105,12 @@
   # GET ---------------------------------------------------------------------------------------------------
   # path
   path_resolution <- c(
-    'rss', 'observacion', 'listaEstacionsMeteo.action'
+    'mgrss', 'observacion', 'listaEstacionsMeteo.action'
   )
   # api response
   api_response <- safe_api_access(
     type = 'rest',
-    "http://servizos.meteogalicia.es",
+    "http://servizos.meteogalicia.gal",
     path = path_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain')
   )
@@ -163,7 +163,7 @@
   # get the api response
   api_response <- safe_api_access(
     type = 'rest',
-    "http://servizos.meteogalicia.es",
+    "http://servizos.meteogalicia.gal",
     path = path_resolution,
     query = query_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain')
