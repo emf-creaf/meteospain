@@ -1,3 +1,7 @@
+# meteospain (development version)
+
+* Fixed new meteogalicia API by @dataleteo (#13)
+
 # meteospain 0.0.4
 
 * Minor improvements in vignettes
