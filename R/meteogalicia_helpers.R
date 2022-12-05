@@ -171,14 +171,30 @@
 
 
   # Status check ------------------------------------------------------------------------------------------
+  # bad stations return code 500
+  if (api_response$status_code == 500L) {
+    stop(
+      "MeteoGalicia API returned an error:\n",
+      stringr::str_remove_all(
+        httr::content(api_response, 'text'),
+        '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
+      ),
+      '\nThis usually happens when unknown station ids are supplied.'
+    )
+  }
+  # check any other codes besides 200
   if (api_response$status_code != 200) {
     stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
   # Check when html with error is returned (bad stations)
+  # LEGACY, bad stations now are reported with error 500 in the new meteogalicia API
   if (httr::http_type(api_response) != "application/json") {
     stop(
       "MeteoGalicia API returned an error:\n",
-      stringr::str_remove_all(httr::content(api_response, 'text'), '<.*?>|\\t|\\n'),
+      stringr::str_remove_all(
+        httr::content(api_response, 'text'),
+        '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
+      ),
       '\nThis usually happens when unknown station ids are supplied.'
     )
   }
