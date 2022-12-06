@@ -94,7 +94,7 @@
   ) %>%
     dplyr::group_by(.data$year) %>%
     dplyr::mutate(min_month = min(.data$month), max_month = max(.data$month)) %>%
-    dplyr::select(-.data$month) %>%
+    dplyr::select(-"month") %>%
     dplyr::distinct() %>%
     as.list()
 
@@ -168,18 +168,18 @@
   response_content <- api_status_check$content
 
   province_df <- response_content[['provincia']] %>%
-    dplyr::rename(station_province = .data$nombre, province_id = .data$id)
+    dplyr::rename(station_province = "nombre", province_id = "id")
 
   response_content %>%
     dplyr::as_tibble() %>%
     # add service name, to identify the data if joining with other services
     dplyr::mutate(service = 'ria') %>%
-    dplyr::select(-.data$provincia) %>%
+    dplyr::select(-"provincia") %>%
     dplyr::bind_cols(province_df) %>%
     dplyr::select(
-      .data$service, station_id = .data$codigoEstacion, station_name = .data$nombre,
-      .data$station_province, .data$province_id,
-      altitude = .data$altitud, .data$longitud, .data$latitud, under_plastic = .data$bajoplastico
+      "service", station_id = "codigoEstacion", station_name = "nombre",
+      "station_province", "province_id",
+      altitude = "altitud", "longitud", "latitud", under_plastic = "bajoplastico"
     ) %>%
     dplyr::distinct() %>%
     dplyr::mutate(
@@ -291,13 +291,13 @@
       ~ dplyr::mutate(.x, station_id = .ria_url2station(.y))
     ) %>%
     dplyr::select(
-      !!! resolution_specific_select_quos(), .data$station_id,
-      mean_temperature = .data$tempMedia, min_temperature = .data$tempMin, max_temperature = .data$tempMax,
-      mean_relative_humidity = .data$humedadMedia, min_relative_humidity = .data$humedadMin,
-      max_relative_humidity = .data$humedadMax,
-      mean_wind_speed = .data$velViento, mean_wind_direction = .data$dirViento,
-      precipitation = .data$precipitacion,
-      solar_radiation = .data$radiacion
+      !!! resolution_specific_select_quos(), "station_id",
+      mean_temperature = "tempMedia", min_temperature = "tempMin", max_temperature = "tempMax",
+      mean_relative_humidity = "humedadMedia", min_relative_humidity = "humedadMin",
+      max_relative_humidity = "humedadMax",
+      mean_wind_speed = "velViento", mean_wind_direction = "dirViento",
+      precipitation = "precipitacion",
+      solar_radiation = "radiacion"
     ) %>%
     dplyr::mutate(
       !!! resolution_specific_mutate_quos(),
@@ -349,11 +349,11 @@
 # resolution specific carpentry -------------------------------------------------------------------------
 
 .ria_monthly_select_quos <- function() {
-  return(rlang::quos(year = .data$anyo, month = .data$mes))
+  return(rlang::quos(year = "anyo", month = "mes"))
 }
 
 .ria_daily_select_quos <- function() {
-  return(rlang::quos(timestamp = .data$fecha))
+  return(rlang::quos(timestamp = "fecha"))
 }
 
 .ria_monthly_mutate_quos <- function() {

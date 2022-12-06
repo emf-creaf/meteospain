@@ -103,7 +103,7 @@
       )
     ) %>%
     dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) %>%
-    dplyr::select(.data$timestamp, .data$station_id, .data$station_name, dplyr::everything()) %>%
+    dplyr::select("timestamp", "station_id", "station_name", dplyr::everything()) %>%
     dplyr::mutate(
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),

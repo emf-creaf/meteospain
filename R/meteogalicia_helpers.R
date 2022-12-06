@@ -131,8 +131,8 @@
     dplyr::mutate(service = 'meteogalicia') %>%
     .info_table_checker() %>%
     dplyr::select(
-      .data$service, station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
-      .data$altitude, .data$lat, .data$lon
+      "service", station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
+      "altitude", "lat", "lon"
     ) %>%
     dplyr::mutate(
       station_id = as.character(.data$station_id),
@@ -235,15 +235,15 @@
   res <-
     resolution_specific_unnesting(response_content) %>%
     # final unnest, common to all resolutions
-    unnest_safe(.data$listaMedidas) %>%
+    unnest_safe("listaMedidas") %>%
     # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
     dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
     # remove unwanted variables
-    dplyr::select(-.data$lnCodigoValidacion, -.data$nomeParametro, -.data$unidade) %>%
+    dplyr::select(-"lnCodigoValidacion", -"nomeParametro", -"unidade") %>%
     # now, some stations can have errors in the sense of duplicated precipitation values.
     # We get the first record
     tidyr::pivot_wider(
-      names_from = .data$codigoParametro, values_from = .data$valor, values_fn = dplyr::first
+      names_from = "codigoParametro", values_from = "valor", values_fn = dplyr::first
     ) %>%
     # resolution-specific transformations
     resolution_specific_carpentry() %>%
@@ -276,21 +276,21 @@
 
 .meteogalicia_current_day_unnesting <- function(response_content) {
   res <- response_content$listHorarios %>%
-    unnest_safe(.data$listaInstantes)
+    unnest_safe("listaInstantes")
 
   return(res)
 }
 
 .meteogalicia_daily_unnesting <- function(response_content) {
   res <- response_content$listDatosDiarios %>%
-    unnest_safe(.data$listaEstacions)
+    unnest_safe("listaEstacions")
 
   return(res)
 }
 
 .meteogalicia_monthly_unnesting <- function(response_content) {
   res <- response_content$listDatosMensuais %>%
-    unnest_safe(.data$listaEstacions)
+    unnest_safe("listaEstacions")
 
   return(res)
 }
@@ -309,14 +309,14 @@
       )
     ) %>%
     dplyr::select(
-      timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
-      temperature = .data$TA_AVG_1.5m,
-      wind_direction = .data$DV_AVG_2m,
-      wind_speed = .data$VV_AVG_2m,
-      relative_humidity = .data$HR_AVG_1.5m,
-      precipitation = .data$PP_SUM_1.5m,
-      insolation = .data$HSOL_SUM_1.5m
-      # global_solar_radiation = .data$RS_AVG_1.5m
+      timestamp = "instanteLecturaUTC", station_id = "idEstacion", station_name = "estacion",
+      temperature = "TA_AVG_1.5m",
+      wind_direction = "DV_AVG_2m",
+      wind_speed = "VV_AVG_2m",
+      relative_humidity = "HR_AVG_1.5m",
+      precipitation = "PP_SUM_1.5m",
+      insolation = "HSOL_SUM_1.5m"
+      # global_solar_radiation = "RS_AVG_1.5m"
     ) %>%
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
@@ -344,15 +344,15 @@
       )
     ) %>%
     dplyr::select(
-      timestamp = .data$instanteLecturaUTC, station_id = .data$idEstacion, station_name = .data$estacion,
-      temperature = .data$TA_AVG_1.5m,
-      min_temperature = .data$TA_MIN_1.5m,
-      max_temperature = .data$TA_MAX_1.5m,
-      wind_direction = .data$DV_AVG_2m,
-      wind_speed = .data$VV_AVG_2m,
-      relative_humidity = .data$HR_AVG_1.5m,
-      precipitation = .data$PP_SUM_1.5m,
-      insolation = .data$HSOL_SUM_1.5m
+      timestamp = "instanteLecturaUTC", station_id = "idEstacion", station_name = "estacion",
+      temperature = "TA_AVG_1.5m",
+      min_temperature = "TA_MIN_1.5m",
+      max_temperature = "TA_MAX_1.5m",
+      wind_direction = "DV_AVG_2m",
+      wind_speed = "VV_AVG_2m",
+      relative_humidity = "HR_AVG_1.5m",
+      precipitation = "PP_SUM_1.5m",
+      insolation = "HSOL_SUM_1.5m"
     ) %>%
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
@@ -379,18 +379,18 @@
       )
     ) %>%
     dplyr::select(
-      timestamp = .data$data,
-      station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
-      mean_temperature = .data$TA_AVG_1.5m,
-      min_temperature = .data$TA_MIN_1.5m,
-      max_temperature = .data$TA_MAX_1.5m,
-      mean_wind_direction = .data$DV_AVG_2m,
-      mean_wind_speed = .data$VV_AVG_2m,
-      mean_relative_humidity = .data$HR_AVG_1.5m,
-      min_relative_humidity = .data$HR_MIN_1.5m,
-      max_relative_humidity = .data$HR_MAX_1.5m,
-      precipitation = .data$PP_SUM_1.5m,
-      insolation = .data$HSOL_SUM_1.5m
+      timestamp = "data",
+      station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
+      mean_temperature = "TA_AVG_1.5m",
+      min_temperature = "TA_MIN_1.5m",
+      max_temperature = "TA_MAX_1.5m",
+      mean_wind_direction = "DV_AVG_2m",
+      mean_wind_speed = "VV_AVG_2m",
+      mean_relative_humidity = "HR_AVG_1.5m",
+      min_relative_humidity = "HR_MIN_1.5m",
+      max_relative_humidity = "HR_MAX_1.5m",
+      precipitation = "PP_SUM_1.5m",
+      insolation = "HSOL_SUM_1.5m"
     ) %>%
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
@@ -419,15 +419,15 @@
       )
     ) %>%
     dplyr::select(
-      timestamp = .data$data,
-      station_id = .data$idEstacion, station_name = .data$estacion, station_province = .data$provincia,
-      mean_temperature = .data$TA_AVG_1.5m,
-      min_temperature = .data$TA_MIN_1.5m,
-      max_temperature = .data$TA_MAX_1.5m,
-      mean_wind_speed = .data$VV_AVG_2m,
-      mean_relative_humidity = .data$HR_AVG_1.5m,
-      precipitation = .data$PP_SUM_1.5m,
-      insolation = .data$HSOL_SUM_1.5m
+      timestamp = "data",
+      station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
+      mean_temperature = "TA_AVG_1.5m",
+      min_temperature = "TA_MIN_1.5m",
+      max_temperature = "TA_MAX_1.5m",
+      mean_wind_speed = "VV_AVG_2m",
+      mean_relative_humidity = "HR_AVG_1.5m",
+      precipitation = "PP_SUM_1.5m",
+      insolation = "HSOL_SUM_1.5m"
     ) %>%
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),

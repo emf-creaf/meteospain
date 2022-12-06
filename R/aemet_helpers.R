@@ -250,9 +250,9 @@
     # add service name, to identify the data if joining with other services
     dplyr::mutate(service = 'aemet') %>%
     dplyr::select(
-      .data$service, station_id = .data$indicativo, station_name = .data$nombre,
-      station_province = .data$provincia, altitude = .data$altitud, latitude = .data$latitud,
-      longitude = .data$longitud
+      "service", station_id = "indicativo", station_name = "nombre",
+      station_province = "provincia", altitude = "altitud", latitude = "latitud",
+      longitude = "longitud"
     ) %>%
     # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
     # and negative when S or W.
@@ -429,16 +429,16 @@
 .aemet_current_day_carpentry <- function(data, stations_info) {
   data %>%
     dplyr::select(
-      timestamp = .data$fint, station_id = .data$idema, station_name = .data$ubi,
-      altitude = .data$alt,
-      temperature = .data$ta,
-      min_temperature = .data$tamin,
-      max_temperature = .data$tamax,
-      relative_humidity = .data$hr,
-      precipitation = .data$prec,
-      wind_speed = .data$vv,
-      wind_direction = .data$dv,
-      longitude = .data$lon, latitude = .data$lat,
+      timestamp = "fint", station_id = "idema", station_name = "ubi",
+      altitude = "alt",
+      temperature = "ta",
+      min_temperature = "tamin",
+      max_temperature = "tamax",
+      relative_humidity = "hr",
+      precipitation = "prec",
+      wind_speed = "vv",
+      wind_direction = "dv",
+      longitude = "lon", latitude = "lat",
     ) %>%
     # units
     dplyr::mutate(
@@ -459,15 +459,15 @@
 .aemet_daily_carpentry <- function(data, stations_info) {
   data %>%
     dplyr::select(
-      timestamp = .data$fecha,
-      station_id = .data$indicativo, station_name = .data$nombre, station_province = .data$provincia,
-      mean_temperature = .data$tmed,
-      min_temperature = .data$tmin,
-      max_temperature = .data$tmax,
-      precipitation = .data$prec,
-      mean_wind_speed = .data$velmedia,
-      # wind_direction = .data$dir,
-      insolation = .data$sol
+      timestamp = "fecha",
+      station_id = "indicativo", station_name = "nombre", station_province = "provincia",
+      mean_temperature = "tmed",
+      min_temperature = "tmin",
+      max_temperature = "tmax",
+      precipitation = "prec",
+      mean_wind_speed = "velmedia",
+      # wind_direction = "dir",
+      insolation = "sol"
     ) %>%
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(

@@ -117,7 +117,7 @@ relocate_vars <- function(data) {
       dplyr::contains('direction'),
       dplyr::contains('speed'),
       dplyr::contains('sol'),
-      .data$geometry
+      "geometry"
     )
 }
 

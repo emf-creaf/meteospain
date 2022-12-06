@@ -310,7 +310,7 @@
 
   coords_df <- response_content[['coordenades']]
   province_df <- response_content[['provincia']]['nom'] %>%
-    dplyr::rename(station_province = .data$nom)
+    dplyr::rename(station_province = "nom")
 
   response_content %>%
     dplyr::as_tibble() %>%
@@ -324,8 +324,8 @@
     ) %>%
     dplyr::bind_cols(coords_df, province_df) %>%
     dplyr::select(
-      .data$service, station_id = .data$codi, station_name = .data$nom, .data$station_province,
-      altitude = .data$altitud, .data$longitud, .data$latitud
+      "service", station_id = "codi", station_name = "nom", "station_province",
+      altitude = "altitud", "longitud", "latitud"
     ) %>%
     dplyr::distinct() %>%
     dplyr::mutate(
@@ -420,8 +420,8 @@
     dplyr::distinct() %>%
     # each variable in its own column
     tidyr::pivot_wider(
-      -.data$variable_code,
-      names_from = .data$variable_name, values_from = .data$valor
+      -"variable_code",
+      names_from = "variable_name", values_from = "valor"
     ) %>%
     # set service, date and units
     dplyr::mutate(
@@ -474,24 +474,24 @@
   data %>%
     purrr::map_dfr(function(variable_data) {
       unnest_safe(
-        variable_data, cols = .data$variables,
+        variable_data, cols = "variables",
         # names_repair = 'universal'
         names_repair = ~ vctrs::vec_as_names(.x, repair = 'universal', quiet = TRUE)
       ) %>%
-        unnest_safe(cols = .data$lectures, names_repair = 'universal')
+        unnest_safe(cols = "lectures", names_repair = 'universal')
     }) %>%
     dplyr::select(
-      timestamp = .data$data, station_id = .data$codi...1, variable_code = .data$codi...2, .data$valor
+      timestamp = "data", station_id = "codi...1", variable_code = "codi...2", "valor"
     )
 }
 
 .meteocat_long_carpentry <- function(data) {
   data %>%
     purrr::map_dfr(function(variable_data) {
-      unnest_safe(variable_data, cols = .data$valors, names_repair = 'universal')
+      unnest_safe(variable_data, cols = "valors", names_repair = 'universal')
     }) %>%
     dplyr::select(
-      timestamp = .data$data, station_id = .data$codiEstacio, variable_code = .data$codiVariable,
-      .data$valor
+      timestamp = "data", station_id = "codiEstacio", variable_code = "codiVariable",
+      "valor"
     )
 }
