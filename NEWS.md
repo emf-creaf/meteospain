@@ -1,5 +1,6 @@
 # meteospain (development version)
 
+* Substitute `.data` calls by `"variable_name"` as recommended by tidyselect after deprecation of `.data`
 * Fixed new meteogalicia API by @dataleteo (#13)
 
 # meteospain 0.0.4
