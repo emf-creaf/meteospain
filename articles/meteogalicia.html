@@ -99,7 +99,7 @@
 
       
 
-      </header><script src="meteogalicia_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MeteoGalicia service</h1>
@@ -126,13 +126,16 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com" class="external-link">ggforce</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/" class="external-link">units</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; udunits database from /Users/runner/work/_temp/Library/units/share/udunits/udunits2.xml</span></span>
+<span><span class="co">#&gt; udunits database from /usr/share/xml/udunits/udunits2.xml</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="meteogalicia-service">MeteoGalicia service<a class="anchor" aria-label="anchor" href="#meteogalicia-service"></a>
 </h2>
-<p><a href="https://www.meteogalicia.gal/" class="external-link">MeteoGalicia</a> service offers the data of the galician automatic meteorological stations network. This network is supported and assessed by the Xunta de Galicia and the data should be trustworthy.</p>
+<p><a href="https://www.meteogalicia.gal/" class="external-link">MeteoGalicia</a> service
+offers the data of the galician automatic meteorological stations
+network. This network is supported and assessed by the Xunta de Galicia
+and the data should be trustworthy.</p>
 <div class="section level3">
 <h3 id="meteogalicia-options">MeteoGalicia options<a class="anchor" aria-label="anchor" href="#meteogalicia-options"></a>
 </h3>
@@ -141,17 +144,25 @@
 </h4>
 <p>MeteoGalicia API offers data at different temporal resolutions:</p>
 <ul>
-<li>“instant”, returning the latest measures for all or selected stations.</li>
-<li>“current_day”, returning the latest 24 hours of measures for all or selected stations.</li>
-<li>“daily”, returning the daily aggregated measures for all or selected stations.</li>
-<li>“monthly”, returning the monthly aggregated measures for all or selected stations.</li>
+<li>“instant”, returning the latest measures for all or selected
+stations.</li>
+<li>“current_day”, returning the latest 24 hours of measures for all or
+selected stations.</li>
+<li>“daily”, returning the daily aggregated measures for all or selected
+stations.</li>
+<li>“monthly”, returning the monthly aggregated measures for all or
+selected stations.</li>
 </ul>
-<p>In both, “daily” and “monthly”, a <code>start_date</code> (and optionally an <code>end_date</code>) arguments must be provided, indicating the period from which retrieve the data.</p>
+<p>In both, “daily” and “monthly”, a <code>start_date</code> (and
+optionally an <code>end_date</code>) arguments must be provided,
+indicating the period from which retrieve the data.</p>
 </div>
 <div class="section level4">
 <h4 id="stations">Stations<a class="anchor" aria-label="anchor" href="#stations"></a>
 </h4>
-<p>MeteoGalicia API allows specifying stations code to narrow the data retrieved. So, a character vector of station codes can be supplied in the <code>stations</code> argument.</p>
+<p>MeteoGalicia API allows specifying stations code to narrow the data
+retrieved. So, a character vector of station codes can be supplied in
+the <code>stations</code> argument.</p>
 </div>
 <div class="section level4">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>

@@ -79,6 +79,7 @@
     </div>
 
 <div id="contributing-to-meteospain" class="section level1">
+
 <p>This outlines how to propose a change to meteospain.</p>
 <div class="section level2">
 <h2 id="bigger-changes">Bigger changes<a class="anchor" aria-label="anchor" href="#bigger-changes"></a></h2>
@@ -126,9 +127,14 @@
 <code>end_date</code>: End date for the desired data, used to build paths, queries…. If the API only accepts one date, this argument is not necessary.</li>
 <li>
 <code>stations</code>: Character vector with stations IDs to use in paths or queries before retrieving the data or filters after.</li>
-</ul><blockquote><p>NOTE: When the API only accepts one station when querying by stations, but there is a path to obtain all stations, this one must be used and the desired stations filtered afterwards. This way we reduce the calls to the API, as we dont need to create a loop to return every station in <code>stations</code> argument. If no path exists for getting data from all stations, then a loop should be used.</p></blockquote>
+</ul><blockquote>
+<p>NOTE: When the API only accepts one station when querying by stations, but there is a path to obtain all stations, this one must be used and the desired stations filtered afterwards. This way we reduce the calls to the API, as we dont need to create a loop to return every station in <code>stations</code> argument. If no path exists for getting data from all stations, then a loop should be used.</p>
+</blockquote>
 <ul><li>
-<code>api_key</code>: If the API needs a key, add this argument for the user to supply the key.</li></ul><blockquote><p>NOTE: <code>meteospain</code> does not store or encrypt in any way the supplied key. Is the user responsability to manage their keys. We recommend the keyring package for this in all docs and functions help.</p></blockquote>
+<code>api_key</code>: If the API needs a key, add this argument for the user to supply the key.</li>
+</ul><blockquote>
+<p>NOTE: <code>meteospain</code> does not store or encrypt in any way the supplied key. Is the user responsability to manage their keys. We recommend the keyring package for this in all docs and functions help.</p>
+</blockquote>
 </div>
 <div class="section level3">
 <h3 id="tests">Tests<a class="anchor" aria-label="anchor" href="#tests"></a></h3>

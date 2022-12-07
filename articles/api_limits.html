@@ -99,7 +99,7 @@
 
       
 
-      </header><script src="api_limits_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>API limits and loops</h1>
@@ -115,8 +115,9 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre></div>
-<p>The following APIs impose a period limit in the data retrieved, not allowing querying more than the predetermined period in each API.</p>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre></div>
+<p>The following APIs impose a period limit in the data retrieved, not
+allowing querying more than the predetermined period in each API.</p>
 <div class="section level2">
 <h2 id="aemet-api">AEMET API<a class="anchor" aria-label="anchor" href="#aemet-api"></a>
 </h2>
@@ -134,7 +135,10 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in api_function(options): 404:</span></span>
 <span><span class="co">#&gt; AEMET API returned no data: El rango de fechas no puede ser superior a 31 dias</span></span></code></pre></div>
-<p>This means that with one call to <code>get_meteo_from</code> to the AEMET service, one can only download 31 days of data. If the period needed is bigger than that, one option is performing all the calls necessary and join the results:</p>
+<p>This means that with one call to <code>get_meteo_from</code> to the
+AEMET service, one can only download 31 days of data. If the period
+needed is bigger than that, one option is performing all the calls
+necessary and join the results:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_1990_jan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
@@ -185,8 +189,14 @@
 <span><span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;, and abbreviated variable names ¹​station_id,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ²​station_name, ³​station_province, ⁴​altitude, ⁵​mean_temperature,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​min_temperature</span></span></span></code></pre></div>
-<p>While for short periods this can be easily done, when needing long periods (years, decades), this can be tedious and prone to error (or at least involves a lot of <em>copy&amp;paste</em> and generate longer scripts).<br>
-To avoid this, we can use loops, both in a tidyverse way (<code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map</a></code>) or in a more classic approach (<code>for</code>). For both ways, the first thing to do is create the vectors of dates to retrieve:</p>
+<p>While for short periods this can be easily done, when needing long
+periods (years, decades), this can be tedious and prone to error (or at
+least involves a lot of <em>copy&amp;paste</em> and generate longer
+scripts).<br>
+To avoid this, we can use loops, both in a tidyverse way
+(<code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map</a></code>) or in a more classic approach
+(<code>for</code>). For both ways, the first thing to do is create the
+vectors of dates to retrieve:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># First, we prepare the date vectors, with the start and end dates.</span></span>
 <span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-06-01'</span><span class="op">)</span>, <span class="st">'months'</span><span class="op">)</span></span>
@@ -208,7 +218,9 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <div class="section level3">
 <h3 id="tidyverse-loop">tidyverse loop<a class="anchor" aria-label="anchor" href="#tidyverse-loop"></a>
 </h3>
-<p>We are gonna use <code><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">purrr::map2_dfr</a></code>, to iterate both date vectors at the same time and return a data frame with all the results directly:</p>
+<p>We are gonna use <code><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">purrr::map2_dfr</a></code>, to iterate both date
+vectors at the same time and return a data frame with all the results
+directly:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tidyverse map</span></span>
 <span><span class="va">res_tidyverse</span> <span class="op">&lt;-</span></span>
@@ -264,7 +276,8 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <div class="section level3">
 <h3 id="for-loop">for loop<a class="anchor" aria-label="anchor" href="#for-loop"></a>
 </h3>
-<p>We use <code>base::for</code>, iterating by the index of the dates vectors:</p>
+<p>We use <code>base::for</code>, iterating by the index of the dates
+vectors:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># base for loop</span></span>
 <span><span class="va">res_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -313,19 +326,27 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">res_tidyverse</span>, <span class="va">res_for</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <blockquote>
-<p>In a loop, no matter if a <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map</a></code> or a <code>for</code> loop, each iteration will connect with the API, consuming connections from the user quota. Take this into consideration when creating loops for longer periods, as you can reach your API request limits for the day/month… (it depends on the service API).</p>
+<p>In a loop, no matter if a <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map</a></code> or a
+<code>for</code> loop, each iteration will connect with the API,
+consuming connections from the user quota. Take this into consideration
+when creating loops for longer periods, as you can reach your API
+request limits for the day/month… (it depends on the service API).</p>
 </blockquote>
 </div>
 </div>
 <div class="section level2">
 <h2 id="meteocat-api">MeteoCat API<a class="anchor" aria-label="anchor" href="#meteocat-api"></a>
 </h2>
-<p>When using MeteoCat in <code>daily</code>, <code>monthly</code> and <code>yearly</code> there are restrictions on the period that can be accessed.</p>
+<p>When using MeteoCat in <code>daily</code>, <code>monthly</code> and
+<code>yearly</code> there are restrictions on the period that can be
+accessed.</p>
 <div class="section level3">
 <h3 id="daily">
 <code>daily</code><a class="anchor" aria-label="anchor" href="#daily"></a>
 </h3>
-<p><code>daily</code> always returns the whole month the date selected is in, i.e. for <code>start_date = as.Date('2020-04-10')</code> it will return all days in April, 2020:</p>
+<p><code>daily</code> always returns the whole month the date selected
+is in, i.e. for <code>start_date = as.Date('2020-04-10')</code> it will
+return all days in April, 2020:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span></span>
 <span>  <span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-10'</span><span class="op">)</span>,</span>
@@ -343,7 +364,8 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span><span class="co">#&gt; [21] "2020-04-21 UTC" "2020-04-22 UTC" "2020-04-23 UTC" "2020-04-24 UTC"</span></span>
 <span><span class="co">#&gt; [25] "2020-04-25 UTC" "2020-04-26 UTC" "2020-04-27 UTC" "2020-04-28 UTC"</span></span>
 <span><span class="co">#&gt; [29] "2020-04-29 UTC" "2020-04-30 UTC"</span></span></code></pre></div>
-<p>This means that if we want more than one month, we need to use loops in a similar way as described previously for AEMET:</p>
+<p>This means that if we want more than one month, we need to use loops
+in a similar way as described previously for AEMET:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, <span class="st">'months'</span><span class="op">)</span></span>
 <span><span class="co"># tidyverse map</span></span>
@@ -447,7 +469,9 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <h3 id="monthly">
 <code>monthly</code><a class="anchor" aria-label="anchor" href="#monthly"></a>
 </h3>
-<p><code>monthly</code> always returns the whole year the date selected is in, i.e. for <code>start_date = as.Date('2020-04-10')</code> it will return all months in 2020:</p>
+<p><code>monthly</code> always returns the whole year the date selected
+is in, i.e. for <code>start_date = as.Date('2020-04-10')</code> it will
+return all months in 2020:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span></span>
 <span>  <span class="st">'monthly'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-10'</span><span class="op">)</span>,</span>
@@ -460,7 +484,8 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span><span class="co">#&gt;  [1] "2020-01-01 UTC" "2020-02-01 UTC" "2020-03-01 UTC" "2020-04-01 UTC"</span></span>
 <span><span class="co">#&gt;  [5] "2020-05-01 UTC" "2020-06-01 UTC" "2020-07-01 UTC" "2020-08-01 UTC"</span></span>
 <span><span class="co">#&gt;  [9] "2020-09-01 UTC" "2020-10-01 UTC" "2020-11-01 UTC" "2020-12-01 UTC"</span></span></code></pre></div>
-<p>Which means that if we need more than one year of monthly data, we need to use loops again:</p>
+<p>Which means that if we need more than one year of monthly data, we
+need to use loops again:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2019-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span>, <span class="st">'years'</span><span class="op">)</span></span>
 <span><span class="co"># tidyverse map</span></span>
@@ -560,7 +585,10 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <h3 id="yearly">
 <code>yearly</code><a class="anchor" aria-label="anchor" href="#yearly"></a>
 </h3>
-<p><code>yearly</code> always returns all available years and <code>start_date</code> argument is ignored, i.e. using <code>start_date = as.Date('2020-04-10')</code> will return all years, independently of the date supplied:</p>
+<p><code>yearly</code> always returns all available years and
+<code>start_date</code> argument is ignored, i.e. using
+<code>start_date = as.Date('2020-04-10')</code> will return all years,
+independently of the date supplied:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span></span>
 <span>  <span class="st">'yearly'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-10'</span><span class="op">)</span>,</span>
@@ -574,7 +602,8 @@ To avoid this, we can use loops, both in a tidyverse way (<code><a href="https:/
 <span><span class="co">#&gt;  [5] "2012-12-07 UTC" "2013-12-07 UTC" "2014-12-07 UTC" "2015-12-07 UTC"</span></span>
 <span><span class="co">#&gt;  [9] "2016-12-07 UTC" "2017-12-07 UTC" "2018-12-07 UTC" "2019-12-07 UTC"</span></span>
 <span><span class="co">#&gt; [13] "2020-12-07 UTC" "2021-12-07 UTC"</span></span></code></pre></div>
-<p>This means that with yearly we always get all the data available, so there is no need of loops.</p>
+<p>This means that with yearly we always get all the data available, so
+there is no need of loops.</p>
 </div>
 </div>
   </div>

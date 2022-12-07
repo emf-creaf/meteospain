@@ -99,7 +99,7 @@
 
       
 
-      </header><script src="aemet_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>AEMET service</h1>
@@ -117,39 +117,57 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com" class="external-link">ggforce</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/" class="external-link">units</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; udunits database from /Users/runner/work/_temp/Library/units/share/udunits/udunits2.xml</span></span>
+<span><span class="co">#&gt; udunits database from /usr/share/xml/udunits/udunits2.xml</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="aemet-service">AEMET service<a class="anchor" aria-label="anchor" href="#aemet-service"></a>
 </h2>
-<p><a href="https://www.aemet.es/en/portada" class="external-link">AEMET</a> is the Spanish national meteorologic service, and is the national meteorology authority providing quality data for public and research use, as well as prediction products and disaster warning system. <code>meteospain</code> only access to the automatic meteorological stations network data.</p>
+<p><a href="https://www.aemet.es/en/portada" class="external-link">AEMET</a> is the Spanish
+national meteorologic service, and is the national meteorology authority
+providing quality data for public and research use, as well as
+prediction products and disaster warning system. <code>meteospain</code>
+only access to the automatic meteorological stations network data.</p>
 <div class="section level3">
 <h3 id="aemet-options">AEMET options<a class="anchor" aria-label="anchor" href="#aemet-options"></a>
 </h3>
 <div class="section level4">
 <h4 id="temporal-resolution">Temporal resolution<a class="anchor" aria-label="anchor" href="#temporal-resolution"></a>
 </h4>
-<p><code>meteospain</code> offers access to the AEMET API at different temporal resolutions:</p>
+<p><code>meteospain</code> offers access to the AEMET API at different
+temporal resolutions:</p>
 <ul>
-<li>“current_day”, returning the latest 24 hours of measures for all or selected stations.</li>
-<li>“daily”, returning the daily aggregated measures for all or selected stations.</li>
+<li>“current_day”, returning the latest 24 hours of measures for all or
+selected stations.</li>
+<li>“daily”, returning the daily aggregated measures for all or selected
+stations.</li>
 </ul>
-<p>In “daily”, a <code>start_date</code> (and optionally an <code>end_date</code>) arguments must be provided, indicating the period from which retrieve the data.</p>
+<p>In “daily”, a <code>start_date</code> (and optionally an
+<code>end_date</code>) arguments must be provided, indicating the period
+from which retrieve the data.</p>
 </div>
 <div class="section level4">
 <h4 id="stations">Stations<a class="anchor" aria-label="anchor" href="#stations"></a>
 </h4>
-<p><code>meteospain</code> access the data in the AEMET API collecting all stations. If a character vector of stations codes is supplied in the <code>stations</code> argument, a filter step is done before returning the data to maintain only the stations supplied.</p>
+<p><code>meteospain</code> access the data in the AEMET API collecting
+all stations. If a character vector of stations codes is supplied in the
+<code>stations</code> argument, a filter step is done before returning
+the data to maintain only the stations supplied.</p>
 </div>
 <div class="section level4">
 <h4 id="aemet-api-key">AEMET API Key<a class="anchor" aria-label="anchor" href="#aemet-api-key"></a>
 </h4>
-<p>AEMET API only allow access to the data with a personal API Key. This token must be included in the <code>api_key</code> argument of <code>aemet_options</code> function.<br>
-To obtain the API Key, please visit <a href="https://opendata.aemet.es/centrodedescargas/inicio" class="external-link uri">https://opendata.aemet.es/centrodedescargas/inicio</a> and follow the instructions at “Obtencion de API Key”.</p>
+<p>AEMET API only allow access to the data with a personal API Key. This
+token must be included in the <code>api_key</code> argument of
+<code>aemet_options</code> function.<br>
+To obtain the API Key, please visit <a href="https://opendata.aemet.es/centrodedescargas/inicio" class="external-link uri">https://opendata.aemet.es/centrodedescargas/inicio</a> and
+follow the instructions at “Obtencion de API Key”.</p>
 <blockquote>
-<p>It is not advisable to use the keys directly in any script shared or publicly available (github…), neither store them in plain text files. One option is using the <a href="https://github.com/r-lib/keyring" class="external-link">keyring package</a> for managing and accessing keys:</p>
+<p>It is not advisable to use the keys directly in any script shared or
+publicly available (github…), neither store them in plain text files.
+One option is using the <a href="https://github.com/r-lib/keyring" class="external-link">keyring package</a> for managing
+and accessing keys:</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'keyring'</span><span class="op">)</span></span>
@@ -241,8 +259,6 @@ To obtain the API Key, please visit <a href="https://opendata.aemet.es/centroded
 <span>  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">spain_20200425</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data received</span></span></span>
-<span><span class="co">#&gt; Trying again in 60 seconds</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
 <span><span class="va">spain_20200425</span></span>

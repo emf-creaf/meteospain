@@ -99,7 +99,7 @@
 
       
 
-      </header><script src="meteocat_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MeteoCat service</h1>
@@ -126,42 +126,66 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com" class="external-link">ggforce</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/" class="external-link">units</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; udunits database from /Users/runner/work/_temp/Library/units/share/udunits/udunits2.xml</span></span>
+<span><span class="co">#&gt; udunits database from /usr/share/xml/udunits/udunits2.xml</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-lib.github.io/keyring/index.html" class="external-link">keyring</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="meteocat-service">MeteoCat service<a class="anchor" aria-label="anchor" href="#meteocat-service"></a>
 </h2>
-<p><a href="https://www.meteo.cat/" class="external-link">MeteoCat</a> is the Catalonian meteorologic service. It offers access to different meteorological data and information, being one of their main missions to curate and circulate data from meteorological stations. <code>meteospain</code> only access to the automatic meteorological stations network data.</p>
+<p><a href="https://www.meteo.cat/" class="external-link">MeteoCat</a> is the Catalonian
+meteorologic service. It offers access to different meteorological data
+and information, being one of their main missions to curate and
+circulate data from meteorological stations. <code>meteospain</code>
+only access to the automatic meteorological stations network data.</p>
 <div class="section level3">
 <h3 id="meteocat-options">MeteoCat options<a class="anchor" aria-label="anchor" href="#meteocat-options"></a>
 </h3>
 <div class="section level4">
 <h4 id="temporal-resolution">Temporal resolution<a class="anchor" aria-label="anchor" href="#temporal-resolution"></a>
 </h4>
-<p><code>meteospain</code> offers access to the MeteoCat API at different temporal resolutions:</p>
+<p><code>meteospain</code> offers access to the MeteoCat API at
+different temporal resolutions:</p>
 <ul>
-<li>“instant”, returning the latest 4 hours of measures for all or selected stations.</li>
-<li>“hourly”, returning all measures (some stations has timesteps of 30 min, others 60 min, others more) for all or selected stations.</li>
-<li>“daily”, returning daily aggregates for the month in the date provided, i.e. if ‘2020-04-10’ is provided as start_date, all daily values for April 2020 will be returned.</li>
-<li>“monthly”, returning monthly aggregates for the year in the date provided, i.e. if ‘2020-04-10’ is provided as start_date, all monthly values for 2020 will be returned.</li>
-<li>“yearly”, returning yearly aggregates for all years available. In this case date provided is ignored.</li>
+<li>“instant”, returning the latest 4 hours of measures for all or
+selected stations.</li>
+<li>“hourly”, returning all measures (some stations has timesteps of 30
+min, others 60 min, others more) for all or selected stations.</li>
+<li>“daily”, returning daily aggregates for the month in the date
+provided, i.e. if ‘2020-04-10’ is provided as start_date, all daily
+values for April 2020 will be returned.</li>
+<li>“monthly”, returning monthly aggregates for the year in the date
+provided, i.e. if ‘2020-04-10’ is provided as start_date, all monthly
+values for 2020 will be returned.</li>
+<li>“yearly”, returning yearly aggregates for all years available. In
+this case date provided is ignored.</li>
 </ul>
-<p>In “daily” and “monthly”, a <code>start_date</code> argument must be provided, indicating the date from which retrieve the data as explained earlier. For more info see <code><a href="../articles/api_limits.html">vignette('api_limits', package = 'meteospain')</a></code>.</p>
+<p>In “daily” and “monthly”, a <code>start_date</code> argument must be
+provided, indicating the date from which retrieve the data as explained
+earlier. For more info see
+<code><a href="../articles/api_limits.html">vignette('api_limits', package = 'meteospain')</a></code>.</p>
 </div>
 <div class="section level4">
 <h4 id="stations">Stations<a class="anchor" aria-label="anchor" href="#stations"></a>
 </h4>
-<p><code>meteospain</code> access the data in the MeteoCat API collecting all stations. If a character vector of stations codes is supplied in the <code>stations</code> argument, a filter step is done before returning the data to maintain only the stations supplied.</p>
+<p><code>meteospain</code> access the data in the MeteoCat API
+collecting all stations. If a character vector of stations codes is
+supplied in the <code>stations</code> argument, a filter step is done
+before returning the data to maintain only the stations supplied.</p>
 </div>
 <div class="section level4">
 <h4 id="meteocat-api-key">MeteoCat API Key<a class="anchor" aria-label="anchor" href="#meteocat-api-key"></a>
 </h4>
-<p>MeteoCat API only allow access to the data with a personal API Key. This token must be included in the <code>api_key</code> argument of <code>meteocat_options</code> function.<br>
-To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat/" class="external-link uri">https://apidocs.meteocat.gencat.cat/</a> and follow the instructions there.</p>
+<p>MeteoCat API only allow access to the data with a personal API Key.
+This token must be included in the <code>api_key</code> argument of
+<code>meteocat_options</code> function.<br>
+To obtain the API Key, please visit <a href="https://apidocs.meteocat.gencat.cat/" class="external-link uri">https://apidocs.meteocat.gencat.cat/</a> and follow the
+instructions there.</p>
 <blockquote>
-<p>It is not advisable to use the keys directly in any script shared or publicly available (github…), neither store them in plain text files. One option is using the <a href="https://github.com/r-lib/keyring" class="external-link">keyring package</a> for managing and accessing keys:</p>
+<p>It is not advisable to use the keys directly in any script shared or
+publicly available (github…), neither store them in plain text files.
+One option is using the <a href="https://github.com/r-lib/keyring" class="external-link">keyring package</a> for managing
+and accessing keys:</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'keyring'</span><span class="op">)</span></span>
