@@ -175,10 +175,10 @@ the <code>stations</code> argument.</p>
 <span><span class="co">#&gt; [1] "instant"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2022-12-07"</span></span>
+<span><span class="co">#&gt; [1] "2022-12-12"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2022-12-07"</span></span>
+<span><span class="co">#&gt; [1] "2022-12-12"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -193,10 +193,10 @@ the <code>stations</code> argument.</p>
 <span><span class="co">#&gt; [1] "current_day"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2022-12-07"</span></span>
+<span><span class="co">#&gt; [1] "2022-12-12"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2022-12-07"</span></span>
+<span><span class="co">#&gt; [1] "2022-12-12"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; [1] "10157" "14000" "10045"</span></span>
@@ -245,12 +245,12 @@ the <code>stations</code> argument.</p>
 <p>Accessing station metadata for MeteoGalicia is simple:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 156 features and 5 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 155 features and 5 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 156 × 6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 155 × 6</span></span></span>
 <span><span class="co">#&gt;    service      station_id station_n…¹ stati…² altit…³             geometry</span></span>
 <span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494;">[m]</span>          <span style="color: #949494; font-style: italic;">&lt;POINT [°]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> meteogalicia 10157      Coruña-Tor… A Coru…      21 (-8.409202 43.38276)</span></span>
@@ -263,7 +263,7 @@ the <code>stations</code> argument.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> meteogalicia 10095      Sergude     A Coru…     231 (-8.461246 42.82283)</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> meteogalicia 10800      Camariñas   A Coru…       5 (-9.178318 43.12445)</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> meteogalicia 19001      Rus         A Coru…     134 (-8.685357 43.15616)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 146 more rows, and abbreviated variable names ¹​station_name,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 145 more rows, and abbreviated variable names ¹​station_name,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ²​station_province, ³​altitude</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -282,7 +282,7 @@ the <code>stations</code> argument.</p>
 <span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; que as utilice para os usos distintos do particular e privado.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span></span>
 <span><span class="va">galicia_2020</span></span>
-<span><span class="co">#&gt; Simple feature collection with 1844 features and 13 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 1844 features and 13 fields (with 12 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span></span>
