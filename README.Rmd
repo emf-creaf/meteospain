@@ -75,4 +75,3 @@ plot(get_meteo_from('meteogalicia', mg_options))
 
 plot(get_stations_info_from('meteogalicia', mg_options))
 ```
-
