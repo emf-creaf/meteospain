@@ -43,18 +43,20 @@ To forgot the cache, \code{memoise::forget(get_meteo_from)} can be used.
 
 \examples{
 \donttest{
-library(meteospain)
-library(keyring)
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+  library(meteospain)
+  library(keyring)
 
-# AEMET (we need a key)
-# key_set('aemet')
-options_for_aemet <- aemet_options(
-  'daily',
-  start_date = as.Date('2012-01-01'),
-  end_date = as.Date('2012-02-01'),
-  api_key = key_get('aemet')
-)
-get_meteo_from('aemet', options_for_aemet)
+  # AEMET (we need a key)
+  # key_set('aemet')
+  options_for_aemet <- aemet_options(
+    'daily',
+    start_date = as.Date('2012-01-01'),
+    end_date = as.Date('2012-02-01'),
+    api_key = key_get('aemet')
+  )
+  get_meteo_from('aemet', options_for_aemet)
+}
 }
 
 }

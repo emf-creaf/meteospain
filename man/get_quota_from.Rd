@@ -24,13 +24,15 @@ quota numbers in the services that allow for this, \strong{(currently only Meteo
 }
 \examples{
 \donttest{
-library(meteospain)
-library(keyring)
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+  library(meteospain)
+  library(keyring)
 
-# MeteoCat (we need a key)
-# key_set('meteocat')
-api_options <- meteocat_options(api_key = key_get('meteocat'))
-get_quota_from('meteocat', api_options)
+  # MeteoCat (we need a key)
+  # key_set('meteocat')
+  api_options <- meteocat_options(api_key = key_get('meteocat'))
+  get_quota_from('meteocat', api_options)
+}
 }
 
 }

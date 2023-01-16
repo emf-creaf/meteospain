@@ -23,18 +23,20 @@
 #'
 #' @examples
 #' \donttest{
-#' library(meteospain)
-#' library(keyring)
+#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#'   library(meteospain)
+#'   library(keyring)
 #'
-#' # AEMET (we need a key)
-#' # key_set('aemet')
-#' options_for_aemet <- aemet_options(
-#'   'daily',
-#'   start_date = as.Date('2012-01-01'),
-#'   end_date = as.Date('2012-02-01'),
-#'   api_key = key_get('aemet')
-#' )
-#' get_meteo_from('aemet', options_for_aemet)
+#'   # AEMET (we need a key)
+#'   # key_set('aemet')
+#'   options_for_aemet <- aemet_options(
+#'     'daily',
+#'     start_date = as.Date('2012-01-01'),
+#'     end_date = as.Date('2012-02-01'),
+#'     api_key = key_get('aemet')
+#'   )
+#'   get_meteo_from('aemet', options_for_aemet)
+#' }
 #' }
 #'
 #' @return An sf (spatial) object with the stations meteorological data.
@@ -85,13 +87,15 @@ get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'me
 #'
 #' @examples
 #' \donttest{
-#' library(meteospain)
-#' library(keyring)
+#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#'   library(meteospain)
+#'   library(keyring)
 #'
-#' # AEMET (we need a key)
-#' # key_set('aemet')
-#' api_options <- aemet_options(api_key = key_get('aemet'))
-#' get_stations_info_from('aemet', api_options)
+#'   # AEMET (we need a key)
+#'   # key_set('aemet')
+#'   api_options <- aemet_options(api_key = key_get('aemet'))
+#'   get_stations_info_from('aemet', api_options)
+#' }
 #' }
 #'
 #' @return An sf (spatial) object with the stations metadata.
@@ -135,13 +139,15 @@ get_stations_info_from <- function(
 #'
 #' @examples
 #' \donttest{
-#' library(meteospain)
-#' library(keyring)
+#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#'   library(meteospain)
+#'   library(keyring)
 #'
-#' # MeteoCat (we need a key)
-#' # key_set('meteocat')
-#' api_options <- meteocat_options(api_key = key_get('meteocat'))
-#' get_quota_from('meteocat', api_options)
+#'   # MeteoCat (we need a key)
+#'   # key_set('meteocat')
+#'   api_options <- meteocat_options(api_key = key_get('meteocat'))
+#'   get_quota_from('meteocat', api_options)
+#' }
 #' }
 #'
 #' @return A data frame with the quota info

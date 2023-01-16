@@ -60,27 +60,29 @@ NULL
 #'
 #' @examples
 #' \donttest{
-#' library(keyring)
-#' library(meteospain)
+#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#'   library(keyring)
+#'   library(meteospain)
 #'
-#' ## AEMET examples ---------------------------------------------------------
+#'   ## AEMET examples ---------------------------------------------------------
 #'
-#' # setting the key (a prompt will appear in console to supply the API key)
-#' # keyring::key_set(service = 'aemet')
+#'   # setting the key (a prompt will appear in console to supply the API key)
+#'   # keyring::key_set(service = 'aemet')
 #'
-#' # Options for the last 24h data
-#' current_opts <- aemet_options(
-#'   resolution = 'current_day',
-#'   api = keyring::key_get('aemet')
-#' )
+#'   # Options for the last 24h data
+#'   current_opts <- aemet_options(
+#'     resolution = 'current_day',
+#'     api = keyring::key_get('aemet')
+#'   )
 #'
-#' # Options for daily data for January, 1990
-#' daily_opts <- aemet_options(
-#'   resolution = 'daily',
-#'   start_date = as.Date('1990-01-01'),
-#'   end_date = as.Date('1990-01-31'),
-#'   api = keyring::key_get('aemet')
-#' )
+#'   # Options for daily data for January, 1990
+#'   daily_opts <- aemet_options(
+#'     resolution = 'daily',
+#'     start_date = as.Date('1990-01-01'),
+#'     end_date = as.Date('1990-01-31'),
+#'     api = keyring::key_get('aemet')
+#'   )
+#' }
 #' }
 #'
 #' @rdname services_options
@@ -121,17 +123,19 @@ aemet_options <- function(
 #'
 #' @examples
 #' \donttest{
-#' ## MeteoCat examples -----------------------------------------------------------
+#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#'   ## MeteoCat examples -----------------------------------------------------------
 #'
-#' # setting the key (a prompt will appear in console to supply the API key)
-#' # keyring::key_set(service = 'meteocat')
+#'   # setting the key (a prompt will appear in console to supply the API key)
+#'   # keyring::key_set(service = 'meteocat')
 #'
-#' # create the options
-#' query_options <- meteocat_options(
-#'   resolution = 'hourly',
-#'   start_date = as.Date('2020-12-31'),
-#'   api = keyring::key_get('meteocat')
-#' )
+#'   # create the options
+#'   query_options <- meteocat_options(
+#'     resolution = 'hourly',
+#'     start_date = as.Date('2020-12-31'),
+#'     api = keyring::key_get('meteocat')
+#'   )
+#' }
 #' }
 #'
 #' @rdname services_options
@@ -267,17 +271,19 @@ meteogalicia_options <- function(
 #'
 #' @examples
 #' \donttest{
-#' library(keyring)
-#' library(meteospain)
+#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#'   library(keyring)
+#'   library(meteospain)
 #'
-#' ## RIA examples ---------------------------------------------------------
+#'   ## RIA examples ---------------------------------------------------------
 #'
-#' # Options for daily data for April, 2020
-#' daily_opts <- ria_options(
-#'   resolution = 'daily',
-#'   start_date = as.Date('2020-04-01'),
-#'   end_date = as.Date('2020-04-30')
-#' )
+#'   # Options for daily data for April, 2020
+#'   daily_opts <- ria_options(
+#'     resolution = 'daily',
+#'     start_date = as.Date('2020-04-01'),
+#'     end_date = as.Date('2020-04-30')
+#'   )
+#' }
 #' }
 #'
 #' @rdname services_options

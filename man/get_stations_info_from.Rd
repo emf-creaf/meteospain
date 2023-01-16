@@ -38,13 +38,15 @@ To forgot the cache, \code{memoise::forget(get_stations_info_from)} can be used.
 
 \examples{
 \donttest{
-library(meteospain)
-library(keyring)
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+  library(meteospain)
+  library(keyring)
 
-# AEMET (we need a key)
-# key_set('aemet')
-api_options <- aemet_options(api_key = key_get('aemet'))
-get_stations_info_from('aemet', api_options)
+  # AEMET (we need a key)
+  # key_set('aemet')
+  api_options <- aemet_options(api_key = key_get('aemet'))
+  get_stations_info_from('aemet', api_options)
+}
 }
 
 }
