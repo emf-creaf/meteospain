@@ -150,7 +150,7 @@ necessary and join the results:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="va">res_1990_feb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
@@ -162,7 +162,7 @@ necessary and join the results:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">res_1990_jan</span>, <span class="va">res_1990_feb</span><span class="op">)</span></span>
 <span><span class="va">res</span></span>
@@ -218,13 +218,13 @@ vectors of dates to retrieve:</p>
 <div class="section level3">
 <h3 id="tidyverse-loop">tidyverse loop<a class="anchor" aria-label="anchor" href="#tidyverse-loop"></a>
 </h3>
-<p>We are gonna use <code><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">purrr::map2_dfr</a></code>, to iterate both date
+<p>We are gonna use <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">purrr::map2_dfr</a></code>, to iterate both date
 vectors at the same time and return a data frame with all the results
 directly:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tidyverse map</span></span>
 <span><span class="va">res_tidyverse</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2_dfr</a></span><span class="op">(</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map2_dfr</a></span><span class="op">(</span></span>
 <span>    .x <span class="op">=</span> <span class="va">start_dates</span>, .y <span class="op">=</span> <span class="va">end_dates</span>,</span>
 <span>    .f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">start_date</span>, <span class="va">end_date</span><span class="op">)</span> <span class="op">{</span></span>
 <span>      <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
@@ -240,15 +240,15 @@ directly:</p>
 <span>    <span class="op">}</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">API request limit reached: Client error: (429) Too Many Requests (RFC 6585)</span></span></span>
 <span><span class="co">#&gt; Trying again in 60 seconds</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">http://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="va">res_tidyverse</span></span>
 <span><span class="co">#&gt; Simple feature collection with 21553 features and 12 fields</span></span>
@@ -372,7 +372,7 @@ in a similar way as described previously for AEMET:</p>
 <code class="sourceCode R"><span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, <span class="st">'months'</span><span class="op">)</span></span>
 <span><span class="co"># tidyverse map</span></span>
 <span><span class="va">meteocat_2020q1_tidyverse</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
 <span>    .x <span class="op">=</span> <span class="va">start_dates</span>,</span>
 <span>    .f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">start_date</span><span class="op">)</span> <span class="op">{</span></span>
 <span>      <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
@@ -492,7 +492,7 @@ need to use loops again:</p>
 <code class="sourceCode R"><span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2019-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span>, <span class="st">'years'</span><span class="op">)</span></span>
 <span><span class="co"># tidyverse map</span></span>
 <span><span class="va">meteocat_2019_20_tidyverse</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
 <span>    .x <span class="op">=</span> <span class="va">start_dates</span>,</span>
 <span>    .f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">start_date</span><span class="op">)</span> <span class="op">{</span></span>
 <span>      <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
@@ -600,10 +600,10 @@ independently of the date supplied:</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "2008-12-13 UTC" "2009-12-13 UTC" "2010-12-13 UTC" "2011-12-13 UTC"</span></span>
-<span><span class="co">#&gt;  [5] "2012-12-13 UTC" "2013-12-13 UTC" "2014-12-13 UTC" "2015-12-13 UTC"</span></span>
-<span><span class="co">#&gt;  [9] "2016-12-13 UTC" "2017-12-13 UTC" "2018-12-13 UTC" "2019-12-13 UTC"</span></span>
-<span><span class="co">#&gt; [13] "2020-12-13 UTC" "2021-12-13 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "2008-01-16 UTC" "2009-01-16 UTC" "2010-01-16 UTC" "2011-01-16 UTC"</span></span>
+<span><span class="co">#&gt;  [5] "2012-01-16 UTC" "2013-01-16 UTC" "2014-01-16 UTC" "2015-01-16 UTC"</span></span>
+<span><span class="co">#&gt;  [9] "2016-01-16 UTC" "2017-01-16 UTC" "2018-01-16 UTC" "2019-01-16 UTC"</span></span>
+<span><span class="co">#&gt; [13] "2020-01-16 UTC" "2021-01-16 UTC" "2022-01-16 UTC"</span></span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so
 there is no need of loops.</p>
 </div>
@@ -627,7 +627,7 @@ there is no need of loops.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
