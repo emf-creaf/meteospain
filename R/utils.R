@@ -160,9 +160,17 @@ unnest_safe <- function(x, ...) {
   # if x is a list instead of a dataframe, something went wrong (happens sometimes in
   # meteogalicia or meteocat).
   if (inherits(x, 'list')) {
-    stop(glue::glue(
-      "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}"
-    ))
+
+    # with new purrr (>=1.0.0) empty response (like in some cases for meteocat
+    # variables) is maintained as list() instead of NULL. So if is an empty
+    # list, return tibble(), if is a list not empty, maintain the error
+    if (length(x) < 1) {
+      return(dplyr::tibble())
+    } else {
+      stop(glue::glue(
+        "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}"
+      ))
+    }
   }
 
   # now, we need to check if "x" is NULL. Sometimes the list of dataframes is not complete, with
