@@ -15,7 +15,8 @@
   # 400 Bad Request: Parameters are not correct, message contains further info
   # 404 Not found: Not found
   # 500 Internal Error Server: Internal error, message contains further info
-  if (response_status %in% c(400, 404, 500)) {
+  # 503 Service Unavailable
+  if (response_status %in% c(400, 404, 500, 503)) {
     res <- list(
       status = 'Error',
       code = response_status,

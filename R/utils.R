@@ -163,14 +163,14 @@ unnest_safe <- function(x, ...) {
 
     # with new purrr (>=1.0.0) empty response (like in some cases for meteocat
     # variables) is maintained as list() instead of NULL. So if is an empty
-    # list, return tibble(), if is a list not empty, maintain the error
-    if (length(x) < 1) {
-      return(dplyr::tibble())
-    } else {
-      stop(glue::glue(
-        "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}"
+    # list, return tibble(), if is a list not empty, issue a warning
+    if (length(x) > 0) {
+      warning(glue::glue(
+        "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}\n Returning an empty data.frame"
       ))
     }
+
+    return(dplyr::tibble())
   }
 
   # now, we need to check if "x" is NULL. Sometimes the list of dataframes is not complete, with
