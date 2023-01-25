@@ -101,7 +101,7 @@ with all the results directly:
 ```{r tidyverse_loop, eval=NOT_CRAN}
 # tidyverse map
 res_tidyverse <-
-  purrr::map2_dfr(
+  purrr::map2(
     .x = start_dates, .y = end_dates,
     .f = function(start_date, end_date) {
       res <- get_meteo_from(
@@ -115,7 +115,8 @@ res_tidyverse <-
       )
       return(res)
     }
-  )
+  ) %>%
+  purrr::list_rbind()
 
 res_tidyverse
 ```
@@ -185,7 +186,7 @@ for AEMET:
 start_dates <- seq(as.Date('2020-01-01'), as.Date('2020-04-01'), 'months')
 # tidyverse map
 meteocat_2020q1_tidyverse <-
-  purrr::map_dfr(
+  purrr::map(
     .x = start_dates,
     .f = function(start_date) {
       res <- get_meteo_from(
@@ -198,7 +199,8 @@ meteocat_2020q1_tidyverse <-
       )
       return(res)
     }
-  )
+  ) %>%
+  purrr::list_rbind()
 meteocat_2020q1_tidyverse
 
 # base for loop
@@ -242,7 +244,7 @@ Which means that if we need more than one year of monthly data, we need to use l
 start_dates <- seq(as.Date('2019-01-01'), as.Date('2020-01-01'), 'years')
 # tidyverse map
 meteocat_2019_20_tidyverse <-
-  purrr::map_dfr(
+  purrr::map(
     .x = start_dates,
     .f = function(start_date) {
       res <- get_meteo_from(
@@ -255,7 +257,8 @@ meteocat_2019_20_tidyverse <-
       )
       return(res)
     }
-  )
+  ) %>%
+  purrr::list_rbind()
 meteocat_2019_20_tidyverse
 
 # base for loop

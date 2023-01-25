@@ -75,7 +75,7 @@
   # Now we can iterate and get the data
   stations_data <-
     nodes %>%
-    purrr::map_dfr(
+    purrr::map(
       ~ dplyr::tibble(
         service = 'meteoclimatic',
         timestamp = lubridate::parse_date_time(
@@ -102,6 +102,7 @@
         )
       )
     ) %>%
+    purrr::list_rbind() %>%
     dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) %>%
     dplyr::select("timestamp", "station_id", "station_name", dplyr::everything()) %>%
     dplyr::mutate(
