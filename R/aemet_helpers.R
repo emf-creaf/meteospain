@@ -259,16 +259,8 @@
     dplyr::mutate(
       altitude = as.numeric(stringr::str_replace_all(.data$altitude, ',', '.')),
       altitude = units::set_units(.data$altitude, "m"),
-      latitude = dplyr::if_else(
-        stringr::str_detect(.data$latitude, 'S'),
-        -as.numeric(stringr::str_remove_all(.data$latitude, '[A-Za-z]'))/10000,
-        as.numeric(stringr::str_remove_all(.data$latitude, '[A-Za-z]'))/10000
-      ),
-      longitude = dplyr::if_else(
-        stringr::str_detect(.data$longitude, 'W'),
-        -as.numeric(stringr::str_remove_all(.data$longitude, '[A-Za-z]'))/10000,
-        as.numeric(stringr::str_remove_all(.data$longitude, '[A-Za-z]'))/10000
-      )
+      latitude = .aemet_coords_generator(.data$latitude),
+      longitude = .aemet_coords_generator(.data$longitude)
     ) %>%
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 

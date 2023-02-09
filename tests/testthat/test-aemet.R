@@ -30,6 +30,12 @@ test_that("aemet get info works", {
   test_object <- suppressMessages(get_stations_info_from('aemet', api_options))
   expected_names <- c("service", "station_id", "station_name", "station_province", "altitude", "geometry")
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names)
+
+  # test the aemet coords transformation
+  expect_equal(
+    .aemet_coords_generator(c("393339N", "024412E", "393339S", "024412W")),
+    c(39.5608333, 2.7366667, -39.5608333, -2.7366667)
+  )
 })
 
 # aemet get meteo tests ----------------------------------------------------------------------------------
