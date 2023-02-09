@@ -231,11 +231,18 @@
   # checking statuses and retrieving data if everything is ok.
   api_statuses <- paths_resolution %>%
     purrr::map(
-      ~ .check_status_ria(
-        "https://www.juntadeandalucia.es",
-        path = .x,
-        httr::user_agent('https://github.com/emf-creaf/meteospain')
-      )
+      \(path) {
+        .check_status_ria(
+          "https://www.juntadeandalucia.es",
+          path = path,
+          httr::user_agent('https://github.com/emf-creaf/meteospain')
+        )
+      }
+      # ~ .check_status_ria(
+      #   "https://www.juntadeandalucia.es",
+      #   path = .x,
+      #   httr::user_agent('https://github.com/emf-creaf/meteospain')
+      # )
     )
 
   ria_statuses <- purrr::map_depth(api_statuses, 1, 'status') %>%
@@ -288,9 +295,13 @@
   res <- purrr::map_depth(api_statuses, 1, 'content') %>%
     magrittr::set_names(ria_urls) %>%
     purrr::discard(is.null) %>%
-    purrr::imap_dfr(
-      ~ dplyr::mutate(.x, station_id = .ria_url2station(.y))
+    purrr::imap(
+      \(.x, .y) {dplyr::mutate(.x, station_id = .ria_url2station(.y))}
     ) %>%
+    purrr::list_rbind() %>%
+    # purrr::imap_dfr(
+    #   # ~ dplyr::mutate(.x, station_id = .ria_url2station(.y))
+    # ) %>%
     dplyr::select(
       !!! resolution_specific_select_quos(), "station_id",
       mean_temperature = "tempMedia", min_temperature = "tempMin", max_temperature = "tempMax",

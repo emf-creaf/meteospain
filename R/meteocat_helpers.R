@@ -364,13 +364,22 @@
   # checking statuses and retrieving data if everything is ok.
   api_statuses <- paths_resolution %>%
     purrr::map(
-      ~ .check_status_meteocat(
-        "https://api.meteo.cat",
-        httr::add_headers(`x-api-key` = api_options$api_key),
-        path = .x,
-        query = query_resolution,
-        httr::user_agent('https://github.com/emf-creaf/meteospain')
-      )
+      \(path) {
+        .check_status_meteocat(
+          "https://api.meteo.cat",
+          httr::add_headers(`x-api-key` = api_options$api_key),
+          path = path,
+          query = query_resolution,
+          httr::user_agent('https://github.com/emf-creaf/meteospain')
+        )
+      }
+      # ~ .check_status_meteocat(
+      #   "https://api.meteo.cat",
+      #   httr::add_headers(`x-api-key` = api_options$api_key),
+      #   path = .x,
+      #   query = query_resolution,
+      #   httr::user_agent('https://github.com/emf-creaf/meteospain')
+      # )
     )
 
   variables_statuses <- purrr::map_depth(api_statuses, 1, 'status') %>%
