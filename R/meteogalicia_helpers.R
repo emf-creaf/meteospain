@@ -111,6 +111,7 @@
   api_response <- safe_api_access(
     type = 'rest',
     "https://servizos.meteogalicia.gal",
+    config = list(http_version = 2),
     path = path_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain')
   )
@@ -164,6 +165,7 @@
   api_response <- safe_api_access(
     type = 'rest',
     "https://servizos.meteogalicia.gal",
+    config = list(http_version = 2),
     path = path_resolution,
     query = query_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain')
