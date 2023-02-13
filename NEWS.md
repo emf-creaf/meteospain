@@ -1,3 +1,9 @@
+# meteospain 0.1.1
+
+* Fixed bug in AEMET coordinates (#18)
+* Adapted to purrr >1.0.0
+* Lambda functions to the new r base syntax (`\(x) {}`)
+
 # meteospain 0.1.0
 
 * Substitute `.data` calls by `"variable_name"` as recommended by tidyselect after deprecation of `.data`
