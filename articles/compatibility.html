@@ -226,25 +226,23 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html" class="external-link">reduce</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name",</span></span>
-<span><span class="co">#&gt; "station_province", "altitude", "mean_temperature", "min_temperature",</span></span>
-<span><span class="co">#&gt; "max_temperature", "precipitation", "mean_wind_speed", "geometry")</span></span>
-<span><span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name",</span></span>
-<span><span class="co">#&gt; "station_province", "altitude", "mean_temperature", "min_temperature",</span></span>
-<span><span class="co">#&gt; "max_temperature", "precipitation", "mean_wind_speed", "insolation",</span></span>
-<span><span class="co">#&gt; "geometry", "mean_relative_humidity", "min_relative_humidity",</span></span>
-<span><span class="co">#&gt; "max_relative_humidity", "mean_wind_direction")</span></span>
-<span><span class="co">#&gt; Joining, by = c("timestamp", "service", "station_id", "station_name",</span></span>
-<span><span class="co">#&gt; "station_province", "altitude", "mean_temperature", "min_temperature",</span></span>
-<span><span class="co">#&gt; "max_temperature", "precipitation", "mean_wind_speed", "geometry",</span></span>
-<span><span class="co">#&gt; "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",</span></span>
-<span><span class="co">#&gt; "mean_wind_direction")</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
+<span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
+<span><span class="co">#&gt; precipitation, mean_wind_speed, geometry)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
+<span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
+<span><span class="co">#&gt; precipitation, mean_wind_speed, insolation, geometry, mean_relative_humidity,</span></span>
+<span><span class="co">#&gt; min_relative_humidity, max_relative_humidity, mean_wind_direction)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
+<span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
+<span><span class="co">#&gt; precipitation, mean_wind_speed, geometry, mean_relative_humidity,</span></span>
+<span><span class="co">#&gt; min_relative_humidity, max_relative_humidity, mean_wind_direction)`</span></span>
 <span></span>
 <span><span class="va">april_2020_spain</span></span>
-<span><span class="co">#&gt; Simple feature collection with 20502 features and 19 fields (with 210 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 20502 features and 19 fields (with 180 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -17.5455 ymin: 27.4409 xmax: 4.1256 ymax: 43.734</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -17.91528 ymin: 27.73583 xmax: 4.215556 ymax: 43.78611</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20,502 × 20</span></span></span>
 <span><span class="co">#&gt;    timestamp           service station…¹ stati…² stati…³ altit…⁴ mean_…⁵ min_t…⁶</span></span>
