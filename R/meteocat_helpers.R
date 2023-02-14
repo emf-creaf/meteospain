@@ -429,7 +429,7 @@
     dplyr::distinct() %>%
     # each variable in its own column
     tidyr::pivot_wider(
-      -"variable_code",
+      id_cols = -"variable_code",
       names_from = "variable_name", values_from = "valor"
     ) %>%
     # set service, date and units
