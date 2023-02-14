@@ -1,3 +1,6 @@
+This version of `meteospain` fixes a bug in AEMET
+stations coordinates.
+
 ## Test environments
 
 * local R installation (Arch Linux), R 4.2.2
@@ -7,7 +10,6 @@
 * ubuntu-latest (on github actions), R devel
 * ubuntu-latest (on github actions), R oldrel-1
 * win-builder (devel, oldrelease and release)
-* macOS-builder (devel)
 * debian-clang-devel (on rhub)
 
 ## R CMD check results

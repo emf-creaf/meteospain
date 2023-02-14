@@ -1,7 +1,7 @@
 # meteospain 0.1.1
 
 * Fixed bug in AEMET coordinates (#18)
-* Adapted to purrr >1.0.0
+* Minimal versions of `dplyr` and `purrr` added (both `1.0.0`)
 * Lambda functions to the new r base syntax (`\(x) {}`)
 
 # meteospain 0.1.0
