@@ -118,7 +118,7 @@ res_tidyverse <-
   ) %>%
   purrr::list_rbind()
 
-res_tidyverse
+head(res_tidyverse)
 ```
 
 ### for loop
@@ -143,7 +143,7 @@ for (index in seq_along(start_dates)) {
   res_for <- rbind(res_for, temp_res)
 }
 
-res_for
+head(res_for)
 ```
 
 
@@ -201,7 +201,8 @@ meteocat_2020q1_tidyverse <-
     }
   ) %>%
   purrr::list_rbind()
-meteocat_2020q1_tidyverse
+
+head(meteocat_2020q1_tidyverse)
 
 # base for loop
 meteocat_2020q1_for <- data.frame()
@@ -218,7 +219,8 @@ for (index in seq_along(start_dates)) {
   
   meteocat_2020q1_for <- rbind(meteocat_2020q1_for, temp_res)
 }
-meteocat_2020q1_for
+
+head(meteocat_2020q1_for)
 
 # both are identical
 identical(meteocat_2020q1_tidyverse, meteocat_2020q1_for)
@@ -259,7 +261,8 @@ meteocat_2019_20_tidyverse <-
     }
   ) %>%
   purrr::list_rbind()
-meteocat_2019_20_tidyverse
+
+head(meteocat_2019_20_tidyverse)
 
 # base for loop
 meteocat_2019_20_for <- data.frame()
@@ -276,7 +279,7 @@ for (index in seq_along(start_dates)) {
   
   meteocat_2019_20_for <- rbind(meteocat_2019_20_for, temp_res)
 }
-meteocat_2019_20_for
+head(meteocat_2019_20_for)
 
 # both are identical
 identical(meteocat_2019_20_tidyverse, meteocat_2019_20_for)
