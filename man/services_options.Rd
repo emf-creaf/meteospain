@@ -82,7 +82,7 @@ Some services (i.e. AEMET, MeteoCat...) require an API key to access the data. T
 to obtain the key varies from service to service.
 \itemize{
 \item{AEMET: Visit \url{https://opendata.aemet.es/centrodedescargas/inicio} and follow the instructions
-at "Obtencion de API Key".}
+at "Obtención de API Key".}
 \item{MeteoCat: Visit \url{https://apidocs.meteocat.gencat.cat/} and follow the instructions there.}
 }
 It is not advisable to use the keys directly in any script shared or publicly available (github...), neither
