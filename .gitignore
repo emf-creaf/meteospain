@@ -6,6 +6,7 @@
 .httr-oauth
 .DS_Store
 
+.Rprofile
 .Renviron
 inst/doc
 docs
