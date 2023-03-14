@@ -32,23 +32,30 @@
 
   # monthly
   # monthly API does not work for now
-  # if (resolution == 'monthly') {
-  #   # issue a warning if more than one station is provided
-  #   if (length(api_options$stations) > 1) {
-  #     warning(
-  #       "AEMET API for monthly aggregated values only accepts one station per query.\n",
-  #       "Only the first station provided will be used: ", api_options$stations[1]
-  #     )
-  #   }
-  #
-  #   return(
-  #     c(
-  #       'opendata', 'api', 'valores', 'climatologicos', 'mensualesanuales', 'datos',
-  #       'anioini', lubridate::year(api_options$start_date), 'aniofin', lubridate::year(api_options$end_date),
-  #       'estacion', api_options$stations[1]
-  #     )
-  #   )
-  # }
+  if (resolution == 'monthly') {
+    # stop if stations is null. For monthly API, one and only one station must be provided
+    if (length(api_options$stations) < 1) {
+      stop(
+        "AEMET API for monthly aggregated values needs at least one station provided"
+      )
+    }
+
+    # issue a warning if more than one station is provided
+    if (length(api_options$stations) > 1) {
+      warning(
+        "AEMET API for monthly aggregated values only accepts one station per query.\n",
+        "Only the first station provided will be used: ", api_options$stations[1]
+      )
+    }
+
+    return(
+      c(
+        'opendata', 'api', 'valores', 'climatologicos', 'mensualesanuales', 'datos',
+        'anioini', lubridate::year(api_options$start_date), 'aniofin', lubridate::year(api_options$end_date),
+        'estacion', api_options$stations[1]
+      )
+    )
+  }
 
   # not recognised resolution
   stop(
@@ -352,12 +359,14 @@
   # Filter expression for stations ------------------------------------------------------------------------
   # In case stations were supplied, we need also to filter them
   filter_expression <- TRUE
-  # update filter if there is stations supplied
+  # update filter if there is stations supplied, but not for monthly. In monthly only one
+  # station must be used, so the filtering is unnecesary
   if (!rlang::is_null(api_options$stations)) {
     filter_expression <- switch(
       api_options$resolution,
       'current_day' = rlang::expr(.data$idema %in% api_options$stations),
-      'daily' = rlang::expr(.data$indicativo %in% api_options$stations)
+      'daily' = rlang::expr(.data$indicativo %in% api_options$stations),
+      'monthly' = TRUE
     )
   }
 
@@ -369,7 +378,8 @@
   resolution_specific_carpentry <- switch(
     api_options$resolution,
     'current_day' = .aemet_current_day_carpentry,
-    'daily' = .aemet_daily_carpentry
+    'daily' = .aemet_daily_carpentry,
+    'monthly' = .aemet_monthly_carpentry
   )
 
   # NOTE::
@@ -448,6 +458,7 @@
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'altitude')) %>%
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 }
+
 .aemet_daily_carpentry <- function(data, stations_info) {
   data %>%
     dplyr::select(
@@ -482,4 +493,54 @@
       insolation = units::set_units(.data$insolation, "h")
     ) %>%
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'station_province'))
+}
+
+.aemet_monthly_carpentry <- function(data, stations_info) {
+  data %>%
+    dplyr::select(dplyr::any_of(c(
+          timestamp = "fecha",
+          station_id = "indicativo",
+          # temperatures
+          mean_temperature = "tm_mes",
+          mean_min_temperature = "tm_min",
+          mean_max_temperature = "tm_max",
+          # min_temperature = "ta_min",
+          # max_temperature = "ta_max",
+          # rh
+          mean_relative_humidity = "hr",
+          # precipitation
+          total_precipitation = "p_mes",
+          # max_day_precipitation = "p_max",
+          days_precipitation = "np_001",
+          # wind
+          mean_wind_speed = "w_med"
+          # radiation
+          # mean_insolation = "inso",
+          # mean_global_radiation = "glo"
+    ))) %>%
+    # remove anual value
+    dplyr::filter(
+      stringr::str_detect(timestamp, "-13", negate = TRUE)
+    ) %>%
+    # variables are characters, with "," as decimal point, so....
+    dplyr::mutate(
+      service = 'aemet',
+      timestamp = lubridate::parse_date_time(.data$timestamp, orders = "ym"),
+      mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
+      mean_min_temperature = as.numeric(stringr::str_replace_all(.data$mean_min_temperature, ',', '.')),
+      mean_max_temperature = as.numeric(stringr::str_replace_all(.data$mean_max_temperature, ',', '.')),
+      total_precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$total_precipitation, ',', '.'))),
+      mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
+      mean_relative_humidity = as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ',', '.')),
+      days_precipitation = as.numeric(stringr::str_replace_all(.data$days_precipitation, ',', '.')),
+      # and set the units also
+      mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+      mean_min_temperature = units::set_units(.data$mean_min_temperature, "degree_C"),
+      mean_max_temperature = units::set_units(.data$mean_max_temperature, "degree_C"),
+      total_precipitation = units::set_units(.data$total_precipitation, "L/m^2"),
+      mean_wind_speed = units::set_units(.data$mean_wind_speed, "km/h"),
+      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+      days_precipitation = units::set_units(.data$days_precipitation, "days")
+    ) %>%
+    dplyr::left_join(stations_info, by = c('service', 'station_id'))
 }

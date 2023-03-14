@@ -89,7 +89,7 @@ NULL
 #'
 #' @export
 aemet_options <- function(
-  resolution = c('current_day', 'daily'),
+  resolution = c('current_day', 'daily', 'monthly'),
   start_date = Sys.Date(),
   end_date = start_date,
   stations = NULL,

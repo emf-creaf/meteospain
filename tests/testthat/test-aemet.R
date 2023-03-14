@@ -106,6 +106,54 @@ test_that("aemet daily works", {
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
 })
 
+test_that("aemet monthly works", {
+  # all stations "modern" time
+  api_options <- aemet_options(
+    'monthly',
+    start_date = as.Date('2020-01-01'), end_date = as.Date('2020-12-31'),
+    stations = "0149X",
+    api_key = keyring::key_get('aemet')
+  )
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  expected_names <- c(
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
+    "mean_temperature", "mean_min_temperature", "mean_max_temperature",
+    "mean_relative_humidity", "total_precipitation", "days_precipitation",
+    "mean_wind_speed", "geometry"
+  )
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
+  # more than one station -> error
+  stations_to_check <- c("0149X", "0252D")
+  api_options$stations <- stations_to_check
+  expect_warning(test_object <- get_meteo_from('aemet', api_options), "Only the first station")
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  main_test_battery(
+    test_object, service = 'aemet',
+    expected_names = expected_names, stations_to_check = stations_to_check[1], temperature = mean_temperature
+  )
+  # stations 2000's
+  api_options <- aemet_options(
+    'monthly',
+    start_date = as.Date('2005-04-01'), end_date = as.Date('2005-05-01'),
+    stations = "0149X",
+    api_key = keyring::key_get('aemet')
+  )
+  test_object <- get_meteo_from('aemet', api_options)
+  # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
+  # all stations 1990's
+  api_options <- aemet_options(
+    'monthly',
+    start_date = as.Date('1990-04-01'), end_date = as.Date('1990-05-01'),
+    stations = "0149X",
+    api_key = keyring::key_get('aemet')
+  )
+  expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
+  main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
+})
+
 test_that("aemet API errors, messages, warnings are correctly raised", {
   # copyright message
   api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
@@ -136,6 +184,15 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
     get_meteo_from('aemet', api_options),
     "provided have no data for the dates selected"
   )
-  api_options$resolution <- 'monthly'
-  expect_error(get_meteo_from('aemet', api_options), "is not a valid temporal resolution")
+
+  # monthly errors
+  api_options <- aemet_options(
+    'monthly',
+    start_date = as.Date('2020-01-01'), end_date = as.Date('2020-01-02'),
+    api_key = keyring::key_get('aemet'),
+    stations = 'XXXXXX'
+  )
+  expect_error(get_meteo_from('aemet', api_options), "404")
+  api_options$stations <- NULL
+  expect_error(get_meteo_from('aemet', api_options), "needs at least one station provided")
 })
