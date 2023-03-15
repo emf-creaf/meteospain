@@ -1,9 +1,5 @@
 # imports from other packages ---------------------------------------------------------------------------
 
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
 #' @importFrom rlang := .data
 NULL
 

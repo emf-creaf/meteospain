@@ -45,7 +45,6 @@ Imports:
     httr,
     jsonlite,
     lubridate,
-    magrittr,
     purrr (>= 1.0.0),
     rlang,
     sf,
