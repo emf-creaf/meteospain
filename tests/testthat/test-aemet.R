@@ -53,7 +53,7 @@ test_that("aemet current works", {
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = temperature)
   # some stations
-  stations_to_check <- test_object[['station_id']][1:3]
+  stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
@@ -79,7 +79,7 @@ test_that("aemet daily works", {
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # some stations
-  stations_to_check <- test_object[['station_id']][1:3]
+  stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')

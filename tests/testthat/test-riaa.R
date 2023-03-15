@@ -57,7 +57,7 @@ test_that("ria daily works", {
   )
 
   # some stations
-  stations_to_check <- test_object[['station_id']][1:3]
+  stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('ria', api_options)
   # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
@@ -87,7 +87,7 @@ test_that("ria monthly works", {
   )
 
   # some stations
-  stations_to_check <- test_object[['station_id']][1:3]
+  stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('ria', api_options)
   # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
