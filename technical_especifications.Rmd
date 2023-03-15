@@ -60,8 +60,8 @@ desired stations in one take, always using the same interface.
 
 ```{r piping_example, eval=FALSE}
 all_catalonia_stations <-
-  get_meteo_from('aemet', aemet_options(), ...) %>%
-  dplyr::bind_rows(get_meteo_from('smc', smc_options(), ...)) %>%
+  get_meteo_from('aemet', aemet_options(), ...) |>
+  dplyr::bind_rows(get_meteo_from('smc', smc_options(), ...)) |>
   dplyr::bind_rows(get_meteo_from('meteoclimatic', meteoclimatic_options(), ...))
 ```
 
@@ -77,8 +77,8 @@ some don't, some offers hourly, some don't...). This is not a big concern right 
 different services (CyL, Aragón, Asturias...) the complexity for the user increases.
 
 ```{r option_2_example, eval=FALSE}
-get_aemet_daily_data(dates, stations, api, ...) %>%
-  dplyr::bind_rows(get_smc_daily_data(dates, stations, api, ...)) %>%
+get_aemet_daily_data(dates, stations, api, ...) |>
+  dplyr::bind_rows(get_smc_daily_data(dates, stations, api, ...)) |>
   dplyr::bind_rows(get_meteoclimatic_daily_data(dates, stations, ...))
 ```
 

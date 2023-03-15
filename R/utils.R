@@ -99,7 +99,7 @@ legal_note_style <- crayon::combine_styles('blue', 'bold', 'underline')
 #' Relocate all vars in the same way for any service/resolution combination
 #' @noRd
 relocate_vars <- function(data) {
-  data %>%
+  data |>
     dplyr::relocate(
       dplyr::matches('timestamp'),
       dplyr::matches('service'),
@@ -125,13 +125,13 @@ relocate_vars <- function(data) {
   if (stringr::str_detect(station_url, 'mensuales')) {
     parts <- stringr::str_remove_all(
       station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/'
-    ) %>%
+    ) |>
       stringr::str_split('/', n = 3, simplify = TRUE)
     return(glue::glue("{parts[,1]}-{parts[,2]}"))
   } else {
     parts <- stringr::str_remove_all(
       station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/'
-    ) %>%
+    ) |>
       stringr::str_split('/', n = 3, simplify = TRUE)
     return(glue::glue("{parts[,1]}-{parts[,2]}"))
   }

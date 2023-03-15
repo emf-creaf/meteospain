@@ -86,8 +86,8 @@ april_2020_spain <- list(
   dplyr::as_tibble(meteocat_daily),
   dplyr::as_tibble(meteogalicia_daily),
   dplyr::as_tibble(ria_daily)
-) %>%
-  purrr::reduce(dplyr::full_join) %>%
+) |>
+  purrr::reduce(dplyr::full_join) |>
   sf::st_as_sf()
 
 april_2020_spain
@@ -98,9 +98,9 @@ We can visualize the data, only one day.
 #### By service
 
 ```{r plot_map, eval=NOT_CRAN, fig.height=5, fig.width=7, fig.align='center'}
-april_2020_spain %>%
-  dplyr::filter(lubridate::day(timestamp) == 25) %>%
-  units::drop_units() %>%
+april_2020_spain |>
+  dplyr::filter(lubridate::day(timestamp) == 25) |>
+  units::drop_units() |>
   ggplot(aes(colour = service)) +
   geom_sf() +
   scale_colour_viridis_d()
@@ -109,9 +109,9 @@ april_2020_spain %>%
 #### By one variable
 
 ```{r plot_map_2, eval=NOT_CRAN, fig.height=5, fig.width=7, fig.align='center'}
-april_2020_spain %>%
-  dplyr::filter(lubridate::day(timestamp) == 25) %>%
-  units::drop_units() %>%
+april_2020_spain |>
+  dplyr::filter(lubridate::day(timestamp) == 25) |>
+  units::drop_units() |>
   ggplot(aes(colour = mean_temperature)) +
   geom_sf() +
   scale_colour_viridis_c()

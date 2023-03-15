@@ -166,13 +166,13 @@ spain_20200425
 Visually:
 
 ```{r aemet_data_plot, fig.width=7, fig.height=5, fig.align='center', eval = NOT_CRAN}
-spain_20200425 %>%
-  units::drop_units() %>%
+spain_20200425 |>
+  units::drop_units() |>
   ggplot() +
   geom_sf(aes(colour = mean_temperature)) +
   scale_colour_viridis_c()
 
-spain_20200425 %>%
+spain_20200425 |>
   ggplot() +
   geom_histogram(aes(x = precipitation))
 ```

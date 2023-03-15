@@ -142,16 +142,16 @@ catalunya_2020
 Visually:
 
 ```{r meteocat_data_plot, fig.width=7, fig.height=7, fig.align='center', eval = NOT_CRAN}
-catalunya_2020 %>%
-  units::drop_units() %>%
-  mutate(month = lubridate::month(timestamp, label = TRUE)) %>%
+catalunya_2020 |>
+  units::drop_units() |>
+  mutate(month = lubridate::month(timestamp, label = TRUE)) |>
   ggplot() +
   geom_sf(aes(colour = mean_temperature)) +
   facet_wrap(vars(month), ncol = 4) +
   scale_colour_viridis_c()
 
-catalunya_2020 %>%
-  mutate(month = lubridate::month(timestamp, label = TRUE)) %>%
+catalunya_2020 |>
+  mutate(month = lubridate::month(timestamp, label = TRUE)) |>
   ggplot() +
   geom_histogram(aes(x = precipitation)) +
   facet_wrap(vars(month), ncol = 4)

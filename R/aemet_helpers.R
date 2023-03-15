@@ -252,15 +252,15 @@
 
   # Data transformation ----------------------------------------------------------------------------------
   # We can finally take the station info data frame and do the necessary transformations
-  stations_info_check$content %>%
-    dplyr::as_tibble() %>%
+  stations_info_check$content |>
+    dplyr::as_tibble() |>
     # add service name, to identify the data if joining with other services
-    dplyr::mutate(service = 'aemet') %>%
+    dplyr::mutate(service = 'aemet') |>
     dplyr::select(
       "service", station_id = "indicativo", station_name = "nombre",
       station_province = "provincia", altitude = "altitud", latitude = "latitud",
       longitude = "longitud"
-    ) %>%
+    ) |>
     # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
     # and negative when S or W.
     dplyr::mutate(
@@ -268,7 +268,7 @@
       altitude = units::set_units(.data$altitude, "m"),
       latitude = .aemet_coords_generator(.data$latitude),
       longitude = .aemet_coords_generator(.data$longitude)
-    ) %>%
+    ) |>
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 
 }
@@ -391,16 +391,16 @@
   # I tried to communicate with them, No solution offered :(
 
   # Data transformation -----------------------------------------------------------------------------------
-  res <- stations_data_check$content %>%
-    dplyr::as_tibble() %>%
+  res <- stations_data_check$content |>
+    dplyr::as_tibble() |>
     # remove unwanted stations
-    dplyr::filter(!! filter_expression) %>%
+    dplyr::filter(!! filter_expression) |>
     # apply the resolution-specific transformations
-    resolution_specific_carpentry(stations_info, resolution = api_options$resolution) %>%
+    resolution_specific_carpentry(stations_info, resolution = api_options$resolution) |>
     # arrange data
-    dplyr::arrange(.data$timestamp, .data$station_id) %>%
+    dplyr::arrange(.data$timestamp, .data$station_id) |>
     # reorder variables to be consistent among all services
-    relocate_vars() %>%
+    relocate_vars() |>
     # ensure we have an sf
     sf::st_as_sf()
 
@@ -431,7 +431,7 @@
 
 # resolution_specific_carpentry -------------------------------------------------------------------------
 .aemet_current_day_carpentry <- function(data, stations_info, ...) {
-  data %>%
+  data |>
     dplyr::select(
       timestamp = "fint", station_id = "idema", station_name = "ubi",
       altitude = "alt",
@@ -443,7 +443,7 @@
       wind_speed = "vv",
       wind_direction = "dv",
       longitude = "lon", latitude = "lat",
-    ) %>%
+    ) |>
     # units
     dplyr::mutate(
       service = 'aemet',
@@ -456,13 +456,13 @@
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
       wind_speed = units::set_units(.data$wind_speed, "m/s"),
       wind_direction = units::set_units(.data$wind_direction, "degree")
-    ) %>%
-    dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'altitude')) %>%
+    ) |>
+    dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'altitude')) |>
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 }
 
 .aemet_daily_carpentry <- function(data, stations_info, ...) {
-  data %>%
+  data |>
     dplyr::select(
       timestamp = "fecha",
       station_id = "indicativo", station_name = "nombre", station_province = "provincia",
@@ -473,7 +473,7 @@
       mean_wind_speed = "velmedia",
       # wind_direction = "dir",
       insolation = "sol"
-    ) %>%
+    ) |>
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(
       service = 'aemet',
@@ -493,7 +493,7 @@
       mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
       # wind_direction = units::set_units(.data$wind_direction, degree),
       insolation = units::set_units(.data$insolation, "h")
-    ) %>%
+    ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'station_province'))
 }
 
@@ -505,7 +505,7 @@
     negate_filter <- TRUE
   }
   # data carpentry
-  data %>%
+  data |>
     dplyr::select(dplyr::any_of(c(
           timestamp = "fecha",
           station_id = "indicativo",
@@ -523,16 +523,16 @@
           # radiation
           mean_insolation = "inso",
           mean_global_radiation = "glo"
-    ))) %>%
+    ))) |>
     # remove yearly or monthly values, depending on resolution
     dplyr::filter(
       stringr::str_detect(timestamp, "-13", negate = negate_filter)
-    ) %>%
+    ) |>
     # remove any "-13" for yearly values (if monthly, this step dont do anything), for
     # the timestamp parsing to work
     dplyr::mutate(
       timestamp = stringr::str_remove(timestamp, "-13")
-    ) %>%
+    ) |>
     # create any variable missing
     .create_missing_vars(
       var_names = c(
@@ -540,7 +540,7 @@
         "mean_relative_humidity", "total_precipitation", "days_precipitation",
         "mean_wind_speed", "mean_insolation", "mean_global_radiation"
       )
-    ) %>%
+    ) |>
     # timestamp has to be parsed, "ym" for monthly values, "y" for yearly, and
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(
@@ -566,6 +566,6 @@
       days_precipitation = units::set_units(.data$days_precipitation, "days"),
       mean_insolation = units::set_units(.data$mean_insolation, "hours"),
       mean_global_radiation = units::set_units(.data$mean_global_radiation, "kJ/m^2")
-    ) %>%
+    ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id'))
 }

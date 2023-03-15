@@ -74,13 +74,13 @@ current_day_barcelona
 Visually:
 
 ```{r meteoclimatic_data_plot, fig.width=7, fig.height=5, fig.align='center', eval = NOT_CRAN}
-current_day_barcelona %>%
-  units::drop_units() %>%
+current_day_barcelona |>
+  units::drop_units() |>
   ggplot() +
   geom_sf(aes(colour = max_temperature)) +
   scale_colour_viridis_c()
 
-current_day_barcelona %>%
+current_day_barcelona |>
   ggplot() +
   geom_histogram(aes(x = max_relative_humidity))
 ```

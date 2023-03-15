@@ -66,7 +66,7 @@
     stop(api_status_check$code, ':\n', api_status_check$message)
   }
 
-  response_content <- api_status_check$content %>%
+  response_content <- api_status_check$content |>
     dplyr::as_tibble()
   return(response_content)
 }
@@ -92,11 +92,11 @@
   month_and_years <- dplyr::tibble(
     year = lubridate::year(seq(api_options$start_date, api_options$end_date, 'months')),
     month = lubridate::month(seq(api_options$start_date, api_options$end_date, 'months'))
-  ) %>%
-    dplyr::group_by(.data$year) %>%
-    dplyr::mutate(min_month = min(.data$month), max_month = max(.data$month)) %>%
-    dplyr::select(-"month") %>%
-    dplyr::distinct() %>%
+  ) |>
+    dplyr::group_by(.data$year) |>
+    dplyr::mutate(min_month = min(.data$month), max_month = max(.data$month)) |>
+    dplyr::select(-"month") |>
+    dplyr::distinct() |>
     as.list()
 
   provinces_and_stations <- stringr::str_split(api_options$stations, '-', n = 2, simplify = TRUE)
@@ -168,21 +168,21 @@
   # ria returns a data frame, but some variables are data frames themselves. We need to work on that
   response_content <- api_status_check$content
 
-  province_df <- response_content[['provincia']] %>%
+  province_df <- response_content[['provincia']] |>
     dplyr::rename(station_province = "nombre", province_id = "id")
 
-  response_content %>%
-    dplyr::as_tibble() %>%
+  response_content |>
+    dplyr::as_tibble() |>
     # add service name, to identify the data if joining with other services
-    dplyr::mutate(service = 'ria') %>%
-    dplyr::select(-"provincia") %>%
-    dplyr::bind_cols(province_df) %>%
+    dplyr::mutate(service = 'ria') |>
+    dplyr::select(-"provincia") |>
+    dplyr::bind_cols(province_df) |>
     dplyr::select(
       "service", station_id = "codigoEstacion", station_name = "nombre",
       "station_province", "province_id",
       altitude = "altitud", "longitud", "latitud", under_plastic = "bajoplastico"
-    ) %>%
-    dplyr::distinct() %>%
+    ) |>
+    dplyr::distinct() |>
     dplyr::mutate(
       station_id = as.character(glue::glue("{province_id}-{station_id}")),
       altitude = units::set_units(.data$altitude, 'm'),
@@ -196,7 +196,7 @@
         -as.numeric(stringr::str_remove_all(.data$longitud, '[A-Za-z]'))/1e7,
         as.numeric(stringr::str_remove_all(.data$longitud, '[A-Za-z]'))/1e7
       )
-    ) %>%
+    ) |>
     sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
 
 }
@@ -215,8 +215,8 @@
   # All necessary things for the GET ----------------------------------------------------------------------
   # stations_info and update api_options
   # we need the stations id and their province
-  stations_info <- .get_info_ria(api_options)# %>%
-    # dplyr::left_join(.get_provinces_ria(api_options), by = c('station_province' = 'nombre')) %>%
+  stations_info <- .get_info_ria(api_options)# |>
+    # dplyr::left_join(.get_provinces_ria(api_options), by = c('station_province' = 'nombre')) |>
     # dplyr::rename('province_id' = 'id')
 
   if (is.null(api_options$stations)) {
@@ -229,7 +229,7 @@
   # Here the things are a little convoluted. ria, for returning all stations only allows one variable
   # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
   # checking statuses and retrieving data if everything is ok.
-  api_statuses <- paths_resolution %>%
+  api_statuses <- paths_resolution |>
     purrr::map(
       \(path) {
         .check_status_ria(
@@ -245,17 +245,17 @@
       # )
     )
 
-  ria_statuses <- purrr::map_depth(api_statuses, 1, 'status') %>%
+  ria_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
     purrr::flatten_chr()
-  ria_codes <- purrr::map_depth(api_statuses, 1, 'code') %>%
+  ria_codes <- purrr::map_depth(api_statuses, 1, 'code') |>
     purrr::flatten_dbl()
-  ria_messages <- purrr::map_depth(api_statuses, 1, 'message') %>%
+  ria_messages <- purrr::map_depth(api_statuses, 1, 'message') |>
     purrr::flatten_chr()
-  ria_urls <- purrr::map_depth(api_statuses, 1, 'station_url') %>%
+  ria_urls <- purrr::map_depth(api_statuses, 1, 'station_url') |>
     purrr::flatten_chr()
 
-  messages_to_show <- ria_messages[which(ria_codes != 200)] %>% unique()
-  urls_to_show <- ria_urls[which(ria_codes != 200)] %>% unique()
+  messages_to_show <- ria_messages[which(ria_codes != 200)] |> unique()
+  urls_to_show <- ria_urls[which(ria_codes != 200)] |> unique()
 
   if (all(ria_statuses != 'OK')) {
     stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
@@ -292,16 +292,16 @@
 
   # Data transformation -----------------------------------------------------------------------------------
 
-  res <- purrr::map_depth(api_statuses, 1, 'content') %>%
-    magrittr::set_names(ria_urls) %>%
-    purrr::discard(is.null) %>%
+  res <- purrr::map_depth(api_statuses, 1, 'content') |>
+    purrr::set_names(ria_urls) |>
+    purrr::discard(is.null) |>
     purrr::imap(
       \(.x, .y) {dplyr::mutate(.x, station_id = .ria_url2station(.y))}
-    ) %>%
-    purrr::list_rbind() %>%
+    ) |>
+    purrr::list_rbind() |>
     # purrr::imap_dfr(
     #   # ~ dplyr::mutate(.x, station_id = .ria_url2station(.y))
-    # ) %>%
+    # ) |>
     dplyr::select(
       !!! resolution_specific_select_quos(), "station_id",
       mean_temperature = "tempMedia", min_temperature = "tempMin", max_temperature = "tempMax",
@@ -310,7 +310,7 @@
       mean_wind_speed = "velViento", mean_wind_direction = "dirViento",
       precipitation = "precipitacion",
       solar_radiation = "radiacion"
-    ) %>%
+    ) |>
     dplyr::mutate(
       !!! resolution_specific_mutate_quos(),
       mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
@@ -325,11 +325,11 @@
       solar_radiation = units::set_units(.data$solar_radiation, "MJ/d/m^2"),
       timestamp = lubridate::as_datetime(.data$timestamp),
       station_id = as.character(.data$station_id)
-    ) %>%
-    dplyr::left_join(stations_info, by = 'station_id') %>%
-    dplyr::select(!dplyr::any_of(c('month', 'year', 'province_id'))) %>%
+    ) |>
+    dplyr::left_join(stations_info, by = 'station_id') |>
+    dplyr::select(!dplyr::any_of(c('month', 'year', 'province_id'))) |>
     # reorder variables to be consistent among all services
-    relocate_vars() %>%
+    relocate_vars() |>
     # ensure we have an sf
     sf::st_as_sf()
 

@@ -39,7 +39,7 @@
     station_name = xml2::xml_text(xml2::xml_find_all(raw_station_info, '//item/title')),
     lat = xml2::xml_double(xml2::xml_find_all(raw_station_info, '//item/geo:Point/geo:lat')),
     long = xml2::xml_double(xml2::xml_find_all(raw_station_info, '//item/geo:Point/geo:long'))
-  ) %>%
+  ) |>
     sf::st_as_sf(coords = c('long', 'lat'), crs = 4326)
 
   return(res)
@@ -74,7 +74,7 @@
 
   # Now we can iterate and get the data
   stations_data <-
-    nodes %>%
+    nodes |>
     purrr::map(
       \(.x) {
         dplyr::tibble(
@@ -128,20 +128,20 @@
       #     (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/rain/total')))
       #   )
       # )
-    ) %>%
-    purrr::list_rbind() %>%
-    dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) %>%
-    dplyr::select("timestamp", "station_id", "station_name", dplyr::everything()) %>%
+    ) |>
+    purrr::list_rbind() |>
+    dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) |>
+    dplyr::select("timestamp", "station_id", "station_name", dplyr::everything()) |>
     dplyr::mutate(
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
       min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
       precipitation = units::set_units(.data$precipitation, "L/m^2")
-    ) %>%
-    dplyr::arrange(.data$timestamp, .data$station_id) %>%
+    ) |>
+    dplyr::arrange(.data$timestamp, .data$station_id) |>
     # reorder variables to be consistent among all services
-    relocate_vars() %>%
+    relocate_vars() |>
     sf::st_as_sf(crs = 4326)
 
   message(

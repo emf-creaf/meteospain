@@ -16,7 +16,7 @@ test_that("instant concordance exists", {
     meteogalicia_options('instant')
   ))
   test_object <- suppressMessages(
-    dplyr::full_join(dplyr::as_tibble(meteocat_instant), dplyr::as_tibble(meteogalicia_instant)) %>%
+    dplyr::full_join(dplyr::as_tibble(meteocat_instant), dplyr::as_tibble(meteogalicia_instant)) |>
       sf::st_as_sf()
   )
   expect_s3_class(test_object, 'sf')
@@ -46,7 +46,7 @@ test_that("current concordance exists", {
       dplyr::as_tibble(meteoclimatic_current), dplyr::as_tibble(meteogalicia_current)
     ),
     dplyr::full_join
-  ) %>%
+  ) |>
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
   expect_identical(unique(test_object$service), c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia'))
@@ -77,7 +77,7 @@ test_that("daily concordance exists", {
       dplyr::as_tibble(meteogalicia_daily), dplyr::as_tibble(ria_daily)
     ),
     dplyr::full_join
-  ) %>%
+  ) |>
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
   expect_identical(unique(test_object$service), c('aemet', 'meteocat', 'meteogalicia', 'ria'))
@@ -110,7 +110,7 @@ test_that("monthly concordance exists", {
       dplyr::as_tibble(ria_monthly)
     ),
     dplyr::full_join
-  ) %>%
+  ) |>
     sf::st_as_sf())
   expect_s3_class(test_object, 'sf')
   expect_identical(unique(test_object$service), c('meteocat', 'meteogalicia', 'ria'))

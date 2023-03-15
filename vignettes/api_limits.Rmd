@@ -128,7 +128,7 @@ res_tidyverse <-
       )
       return(res)
     }
-  ) %>%
+  ) |>
   purrr::list_rbind()
 
 head(res_tidyverse)
@@ -210,7 +210,7 @@ meteocat_2020q1_tidyverse <-
       )
       return(res)
     }
-  ) %>%
+  ) |>
   purrr::list_rbind()
 
 head(meteocat_2020q1_tidyverse)
@@ -270,7 +270,7 @@ meteocat_2019_20_tidyverse <-
       )
       return(res)
     }
-  ) %>%
+  ) |>
   purrr::list_rbind()
 
 head(meteocat_2019_20_tidyverse)
