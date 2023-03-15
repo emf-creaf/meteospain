@@ -1,6 +1,9 @@
 # meteospain (development version)
 
 * Added monthly and yearly temporal resolutions to AEMET service
+* Better meteogalicia error managing
+* Removed dependency (and exports) from magrittr. Substituted all magrittr pipes (`%>%`) by native
+  pipes (`|>`)
 
 # meteospain 0.1.1
 
