@@ -504,23 +504,28 @@
           mean_temperature = "tm_mes",
           mean_min_temperature = "tm_min",
           mean_max_temperature = "tm_max",
-          # min_temperature = "ta_min",
-          # max_temperature = "ta_max",
           # rh
           mean_relative_humidity = "hr",
           # precipitation
           total_precipitation = "p_mes",
-          # max_day_precipitation = "p_max",
           days_precipitation = "np_001",
           # wind
-          mean_wind_speed = "w_med"
+          mean_wind_speed = "w_med",
           # radiation
-          # mean_insolation = "inso",
-          # mean_global_radiation = "glo"
+          mean_insolation = "inso",
+          mean_global_radiation = "glo"
     ))) %>%
     # remove anual value
     dplyr::filter(
       stringr::str_detect(timestamp, "-13", negate = TRUE)
+    ) %>%
+    # create any variable missing
+    .create_missing_vars(
+      var_names = c(
+        "mean_temperature", "mean_min_temperature", "mean_max_temperature",
+        "mean_relative_humidity", "total_precipitation", "days_precipitation",
+        "mean_wind_speed", "mean_insolation", "mean_global_radiation"
+      )
     ) %>%
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(
@@ -533,6 +538,9 @@
       mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
       mean_relative_humidity = as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ',', '.')),
       days_precipitation = as.numeric(stringr::str_replace_all(.data$days_precipitation, ',', '.')),
+      mean_insolation = as.numeric(stringr::str_replace_all(.data$mean_insolation, ',', '.')),
+      # global radiation is in 10*kJ/m2, so we multiply by 10 to set the units later to kJ/m2
+      mean_global_radiation = 10*as.numeric(stringr::str_replace_all(.data$mean_global_radiation, ',', '.')),
       # and set the units also
       mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
       mean_min_temperature = units::set_units(.data$mean_min_temperature, "degree_C"),
@@ -540,7 +548,9 @@
       total_precipitation = units::set_units(.data$total_precipitation, "L/m^2"),
       mean_wind_speed = units::set_units(.data$mean_wind_speed, "km/h"),
       mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-      days_precipitation = units::set_units(.data$days_precipitation, "days")
+      days_precipitation = units::set_units(.data$days_precipitation, "days"),
+      mean_insolation = units::set_units(.data$mean_insolation, "hours"),
+      mean_global_radiation = units::set_units(.data$mean_global_radiation, "kJ/m^2")
     ) %>%
     dplyr::left_join(stations_info, by = c('service', 'station_id'))
 }

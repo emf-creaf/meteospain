@@ -225,7 +225,7 @@ main_test_battery <- function(test_object, ...) {
   # has data, more than zero rows
   testthat::expect_true(nrow(test_object) > 0)
   # has expected names
-  testthat::expect_named(test_object, rlang::eval_tidy(args$expected_names))
+  testthat::expect_named(test_object, rlang::eval_tidy(args$expected_names), ignore.order = TRUE)
   # has the correct service value
   testthat::expect_identical(unique(test_object$service), rlang::eval_tidy(args$service))
 
