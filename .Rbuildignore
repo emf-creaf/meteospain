@@ -4,6 +4,7 @@
 ^technical_especifications
 ^README\.Rmd$
 ^.Renviron$
+^.Rprofile$
 ^\.github$
 ^_pkgdown\.yml$
 ^docs$
