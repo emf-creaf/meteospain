@@ -10,7 +10,7 @@
 \title{Options for meteorological services}
 \usage{
 aemet_options(
-  resolution = c("current_day", "daily", "monthly"),
+  resolution = c("current_day", "daily", "monthly", "yearly"),
   start_date = Sys.Date(),
   end_date = start_date,
   stations = NULL,

@@ -32,18 +32,18 @@
 
   # monthly
   # monthly API does not work for now
-  if (resolution == 'monthly') {
+  if (resolution %in% c('monthly', 'yearly')) {
     # stop if stations is null. For monthly API, one and only one station must be provided
     if (length(api_options$stations) < 1) {
       stop(
-        "AEMET API for monthly aggregated values needs at least one station provided"
+        "AEMET API for monthly/yearly aggregated values needs one station provided"
       )
     }
 
     # issue a warning if more than one station is provided
     if (length(api_options$stations) > 1) {
       warning(
-        "AEMET API for monthly aggregated values only accepts one station per query.\n",
+        "AEMET API for monthly/yearly aggregated values only accepts one station per query.\n",
         "Only the first station provided will be used: ", api_options$stations[1]
       )
     }
@@ -366,7 +366,8 @@
       api_options$resolution,
       'current_day' = rlang::expr(.data$idema %in% api_options$stations),
       'daily' = rlang::expr(.data$indicativo %in% api_options$stations),
-      'monthly' = TRUE
+      'monthly' = TRUE,
+      'yearly' = TRUE
     )
   }
 
@@ -379,7 +380,8 @@
     api_options$resolution,
     'current_day' = .aemet_current_day_carpentry,
     'daily' = .aemet_daily_carpentry,
-    'monthly' = .aemet_monthly_carpentry
+    'monthly' = .aemet_monthly_yearly_carpentry,
+    'yearly' = .aemet_monthly_yearly_carpentry
   )
 
   # NOTE::
@@ -394,7 +396,7 @@
     # remove unwanted stations
     dplyr::filter(!! filter_expression) %>%
     # apply the resolution-specific transformations
-    resolution_specific_carpentry(stations_info) %>%
+    resolution_specific_carpentry(stations_info, resolution = api_options$resolution) %>%
     # arrange data
     dplyr::arrange(.data$timestamp, .data$station_id) %>%
     # reorder variables to be consistent among all services
@@ -428,7 +430,7 @@
 
 
 # resolution_specific_carpentry -------------------------------------------------------------------------
-.aemet_current_day_carpentry <- function(data, stations_info) {
+.aemet_current_day_carpentry <- function(data, stations_info, ...) {
   data %>%
     dplyr::select(
       timestamp = "fint", station_id = "idema", station_name = "ubi",
@@ -459,7 +461,7 @@
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 }
 
-.aemet_daily_carpentry <- function(data, stations_info) {
+.aemet_daily_carpentry <- function(data, stations_info, ...) {
   data %>%
     dplyr::select(
       timestamp = "fecha",
@@ -495,7 +497,14 @@
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'station_province'))
 }
 
-.aemet_monthly_carpentry <- function(data, stations_info) {
+.aemet_monthly_yearly_carpentry <- function(data, stations_info, resolution) {
+
+  # resolution depending negate argument
+  negate_filter <- FALSE
+  if (resolution == "monthly") {
+    negate_filter <- TRUE
+  }
+  # data carpentry
   data %>%
     dplyr::select(dplyr::any_of(c(
           timestamp = "fecha",
@@ -515,9 +524,14 @@
           mean_insolation = "inso",
           mean_global_radiation = "glo"
     ))) %>%
-    # remove anual value
+    # remove yearly or monthly values, depending on resolution
     dplyr::filter(
-      stringr::str_detect(timestamp, "-13", negate = TRUE)
+      stringr::str_detect(timestamp, "-13", negate = negate_filter)
+    ) %>%
+    # remove any "-13" for yearly values (if monthly, this step dont do anything), for
+    # the timestamp parsing to work
+    dplyr::mutate(
+      timestamp = stringr::str_remove(timestamp, "-13")
     ) %>%
     # create any variable missing
     .create_missing_vars(
@@ -527,10 +541,11 @@
         "mean_wind_speed", "mean_insolation", "mean_global_radiation"
       )
     ) %>%
+    # timestamp has to be parsed, "ym" for monthly values, "y" for yearly, and
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(
       service = 'aemet',
-      timestamp = lubridate::parse_date_time(.data$timestamp, orders = "ym"),
+      timestamp = lubridate::parse_date_time(.data$timestamp, orders = c("ym", "y")),
       mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
       mean_min_temperature = as.numeric(stringr::str_replace_all(.data$mean_min_temperature, ',', '.')),
       mean_max_temperature = as.numeric(stringr::str_replace_all(.data$mean_max_temperature, ',', '.')),
