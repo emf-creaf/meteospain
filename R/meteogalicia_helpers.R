@@ -127,18 +127,18 @@
 
   # Meteogalicia returns a list, with one element called listaEstacionsMeteo, that is parsed directly to
   # a data.frame with all the info. We work with that.
-  response_content$listaEstacionsMeteo %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(service = 'meteogalicia') %>%
-    .info_table_checker() %>%
+  response_content$listaEstacionsMeteo |>
+    dplyr::as_tibble() |>
+    dplyr::mutate(service = 'meteogalicia') |>
+    .info_table_checker() |>
     dplyr::select(
       "service", station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
       "altitude", "lat", "lon"
-    ) %>%
+    ) |>
     dplyr::mutate(
       station_id = as.character(.data$station_id),
       altitude = units::set_units(.data$altitude, "m")
-    ) %>%
+    ) |>
     sf::st_as_sf(coords = c('lon', 'lat'), crs = 4326)
 
 }
@@ -174,7 +174,7 @@
 
   # Status check ------------------------------------------------------------------------------------------
   # bad stations return code 500
-  if (api_response$status_code == 500L) {
+  if (api_response$status_code %in% c(500L, 404L)) {
     stop(
       "MeteoGalicia API returned an error:\n",
       stringr::str_remove_all(
@@ -235,24 +235,24 @@
 
   # Data transformation -----------------------------------------------------------------------------------
   res <-
-    resolution_specific_unnesting(response_content) %>%
+    resolution_specific_unnesting(response_content) |>
     # final unnest, common to all resolutions
-    unnest_safe("listaMedidas") %>%
+    unnest_safe("listaMedidas") |>
     # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
-    dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) %>%
+    dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) |>
     # remove unwanted variables
-    dplyr::select(-"lnCodigoValidacion", -"nomeParametro", -"unidade") %>%
+    dplyr::select(-"lnCodigoValidacion", -"nomeParametro", -"unidade") |>
     # now, some stations can have errors in the sense of duplicated precipitation values.
     # We get the first record
     tidyr::pivot_wider(
       names_from = "codigoParametro", values_from = "valor", values_fn = dplyr::first
-    ) %>%
+    ) |>
     # resolution-specific transformations
-    resolution_specific_carpentry() %>%
-    dplyr::arrange(.data$timestamp, .data$station_id) %>%
-    dplyr::left_join(.get_info_meteogalicia(), by = resolution_specific_joinvars) %>%
+    resolution_specific_carpentry() |>
+    dplyr::arrange(.data$timestamp, .data$station_id) |>
+    dplyr::left_join(.get_info_meteogalicia(), by = resolution_specific_joinvars) |>
     # reorder variables to be consistent among all services
-    relocate_vars() %>%
+    relocate_vars() |>
     sf::st_as_sf()
 
   # Copyright message -------------------------------------------------------------------------------------
@@ -277,21 +277,21 @@
 }
 
 .meteogalicia_current_day_unnesting <- function(response_content) {
-  res <- response_content$listHorarios %>%
+  res <- response_content$listHorarios |>
     unnest_safe("listaInstantes")
 
   return(res)
 }
 
 .meteogalicia_daily_unnesting <- function(response_content) {
-  res <- response_content$listDatosDiarios %>%
+  res <- response_content$listDatosDiarios |>
     unnest_safe("listaEstacions")
 
   return(res)
 }
 
 .meteogalicia_monthly_unnesting <- function(response_content) {
-  res <- response_content$listDatosMensuais %>%
+  res <- response_content$listDatosMensuais |>
     unnest_safe("listaEstacions")
 
   return(res)
@@ -301,7 +301,7 @@
 # resolution_specific_carpentry -------------------------------------------------------------------------
 
 .meteogalicia_instant_carpentry <- function(data) {
-  data %>%
+  data |>
     # When querying stations, it can happen that some stations lack some variables, making the further
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
@@ -309,7 +309,7 @@
         'TA_AVG_1.5m', 'DV_AVG_2m', 'VV_AVG_2m', 'HR_AVG_1.5m',
         'PP_SUM_1.5m', 'HSOL_SUM_1.5m', 'RS_AVG_1.5m'
       )
-    ) %>%
+    ) |>
     dplyr::select(
       timestamp = "instanteLecturaUTC", station_id = "idEstacion", station_name = "estacion",
       temperature = "TA_AVG_1.5m",
@@ -319,7 +319,7 @@
       precipitation = "PP_SUM_1.5m",
       insolation = "HSOL_SUM_1.5m"
       # global_solar_radiation = "RS_AVG_1.5m"
-    ) %>%
+    ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
       service = 'meteogalicia',
@@ -336,7 +336,7 @@
     )
 }
 .meteogalicia_current_day_carpentry <- function(data) {
-  data %>%
+  data |>
     # When querying stations, it can happen that some stations lack some variables, making the further
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
@@ -344,7 +344,7 @@
         'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
         'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
       )
-    ) %>%
+    ) |>
     dplyr::select(
       timestamp = "instanteLecturaUTC", station_id = "idEstacion", station_name = "estacion",
       temperature = "TA_AVG_1.5m",
@@ -355,7 +355,7 @@
       relative_humidity = "HR_AVG_1.5m",
       precipitation = "PP_SUM_1.5m",
       insolation = "HSOL_SUM_1.5m"
-    ) %>%
+    ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
       service = 'meteogalicia',
@@ -371,7 +371,7 @@
     )
 }
 .meteogalicia_daily_carpentry <- function(data) {
-  data %>%
+  data |>
     # When querying stations, it can happen that some stations lack some variables, making the further
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
@@ -379,7 +379,7 @@
         'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
         'HR_AVG_1.5m', 'HR_MIN_1.5m', 'HR_MAX_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
       )
-    ) %>%
+    ) |>
     dplyr::select(
       timestamp = "data",
       station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
@@ -393,7 +393,7 @@
       max_relative_humidity = "HR_MAX_1.5m",
       precipitation = "PP_SUM_1.5m",
       insolation = "HSOL_SUM_1.5m"
-    ) %>%
+    ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
       service = 'meteogalicia',
@@ -411,7 +411,7 @@
     )
 }
 .meteogalicia_monthly_carpentry <- function(data) {
-  data %>%
+  data |>
     # When querying stations, it can happen that some stations lack some variables, making the further
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
@@ -419,7 +419,7 @@
         'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'VV_AVG_2m',
         'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
       )
-    ) %>%
+    ) |>
     dplyr::select(
       timestamp = "data",
       station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
@@ -430,7 +430,7 @@
       mean_relative_humidity = "HR_AVG_1.5m",
       precipitation = "PP_SUM_1.5m",
       insolation = "HSOL_SUM_1.5m"
-    ) %>%
+    ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
       service = 'meteogalicia',
