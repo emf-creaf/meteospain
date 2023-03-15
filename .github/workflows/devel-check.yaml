@@ -27,7 +27,10 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      aemet: ${{ secrets.aemet }}
+      meteocat: ${{ secrets.meteocat }}
       NOT_CRAN: true
+      R_KEYRING_BACKEND: env
 
     steps:
       - uses: actions/checkout@v3
