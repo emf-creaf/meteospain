@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [devel]
 
-name: R-CMD-check
+name: devel-check
 
 jobs:
   R-CMD-check:
