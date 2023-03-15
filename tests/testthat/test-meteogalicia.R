@@ -52,7 +52,7 @@ test_that("meteogalicia instant works", {
   # expect_identical(units(test_object$global_solar_radiation)$denominator, c('m', 'm'))
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteogalicia', api_options)
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
@@ -79,7 +79,7 @@ test_that("meteogalicia current works", {
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteogalicia', api_options)
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
@@ -107,7 +107,7 @@ test_that("meteogalicia daily works", {
   expect_equal(as.Date(unique(test_object$timestamp)), seq(api_options$start_date, api_options$end_date, 1))
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteogalicia', api_options)
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
@@ -126,7 +126,7 @@ test_that("meteogalicia daily works", {
   expect_equal(as.Date(unique(test_object$timestamp)), seq(api_options$start_date, api_options$end_date, 1))
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteogalicia', api_options)
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
@@ -153,7 +153,7 @@ test_that("meteogalicia monthly works", {
   )
   # some stations actual
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteogalicia', api_options)
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(
@@ -171,7 +171,7 @@ test_that("meteogalicia monthly works", {
   expect_length(unique(test_object$timestamp), 12)
   # some stations 2000s
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteogalicia', api_options)
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   main_test_battery(

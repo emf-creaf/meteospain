@@ -52,7 +52,7 @@ test_that("meteocat instant works", {
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- suppressMessages(get_meteo_from('meteocat', api_options))
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
@@ -80,7 +80,7 @@ test_that("meteocat hourly works", {
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteocat', api_options)
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
@@ -128,7 +128,7 @@ test_that("meteocat daily works", {
   )
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteocat', api_options)
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
@@ -180,8 +180,8 @@ test_that("meteocat monthly works", {
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
   # some stations
-  stations_to_check <- unique(test_object[['station_id']])[1:3]
-  api_options$stations <- stations_to_check
+  stations_to_check <- test_object[['station_id']][1:3]
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteocat', api_options)
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(
@@ -214,8 +214,8 @@ test_that("meteocat yearly works", {
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
   # some stations
-  stations_to_check <- unique(test_object[['station_id']])[1:3]
-  api_options$stations <- stations_to_check
+  stations_to_check <- test_object[['station_id']][1:3]
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('meteocat', api_options)
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   main_test_battery(

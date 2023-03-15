@@ -54,7 +54,7 @@ test_that("aemet current works", {
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = temperature)
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   main_test_battery(
@@ -80,7 +80,7 @@ test_that("aemet daily works", {
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # some stations
   stations_to_check <- test_object[['station_id']][1:3]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   main_test_battery(
@@ -125,7 +125,7 @@ test_that("aemet monthly works", {
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # more than one station -> warning
   stations_to_check <- c("0149X", "0252D")
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   expect_warning(test_object <- get_meteo_from('aemet', api_options), "Only the first station")
   test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
@@ -173,7 +173,7 @@ test_that("aemet yearly works", {
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # more than one station -> warning
   stations_to_check <- c("0149X", "0252D")
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   expect_warning(test_object <- get_meteo_from('aemet', api_options), "Only the first station")
   test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')

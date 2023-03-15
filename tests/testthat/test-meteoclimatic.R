@@ -45,7 +45,7 @@ test_that("Meteoclimatic works as expected", {
   )
   # one station
   stations_to_check <- get_stations_info_from('meteoclimatic', api_options)[['station_id']][11]
-  api_options$stations <- stations_to_check
+  api_options$stations <- unique(stations_to_check)
   test_object <- suppressMessages(get_meteo_from('meteoclimatic', api_options))
   main_test_battery(
     test_object, service = 'meteoclimatic', expected_names = expected_names, temperature = min_temperature,
