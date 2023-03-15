@@ -32,10 +32,10 @@ predetermined period in each API.
 
 ## AEMET API
 
-AEMET API limit the daily data download to 31 days:
+AEMET API limit the daily data download to 31 days, and the monthly and yearly data to 3 years:
 
 ```{r aemet_limit, error=TRUE, eval=NOT_CRAN}
-# aemet api has a limit for 31 days:
+# aemet api has a limit for 31 days in daily:
 get_meteo_from(
   'aemet',
   aemet_options(
@@ -45,9 +45,22 @@ get_meteo_from(
     end_date = as.Date('1990-12-31')
   )
 )
+
+# and monthly and yearly data to 3 years
+get_meteo_from(
+  'aemet',
+  aemet_options(
+    api_key = keyring::key_get('aemet'),
+    resolution = 'yearly',
+    start_date = as.Date('2005-01-01'),
+    end_date = as.Date('2020-12-31'),
+    stations = "0149X"
+  )
+)
 ```
 
-This means that with one call to `get_meteo_from` to the AEMET service, one can only download 31 days of data.
+This means that with one call to `get_meteo_from` to the AEMET service, one can only download 31 days of data,
+(or 3 years in monthly and yearly data).  
 If the period needed is bigger than that, one option is performing all the calls necessary and join the
 results:
 
@@ -153,8 +166,6 @@ Both methods return identical results:
 # both are identical
 identical(res_tidyverse, res_for)
 ```
-
-
 
   > In a loop, no matter if a `purrr::map` or a `for` loop, each iteration will connect with the API, consuming
   connections from the user quota. Take this into consideration when creating loops for longer periods, as you

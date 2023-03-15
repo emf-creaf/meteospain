@@ -45,15 +45,23 @@ warning system. `meteospain` only access to the automatic meteorological station
 
   - "current_day", returning the latest 24 hours of measures for all or selected stations.
   - "daily", returning the daily aggregated measures for all or selected stations.
+  - "monthly", returning the monthly aggregated measures for **only one** station.
+  - "yearly", returning the yearly aggregated measures for **only one** station.
 
 In "daily", a `start_date` (and optionally an `end_date`) arguments must be provided, indicating the period
-from which retrieve the data.
+from which retrieve the data.  
+In "monthly" and "yearly", only the years in `start_date` and `end_date` are used, returning all year
+monthly or yearly values (*i.e* `start_date = as.Date("2020-12-01")` is the same as
+`start_date = as.Date("2020-01-01")` as both will return all 2020 measures).
 
 ### Stations
 
 `meteospain` access the data in the AEMET API collecting all stations. If a character vector of stations codes
 is supplied in the `stations` argument, a filter step is done before returning the data to maintain only
 the stations supplied.
+
+The exception for this are "monthly" and "yearly" temporal resolutions. AEMET API only allows for
+one station to be retrieved.
 
 ### AEMET API Key
 
@@ -108,6 +116,28 @@ api_options
 fake_api <- aemet_options(
   resolution = 'daily',
   start_date = as.Date('2020-04-25'), end_date = as.Date('2020-05-25'),
+  api_key = 'my_api_key'
+)
+fake_api
+```
+
+```{r aemet_options_3, eval=NOT_CRAN, results='hide'}
+# monthly, only one station because AEMET API limitations
+api_options <- aemet_options(
+  resolution = 'monthly',
+  start_date = as.Date('2020-04-25'), end_date = as.Date('2020-05-25'),
+  station = "0149X",
+  api_key = key_get('aemet')
+)
+api_options
+```
+
+```{r aemet_options_fake_3, eval=TRUE, echo=FALSE}
+# monthly, only one station because AEMET API limitations
+fake_api <- aemet_options(
+  resolution = 'monthly',
+  start_date = as.Date('2020-01-01'), end_date = as.Date('2020-12-31'),
+  station = "0149X",
   api_key = 'my_api_key'
 )
 fake_api
