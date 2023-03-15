@@ -526,12 +526,12 @@
     ))) |>
     # remove yearly or monthly values, depending on resolution
     dplyr::filter(
-      stringr::str_detect(timestamp, "-13", negate = negate_filter)
+      stringr::str_detect(.data$timestamp, "-13", negate = negate_filter)
     ) |>
     # remove any "-13" for yearly values (if monthly, this step dont do anything), for
     # the timestamp parsing to work
     dplyr::mutate(
-      timestamp = stringr::str_remove(timestamp, "-13")
+      timestamp = stringr::str_remove(.data$timestamp, "-13")
     ) |>
     # create any variable missing
     .create_missing_vars(
