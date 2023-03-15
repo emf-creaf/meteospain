@@ -1,5 +1,7 @@
 # meteospain (development version)
 
+* Added monthly and yearly temporal resolutions to AEMET service
+
 # meteospain 0.1.1
 
 * Fixed bug in AEMET coordinates (#18)
