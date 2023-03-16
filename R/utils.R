@@ -145,8 +145,6 @@ relocate_vars <- function(data) {
       i = copyright_style(api_status_check$message),
       "Trying again in 60 seconds"
     ))
-    # message(copyright_style(api_status_check$message))
-    # message("Trying again in 60 seconds")
     Sys.sleep(60)
     api_options$while_number <- 1
     return(.f(api_options))
@@ -155,7 +153,6 @@ relocate_vars <- function(data) {
     x = api_status_check$code,
     i = api_status_check$message
   ))
-  # stop(api_status_check$code, ':\n', api_status_check$message)
 }
 
 .aemet_coords_generator <- function(coord_vec) {
@@ -190,9 +187,6 @@ unnest_safe <- function(x, ...) {
         "and the following contents {glue::glue_collapse(x, sep = '\n')}",
         "Returning an empty data.frame"
       ))
-      # warning(glue::glue(
-      #   "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}\n Returning an empty data.frame"
-      # ))
     }
 
     return(dplyr::tibble())
@@ -224,7 +218,6 @@ skip_if_no_auth <- function(service) {
     cli::cli_inform(c(
       i = "{.arg {service}} key found, running tests"
     ))
-    # message(glue::glue("{service} key found, running tests"))
   }
 }
 
@@ -314,10 +307,6 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
       "Unable to connect to API at {.url {din_dots[[1]]}}: {.val {response$error}}",
       i = "This usually happens when connection with {.url {din_dots[[1]]}} is not possible."
     ))
-    # stop(
-    #   glue::glue("Unable to connect to API at {din_dots[[1]]}: {response$error}\n"),
-    #   glue::glue("This usually happens when connection with {din_dots[[1]]} is not possible")
-    # )
   }
 
   return(response$result)

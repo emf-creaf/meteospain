@@ -110,7 +110,6 @@
     cli::cli_abort(c(
       "Unable to connect to meteogalicia API at {.url {api_response$url}}"
     ))
-    # stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
 
 
@@ -175,21 +174,12 @@
       ),
       i = 'This usually happens when unknown station ids are supplied.'
     ))
-    # stop(
-    #   "MeteoGalicia API returned an error:\n",
-    #   stringr::str_remove_all(
-    #     httr::content(api_response, 'text'),
-    #     '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
-    #   ),
-    #   '\nThis usually happens when unknown station ids are supplied.'
-    # )
   }
   # check any other codes besides 200
   if (api_response$status_code != 200) {
     cli::cli_abort(c(
       "Unable to connect to meteogalicia API at {.url {api_response$url}}"
     ))
-    # stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
   # Check when html with error is returned (bad stations)
   # LEGACY, bad stations now are reported with error 500 in the new meteogalicia API
@@ -202,14 +192,6 @@
       ),
       i = 'This usually happens when unknown station ids are supplied.'
     ))
-    # stop(
-    #   "MeteoGalicia API returned an error:\n",
-    #   stringr::str_remove_all(
-    #     httr::content(api_response, 'text'),
-    #     '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
-    #   ),
-    #   '\nThis usually happens when unknown station ids are supplied.'
-    # )
   }
   # response content
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
@@ -219,10 +201,6 @@
       "MeteoGalicia API returned no data:\n",
       i = "This usually happens when there is no data for the dates supplied."
     ))
-    # stop(
-    #   "MeteoGalicia API returned no data:\n",
-    #   "This usually happens when there is no data for the dates supplied."
-    # )
   }
 
   # Resolution specific carpentry -------------------------------------------------------------------------
@@ -278,16 +256,6 @@
     copyright_style("que as utilice para os usos distintos do particular e privado."),
     legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
   ))
-  # message(
-  #   copyright_style(
-  #     "A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser",
-  #     "\nutilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1",
-  #     "\nConseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
-  #     "\nque as utilice para os usos distintos do particular e privado."
-  #   ),
-  #   '\n',
-  #   legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
-  # )
 
   return(res)
 }
@@ -480,9 +448,6 @@
       x = "Oops, something went wrong and some info about stations is missing:",
       mandatory_names[names_ok]
     ))
-    # stop(glue::glue(
-    #   "Oops, something went wrong and some info about stations is missing: {glue::glue_collapse(mandatory_names[names_ok], sep = ', )}"
-    # ))
   }
 
   return(data)

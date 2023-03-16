@@ -67,7 +67,6 @@
       x = api_status_check$code,
       i = api_status_check$message
     ))
-    # stop(api_status_check$code, ':\n', api_status_check$message)
   }
 
   response_content <- api_status_check$content |>
@@ -139,10 +138,6 @@
     cli::cli_abort(c(
       "{.arg {resolution}} is not a valid temporal resolution for ria.\nPlease see ria_options help for more information."
     ))
-    # stop(
-    #   resolution,
-    #   " is not a valid temporal resolution for ria.\nPlease see ria_options help for more information"
-    # )
   }
 
   return(paths_resolution)
@@ -172,7 +167,6 @@
       x = api_status_check$code,
       i = api_status_check$message
     ))
-    # stop(api_status_check$code, ':\n', api_status_check$message)
   }
 
   # Data --------------------------------------------------------------------------------------------------
@@ -226,9 +220,7 @@
   # All necessary things for the GET ----------------------------------------------------------------------
   # stations_info and update api_options
   # we need the stations id and their province
-  stations_info <- .get_info_ria(api_options)# |>
-    # dplyr::left_join(.get_provinces_ria(api_options), by = c('station_province' = 'nombre')) |>
-    # dplyr::rename('province_id' = 'id')
+  stations_info <- .get_info_ria(api_options)
 
   if (is.null(api_options$stations)) {
     api_options$stations <- stations_info[['station_id']]
@@ -249,11 +241,6 @@
           httr::user_agent('https://github.com/emf-creaf/meteospain')
         )
       }
-      # ~ .check_status_ria(
-      #   "https://www.juntadeandalucia.es",
-      #   path = .x,
-      #   httr::user_agent('https://github.com/emf-creaf/meteospain')
-      # )
     )
 
   ria_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
@@ -275,7 +262,6 @@
     cli::cli_abort(c(
       messages_to_show
     ))
-    # stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
   }
 
   if (any(ria_statuses != 'OK')) {
@@ -283,10 +269,6 @@
       w = copyright_style("Some stations didn't return data for some dates:"),
       stations_with_problems
     ))
-    # message(copyright_style(
-    #   "Some stations didn't return data for some dates:\n",
-    #   glue::glue_collapse(stations_with_problems, sep = ',\n'), "\n"
-    # ))
   }
 
   # Resolution specific carpentry -------------------------------------------------------------------------
@@ -314,9 +296,6 @@
       \(.x, .y) {dplyr::mutate(.x, station_id = .ria_url2station(.y))}
     ) |>
     purrr::list_rbind() |>
-    # purrr::imap_dfr(
-    #   # ~ dplyr::mutate(.x, station_id = .ria_url2station(.y))
-    # ) |>
     dplyr::select(
       !!! resolution_specific_select_quos(), "station_id",
       mean_temperature = "tempMedia", min_temperature = "tempMin", max_temperature = "tempMax",
@@ -353,11 +332,6 @@
     i = copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
     legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
   ))
-  # message(
-  #   copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
-  #   '\n',
-  #   legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
-  # )
 
   return(res)
 }

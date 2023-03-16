@@ -121,7 +121,6 @@
         x = api_status_check$code,
         i = api_status_check$message
       ))
-      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -243,10 +242,6 @@
     cli::cli_abort(c(
       "{.arg {api_options$resolution}} is not a valid temporal resolution for MeteoCat.\nPlease see meteocat_options help for more information"
     ))
-    # stop(
-    #   api_options$resolution,
-    #   " is not a valid temporal resolution for MeteoCat.\nPlease see meteocat_options help for more information"
-    # )
   }
 
   return(paths_resolution)
@@ -288,17 +283,12 @@
   # GET parts needed --------------------------------------------------------------------------------------
   # path
   path_resolution <- c('xema', 'v1', 'estacions', 'metadades')
-  # # meteocat stamp function
-  # meteocat_stamp <- lubridate::stamp("2020-12-25Z", orders = "YOmd", quiet = TRUE)
-  # # query
-  # query_resolution <- c(glue::glue("estat=ope&data={meteocat_stamp(api_options$start_date)}"))
 
   # Status check ------------------------------------------------------------------------------------------
   api_status_check <- .check_status_meteocat(
     "https://api.meteo.cat",
     httr::add_headers(`x-api-key` = api_options$api_key),
     path = path_resolution,
-    # query = query_resolution,
     httr::user_agent('https://github.com/emf-creaf/meteospain')
   )
 
@@ -311,7 +301,6 @@
         x = api_status_check$code,
         i = api_status_check$message
       ))
-      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -384,13 +373,6 @@
           httr::user_agent('https://github.com/emf-creaf/meteospain')
         )
       }
-      # ~ .check_status_meteocat(
-      #   "https://api.meteo.cat",
-      #   httr::add_headers(`x-api-key` = api_options$api_key),
-      #   path = .x,
-      #   query = query_resolution,
-      #   httr::user_agent('https://github.com/emf-creaf/meteospain')
-      # )
     )
 
   variables_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
@@ -407,7 +389,6 @@
     } else {
       messages_to_show <- variables_messages[which(variables_codes != 200)] |> unique()
       cli::cli_abort(c(messages_to_show))
-      # stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
     }
   }
 
@@ -475,11 +456,6 @@
       "Available stations with data for the actual query are:",
       glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
     ))
-    # stop(
-    #   "Station(s) provided have no data for the dates selected.\n",
-    #   "Available stations with data for the actual query are:\n",
-    #   glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
-    # )
   }
 
   # Copyright message -------------------------------------------------------------------------------------
@@ -487,11 +463,6 @@
     i = copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
     legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
   ))
-  # message(
-  #   copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
-  #   '\n',
-  #   legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
-  # )
 
   return(res)
 }

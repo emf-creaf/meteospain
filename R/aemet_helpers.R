@@ -38,9 +38,6 @@
       cli::cli_abort(c(
         "AEMET API for monthly/yearly aggregated values needs one station provided"
       ))
-      # stop(
-      #   "AEMET API for monthly/yearly aggregated values needs one station provided"
-      # )
     }
 
     # issue a warning if more than one station is provided
@@ -49,10 +46,6 @@
         "AEMET API for monthly/yearly aggregated values only accepts one station per query.\n",
         "Only the first station provided ({.val {api_options$stations[1]}}) will be used."
       ))
-      # warning(
-      #   "AEMET API for monthly/yearly aggregated values only accepts one station per query.\n",
-      #   "Only the first station provided will be used: ", api_options$stations[1]
-      # )
     }
 
     return(
@@ -68,10 +61,6 @@
   cli::cli_abort(c(
     "{.arg {api_options$resolution}} is not a valid temporal resolution for AEMET. Please see aemet_options help for more information"
   ))
-  # stop(
-  #   api_options$resolution,
-  #   " is not a valid temporal resolution for AEMET. Please see aemet_options help for more information"
-  # )
 }
 
 #' Check status and errors for AEMET
@@ -240,7 +229,6 @@
         x = api_status_check$code,
         i = api_status_check$message
       ))
-      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -264,7 +252,6 @@
         x = stations_info_check$code,
         i = stations_info_check$message
       ))
-      # stop(stations_info_check$code, ':\n', stations_info_check$message)
     }
   }
 
@@ -338,7 +325,6 @@
         x = api_status_check$code,
         i = api_status_check$message
       ))
-      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -361,7 +347,6 @@
         x = stations_data_check$code,
         i = stations_data_check$message
       ))
-      # stop(stations_data_check$code, ':\n', stations_data_check$message)
     }
   }
 
@@ -380,7 +365,6 @@
         x = stations_metadata_check$code,
         i = stations_metadata_check$message
       ))
-      # stop(stations_metadata_check$code, ':\n', stations_metadata_check$message)
     }
   }
   # We also need the stations info
@@ -438,14 +422,6 @@
         sep = ', ', last = ' and '
       )
     ))
-    # stop(
-    #   "Station(s) provided have no data for the dates selected.\n",
-    #   "Available stations with data for the actual query are:\n",
-    #   glue::glue_collapse(
-    #     c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
-    #     sep = ', ', last = ' and '
-    #   )
-    # )
   }
 
   # Copyright message -------------------------------------------------------------------------------------
@@ -453,11 +429,6 @@
     i = copyright_style(stations_metadata_check$content$copyright),
     legal_note_style(stations_metadata_check$content$notaLegal)
   ))
-  # message(
-  #   copyright_style(stations_metadata_check$content$copyright),
-  #   '\n',
-  #   legal_note_style(stations_metadata_check$content$notaLegal)
-  # )
 
   # Return ------------------------------------------------------------------------------------------------
   return(res)

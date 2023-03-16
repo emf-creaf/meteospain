@@ -14,10 +14,6 @@
     cli::cli_abort(c(
       "{.arg {api_options$resolution}} is not a valid temporal resolution for Meteoclimatic. Please see meteoclimatic_options help for more information"
     ))
-    # stop(
-    #   api_options$resolution,
-    #   " is not a valid temporal resolution for Meteoclimatic. Please see meteoclimatic_options help for more information"
-    # )
   }
 
   return(meteoclimatic_path)
@@ -75,10 +71,6 @@
       'not found in Meteoclimatic database.',
       i = "See https://www.meteoclimatic.net/index/wp/rss_es.html for more info"
     ))
-    # stop(
-    #   'Stations code provided ("', api_options$stations, '") not found in Meteoclimatic database.\n',
-    #   "See https://www.meteoclimatic.net/index/wp/rss_es.html for more info"
-    # )
   }
 
   # Now we can iterate and get the data
@@ -112,31 +104,6 @@
           )
         )
       }
-      # ~ dplyr::tibble(
-      #   service = 'meteoclimatic',
-      #   timestamp = lubridate::parse_date_time(
-      #     xml2::xml_text(xml2::xml_find_first(data_xml_body, paste0(.x, '/pubDate'))),
-      #     orders = 'dbYHMSz'
-      #   ),
-      #   station_id = xml2::xml_text(
-      #     xml2::xml_find_first(data_xml_body, paste0(.x, '/id'))
-      #   ),
-      #   max_temperature = xml2::xml_double(
-      #     (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/max')))
-      #   ),
-      #   min_temperature = xml2::xml_double(
-      #     (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/temperature/min')))
-      #   ),
-      #   max_relative_humidity = xml2::xml_double(
-      #     (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/humidity/max')))
-      #   ),
-      #   min_relative_humidity = xml2::xml_double(
-      #     (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/humidity/min')))
-      #   ),
-      #   precipitation = xml2::xml_double(
-      #     (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/rain/total')))
-      #   )
-      # )
     ) |>
     purrr::list_rbind() |>
     dplyr::left_join(.get_info_meteoclimatic(api_options), by = c('service', 'station_id')) |>
@@ -159,12 +126,6 @@
     copyright_style("No quality check is performed in this data, and errors in measures or coordinates of stations can be present."),
     legal_note_style("https://www.meteoclimatic.net/index")
   ))
-
-  # message(
-  #   copyright_style("Meteoclimatic is a non-professional network of automatic meteorological stations.\n"),
-  #   copyright_style("No quality check is performed in this data, and errors in measures or coordinates of stations can be present.\n"),
-  #   legal_note_style("https://www.meteoclimatic.net/index")
-  # )
 
   return(stations_data)
 }

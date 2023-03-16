@@ -14,6 +14,8 @@
   + AEMET API: `insolation` variable added to returned AEMET current data
   + RIA API: improved messages
   + meteogalicia API: improved error managing
+  + meteogalicia API: improved path creation
+  + Code cleaning (removing old code, fixing typos, code style...)
 
 # meteospain 0.1.1
 
