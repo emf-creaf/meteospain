@@ -49,7 +49,7 @@ test_that("aemet current works", {
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "temperature", "min_temperature", "max_temperature",
     "relative_humidity", "precipitation",
-    "wind_direction", "wind_speed", "geometry"
+    "wind_direction", "wind_speed", "insolation", "geometry"
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = temperature)
   # some stations
