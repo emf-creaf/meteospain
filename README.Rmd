@@ -75,3 +75,16 @@ plot(get_meteo_from('meteogalicia', mg_options))
 
 plot(get_stations_info_from('meteogalicia', mg_options))
 ```
+
+## API keys
+
+Some services, like AEMET or Meteocat, require an *API key* to access the data.
+`meteospain` **doesn't** provide any key for those services, see `?services_options` for information
+about this.
+
+Once a key has been obtained, we can get the meteo:
+
+```{r aemet_key_use}
+get_meteo_from('aemet', aemet_options(api_key = keyring::key_get("aemet")))
+```
+

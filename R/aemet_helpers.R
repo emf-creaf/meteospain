@@ -413,8 +413,6 @@
     'yearly' = .aemet_monthly_yearly_carpentry
   )
 
-  browser()
-
   # Data transformation -----------------------------------------------------------------------------------
   res <- stations_data_check$content |>
     dplyr::as_tibble() |>
@@ -480,7 +478,7 @@
       wind_speed = "vv",
       wind_direction = "dv",
       insolation = "inso",
-      longitude = "lon", latitude = "lat",
+      longitude = "lon", latitude = "lat"
     ))) |>
     # create any variable missing
     .create_missing_vars(

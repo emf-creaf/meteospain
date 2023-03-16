@@ -1,9 +1,17 @@
 # meteospain (development version)
 
 * Added monthly and yearly temporal resolutions to AEMET service
-* Better meteogalicia error managing
-* Removed dependency (and exports) from magrittr. Substituted all magrittr pipes (`%>%`) by native
+* Removed dependencies:
+  + Removed dependency (and exports) from magrittr. Substituted all magrittr pipes (`%>%`) by native
   pipes (`|>`)
+  + Removed dependency from crayon. Using cli now.
+* New dependencies
+  + Added cli to manage communication with the user (messages, warnings and errors)
+* Better meteogalicia error managing
+* Minor changes
+  + Improved tests
+  + AEMET API: return always the same variables (depending on resolution). If the variable doesn't
+  exists for the station and date, is created with NA.
 
 # meteospain 0.1.1
 
