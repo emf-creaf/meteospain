@@ -405,7 +405,6 @@
   # Now, current day and daily have differences, in the names of the variables and also
   # in the need to join the stations data to offer coords. We can branch the code with ifs, repeating the
   # common steps in the data carpentry or we can create the specific functions and have only one common pipe.
-  # The latter will simplify adding monthly in the future, so lets do it:
   resolution_specific_carpentry <- switch(
     api_options$resolution,
     'current_day' = .aemet_current_day_carpentry,
@@ -414,11 +413,7 @@
     'yearly' = .aemet_monthly_yearly_carpentry
   )
 
-  # NOTE::
-  # AEMET monthly seems to be impossible to reach from R, I spent 3 days trying every option
-  # I found and nothing, so I remove it from now, to wait for a solution.
-  # NOTE: It also doesn't work with the python example in their webpage, so...
-  # I tried to communicate with them, No solution offered :(
+  browser()
 
   # Data transformation -----------------------------------------------------------------------------------
   res <- stations_data_check$content |>
@@ -474,7 +469,7 @@
 # resolution_specific_carpentry -------------------------------------------------------------------------
 .aemet_current_day_carpentry <- function(data, stations_info, ...) {
   data |>
-    dplyr::select(
+    dplyr::select(dplyr::any_of(c(
       timestamp = "fint", station_id = "idema", station_name = "ubi",
       altitude = "alt",
       temperature = "ta",
@@ -484,7 +479,15 @@
       precipitation = "prec",
       wind_speed = "vv",
       wind_direction = "dv",
+      insolation = "inso",
       longitude = "lon", latitude = "lat",
+    ))) |>
+    # create any variable missing
+    .create_missing_vars(
+      var_names = c(
+        "temperature", "min_temperature", "max_temperature", "relative_humidity",
+        "precipitation", "wind_speed", "wind_direction", "insolation"
+      )
     ) |>
     # units
     dplyr::mutate(
@@ -497,7 +500,8 @@
       relative_humidity = units::set_units(.data$relative_humidity, "%"),
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
       wind_speed = units::set_units(.data$wind_speed, "m/s"),
-      wind_direction = units::set_units(.data$wind_direction, "degree")
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      insolation = units::set_units(.data$insolation, "hours")
     ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'altitude')) |>
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
@@ -505,7 +509,7 @@
 
 .aemet_daily_carpentry <- function(data, stations_info, ...) {
   data |>
-    dplyr::select(
+    dplyr::select(dplyr::any_of(c(
       timestamp = "fecha",
       station_id = "indicativo", station_name = "nombre", station_province = "provincia",
       mean_temperature = "tmed",
@@ -515,6 +519,13 @@
       mean_wind_speed = "velmedia",
       # wind_direction = "dir",
       insolation = "sol"
+    ))) |>
+    # create any variable missing
+    .create_missing_vars(
+      var_names = c(
+        "mean_temperature", "min_temperature", "max_temperature",
+        "precipitation", "mean_wind_speed", "insolation"
+      )
     ) |>
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(
