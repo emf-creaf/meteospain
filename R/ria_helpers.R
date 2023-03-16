@@ -266,7 +266,10 @@
     purrr::flatten_chr()
 
   messages_to_show <- ria_messages[which(ria_codes != 200)] |> unique()
-  urls_to_show <- ria_urls[which(ria_codes != 200)] |> unique()
+  stations_with_problems <- ria_urls[which(ria_codes != 200)] |>
+    unique() |>
+    purrr::map_chr(.f = .ria_url2station) |>
+    sort()
 
   if (all(ria_statuses != 'OK')) {
     cli::cli_abort(c(
@@ -278,11 +281,11 @@
   if (any(ria_statuses != 'OK')) {
     cli::cli_inform(c(
       w = copyright_style("Some stations didn't return data for some dates:"),
-      legal_note_style(urls_to_show)
+      stations_with_problems
     ))
     # message(copyright_style(
     #   "Some stations didn't return data for some dates:\n",
-    #   glue::glue_collapse(urls_to_show, sep = ',\n'), "\n"
+    #   glue::glue_collapse(stations_with_problems, sep = ',\n'), "\n"
     # ))
   }
 
