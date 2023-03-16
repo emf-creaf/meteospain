@@ -10,37 +10,23 @@
   # we need the resolution to create the corresponding path
   resolution <- api_options$resolution
 
-  ## TODO Maybe a switch here is more efficient, but we have to control for non recognised resolution.
-  ## Worth to check it some time.
+  temp_path <- switch(
+    resolution,
+    "instant" = c('mgrss', 'observacion', 'ultimos10minEstacionsMeteo.action'),
+    "current_day" = c('mgrss', 'observacion', 'ultimosHorariosEstacions.action'),
+    "daily" = c('mgrss', 'observacion', 'datosDiariosEstacionsMeteo.action'),
+    "monthly" = c('mgrss', 'observacion', 'datosMensuaisEstacionsMeteo.action'),
+    FALSE
+  )
 
-  # instant
-  if (resolution == 'instant') {
-    return(c('mgrss', 'observacion', 'ultimos10minEstacionsMeteo.action'))
+  # not recognised resolution, we abort
+  if (isFALSE(temp_path)) {
+    cli::cli_abort(c(
+      "{.arg {api_options$resolution}} is not a valid temporal resolution for MeteoGalicia. Please see meteogalicia_options help for more information"
+    ))
   }
 
-  # current day
-  if (resolution == 'current_day') {
-    return(c('mgrss', 'observacion', 'ultimosHorariosEstacions.action'))
-  }
-
-  # daily
-  if (resolution == 'daily') {
-    return(c('mgrss', 'observacion', 'datosDiariosEstacionsMeteo.action'))
-  }
-
-  # monthly
-  if (resolution == 'monthly') {
-    return(c('mgrss', 'observacion', 'datosMensuaisEstacionsMeteo.action'))
-  }
-
-  # not recognised resolution
-  cli::cli_abort(c(
-    "{.arg {api_options$resolution}} is not a valid temporal resolution for MeteoGalicia. Please see meteogalicia_options help for more information"
-  ))
-  # stop(
-  #   api_options$resolution,
-  #   " is not a valid temporal resolution for MeteoGalicia. Please see meteogalicia_options help for more information"
-  # )
+  return(temp_path)
 }
 
 #' Create the query element for MeteoGalicia API
