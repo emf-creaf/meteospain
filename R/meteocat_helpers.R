@@ -466,11 +466,15 @@
   }
 
   # Copyright message -------------------------------------------------------------------------------------
-  message(
-    copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
-    '\n',
+  cli::cli_inform(c(
+    i = copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
     legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
-  )
+  ))
+  # message(
+  #   copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
+  #   '\n',
+  #   legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
+  # )
 
   return(res)
 }

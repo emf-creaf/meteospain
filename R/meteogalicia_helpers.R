@@ -256,16 +256,23 @@
     sf::st_as_sf()
 
   # Copyright message -------------------------------------------------------------------------------------
-  message(
-    copyright_style(
-      "A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser",
-      "\nutilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1",
-      "\nConseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
-      "\nque as utilice para os usos distintos do particular e privado."
-    ),
-    '\n',
+  cli::cli_inform(c(
+    i = copyright_style("A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser"),
+    copyright_style("utilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1"),
+    copyright_style("Conseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez"),
+    copyright_style("que as utilice para os usos distintos do particular e privado."),
     legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
-  )
+  ))
+  # message(
+  #   copyright_style(
+  #     "A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser",
+  #     "\nutilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1",
+  #     "\nConseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez",
+  #     "\nque as utilice para os usos distintos do particular e privado."
+  #   ),
+  #   '\n',
+  #   legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
+  # )
 
   return(res)
 }

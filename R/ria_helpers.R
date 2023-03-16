@@ -262,14 +262,12 @@
   }
 
   if (any(ria_statuses != 'OK')) {
-    message(copyright_style(
-      "Some stations didn't return data for some dates:\n",
-      glue::glue_collapse(urls_to_show, sep = ',\n'), "\n"
+    cli::cli_inform(c(
+      w = copyright_style("Some stations didn't return data for some dates:"),
+      legal_note_style(urls_to_show)
     ))
-
     # message(copyright_style(
-    #   glue::glue_collapse(messages_to_show, sep = ', also:\n'),
-    #   "\nfor the following stations and dates:\n",
+    #   "Some stations didn't return data for some dates:\n",
     #   glue::glue_collapse(urls_to_show, sep = ',\n'), "\n"
     # ))
   }
@@ -347,11 +345,15 @@
   # }
   #
   # Copyright message -------------------------------------------------------------------------------------
-  message(
-    copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
-    '\n',
+  cli::cli_inform(c(
+    i = copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
     legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
-  )
+  ))
+  # message(
+  #   copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
+  #   '\n',
+  #   legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
+  # )
 
   return(res)
 }

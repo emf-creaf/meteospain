@@ -4,13 +4,12 @@
 NULL
 
 
-# crayon styles -----------------------------------------------------------------------------------------
+# cli styles -----------------------------------------------------------------------------------------
 
-#' crayon styles to use
-#' @importFrom  crayon combine_styles
+#' cli styles to use
 #' @noRd
-copyright_style <- crayon::combine_styles('bold', 'yellow')
-legal_note_style <- crayon::combine_styles('blue', 'bold', 'underline')
+copyright_style <- cli::combine_ansi_styles('bold', 'yellow')
+legal_note_style <- cli::combine_ansi_styles('blue', 'underline')
 
 
 # swiss knives ------------------------------------------------------------------------------------------
@@ -142,8 +141,12 @@ relocate_vars <- function(data) {
   # For that we use api_options$while_number. If it is null or less than one repeat,
   # if not, stop
   while (is.null(api_options$while_number) || api_options$while_number < 1) {
-    message(copyright_style(api_status_check$message))
-    message("Trying again in 60 seconds")
+    cli::cli_inform(c(
+      i = copyright_style(api_status_check$message),
+      "Trying again in 60 seconds"
+    ))
+    # message(copyright_style(api_status_check$message))
+    # message("Trying again in 60 seconds")
     Sys.sleep(60)
     api_options$while_number <- 1
     return(.f(api_options))

@@ -144,11 +144,18 @@
     relocate_vars() |>
     sf::st_as_sf(crs = 4326)
 
-  message(
-    copyright_style("Meteoclimatic is a non-professional network of automatic meteorological stations.\n"),
-    copyright_style("No quality check is performed in this data, and errors in measures or coordinates of stations can be present.\n"),
+  # Copyright message -------------------------------------------------------------------------------------
+  cli::cli_inform(c(
+    i = copyright_style("Meteoclimatic is a non-professional network of automatic meteorological stations."),
+    copyright_style("No quality check is performed in this data, and errors in measures or coordinates of stations can be present."),
     legal_note_style("https://www.meteoclimatic.net/index")
-  )
+  ))
+
+  # message(
+  #   copyright_style("Meteoclimatic is a non-professional network of automatic meteorological stations.\n"),
+  #   copyright_style("No quality check is performed in this data, and errors in measures or coordinates of stations can be present.\n"),
+  #   legal_note_style("https://www.meteoclimatic.net/index")
+  # )
 
   return(stations_data)
 }

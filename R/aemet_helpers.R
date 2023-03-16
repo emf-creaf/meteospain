@@ -418,11 +418,15 @@
   }
 
   # Copyright message -------------------------------------------------------------------------------------
-  message(
-    copyright_style(stations_metadata_check$content$copyright),
-    '\n',
+  cli::cli_inform(c(
+    i = copyright_style(stations_metadata_check$content$copyright),
     legal_note_style(stations_metadata_check$content$notaLegal)
-  )
+  ))
+  # message(
+  #   copyright_style(stations_metadata_check$content$copyright),
+  #   '\n',
+  #   legal_note_style(stations_metadata_check$content$notaLegal)
+  # )
 
   # Return ------------------------------------------------------------------------------------------------
   return(res)
