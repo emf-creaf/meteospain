@@ -7,12 +7,13 @@
   + Removed dependency from crayon. Using cli now.
 * New dependencies
   + Added cli to manage communication with the user (messages, warnings and errors)
-* Better meteogalicia error managing
 * Minor changes
   + Improved tests
   + AEMET API: return always the same variables (depending on resolution). If the variable doesn't
   exists for the station and date, is created with NA.
-  + `insolation` variable added to returned AEMET current data
+  + AEMET API: `insolation` variable added to returned AEMET current data
+  + RIA API: improved messages
+  + meteogalicia API: improved error managing
 
 # meteospain 0.1.1
 
