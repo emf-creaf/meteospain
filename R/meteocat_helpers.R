@@ -117,7 +117,11 @@
     if (api_status_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_quota_meteocat))
     } else {
-      stop(api_status_check$code, ':\n', api_status_check$message)
+      cli::cli_abort(c(
+        x = api_status_check$code,
+        i = api_status_check$message
+      ))
+      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -236,10 +240,13 @@
 
   # not recognised resolution
   if (length(paths_resolution) < 1) {
-    stop(
-      api_options$resolution,
-      " is not a valid temporal resolution for MeteoCat.\nPlease see meteocat_options help for more information"
-    )
+    cli::cli_abort(c(
+      "{.arg {api_options$resolution}} is not a valid temporal resolution for MeteoCat.\nPlease see meteocat_options help for more information"
+    ))
+    # stop(
+    #   api_options$resolution,
+    #   " is not a valid temporal resolution for MeteoCat.\nPlease see meteocat_options help for more information"
+    # )
   }
 
   return(paths_resolution)
@@ -300,7 +307,11 @@
     if (api_status_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_info_meteocat))
     } else {
-      stop(api_status_check$code, ':\n', api_status_check$message)
+      cli::cli_abort(c(
+        x = api_status_check$code,
+        i = api_status_check$message
+      ))
+      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -395,7 +406,8 @@
       return(.manage_429_errors(list(code = 429, message = messages_to_show[1]), api_options, .get_data_meteocat))
     } else {
       messages_to_show <- variables_messages[which(variables_codes != 200)] |> unique()
-      stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
+      cli::cli_abort(c(messages_to_show))
+      # stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
     }
   }
 
@@ -458,11 +470,16 @@
 
   # Check if any stations were returned -------------------------------------------------------------------
   if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-    stop(
-      "Station(s) provided have no data for the dates selected.\n",
-      "Available stations with data for the actual query are:\n",
+    cli::cli_abort(c(
+      "Station(s) provided have no data for the dates selected.",
+      "Available stations with data for the actual query are:",
       glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
-    )
+    ))
+    # stop(
+    #   "Station(s) provided have no data for the dates selected.\n",
+    #   "Available stations with data for the actual query are:\n",
+    #   glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
+    # )
   }
 
   # Copyright message -------------------------------------------------------------------------------------

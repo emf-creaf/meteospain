@@ -63,7 +63,11 @@
   )
 
   if (api_status_check$status != 'OK') {
-    stop(api_status_check$code, ':\n', api_status_check$message)
+    cli::cli_abort(c(
+      x = api_status_check$code,
+      i = api_status_check$message
+    ))
+    # stop(api_status_check$code, ':\n', api_status_check$message)
   }
 
   response_content <- api_status_check$content |>
@@ -132,10 +136,13 @@
 
   # not recognised resolution
   if (length(paths_resolution) < 1) {
-    stop(
-      resolution,
-      " is not a valid temporal resolution for ria.\nPlease see ria_options help for more information"
-    )
+    cli::cli_abort(c(
+      "{.arg {resolution}} is not a valid temporal resolution for ria.\nPlease see ria_options help for more information."
+    ))
+    # stop(
+    #   resolution,
+    #   " is not a valid temporal resolution for ria.\nPlease see ria_options help for more information"
+    # )
   }
 
   return(paths_resolution)
@@ -161,7 +168,11 @@
   )
 
   if (api_status_check$status != 'OK') {
-    stop(api_status_check$code, ':\n', api_status_check$message)
+    cli::cli_abort(c(
+      x = api_status_check$code,
+      i = api_status_check$message
+    ))
+    # stop(api_status_check$code, ':\n', api_status_check$message)
   }
 
   # Data --------------------------------------------------------------------------------------------------
@@ -258,7 +269,10 @@
   urls_to_show <- ria_urls[which(ria_codes != 200)] |> unique()
 
   if (all(ria_statuses != 'OK')) {
-    stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
+    cli::cli_abort(c(
+      messages_to_show
+    ))
+    # stop(glue::glue_collapse(messages_to_show, sep = ', also:\n'))
   }
 
   if (any(ria_statuses != 'OK')) {
@@ -331,19 +345,6 @@
     # ensure we have an sf
     sf::st_as_sf()
 
-
-
-
-  #
-  # # Check if any stations were returned -------------------------------------------------------------------
-  # if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-  #   stop(
-  #     "Station(s) provided have no data for the dates selected.\n",
-  #     "Available stations with data for the actual query are:\n",
-  #     glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
-  #   )
-  # }
-  #
   # Copyright message -------------------------------------------------------------------------------------
   cli::cli_inform(c(
     i = copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),

@@ -11,10 +11,13 @@
 
   # not recognised resolution
   if (api_options$resolution != 'current_day') {
-    stop(
-      api_options$resolution,
-      " is not a valid temporal resolution for Meteoclimatic. Please see meteoclimatic_options help for more information"
-    )
+    cli::cli_abort(c(
+      "{.arg {api_options$resolution}} is not a valid temporal resolution for Meteoclimatic. Please see meteoclimatic_options help for more information"
+    ))
+    # stop(
+    #   api_options$resolution,
+    #   " is not a valid temporal resolution for Meteoclimatic. Please see meteoclimatic_options help for more information"
+    # )
   }
 
   return(meteoclimatic_path)
@@ -66,10 +69,16 @@
   nodes <- xml2::xml_path(xml2::xml_find_all(data_xml_body, '//meteodata/stations/station'))
   # but before start iterating, if station code is wrong, no nodes are returned, so we need to check that
   if (length(nodes) < 1) {
-    stop(
-      'Stations code provided ("', api_options$stations, '") not found in Meteoclimatic database.\n',
-      "See https://www.meteoclimatic.net/index/wp/rss_es.html for more info"
-    )
+    cli::cli_abort(c(
+      'Stations code provided',
+      api_options$stations,
+      'not found in Meteoclimatic database.',
+      i = "See https://www.meteoclimatic.net/index/wp/rss_es.html for more info"
+    ))
+    # stop(
+    #   'Stations code provided ("', api_options$stations, '") not found in Meteoclimatic database.\n',
+    #   "See https://www.meteoclimatic.net/index/wp/rss_es.html for more info"
+    # )
   }
 
   # Now we can iterate and get the data

@@ -45,7 +45,8 @@
 get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'meteogalicia', 'ria'), options) {
   # check internet connection
   if (!curl::has_internet()) {
-    stop("No internet connection detected")
+    cli::cli_abort(c("No internet connection detected"))
+    # stop("No internet connection detected")
   }
 
   # check arguments
@@ -107,7 +108,8 @@ get_stations_info_from <- function(
 ) {
   # check internet connection
   if (!curl::has_internet()) {
-    stop("No internet connection detected")
+    cli::cli_abort(c("No internet connection detected"))
+    # stop("No internet connection detected")
   }
 
   # check arguments
@@ -156,7 +158,8 @@ get_stations_info_from <- function(
 get_quota_from <- function(service = c('meteocat'), options) {
   # check internet connection
   if (!curl::has_internet()) {
-    stop("No internet connection detected")
+    cli::cli_abort(c("No internet connection detected"))
+    # stop("No internet connection detected")
   }
 
   # check arguments

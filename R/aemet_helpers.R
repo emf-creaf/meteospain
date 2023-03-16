@@ -35,17 +35,24 @@
   if (resolution %in% c('monthly', 'yearly')) {
     # stop if stations is null. For monthly API, one and only one station must be provided
     if (length(api_options$stations) < 1) {
-      stop(
+      cli::cli_abort(c(
         "AEMET API for monthly/yearly aggregated values needs one station provided"
-      )
+      ))
+      # stop(
+      #   "AEMET API for monthly/yearly aggregated values needs one station provided"
+      # )
     }
 
     # issue a warning if more than one station is provided
     if (length(api_options$stations) > 1) {
-      warning(
+      cli::cli_warn(c(
         "AEMET API for monthly/yearly aggregated values only accepts one station per query.\n",
-        "Only the first station provided will be used: ", api_options$stations[1]
-      )
+        "Only the first station provided ({.val {api_options$stations[1]}}) will be used."
+      ))
+      # warning(
+      #   "AEMET API for monthly/yearly aggregated values only accepts one station per query.\n",
+      #   "Only the first station provided will be used: ", api_options$stations[1]
+      # )
     }
 
     return(
@@ -58,10 +65,13 @@
   }
 
   # not recognised resolution
-  stop(
-    api_options$resolution,
-    " is not a valid temporal resolution for AEMET. Please see aemet_options help for more information"
-  )
+  cli::cli_abort(c(
+    "{.arg {api_options$resolution}} is not a valid temporal resolution for AEMET. Please see aemet_options help for more information"
+  ))
+  # stop(
+  #   api_options$resolution,
+  #   " is not a valid temporal resolution for AEMET. Please see aemet_options help for more information"
+  # )
 }
 
 #' Check status and errors for AEMET
@@ -226,7 +236,11 @@
     if (api_status_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
     } else {
-      stop(api_status_check$code, ':\n', api_status_check$message)
+      cli::cli_abort(c(
+        x = api_status_check$code,
+        i = api_status_check$message
+      ))
+      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -246,7 +260,11 @@
     if (stations_info_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
     } else {
-      stop(stations_info_check$code, ':\n', stations_info_check$message)
+      cli::cli_abort(c(
+        x = stations_info_check$code,
+        i = stations_info_check$message
+      ))
+      # stop(stations_info_check$code, ':\n', stations_info_check$message)
     }
   }
 
@@ -316,7 +334,11 @@
     if (api_status_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
     } else {
-      stop(api_status_check$code, ':\n', api_status_check$message)
+      cli::cli_abort(c(
+        x = api_status_check$code,
+        i = api_status_check$message
+      ))
+      # stop(api_status_check$code, ':\n', api_status_check$message)
     }
   }
 
@@ -335,7 +357,11 @@
     if (stations_data_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
     } else {
-      stop(stations_data_check$code, ':\n', stations_data_check$message)
+      cli::cli_abort(c(
+        x = stations_data_check$code,
+        i = stations_data_check$message
+      ))
+      # stop(stations_data_check$code, ':\n', stations_data_check$message)
     }
   }
 
@@ -350,7 +376,11 @@
     if (stations_metadata_check$code == 429) {
       return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
     } else {
-      stop(stations_metadata_check$code, ':\n', stations_metadata_check$message)
+      cli::cli_abort(c(
+        x = stations_metadata_check$code,
+        i = stations_metadata_check$message
+      ))
+      # stop(stations_metadata_check$code, ':\n', stations_metadata_check$message)
     }
   }
   # We also need the stations info
@@ -407,14 +437,22 @@
 
   # Check if any stations were returned -------------------------------------------------------------------
   if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-    stop(
-      "Station(s) provided have no data for the dates selected.\n",
-      "Available stations with data for the actual query are:\n",
+    cli::cli_abort(c(
+      x = "Station(s) provided have no data for the dates selected.",
+      "Available stations with data for the actual query are:",
       glue::glue_collapse(
         c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
         sep = ', ', last = ' and '
       )
-    )
+    ))
+    # stop(
+    #   "Station(s) provided have no data for the dates selected.\n",
+    #   "Available stations with data for the actual query are:\n",
+    #   glue::glue_collapse(
+    #     c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
+    #     sep = ', ', last = ' and '
+    #   )
+    # )
   }
 
   # Copyright message -------------------------------------------------------------------------------------

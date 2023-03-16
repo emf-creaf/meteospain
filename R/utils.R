@@ -151,7 +151,11 @@ relocate_vars <- function(data) {
     api_options$while_number <- 1
     return(.f(api_options))
   }
-  stop(api_status_check$code, ':\n', api_status_check$message)
+  cli::cli_abort(c(
+    x = api_status_check$code,
+    i = api_status_check$message
+  ))
+  # stop(api_status_check$code, ':\n', api_status_check$message)
 }
 
 .aemet_coords_generator <- function(coord_vec) {
@@ -180,9 +184,15 @@ unnest_safe <- function(x, ...) {
     # variables) is maintained as list() instead of NULL. So if is an empty
     # list, return tibble(), if is a list not empty, issue a warning
     if (length(x) > 0) {
-      warning(glue::glue(
-        "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}\n Returning an empty data.frame"
+      cli::cli_warn(c(
+        "Something went wrong, no data.frame returned, but a list with the following names",
+        names(x),
+        "and the following contents {glue::glue_collapse(x, sep = '\n')}",
+        "Returning an empty data.frame"
       ))
+      # warning(glue::glue(
+      #   "Something went wrong, no data.frame returned, but a list with the following names {names(x)} and the following contents {glue::glue_collapse(x, sep = '\n')}\n Returning an empty data.frame"
+      # ))
     }
 
     return(dplyr::tibble())
@@ -211,7 +221,10 @@ skip_if_no_auth <- function(service) {
   if (identical(Sys.getenv(service), "")) {
     testthat::skip(glue::glue("No authentication available for {service}"))
   } else {
-    message(glue::glue("{service} key found, running tests"))
+    cli::cli_inform(c(
+      i = "{.arg {service}} key found, running tests"
+    ))
+    # message(glue::glue("{service} key found, running tests"))
   }
 }
 
@@ -297,10 +310,14 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
   # checks and errors
   if (is.null(response$result)) {
     din_dots <- rlang::list2(...)
-    stop(
-      glue::glue("Unable to connect to API at {din_dots[[1]]}: {response$error}\n"),
-      glue::glue("This usually happens when connection with {din_dots[[1]]} is not possible")
-    )
+    cli::cli_abort(c(
+      "Unable to connect to API at {.url {din_dots[[1]]}}: {.val {response$error}}",
+      i = "This usually happens when connection with {.url {din_dots[[1]]}} is not possible."
+    ))
+    # stop(
+    #   glue::glue("Unable to connect to API at {din_dots[[1]]}: {response$error}\n"),
+    #   glue::glue("This usually happens when connection with {din_dots[[1]]} is not possible")
+    # )
   }
 
   return(response$result)

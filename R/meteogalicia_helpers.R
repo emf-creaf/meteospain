@@ -34,10 +34,13 @@
   }
 
   # not recognised resolution
-  stop(
-    api_options$resolution,
-    " is not a valid temporal resolution for MeteoGalicia. Please see meteogalicia_options help for more information"
-  )
+  cli::cli_abort(c(
+    "{.arg {api_options$resolution}} is not a valid temporal resolution for MeteoGalicia. Please see meteogalicia_options help for more information"
+  ))
+  # stop(
+  #   api_options$resolution,
+  #   " is not a valid temporal resolution for MeteoGalicia. Please see meteogalicia_options help for more information"
+  # )
 }
 
 #' Create the query element for MeteoGalicia API
@@ -118,7 +121,10 @@
 
   # Status check ------------------------------------------------------------------------------------------
   if (api_response$status_code != 200) {
-    stop("Unable to connect to meteogalicia API at ", api_response$url)
+    cli::cli_abort(c(
+      "Unable to connect to meteogalicia API at {.url {api_response$url}}"
+    ))
+    # stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
 
 
@@ -175,39 +181,62 @@
   # Status check ------------------------------------------------------------------------------------------
   # bad stations return code 500
   if (api_response$status_code %in% c(500L, 404L)) {
-    stop(
-      "MeteoGalicia API returned an error:\n",
+    cli::cli_abort(c(
+      "MeteoGalicia API returned an error:",
       stringr::str_remove_all(
         httr::content(api_response, 'text'),
         '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
       ),
-      '\nThis usually happens when unknown station ids are supplied.'
-    )
+      i = 'This usually happens when unknown station ids are supplied.'
+    ))
+    # stop(
+    #   "MeteoGalicia API returned an error:\n",
+    #   stringr::str_remove_all(
+    #     httr::content(api_response, 'text'),
+    #     '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
+    #   ),
+    #   '\nThis usually happens when unknown station ids are supplied.'
+    # )
   }
   # check any other codes besides 200
   if (api_response$status_code != 200) {
-    stop("Unable to connect to meteogalicia API at ", api_response$url)
+    cli::cli_abort(c(
+      "Unable to connect to meteogalicia API at {.url {api_response$url}}"
+    ))
+    # stop("Unable to connect to meteogalicia API at ", api_response$url)
   }
   # Check when html with error is returned (bad stations)
   # LEGACY, bad stations now are reported with error 500 in the new meteogalicia API
   if (httr::http_type(api_response) != "application/json") {
-    stop(
-      "MeteoGalicia API returned an error:\n",
+    cli::cli_abort(c(
+      "MeteoGalicia API returned an error:",
       stringr::str_remove_all(
         httr::content(api_response, 'text'),
         '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
       ),
-      '\nThis usually happens when unknown station ids are supplied.'
-    )
+      i = 'This usually happens when unknown station ids are supplied.'
+    ))
+    # stop(
+    #   "MeteoGalicia API returned an error:\n",
+    #   stringr::str_remove_all(
+    #     httr::content(api_response, 'text'),
+    #     '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
+    #   ),
+    #   '\nThis usually happens when unknown station ids are supplied.'
+    # )
   }
   # response content
   response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
   # Check when empty lists are returned (bad dates)
   if (length(response_content[[1]]) < 1) {
-    stop(
+    cli::cli_abort(c(
       "MeteoGalicia API returned no data:\n",
-      "This usually happens when there is no data for the dates supplied."
-    )
+      i = "This usually happens when there is no data for the dates supplied."
+    ))
+    # stop(
+    #   "MeteoGalicia API returned no data:\n",
+    #   "This usually happens when there is no data for the dates supplied."
+    # )
   }
 
   # Resolution specific carpentry -------------------------------------------------------------------------
@@ -461,9 +490,13 @@
   names_ok <- mandatory_names %in% names(data)
 
   if (!all(names_ok)) {
-    stop(glue::glue(
-      "Oops, something went wrong and some info about stations is missing: {glue::glue_collapse(mandatory_names[names_ok], sep = ', )}"
+    cli::cli_abort(c(
+      x = "Oops, something went wrong and some info about stations is missing:",
+      mandatory_names[names_ok]
     ))
+    # stop(glue::glue(
+    #   "Oops, something went wrong and some info about stations is missing: {glue::glue_collapse(mandatory_names[names_ok], sep = ', )}"
+    # ))
   }
 
   return(data)
