@@ -12,6 +12,7 @@
   + Improved tests
   + AEMET API: return always the same variables (depending on resolution). If the variable doesn't
   exists for the station and date, is created with NA.
+  + `insolation` variable added to returned AEMET current data
 
 # meteospain 0.1.1
 
