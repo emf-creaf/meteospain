@@ -1,9 +1,9 @@
-This version of `meteospain` fixes a bug in AEMET
-stations coordinates.
+This version of `meteospain` adds new functionality
+to AEMET methods.
 
 ## Test environments
 
-* local R installation (Arch Linux), R 4.2.2
+* local R installation (Arch Linux), R 4.2.3
 * windows-latest (on github actions), R release
 * macOS-latest (on github actions), R release
 * ubuntu-latest (on github actions), R release
@@ -17,10 +17,10 @@ stations coordinates.
 * checking CRAN incoming feasibility ... NOTE
 
 Possibly mis-spelled words in DESCRIPTION:
-  AEMET (25:90)
-  APIs (25:84)
-  Meteoclimatic (26:3)
-  SMC (25:97)
+  AEMET
+  APIs
+  Meteoclimatic
+  SMC
   
 Words detected are Spanish meteorological services API names
 and are not mis-spelled
