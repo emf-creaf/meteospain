@@ -1,3 +1,5 @@
+# meteospain (development version)
+
 # meteospain 0.1.2
 
 * Added monthly and yearly temporal resolutions to AEMET service
