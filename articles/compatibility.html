@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -159,55 +159,58 @@ already (see code above)</p>
 <span>      api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="va">meteocat_daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'meteocat'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span></span>
 <span><span class="va">meteogalicia_daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'meteogalicia'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; que as utilice para os usos distintos do particular e privado.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">A información divulgada a través deste servidor ofrécese gratuitamente aos</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">cidadáns para que poida ser</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">utilizada libremente por eles, co único compromiso de mencionar expresamente a</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">MeteoGalicia e á</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">fonte da mesma cada vez</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">que as utilice para os usos distintos do particular e privado.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span></span>
 <span></span>
 <span><span class="va">ria_daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'ria'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">ria_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-01'</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Some stations didn't return data for some dates:</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt;  https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/9/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/3/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/5/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/1/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/4/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/106/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/9/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/1/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/10/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/13/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/4/3/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/14/3/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/107/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/4/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/8/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/3/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/9/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/4/9/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/6/2020-04-01/2020-04-30,</span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/14/2020-04-01/2020-04-30 </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by Red de Información Agroclimática de Andalucía (RIA)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/</span></span></span></code></pre></div>
+<span><span class="co">#&gt; 11-3</span></span>
+<span><span class="co">#&gt; 11-8</span></span>
+<span><span class="co">#&gt; 11-9</span></span>
+<span><span class="co">#&gt; 14-3</span></span>
+<span><span class="co">#&gt; 18-4</span></span>
+<span><span class="co">#&gt; 18-9</span></span>
+<span><span class="co">#&gt; 21-1</span></span>
+<span><span class="co">#&gt; 21-104</span></span>
+<span><span class="co">#&gt; 21-106</span></span>
+<span><span class="co">#&gt; 21-107</span></span>
+<span><span class="co">#&gt; 23-10</span></span>
+<span><span class="co">#&gt; 23-13</span></span>
+<span><span class="co">#&gt; 23-9</span></span>
+<span><span class="co">#&gt; 29-3</span></span>
+<span><span class="co">#&gt; 29-5</span></span>
+<span><span class="co">#&gt; 4-3</span></span>
+<span><span class="co">#&gt; 4-9</span></span>
+<span><span class="co">#&gt; 41-1</span></span>
+<span><span class="co">#&gt; 41-14</span></span>
+<span><span class="co">#&gt; 41-4</span></span>
+<span><span class="co">#&gt; 41-6</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by Red de Información Agroclimática de Andalucía (RIA)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/</span></span></span></code></pre></div>
 <p>Now we have all daily data for April, lets join them. We are gonna
 use the purrr package to do it in one pipe.<br>
 Here we convert the data to tibble before the join, that way we are not
@@ -219,8 +222,8 @@ After the join we convert back to <code>sf</code>.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">meteocat_daily</span><span class="op">)</span>,</span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">meteogalicia_daily</span><span class="op">)</span>,</span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">ria_daily</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html" class="external-link">reduce</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html" class="external-link">reduce</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
 <span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
@@ -235,12 +238,12 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="co">#&gt; min_relative_humidity, max_relative_humidity, mean_wind_direction)`</span></span>
 <span></span>
 <span><span class="va">april_2020_spain</span></span>
-<span><span class="co">#&gt; Simple feature collection with 20502 features and 19 fields (with 180 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 20472 features and 19 fields (with 180 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -17.91528 ymin: 27.73583 xmax: 4.215556 ymax: 43.78611</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20,502 × 20</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20,472 × 20</span></span></span>
 <span><span class="co">#&gt;    timestamp           service station…¹ stati…² stati…³ altit…⁴ mean_…⁵ min_t…⁶</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494;">[m]</span>    <span style="color: #949494;">[°C]</span>    <span style="color: #949494;">[°C]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0016A     REUS A… TARRAG…      71    10.6     9.2</span></span>
@@ -253,7 +256,7 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0324A     RIPOLL  GIRONA      675     6.4     4.8</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0367      GIRONA… GIRONA      143     8.9     7.8</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> aemet   0372C     PORQUE… GIRONA      157     8.2     6.9</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 20,492 more rows, 12 more variables: max_temperature [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 20,462 more rows, 12 more variables: max_temperature [°C],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;, mean_relative_humidity [%],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span></span>
@@ -265,9 +268,9 @@ After the join we convert back to <code>sf</code>.</p>
 <h4 id="by-service">By service<a class="anchor" aria-label="anchor" href="#by-service"></a>
 </h4>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">april_2020_spain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">day</a></span><span class="op">(</span><span class="va">timestamp</span><span class="op">)</span> <span class="op">==</span> <span class="fl">25</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">april_2020_spain</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">day</a></span><span class="op">(</span><span class="va">timestamp</span><span class="op">)</span> <span class="op">==</span> <span class="fl">25</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">service</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_d</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -277,9 +280,9 @@ After the join we convert back to <code>sf</code>.</p>
 <h4 id="by-one-variable">By one variable<a class="anchor" aria-label="anchor" href="#by-one-variable"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">april_2020_spain</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">day</a></span><span class="op">(</span><span class="va">timestamp</span><span class="op">)</span> <span class="op">==</span> <span class="fl">25</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">april_2020_spain</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">day</a></span><span class="op">(</span><span class="va">timestamp</span><span class="op">)</span> <span class="op">==</span> <span class="fl">25</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>

@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -144,30 +144,33 @@
 <span></span>
 <span><span class="va">mg_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'current_day'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser </span></span>
-<span><span class="co">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á </span></span>
-<span><span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span></span>
+<span><span class="co">#&gt; ℹ A información divulgada a través deste servidor ofrécese gratuitamente aos</span></span>
+<span><span class="co">#&gt;   cidadáns para que poida ser</span></span>
+<span><span class="co">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a</span></span>
+<span><span class="co">#&gt; MeteoGalicia e á</span></span>
+<span><span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como</span></span>
+<span><span class="co">#&gt; fonte da mesma cada vez</span></span>
 <span><span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span></span>
 <span><span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span>
-<span><span class="co">#&gt; Simple feature collection with 3673 features and 14 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 3768 features and 14 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; # A tibble: 3,673 × 15</span></span>
+<span><span class="co">#&gt; # A tibble: 3,768 × 15</span></span>
 <span><span class="co">#&gt;    timestamp           service   stati…¹ stati…² stati…³ altit…⁴ tempe…⁵ min_t…⁶</span></span>
 <span><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;       [m]    [°C]    [°C]</span></span>
-<span><span class="co">#&gt;  1 2022-12-12 11:00:00 meteogal… 10045   Mabego… A Coru…      94    18.1    17.6</span></span>
-<span><span class="co">#&gt;  2 2022-12-12 11:00:00 meteogal… 10046   Marco … A Coru…     651    12.6    12.3</span></span>
-<span><span class="co">#&gt;  3 2022-12-12 11:00:00 meteogal… 10047   Pedro … Lugo         51    16.8    13.5</span></span>
-<span><span class="co">#&gt;  4 2022-12-12 11:00:00 meteogal… 10048   O Inve… Ourense    1026    12.0    11.2</span></span>
-<span><span class="co">#&gt;  5 2022-12-12 11:00:00 meteogal… 10049   Corrub… A Coru…      30    16.2    16.1</span></span>
-<span><span class="co">#&gt;  6 2022-12-12 11:00:00 meteogal… 10050   CIS Fe… A Coru…      37    17.3    17.1</span></span>
-<span><span class="co">#&gt;  7 2022-12-12 11:00:00 meteogal… 10052   Muralla A Coru…     661    13.3    13.1</span></span>
-<span><span class="co">#&gt;  8 2022-12-12 11:00:00 meteogal… 10053   Campus… Lugo        400    14.0    12.4</span></span>
-<span><span class="co">#&gt;  9 2022-12-12 11:00:00 meteogal… 10055   Guitir… Lugo        684    12.3    12.2</span></span>
-<span><span class="co">#&gt; 10 2022-12-12 11:00:00 meteogal… 10056   Marroxo Lugo        645    13.4    12.8</span></span>
-<span><span class="co">#&gt; # … with 3,663 more rows, 7 more variables: max_temperature [°C],</span></span>
+<span><span class="co">#&gt;  1 2023-03-15 10:00:00 meteogal… 10045   Mabego… A Coru…      94   14.4    13.9 </span></span>
+<span><span class="co">#&gt;  2 2023-03-15 10:00:00 meteogal… 10046   Marco … A Coru…     651    8.65    8.13</span></span>
+<span><span class="co">#&gt;  3 2023-03-15 10:00:00 meteogal… 10047   Pedro … Lugo         51   14.1    13.7 </span></span>
+<span><span class="co">#&gt;  4 2023-03-15 10:00:00 meteogal… 10048   O Inve… Ourense    1026    9.98    8.3 </span></span>
+<span><span class="co">#&gt;  5 2023-03-15 10:00:00 meteogal… 10049   Corrub… A Coru…      30   14.3    13.6 </span></span>
+<span><span class="co">#&gt;  6 2023-03-15 10:00:00 meteogal… 10050   CIS Fe… A Coru…      37   13.9    13.3 </span></span>
+<span><span class="co">#&gt;  7 2023-03-15 10:00:00 meteogal… 10052   Muralla A Coru…     661    9.2     8.79</span></span>
+<span><span class="co">#&gt;  8 2023-03-15 10:00:00 meteogal… 10053   Campus… Lugo        400    8.85    6.79</span></span>
+<span><span class="co">#&gt;  9 2023-03-15 10:00:00 meteogal… 10055   Guitir… Lugo        684    8.54    7.42</span></span>
+<span><span class="co">#&gt; 10 2023-03-15 10:00:00 meteogal… 10056   Marroxo Lugo        645    8.22    7.06</span></span>
+<span><span class="co">#&gt; # … with 3,758 more rows, 7 more variables: max_temperature [°C],</span></span>
 <span><span class="co">#&gt; #   relative_humidity [%], precipitation [L/m^2], wind_direction [°],</span></span>
 <span><span class="co">#&gt; #   wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;, and abbreviated</span></span>
 <span><span class="co">#&gt; #   variable names ¹​station_id, ²​station_name, ³​station_province, ⁴​altitude,</span></span>
@@ -175,12 +178,12 @@
 <p>Stations info can be accessed with <code>get_stations_info_from</code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 155 features and 5 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 158 features and 5 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.7383</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; # A tibble: 155 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 158 × 6</span></span>
 <span><span class="co">#&gt;    service      station_id station_n…¹ stati…² altit…³             geometry</span></span>
 <span><span class="co">#&gt;  * &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;       [m]          &lt;POINT [°]&gt;</span></span>
 <span><span class="co">#&gt;  1 meteogalicia 10157      Coruña-Tor… A Coru…      21 (-8.409202 43.38276)</span></span>
@@ -193,17 +196,20 @@
 <span><span class="co">#&gt;  8 meteogalicia 10095      Sergude     A Coru…     231 (-8.461246 42.82283)</span></span>
 <span><span class="co">#&gt;  9 meteogalicia 10800      Camariñas   A Coru…       5 (-9.178318 43.12445)</span></span>
 <span><span class="co">#&gt; 10 meteogalicia 19001      Rus         A Coru…     134 (-8.685357 43.15616)</span></span>
-<span><span class="co">#&gt; # … with 145 more rows, and abbreviated variable names ¹​station_name,</span></span>
+<span><span class="co">#&gt; # … with 148 more rows, and abbreviated variable names ¹​station_name,</span></span>
 <span><span class="co">#&gt; #   ²​station_province, ³​altitude</span></span></code></pre></div>
 <p>Returned objects are spatial objects (using the <a href="https://r-spatial.github.io/sf/" class="external-link"><code>sf</code></a> R package), so results can be plotted directly:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.11.1, GDAL 3.6.0, PROJ 9.1.0; sf_use_s2() is TRUE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.11.1, GDAL 3.6.3, PROJ 9.1.0; sf_use_s2() is TRUE</span></span>
 <span><span class="va">mg_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/services_options.html">meteogalicia_options</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2021-04-25'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser </span></span>
-<span><span class="co">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á </span></span>
-<span><span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span></span>
+<span><span class="co">#&gt; ℹ A información divulgada a través deste servidor ofrécese gratuitamente aos</span></span>
+<span><span class="co">#&gt;   cidadáns para que poida ser</span></span>
+<span><span class="co">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a</span></span>
+<span><span class="co">#&gt; MeteoGalicia e á</span></span>
+<span><span class="co">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como</span></span>
+<span><span class="co">#&gt; fonte da mesma cada vez</span></span>
 <span><span class="co">#&gt; que as utilice para os usos distintos do particular e privado.</span></span>
 <span><span class="co">#&gt; https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span>
 <span><span class="co">#&gt; Warning: plotting the first 9 out of 16 attributes; use max.plot = 16 to plot</span></span>
@@ -213,6 +219,40 @@
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, <span class="va">mg_options</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot_stations-2.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="api-keys">API keys<a class="anchor" aria-label="anchor" href="#api-keys"></a>
+</h2>
+<p>Some services, like AEMET or Meteocat, require an <em>API key</em> to access the data. <code>meteospain</code> <strong>doesn’t</strong> provide any key for those services, see <code><a href="reference/services_options.html">?services_options</a></code> for information about this.</p>
+<p>Once a key has been obtained, we can get the meteo:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, <span class="fu"><a href="reference/services_options.html">aemet_options</a></span><span class="op">(</span>api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">"aemet"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a</span></span>
+<span><span class="co">#&gt;   AEMET como autora de la misma.</span></span>
+<span><span class="co">#&gt; https://www.aemet.es/es/nota_legal</span></span>
+<span><span class="co">#&gt; Simple feature collection with 18949 features and 14 fields</span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -18.115 ymin: 27.66667 xmax: 4.316389 ymax: 43.78621</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; # A tibble: 18,949 × 15</span></span>
+<span><span class="co">#&gt;    timestamp           service station…¹ stati…² stati…³ altit…⁴ tempe…⁵ min_t…⁶</span></span>
+<span><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;       [m]    [°C]    [°C]</span></span>
+<span><span class="co">#&gt;  1 2023-03-15 10:00:00 aemet   0009X     ALFORJA &lt;NA&gt;        406    14.9    13.7</span></span>
+<span><span class="co">#&gt;  2 2023-03-15 10:00:00 aemet   0016A     REUS/A… &lt;NA&gt;         71    16.9    15.2</span></span>
+<span><span class="co">#&gt;  3 2023-03-15 10:00:00 aemet   0034X     VALLS   &lt;NA&gt;        233    16.2    14.8</span></span>
+<span><span class="co">#&gt;  4 2023-03-15 10:00:00 aemet   0042Y     TARRAG… &lt;NA&gt;         55    15.6    15.4</span></span>
+<span><span class="co">#&gt;  5 2023-03-15 10:00:00 aemet   0061X     PONTONS &lt;NA&gt;        632    13.7    11.3</span></span>
+<span><span class="co">#&gt;  6 2023-03-15 10:00:00 aemet   0066X     VILAFR… &lt;NA&gt;        177    14.8    13.2</span></span>
+<span><span class="co">#&gt;  7 2023-03-15 10:00:00 aemet   0073X     SITGES… &lt;NA&gt;         58    17      15.6</span></span>
+<span><span class="co">#&gt;  8 2023-03-15 10:00:00 aemet   0076      BARCEL… &lt;NA&gt;          4    15.6    13.8</span></span>
+<span><span class="co">#&gt;  9 2023-03-15 10:00:00 aemet   0092X     BERGA … &lt;NA&gt;        682    12.1    11  </span></span>
+<span><span class="co">#&gt; 10 2023-03-15 10:00:00 aemet   0106X     BALSAR… &lt;NA&gt;        361    12.4    10.3</span></span>
+<span><span class="co">#&gt; # … with 18,939 more rows, 7 more variables: max_temperature [°C],</span></span>
+<span><span class="co">#&gt; #   relative_humidity [%], precipitation [L/m^2], wind_direction [°],</span></span>
+<span><span class="co">#&gt; #   wind_speed [m/s], insolation [h], geometry &lt;POINT [°]&gt;, and abbreviated</span></span>
+<span><span class="co">#&gt; #   variable names ¹​station_id, ²​station_name, ³​station_province, ⁴​altitude,</span></span>
+<span><span class="co">#&gt; #   ⁵​temperature, ⁶​min_temperature</span></span></code></pre></div>
 </div>
 </div>
   </div>

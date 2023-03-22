@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -142,10 +142,19 @@ temporal resolutions:</p>
 selected stations.</li>
 <li>“daily”, returning the daily aggregated measures for all or selected
 stations.</li>
+<li>“monthly”, returning the monthly aggregated measures for
+<strong>only one</strong> station.</li>
+<li>“yearly”, returning the yearly aggregated measures for <strong>only
+one</strong> station.</li>
 </ul>
 <p>In “daily”, a <code>start_date</code> (and optionally an
 <code>end_date</code>) arguments must be provided, indicating the period
-from which retrieve the data.</p>
+from which retrieve the data.<br>
+In “monthly” and “yearly”, only the years in <code>start_date</code> and
+<code>end_date</code> are used, returning all year monthly or yearly
+values (<em>i.e</em> <code>start_date = as.Date("2020-12-01")</code> is
+the same as <code>start_date = as.Date("2020-01-01")</code> as both will
+return all 2020 measures).</p>
 </div>
 <div class="section level4">
 <h4 id="stations">Stations<a class="anchor" aria-label="anchor" href="#stations"></a>
@@ -154,6 +163,8 @@ from which retrieve the data.</p>
 all stations. If a character vector of stations codes is supplied in the
 <code>stations</code> argument, a filter step is done before returning
 the data to maintain only the stations supplied.</p>
+<p>The exception for this are “monthly” and “yearly” temporal
+resolutions. AEMET API only allows for one station to be retrieved.</p>
 </div>
 <div class="section level4">
 <h4 id="aemet-api-key">AEMET API Key<a class="anchor" aria-label="anchor" href="#aemet-api-key"></a>
@@ -188,10 +199,10 @@ and accessing keys:</p>
 <span><span class="co">#&gt; [1] "current_day"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2023-02-14"</span></span>
+<span><span class="co">#&gt; [1] "2023-03-22"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2023-02-14"</span></span>
+<span><span class="co">#&gt; [1] "2023-03-22"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -220,13 +231,36 @@ and accessing keys:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $api_key</span></span>
 <span><span class="co">#&gt; [1] "my_api_key"</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># monthly, only one station because AEMET API limitations</span></span>
+<span><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
+<span>  resolution <span class="op">=</span> <span class="st">'monthly'</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-25'</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-05-25'</span><span class="op">)</span>,</span>
+<span>  station <span class="op">=</span> <span class="st">"0149X"</span>,</span>
+<span>  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">api_options</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; $resolution</span></span>
+<span><span class="co">#&gt; [1] "monthly"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $start_date</span></span>
+<span><span class="co">#&gt; [1] "2020-01-01"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $end_date</span></span>
+<span><span class="co">#&gt; [1] "2020-12-31"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $stations</span></span>
+<span><span class="co">#&gt; [1] "0149X"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $api_key</span></span>
+<span><span class="co">#&gt; [1] "my_api_key"</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="aemet-stations-info">AEMET stations info<a class="anchor" aria-label="anchor" href="#aemet-stations-info"></a>
 </h3>
 <p>Accessing station metadata for AEMET is simple:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, <span class="va">api_options</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Simple feature collection with 291 features and 5 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
@@ -252,15 +286,16 @@ and accessing keys:</p>
 <div class="section level3">
 <h3 id="aemet-data">AEMET data<a class="anchor" aria-label="anchor" href="#aemet-data"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">api_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
 <span>  resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-25'</span><span class="op">)</span>,</span>
 <span>  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">spain_20200425</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span><span class="va">spain_20200425</span></span>
 <span><span class="co">#&gt; Simple feature collection with 237 features and 12 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
@@ -286,16 +321,16 @@ and accessing keys:</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ²​station_name, ³​station_province, ⁴​altitude, ⁵​mean_temperature,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​min_temperature</span></span></span></code></pre></div>
 <p>Visually:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">spain_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spain_20200425</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="aemet_files/figure-html/aemet_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">spain_20200425</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">spain_20200425</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span>

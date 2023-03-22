@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -121,9 +121,10 @@ allowing querying more than the predetermined period in each API.</p>
 <div class="section level2">
 <h2 id="aemet-api">AEMET API<a class="anchor" aria-label="anchor" href="#aemet-api"></a>
 </h2>
-<p>AEMET API limit the daily data download to 31 days:</p>
+<p>AEMET API limit the daily data download to 31 days, and the monthly
+and yearly data to 3 years:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># aemet api has a limit for 31 days:</span></span>
+<code class="sourceCode R"><span><span class="co"># aemet api has a limit for 31 days in daily:</span></span>
 <span><span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
@@ -133,12 +134,31 @@ allowing querying more than the predetermined period in each API.</p>
 <span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-12-31'</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in api_function(options): 404:</span></span>
-<span><span class="co">#&gt; AEMET API returned no data: El rango de fechas no puede ser superior a 31 dias</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `api_function()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> 404</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> AEMET API returned no data: El rango de fechas no puede ser superior a 31</span></span>
+<span><span class="co">#&gt;   dias</span></span>
+<span></span>
+<span><span class="co"># and monthly and yearly data to 3 years</span></span>
+<span><span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
+<span>  <span class="st">'aemet'</span>,</span>
+<span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
+<span>    api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span>,</span>
+<span>    resolution <span class="op">=</span> <span class="st">'yearly'</span>,</span>
+<span>    start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2005-01-01'</span><span class="op">)</span>,</span>
+<span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-12-31'</span><span class="op">)</span>,</span>
+<span>    stations <span class="op">=</span> <span class="st">"0149X"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `api_function()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> 404</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> AEMET API returned no data: El rango de las fechas no puede ser superior a 36</span></span>
+<span><span class="co">#&gt;   mesess</span></span></code></pre></div>
 <p>This means that with one call to <code>get_meteo_from</code> to the
-AEMET service, one can only download 31 days of data. If the period
-needed is bigger than that, one option is performing all the calls
-necessary and join the results:</p>
+AEMET service, one can only download 31 days of data, (or 3 years in
+monthly and yearly data).<br>
+If the period needed is bigger than that, one option is performing all
+the calls necessary and join the results:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_1990_jan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
@@ -149,8 +169,9 @@ necessary and join the results:</p>
 <span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-31'</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="va">res_1990_feb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
@@ -161,8 +182,9 @@ necessary and join the results:</p>
 <span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-02-28'</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">res_1990_jan</span>, <span class="va">res_1990_feb</span><span class="op">)</span></span>
 <span><span class="va">res</span></span>
@@ -238,16 +260,20 @@ directly:</p>
 <span>      <span class="op">)</span></span>
 <span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res_tidyverse</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    timestamp service station_id         station_name station_province altitude</span></span>
@@ -347,8 +373,8 @@ return all days in April, 2020:</p>
 <span>  api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">april_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">april_2020</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "2020-04-01 UTC" "2020-04-02 UTC" "2020-04-03 UTC" "2020-04-04 UTC"</span></span>
 <span><span class="co">#&gt;  [5] "2020-04-05 UTC" "2020-04-06 UTC" "2020-04-07 UTC" "2020-04-08 UTC"</span></span>
@@ -377,16 +403,16 @@ in a similar way as described previously for AEMET:</p>
 <span>      <span class="op">)</span></span>
 <span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">meteocat_2020q1_tidyverse</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    timestamp  service station_id                station_name station_province</span></span>
@@ -480,8 +506,8 @@ return all months in 2020:</p>
 <span>  api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">year_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">year_2020</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "2020-01-01 UTC" "2020-02-01 UTC" "2020-03-01 UTC" "2020-04-01 UTC"</span></span>
 <span><span class="co">#&gt;  [5] "2020-05-01 UTC" "2020-06-01 UTC" "2020-07-01 UTC" "2020-08-01 UTC"</span></span>
@@ -505,12 +531,12 @@ need to use loops again:</p>
 <span>      <span class="op">)</span></span>
 <span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">meteocat_2019_20_tidyverse</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    timestamp  service station_id                station_name station_province</span></span>
@@ -619,13 +645,18 @@ independently of the date supplied:</p>
 <span>  api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">all_years</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "2008-02-14 UTC" "2009-02-14 UTC" "2010-02-14 UTC" "2011-02-14 UTC"</span></span>
-<span><span class="co">#&gt;  [5] "2012-02-14 UTC" "2013-02-14 UTC" "2014-02-14 UTC" "2015-02-14 UTC"</span></span>
-<span><span class="co">#&gt;  [9] "2016-02-14 UTC" "2017-02-14 UTC" "2018-02-14 UTC" "2019-02-14 UTC"</span></span>
-<span><span class="co">#&gt; [13] "2020-02-14 UTC" "2021-02-14 UTC" "2022-02-14 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "1989-03-22 UTC" "1990-03-22 UTC" "1991-03-22 UTC" "1992-03-22 UTC"</span></span>
+<span><span class="co">#&gt;  [5] "1993-03-22 UTC" "1994-03-22 UTC" "1995-03-22 UTC" "1996-03-22 UTC"</span></span>
+<span><span class="co">#&gt;  [9] "1997-03-22 UTC" "1998-03-22 UTC" "1999-03-22 UTC" "2000-03-22 UTC"</span></span>
+<span><span class="co">#&gt; [13] "2001-03-22 UTC" "2002-03-22 UTC" "2003-03-22 UTC" "2004-03-22 UTC"</span></span>
+<span><span class="co">#&gt; [17] "2005-03-22 UTC" "2006-03-22 UTC" "2007-03-22 UTC" "2008-03-22 UTC"</span></span>
+<span><span class="co">#&gt; [21] "2009-03-22 UTC" "2010-03-22 UTC" "2011-03-22 UTC" "2012-03-22 UTC"</span></span>
+<span><span class="co">#&gt; [25] "2013-03-22 UTC" "2014-03-22 UTC" "2015-03-22 UTC" "2016-03-22 UTC"</span></span>
+<span><span class="co">#&gt; [29] "2017-03-22 UTC" "2018-03-22 UTC" "2019-03-22 UTC" "2020-03-22 UTC"</span></span>
+<span><span class="co">#&gt; [33] "2021-03-22 UTC" "2022-03-22 UTC"</span></span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so
 there is no need of loops.</p>
 </div>

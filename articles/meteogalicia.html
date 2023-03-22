@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -175,10 +175,10 @@ the <code>stations</code> argument.</p>
 <span><span class="co">#&gt; [1] "instant"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2023-02-14"</span></span>
+<span><span class="co">#&gt; [1] "2023-03-22"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2023-02-14"</span></span>
+<span><span class="co">#&gt; [1] "2023-03-22"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -193,10 +193,10 @@ the <code>stations</code> argument.</p>
 <span><span class="co">#&gt; [1] "current_day"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2023-02-14"</span></span>
+<span><span class="co">#&gt; [1] "2023-03-22"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2023-02-14"</span></span>
+<span><span class="co">#&gt; [1] "2023-03-22"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; [1] "10157" "14000" "10045"</span></span>
@@ -276,18 +276,21 @@ the <code>stations</code> argument.</p>
 <span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-12-31'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">galicia_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'meteogalicia'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">A información divulgada a través deste servidor ofrécese gratuitamente aos cidadáns para que poida ser </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; utilizada libremente por eles, co único compromiso de mencionar expresamente a MeteoGalicia e á </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez </span></span></span>
-<span><span class="co"><span style="color: #BBBB00; font-weight: bold;">#&gt; que as utilice para os usos distintos do particular e privado.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">A información divulgada a través deste servidor ofrécese gratuitamente aos</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">cidadáns para que poida ser</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">utilizada libremente por eles, co único compromiso de mencionar expresamente a</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">MeteoGalicia e á</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">fonte da mesma cada vez</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">que as utilice para os usos distintos do particular e privado.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span></span>
 <span><span class="va">galicia_2020</span></span>
-<span><span class="co">#&gt; Simple feature collection with 1844 features and 13 fields (with 12 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 1832 features and 13 fields (with 12 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.70426</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,844 × 14</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,832 × 14</span></span></span>
 <span><span class="co">#&gt;    timestamp           service   stati…¹ stati…² stati…³ altit…⁴ mean_…⁵ min_t…⁶</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494;">[m]</span>    <span style="color: #949494;">[°C]</span>    <span style="color: #949494;">[°C]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteogal… 10045   Mabego… A Coru…      94    9.49   -<span style="color: #BB0000;">2.13</span></span></span>
@@ -300,16 +303,16 @@ the <code>stations</code> argument.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteogal… 10053   Campus… Lugo        400    6.91   -<span style="color: #BB0000;">2.78</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteogal… 10055   Guitir… Lugo        684    6.77   -<span style="color: #BB0000;">0.83</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteogal… 10056   Marroxo Lugo        645    6.96   -<span style="color: #BB0000;">0.81</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 1,834 more rows, 6 more variables: max_temperature [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 1,822 more rows, 6 more variables: max_temperature [°C],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   mean_relative_humidity [%], precipitation [L/m^2], mean_wind_speed [m/s],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   insolation [h], geometry &lt;POINT [°]&gt;, and abbreviated variable names</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ¹​station_id, ²​station_name, ³​station_province, ⁴​altitude,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ⁵​mean_temperature, ⁶​min_temperature</span></span></span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">galicia_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">galicia_2020</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">max_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
@@ -317,8 +320,8 @@ the <code>stations</code> argument.</p>
 <p><img src="meteogalicia_files/figure-html/meteogalicia_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">galicia_2020</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">galicia_2020</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">timestamp</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -80,7 +80,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.1" id="meteospain-011">meteospain 0.1.1<a class="anchor" aria-label="anchor" href="#meteospain-011"></a></h2>
+<h2 class="page-header" data-toc-text="0.1.2" id="meteospain-012">meteospain 0.1.2<small>2023-03-22</small><a class="anchor" aria-label="anchor" href="#meteospain-012"></a></h2>
+<ul><li>Added monthly and yearly temporal resolutions to AEMET service</li>
+<li>Removed dependencies:
+<ul><li>Removed dependency (and exports) from magrittr. Substituted all magrittr pipes (<code>%&gt;%</code>) by native pipes (<code>|&gt;</code>)</li>
+<li>Removed dependency from crayon. Using cli now.</li>
+</ul></li>
+<li>New dependencies
+<ul><li>Added cli to manage communication with the user (messages, warnings and errors)</li>
+</ul></li>
+<li>Minor changes
+<ul><li>Improved tests</li>
+<li>AEMET API: return always the same variables (depending on resolution). If the variable doesn’t exists for the station and date, is created with NA.</li>
+<li>AEMET API: <code>insolation</code> variable added to returned AEMET current data</li>
+<li>RIA API: improved messages</li>
+<li>meteogalicia API: improved error managing</li>
+<li>meteogalicia API: improved path creation</li>
+<li>Code cleaning (removing old code, fixing typos, code style…)</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.1" id="meteospain-011">meteospain 0.1.1<small>2023-02-14</small><a class="anchor" aria-label="anchor" href="#meteospain-011"></a></h2>
 <ul><li>Fixed bug in AEMET coordinates (<a href="https://github.com/emf-creaf/meteospain/issues/18" class="external-link">#18</a>)</li>
 <li>Minimal versions of <code>dplyr</code> and <code>purrr</code> added (both <code>1.0.0</code>)</li>
 <li>Lambda functions to the new r base syntax (<code>\(x) {}</code>)</li>
