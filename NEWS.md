@@ -1,5 +1,7 @@
 # meteospain (development version)
 
+* meteocat API: new data limits, now daily data can be retrieved starting on 1989
+
 # meteospain 0.1.2
 
 * Added monthly and yearly temporal resolutions to AEMET service

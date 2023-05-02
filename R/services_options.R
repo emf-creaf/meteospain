@@ -159,8 +159,8 @@ meteocat_options <- function(
     msg = "'stations' must be a character vector"
   )
   assertthat::assert_that(
-    start_date >= as.Date('2008-01-01'),
-    msg = "'start_date' must be equal or greater than '2008-01-01'"
+    start_date >= as.Date('1989-01-01'),
+    msg = "'start_date' must be equal or greater than '1989-01-01'"
   )
 
   # build list
