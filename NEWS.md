@@ -1,4 +1,4 @@
-# meteospain (development version)
+# meteospain 0.1.3
 
 * meteocat API: new data limits, now daily data can be retrieved starting on 1989
 
