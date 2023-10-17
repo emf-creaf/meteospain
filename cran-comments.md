@@ -1,9 +1,9 @@
-This version of `meteospain` adds new functionality
-to AEMET methods.
+This version of `meteospain` keeps up with
+changes in meteo data APIs.
 
 ## Test environments
 
-* local R installation (Arch Linux), R 4.2.3
+* local R installation (Arch Linux), R 4.3.1
 * windows-latest (on github actions), R release
 * macOS-latest (on github actions), R release
 * ubuntu-latest (on github actions), R release
