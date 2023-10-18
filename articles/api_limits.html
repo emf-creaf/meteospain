@@ -182,8 +182,6 @@ the calls necessary and join the results:</p>
 <span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-02-28'</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">API request limit reached: Client error: (429) Too Many Requests (RFC 6585)</span></span></span>
-<span><span class="co">#&gt; Trying again in 60 seconds</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
@@ -647,15 +645,15 @@ independently of the date supplied:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "1989-10-17 UTC" "1990-10-17 UTC" "1991-10-17 UTC" "1992-10-17 UTC"</span></span>
-<span><span class="co">#&gt;  [5] "1993-10-17 UTC" "1994-10-17 UTC" "1995-10-17 UTC" "1996-10-17 UTC"</span></span>
-<span><span class="co">#&gt;  [9] "1997-10-17 UTC" "1998-10-17 UTC" "1999-10-17 UTC" "2000-10-17 UTC"</span></span>
-<span><span class="co">#&gt; [13] "2001-10-17 UTC" "2002-10-17 UTC" "2003-10-17 UTC" "2004-10-17 UTC"</span></span>
-<span><span class="co">#&gt; [17] "2005-10-17 UTC" "2006-10-17 UTC" "2007-10-17 UTC" "2008-10-17 UTC"</span></span>
-<span><span class="co">#&gt; [21] "2009-10-17 UTC" "2010-10-17 UTC" "2011-10-17 UTC" "2012-10-17 UTC"</span></span>
-<span><span class="co">#&gt; [25] "2013-10-17 UTC" "2014-10-17 UTC" "2015-10-17 UTC" "2016-10-17 UTC"</span></span>
-<span><span class="co">#&gt; [29] "2017-10-17 UTC" "2018-10-17 UTC" "2019-10-17 UTC" "2020-10-17 UTC"</span></span>
-<span><span class="co">#&gt; [33] "2021-10-17 UTC" "2022-10-17 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "1989-10-18 UTC" "1990-10-18 UTC" "1991-10-18 UTC" "1992-10-18 UTC"</span></span>
+<span><span class="co">#&gt;  [5] "1993-10-18 UTC" "1994-10-18 UTC" "1995-10-18 UTC" "1996-10-18 UTC"</span></span>
+<span><span class="co">#&gt;  [9] "1997-10-18 UTC" "1998-10-18 UTC" "1999-10-18 UTC" "2000-10-18 UTC"</span></span>
+<span><span class="co">#&gt; [13] "2001-10-18 UTC" "2002-10-18 UTC" "2003-10-18 UTC" "2004-10-18 UTC"</span></span>
+<span><span class="co">#&gt; [17] "2005-10-18 UTC" "2006-10-18 UTC" "2007-10-18 UTC" "2008-10-18 UTC"</span></span>
+<span><span class="co">#&gt; [21] "2009-10-18 UTC" "2010-10-18 UTC" "2011-10-18 UTC" "2012-10-18 UTC"</span></span>
+<span><span class="co">#&gt; [25] "2013-10-18 UTC" "2014-10-18 UTC" "2015-10-18 UTC" "2016-10-18 UTC"</span></span>
+<span><span class="co">#&gt; [29] "2017-10-18 UTC" "2018-10-18 UTC" "2019-10-18 UTC" "2020-10-18 UTC"</span></span>
+<span><span class="co">#&gt; [33] "2021-10-18 UTC" "2022-10-18 UTC"</span></span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so
 there is no need of loops.</p>
 </div>
