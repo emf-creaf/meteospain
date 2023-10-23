@@ -1,7 +1,7 @@
 
 # meteospain
 
-[![R-CMD-check](https://github.com/emf-creaf/meteospain/workflows/R-CMD-check/badge.svg)](https://github.com/emf-creaf/meteospain/actions)
+[![R-CMD-check](https://github.com/emf-creaf/meteospain/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/emf-creaf/meteospain/actions/workflows/R-CMD-check.yaml)
 
 `meteospain` aims to offer access to different Spanish meteorological
 stations data in an uniform way.
@@ -56,55 +56,54 @@ get_meteo_from('meteogalicia', mg_options)
 #> fonte da mesma cada vez
 #> que as utilice para os usos distintos do particular e privado.
 #> https://www.meteogalicia.gal/web/informacion/notaIndex.action
-#> Simple feature collection with 3768 features and 14 fields
+#> Simple feature collection with 3720 features and 14 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.734
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 3,768 × 15
-#>    timestamp           service   stati…¹ stati…² stati…³ altit…⁴ tempe…⁵ min_t…⁶
-#>    <dttm>              <chr>     <chr>   <chr>   <chr>       [m]    [°C]    [°C]
-#>  1 2023-03-15 10:00:00 meteogal… 10045   Mabego… A Coru…      94   14.4    13.9 
-#>  2 2023-03-15 10:00:00 meteogal… 10046   Marco … A Coru…     651    8.65    8.13
-#>  3 2023-03-15 10:00:00 meteogal… 10047   Pedro … Lugo         51   14.1    13.7 
-#>  4 2023-03-15 10:00:00 meteogal… 10048   O Inve… Ourense    1026    9.98    8.3 
-#>  5 2023-03-15 10:00:00 meteogal… 10049   Corrub… A Coru…      30   14.3    13.6 
-#>  6 2023-03-15 10:00:00 meteogal… 10050   CIS Fe… A Coru…      37   13.9    13.3 
-#>  7 2023-03-15 10:00:00 meteogal… 10052   Muralla A Coru…     661    9.2     8.79
-#>  8 2023-03-15 10:00:00 meteogal… 10053   Campus… Lugo        400    8.85    6.79
-#>  9 2023-03-15 10:00:00 meteogal… 10055   Guitir… Lugo        684    8.54    7.42
-#> 10 2023-03-15 10:00:00 meteogal… 10056   Marroxo Lugo        645    8.22    7.06
-#> # … with 3,758 more rows, 7 more variables: max_temperature [°C],
-#> #   relative_humidity [%], precipitation [L/m^2], wind_direction [°],
-#> #   wind_speed [m/s], insolation [h], geometry <POINT [°]>, and abbreviated
-#> #   variable names ¹​station_id, ²​station_name, ³​station_province, ⁴​altitude,
-#> #   ⁵​temperature, ⁶​min_temperature
+#> # A tibble: 3,720 × 15
+#>    timestamp           service station_id station_name station_province altitude
+#>    <dttm>              <chr>   <chr>      <chr>        <chr>                 [m]
+#>  1 2023-10-22 14:00:00 meteog… 10045      Mabegondo    A Coruña               94
+#>  2 2023-10-22 14:00:00 meteog… 10046      Marco da Cu… A Coruña              651
+#>  3 2023-10-22 14:00:00 meteog… 10047      Pedro Murias Lugo                   51
+#>  4 2023-10-22 14:00:00 meteog… 10048      O Invernade… Ourense              1026
+#>  5 2023-10-22 14:00:00 meteog… 10049      Corrubedo    A Coruña               30
+#>  6 2023-10-22 14:00:00 meteog… 10050      CIS Ferrol   A Coruña               37
+#>  7 2023-10-22 14:00:00 meteog… 10052      Muralla      A Coruña              661
+#>  8 2023-10-22 14:00:00 meteog… 10053      Campus Lugo  Lugo                  400
+#>  9 2023-10-22 14:00:00 meteog… 10055      Guitiriz-Mi… Lugo                  684
+#> 10 2023-10-22 14:00:00 meteog… 10056      Marroxo      Lugo                  645
+#> # ℹ 3,710 more rows
+#> # ℹ 9 more variables: temperature [°C], min_temperature [°C],
+#> #   max_temperature [°C], relative_humidity [%], precipitation [L/m^2],
+#> #   wind_direction [°], wind_speed [m/s], insolation [h], geometry <POINT [°]>
 ```
 
 Stations info can be accessed with `get_stations_info_from` function:
 
 ``` r
 get_stations_info_from('meteogalicia', mg_options)
-#> Simple feature collection with 158 features and 5 fields
+#> Simple feature collection with 156 features and 5 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.7383
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 158 × 6
-#>    service      station_id station_n…¹ stati…² altit…³             geometry
-#>  * <chr>        <chr>      <chr>       <chr>       [m]          <POINT [°]>
-#>  1 meteogalicia 10157      Coruña-Tor… A Coru…      21 (-8.409202 43.38276)
-#>  2 meteogalicia 14000      Coruña-Diq… A Coru…       5 (-8.374706 43.36506)
-#>  3 meteogalicia 10045      Mabegondo   A Coru…      94 (-8.262225 43.24137)
-#>  4 meteogalicia 14003      Punta Lang… A Coru…       5 (-8.531179 43.34723)
-#>  5 meteogalicia 10144      Arzúa       A Coru…     362  (-8.17469 42.93196)
-#>  6 meteogalicia 19005      Guísamo     A Coru…     175 (-8.276487 43.30799)
-#>  7 meteogalicia 19012      Cespón      A Coru…      59 (-8.854571 42.67466)
-#>  8 meteogalicia 10095      Sergude     A Coru…     231 (-8.461246 42.82283)
-#>  9 meteogalicia 10800      Camariñas   A Coru…       5 (-9.178318 43.12445)
-#> 10 meteogalicia 19001      Rus         A Coru…     134 (-8.685357 43.15616)
-#> # … with 148 more rows, and abbreviated variable names ¹​station_name,
-#> #   ²​station_province, ³​altitude
+#> # A tibble: 156 × 6
+#>    service      station_id station_name             station_province altitude
+#>  * <chr>        <chr>      <chr>                    <chr>                 [m]
+#>  1 meteogalicia 10157      Coruña-Torre de Hércules A Coruña               21
+#>  2 meteogalicia 14000      Coruña-Dique             A Coruña                5
+#>  3 meteogalicia 10045      Mabegondo                A Coruña               94
+#>  4 meteogalicia 14003      Punta Langosteira        A Coruña                5
+#>  5 meteogalicia 10144      Arzúa                    A Coruña              362
+#>  6 meteogalicia 19005      Guísamo                  A Coruña              175
+#>  7 meteogalicia 19012      Cespón                   A Coruña               59
+#>  8 meteogalicia 10095      Sergude                  A Coruña              231
+#>  9 meteogalicia 10800      Camariñas                A Coruña                5
+#> 10 meteogalicia 19001      Rus                      A Coruña              134
+#> # ℹ 146 more rows
+#> # ℹ 1 more variable: geometry <POINT [°]>
 ```
 
 Returned objects are spatial objects (using the
@@ -113,7 +112,7 @@ plotted directly:
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.11.1, GDAL 3.6.3, PROJ 9.1.0; sf_use_s2() is TRUE
+#> Linking to GEOS 3.12.0, GDAL 3.7.2, PROJ 9.2.1; sf_use_s2() is TRUE
 mg_options <- meteogalicia_options(resolution = 'daily', start_date = as.Date('2021-04-25'))
 plot(get_meteo_from('meteogalicia', mg_options))
 #> ℹ A información divulgada a través deste servidor ofrécese gratuitamente aos
@@ -150,27 +149,26 @@ get_meteo_from('aemet', aemet_options(api_key = keyring::key_get("aemet")))
 #> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
 #>   AEMET como autora de la misma.
 #> https://www.aemet.es/es/nota_legal
-#> Simple feature collection with 18949 features and 14 fields
+#> Simple feature collection with 18048 features and 14 fields
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: -18.115 ymin: 27.66667 xmax: 4.316389 ymax: 43.78621
+#> Bounding box:  xmin: -18.115 ymin: 27.66667 xmax: 4.323889 ymax: 43.78621
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 18,949 × 15
-#>    timestamp           service station…¹ stati…² stati…³ altit…⁴ tempe…⁵ min_t…⁶
-#>    <dttm>              <chr>   <chr>     <chr>   <chr>       [m]    [°C]    [°C]
-#>  1 2023-03-15 10:00:00 aemet   0009X     ALFORJA <NA>        406    14.9    13.7
-#>  2 2023-03-15 10:00:00 aemet   0016A     REUS/A… <NA>         71    16.9    15.2
-#>  3 2023-03-15 10:00:00 aemet   0034X     VALLS   <NA>        233    16.2    14.8
-#>  4 2023-03-15 10:00:00 aemet   0042Y     TARRAG… <NA>         55    15.6    15.4
-#>  5 2023-03-15 10:00:00 aemet   0061X     PONTONS <NA>        632    13.7    11.3
-#>  6 2023-03-15 10:00:00 aemet   0066X     VILAFR… <NA>        177    14.8    13.2
-#>  7 2023-03-15 10:00:00 aemet   0073X     SITGES… <NA>         58    17      15.6
-#>  8 2023-03-15 10:00:00 aemet   0076      BARCEL… <NA>          4    15.6    13.8
-#>  9 2023-03-15 10:00:00 aemet   0092X     BERGA … <NA>        682    12.1    11  
-#> 10 2023-03-15 10:00:00 aemet   0106X     BALSAR… <NA>        361    12.4    10.3
-#> # … with 18,939 more rows, 7 more variables: max_temperature [°C],
-#> #   relative_humidity [%], precipitation [L/m^2], wind_direction [°],
-#> #   wind_speed [m/s], insolation [h], geometry <POINT [°]>, and abbreviated
-#> #   variable names ¹​station_id, ²​station_name, ³​station_province, ⁴​altitude,
-#> #   ⁵​temperature, ⁶​min_temperature
+#> # A tibble: 18,048 × 15
+#>    timestamp           service station_id station_name station_province altitude
+#>    <dttm>              <chr>   <chr>      <chr>        <chr>                 [m]
+#>  1 2023-10-22 14:00:00 aemet   0016A      REUS/AEROPU… <NA>                   71
+#>  2 2023-10-22 14:00:00 aemet   0034X      VALLS        <NA>                  233
+#>  3 2023-10-22 14:00:00 aemet   0042Y      TARRAGONA  … <NA>                   55
+#>  4 2023-10-22 14:00:00 aemet   0061X      PONTONS      <NA>                  632
+#>  5 2023-10-22 14:00:00 aemet   0066X      VILAFRANCA … <NA>                  177
+#>  6 2023-10-22 14:00:00 aemet   0073X      SITGES-VALL… <NA>                   58
+#>  7 2023-10-22 14:00:00 aemet   0076       BARCELONA/A… <NA>                    4
+#>  8 2023-10-22 14:00:00 aemet   0106X      BALSARENY    <NA>                  361
+#>  9 2023-10-22 14:00:00 aemet   0114X      PRATS DE LL… <NA>                  700
+#> 10 2023-10-22 14:00:00 aemet   0120X      MOIÀ         <NA>                  742
+#> # ℹ 18,038 more rows
+#> # ℹ 9 more variables: temperature [°C], min_temperature [°C],
+#> #   max_temperature [°C], relative_humidity [%], precipitation [L/m^2],
+#> #   wind_direction [°], wind_speed [m/s], insolation [h], geometry <POINT [°]>
 ```

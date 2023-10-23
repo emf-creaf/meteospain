@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 
 # meteospain
 
-[![R-CMD-check](https://github.com/emf-creaf/meteospain/workflows/R-CMD-check/badge.svg)](https://github.com/emf-creaf/meteospain/actions)
+[![R-CMD-check](https://github.com/emf-creaf/meteospain/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/emf-creaf/meteospain/actions/workflows/R-CMD-check.yaml)
 
 `meteospain` aims to offer access to different Spanish meteorological stations data in an uniform way.
 
