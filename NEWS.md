@@ -1,3 +1,7 @@
+# meteospain 0.1.4
+
+* Fixed bug in RIA coordinates (#20)
+
 # meteospain 0.1.3
 
 * meteocat API: new data limits, now daily data can be retrieved starting on 1989

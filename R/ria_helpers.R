@@ -191,16 +191,8 @@
     dplyr::mutate(
       station_id = as.character(glue::glue("{province_id}-{station_id}")),
       altitude = units::set_units(.data$altitude, 'm'),
-      latitud = dplyr::if_else(
-        stringr::str_detect(.data$latitud, 'S'),
-        -as.numeric(stringr::str_remove_all(.data$latitud, '[A-Za-z]'))/1e7,
-        as.numeric(stringr::str_remove_all(.data$latitud, '[A-Za-z]'))/1e7
-      ),
-      longitud = dplyr::if_else(
-        stringr::str_detect(.data$longitud, 'W'),
-        -as.numeric(stringr::str_remove_all(.data$longitud, '[A-Za-z]'))/1e7,
-        as.numeric(stringr::str_remove_all(.data$longitud, '[A-Za-z]'))/1e7
-      )
+      latitud = .parse_coords_dmsh(latitud),
+      longitud = .parse_coords_dmsh(longitud),
     ) |>
     sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
 
