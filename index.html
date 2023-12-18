@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
       </span>
     </div>
 
@@ -225,7 +225,7 @@
 <p>Some services, like AEMET or Meteocat, require an <em>API key</em> to access the data. <code>meteospain</code> <strong>doesn’t</strong> provide any key for those services, see <code><a href="reference/services_options.html">?services_options</a></code> for information about this.</p>
 <p>Once a key has been obtained, we can get the meteo:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, <span class="fu"><a href="reference/services_options.html">aemet_options</a></span><span class="op">(</span>api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/keyring/man/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">"aemet"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'aemet'</span>, <span class="fu"><a href="reference/services_options.html">aemet_options</a></span><span class="op">(</span>api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">"aemet"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a</span></span>
 <span><span class="co">#&gt;   AEMET como autora de la misma.</span></span>
 <span><span class="co">#&gt; https://www.aemet.es/es/nota_legal</span></span>
