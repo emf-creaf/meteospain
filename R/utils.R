@@ -171,6 +171,17 @@ relocate_vars <- function(data) {
   )
 }
 
+
+.parse_coords_dmsh <- function(coord){
+  
+  # converts from "DDMMSSsssH" DMS format to numeric DD
+  dmsh <- stringr::str_sub_all(coord, 
+        cbind(start = c(1, 3, 5, 10), length = c(2, 2, 5, 1)))
+  sapply(dmsh, function(x) (as.numeric(x[1]) + as.numeric(x[2])/60 + 
+         as.numeric(x[3])/3600000) * if (grepl(x[4],"W|S")) -1 else 1)
+}
+
+
 unnest_safe <- function(x, ...) {
 
   # if x is a list instead of a dataframe, something went wrong (happens sometimes in
