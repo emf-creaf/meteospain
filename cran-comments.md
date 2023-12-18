@@ -1,9 +1,9 @@
-This version of `meteospain` keeps up with
-changes in meteo data APIs.
+This version of `meteospain` fixes a bug in
+the coordinates processing from RIA API.
 
 ## Test environments
 
-* local R installation (Arch Linux), R 4.3.1
+* local R installation (Arch Linux), R 4.3.2
 * windows-latest (on github actions), R release
 * macOS-latest (on github actions), R release
 * ubuntu-latest (on github actions), R release
