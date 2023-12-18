@@ -1,6 +1,6 @@
-# meteospain 0.1.4
+# meteospain 0.1.3.9000
 
-* Fixed bug in RIA coordinates (#20)
+* RIA API: Fixed bug in coordinates processing (they are not decimal) (#20)
 
 # meteospain 0.1.3
 
