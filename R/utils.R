@@ -171,14 +171,21 @@ relocate_vars <- function(data) {
   )
 }
 
-
+#' @noRd
+#' @author Ruben F. Casal
 .parse_coords_dmsh <- function(coord){
-  
+
   # converts from "DDMMSSsssH" DMS format to numeric DD
-  dmsh <- stringr::str_sub_all(coord, 
-        cbind(start = c(1, 3, 5, 10), length = c(2, 2, 5, 1)))
-  sapply(dmsh, function(x) (as.numeric(x[1]) + as.numeric(x[2])/60 + 
-         as.numeric(x[3])/3600000) * if (grepl(x[4],"W|S")) -1 else 1)
+  dmsh <- stringr::str_sub_all(
+    coord, cbind(start = c(1, 3, 5, 10), length = c(2, 2, 5, 1))
+  )
+  sapply(
+    dmsh,
+    function(x) {
+      (as.numeric(x[1]) + as.numeric(x[2])/60 +  as.numeric(x[3])/3600000) *
+        if (grepl(x[4],"W|S")) -1 else 1
+    }
+  )
 }
 
 
