@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 # meteospain
 
 [![R-CMD-check](https://github.com/emf-creaf/meteospain/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/emf-creaf/meteospain/actions/workflows/R-CMD-check.yaml)
+[![CRAN-status](https://www.r-pkg.org/badges/version/meteospain)](https://CRAN.R-project.org/package=meteospain)
+[![CRAN-RStudio-mirror-downloads](https://cranlogs.r-pkg.org/badges/last-month/meteospain?color=blue)](https://r-pkg.org/pkg/meteospain)
 
 `meteospain` aims to offer access to different Spanish meteorological stations data in an uniform way.
 
