@@ -7,7 +7,7 @@
 #' @noRd
 .create_meteoclimatic_path <- function(api_options) {
 
-  meteoclimatic_path <- paste0("http://meteoclimatic.com/feed/xml/", api_options$stations)
+  meteoclimatic_path <- paste0("http://meteoclimatic.net/feed/xml/", api_options$stations)
 
   # not recognised resolution
   if (api_options$resolution != 'current_day') {
@@ -27,7 +27,7 @@
 
 .get_info_meteoclimatic <- function(api_options) {
   # path
-  path_resolution <- paste0("http://meteoclimatic.com/feed/rss/", api_options$stations)
+  path_resolution <- paste0("http://meteoclimatic.net/feed/rss/", api_options$stations)
   # station_info
   raw_station_info <- safe_api_access(type = 'xml', path_resolution)
   res <- dplyr::tibble(
