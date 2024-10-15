@@ -52,7 +52,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   options_for_aemet <- aemet_options(
     'daily',
     start_date = as.Date('2012-01-16'),
-    end_date = as.Date('2012-02-01'),
+    end_date = as.Date('2012-01-31'),
     api_key = key_get('aemet')
   )
   get_meteo_from('aemet', options_for_aemet)

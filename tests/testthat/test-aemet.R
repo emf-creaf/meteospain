@@ -75,6 +75,7 @@ test_that("aemet daily works", {
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
     "mean_temperature", "min_temperature", "max_temperature",
+    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
     "precipitation", "mean_wind_speed", "insolation", "geometry"
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
@@ -127,7 +128,7 @@ test_that("aemet monthly works", {
   stations_to_check <- c("0149X", "0252D")
   api_options$stations <- unique(stations_to_check)
   expect_warning(test_object <- get_meteo_from('aemet', api_options), "Only the first station")
-  test_object <- get_meteo_from('aemet', api_options)
+  # test_object <- get_meteo_from('aemet', api_options)
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   main_test_battery(
     test_object, service = 'aemet',

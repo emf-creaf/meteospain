@@ -484,6 +484,9 @@
       mean_temperature = "tmed",
       min_temperature = "tmin",
       max_temperature = "tmax",
+      mean_relative_humidity = "hrMedia",
+      min_relative_humidity = "hrMin",
+      max_relative_humidity = "hrMax",
       precipitation = "prec",
       mean_wind_speed = "velmedia",
       # wind_direction = "dir",
@@ -493,6 +496,7 @@
     .create_missing_vars(
       var_names = c(
         "mean_temperature", "min_temperature", "max_temperature",
+        "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
         "precipitation", "mean_wind_speed", "insolation"
       )
     ) |>
@@ -503,6 +507,9 @@
       mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
       min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
       max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
+      mean_relative_humidity = as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ',', '.')),
+      min_relative_humidity = as.numeric(stringr::str_replace_all(.data$min_relative_humidity, ',', '.')),
+      max_relative_humidity = as.numeric(stringr::str_replace_all(.data$max_relative_humidity, ',', '.')),
       precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$precipitation, ',', '.'))),
       mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
       # wind_direction = as.numeric(stringr::str_replace_all(.data$wind_direction, ',', '.')),
@@ -511,6 +518,9 @@
       mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+      min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
+      max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
       mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
       # wind_direction = units::set_units(.data$wind_direction, degree),
