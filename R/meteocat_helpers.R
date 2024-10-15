@@ -198,8 +198,14 @@
   # depending on resolution, the variables list is different
   variables_list <- switch(
     api_options$resolution,
-    'instant' = c(32, 33, 35, 36, 46, 47),
-    'hourly' = c(32, 33, 35, 36, 46, 47),
+    'instant' = c(
+      '1', '2', '3', '32', '33', '34', '35', '36', '38',
+      '40', '42', '44', '46', '47', '56', '57', '59', '72'
+    ),
+    'hourly' = c(
+      '1', '2', '3', '32', '33', '34', '35', '36', '38',
+      '40', '42', '44', '46', '47', '56', '57', '59', '72'
+    ),
     'daily' = c(1000:1002, 1100:1102, 1300, 1400, 1505, 1511),
     'monthly' = c(2000:2004, 2100:2104, 2300, 2400, 2505, 2511),
     'yearly' = c(3000:3004, 3100:3104, 3300, 3400, 3505, 3511)
@@ -405,8 +411,20 @@
   # differently. It also differs in the select step as in the latter group there is no repetition of column
   # names after the unnest step.
   resolution_specific_unnest <- .meteocat_short_carpentry
+  radiation_units <- "W/m^2"
+  var_names <- c(
+    "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+    "precipitation", "max_precipitation_minute",
+    "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+    "global_solar_radiation", "net_solar_radiation",
+    "snow_cover",
+    "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure"
+  )
   if (api_options$resolution %in% c('daily', 'monthly', 'yearly')) {
     resolution_specific_unnest <- .meteocat_long_carpentry
+    radiation_units <- "MJ/m^2"
+    var_names <- c("precipitation")
   }
 
   # Stations info for getting coords ----------------------------------------------------------------------
@@ -425,6 +443,7 @@
       id_cols = -"variable_code",
       names_from = "variable_name", values_from = "valor"
     ) |>
+    .create_missing_vars(var_names = var_names) |>
     # set service, date and units
     dplyr::mutate(
       service = 'meteocat',
@@ -432,9 +451,15 @@
       dplyr::across(dplyr::contains('temperature'), ~ units::set_units(.x, 'degree_C')),
       dplyr::across(dplyr::contains('humidity'), ~ units::set_units(.x, '%')),
       dplyr::across(dplyr::contains('precipitation'), ~ units::set_units(.x, 'L/m^2')),
-      dplyr::across(dplyr::contains('radiation'), ~ units::set_units(.x, 'MJ/m^2')),
+      # standard mode to avoid interpreting radiation_units as a symbol (default)
+      dplyr::across(
+        dplyr::contains('radiation'),
+        ~ units::set_units(.x, radiation_units, mode = "standard")
+      ),
       dplyr::across(dplyr::contains('speed'), ~ units::set_units(.x, 'm/s')),
       dplyr::across(dplyr::contains('direction'), ~ units::set_units(.x, 'degree')),
+      dplyr::across(dplyr::contains('pressure'), ~ units::set_units(.x, 'hPa')),
+      dplyr::across(dplyr::contains('snow'), ~ units::set_units(.x, 'cm'))
     )
 
   res <- response_trasformed |>

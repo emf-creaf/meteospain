@@ -14,3 +14,4 @@
 ^CRAN-RELEASE$
 ^revdep$
 ^CRAN-SUBMISSION$
+^\.vscode$

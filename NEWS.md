@@ -1,8 +1,14 @@
 # meteospain (development version)
 
-* AEMET API: Updated docs and examples to reflect new API limit
-  (15 days in daily scale instead of 30)
-* meteoclimatic API: Fixed domain fo new API
+* MeteoCat API:
+  - Updated variables returned in instant and hourly scales. Now all possible
+    variables are returned (#27).  
+* AEMET API:
+  - Updated docs and examples to reflect new API limit, 15 days in daily scale
+    instead of 30 (#25).  
+  - Added relative humidity vars to daily scale (#26).  
+* meteoclimatic API:
+  - Fixed domain fo new API (#24).
 
 # meteospain 0.1.4
 

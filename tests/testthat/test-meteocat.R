@@ -41,10 +41,13 @@ test_that("meteocat instant works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "temperature",
-    "relative_humidity", "precipitation",
-    "wind_direction", "wind_speed",
-    "global_solar_radiation",
+    "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+    "precipitation", "max_precipitation_minute",
+    "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+    "global_solar_radiation", "net_solar_radiation",
+    "snow_cover",
+    "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure",
     "geometry"
   )
   main_test_battery(
@@ -58,6 +61,10 @@ test_that("meteocat instant works", {
     test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
   )
+  # extra check for radiation units as they are different in short than in large
+  expect_true(
+    units(test_object$global_solar_radiation)$numerator %in% c("W")
+  )
 })
 
 test_that("meteocat hourly works", {
@@ -69,10 +76,13 @@ test_that("meteocat hourly works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "temperature",
-    "relative_humidity", "precipitation",
-    "wind_direction", "wind_speed",
-    "global_solar_radiation",
+    "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+    "precipitation", "max_precipitation_minute",
+    "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+    "global_solar_radiation", "net_solar_radiation",
+    "snow_cover",
+    "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure",
     "geometry"
   )
   main_test_battery(
@@ -87,6 +97,10 @@ test_that("meteocat hourly works", {
     test_object, service = 'meteocat', expected_names = expected_names, temperature = temperature,
     stations_to_check = stations_to_check
   )
+  # extra check for radiation units as they are different in short than in large
+  expect_true(
+    units(test_object$global_solar_radiation)$numerator %in% c("W")
+  )
 
   # 2008 to 2010 stations lack some variables, check it works without those variables
   api_options <- meteocat_options(
@@ -96,10 +110,13 @@ test_that("meteocat hourly works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "temperature",
-    "relative_humidity", "precipitation",
-    "wind_speed",
-    "global_solar_radiation",
+    "temperature", "min_temperature", "max_temperature",
+    "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+    "precipitation", "max_precipitation_minute",
+    "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+    "global_solar_radiation", "net_solar_radiation",
+    "snow_cover",
+    "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure",
     "geometry"
   )
   main_test_battery(
@@ -116,7 +133,7 @@ test_that("meteocat daily works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "min_temperature", 'max_temperature',
+    "mean_temperature", "min_temperature", "max_temperature",
     "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
     "precipitation",
     "mean_wind_direction", "mean_wind_speed",
@@ -125,6 +142,10 @@ test_that("meteocat daily works", {
   )
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
+  )
+  # extra check for radiation units as they are different in short than in large
+  expect_true(
+    units(test_object$global_solar_radiation)$numerator %in% c("MJ")
   )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
@@ -179,6 +200,10 @@ test_that("meteocat monthly works", {
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
+  # extra check for radiation units as they are different in short than in large
+  expect_true(
+    units(test_object$global_solar_radiation)$numerator %in% c("MJ")
+  )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]
   api_options$stations <- unique(stations_to_check)
@@ -212,6 +237,10 @@ test_that("meteocat yearly works", {
   )
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
+  )
+  # extra check for radiation units as they are different in short than in large
+  expect_true(
+    units(test_object$global_solar_radiation)$numerator %in% c("MJ")
   )
   # some stations
   stations_to_check <- unique(test_object[['station_id']])[1:3]

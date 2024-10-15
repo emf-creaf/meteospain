@@ -38,12 +38,24 @@ legal_note_style <- cli::combine_ansi_styles('blue', 'underline')
 
   code_dictionary <- c(
     # instant and hourly
+    '1' = 'max_atmospheric_pressure',
+    '2' = 'min_atmospheric_pressure',
+    '3' = 'max_relative_humidity',
     '32' = 'temperature',
     '33' = 'relative_humidity',
+    '34' = 'atmospheric_pressure',
     '35' = 'precipitation',
     '36' = 'global_solar_radiation',
+    '38' = 'snow_cover',
+    '40' = 'max_temperature',
+    '42' = 'min_temperature',
+    '44' = 'min_relative_humidity',
     '46' = 'wind_speed',
     '47' = 'wind_direction',
+    '56' = 'max_wind_speed',
+    '57' = 'max_wind_direction',
+    '59' = 'net_solar_radiation',
+    '72' = 'max_precipitation_minute',
     # daily
     '1000' = 'mean_temperature',
     '1001' = 'max_temperature',
