@@ -51,7 +51,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   # key_set('aemet')
   options_for_aemet <- aemet_options(
     'daily',
-    start_date = as.Date('2012-01-01'),
+    start_date = as.Date('2012-01-16'),
     end_date = as.Date('2012-02-01'),
     api_key = key_get('aemet')
   )

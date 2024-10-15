@@ -38,8 +38,9 @@ test_that("ria get info works", {
 # ria get data tests ------------------------------------------------------------------------------------
 
 test_that("ria daily works", {
-  # all stations
-  api_options <- ria_options('daily', start_date = Sys.Date() - 1)
+  # all stations (two days ago, because the data update is not real time, meaning that if I test
+  # this in the morning, sometimes it will fail as the data is not in the API yet)
+  api_options <- ria_options('daily', start_date = Sys.Date() - 2)
   test_object <- get_meteo_from('ria', api_options)
   # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   expected_names <- c(

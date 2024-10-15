@@ -1,5 +1,7 @@
 # meteospain (development version)
 
+* AEMET API: Updated docs and examples to reflect new API limit
+  (15 days in daily scale instead of 30)
 * meteoclimatic API: Fixed domain fo new API
 
 # meteospain 0.1.4

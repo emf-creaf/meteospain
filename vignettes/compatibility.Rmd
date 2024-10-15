@@ -54,24 +54,24 @@ them in one object:
 ```{r daily_april_2020, eval=NOT_CRAN}
 aemet_daily <- get_meteo_from(
     'aemet', aemet_options(
-      'daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'),
+      'daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'),
       api_key = keyring::key_get('aemet')
     )
 )
 
 meteocat_daily <- get_meteo_from(
   'meteocat',
-  meteocat_options('daily', start_date = as.Date('2020-04-01'), api_key = keyring::key_get('meteocat'))
+  meteocat_options('daily', start_date = as.Date('2020-04-16'), api_key = keyring::key_get('meteocat'))
 )
 
 meteogalicia_daily <- get_meteo_from(
   'meteogalicia',
-  meteogalicia_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+  meteogalicia_options('daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'))
 )
 
 ria_daily <- get_meteo_from(
   'ria',
-  ria_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+  ria_options('daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'))
 )
 ```
 

@@ -55,21 +55,21 @@ test_that("current concordance exists", {
 test_that("daily concordance exists", {
   aemet_daily <- suppressMessages(get_meteo_from(
     'aemet', aemet_options(
-      'daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'),
+      'daily', start_date = as.Date('2020-04-15'), end_date = as.Date('2020-04-30'),
       api_key = keyring::key_get('aemet')
     )
   ))
   meteocat_daily <- suppressMessages(get_meteo_from(
     'meteocat',
-    meteocat_options('daily', start_date = as.Date('2020-04-01'), api_key = keyring::key_get('meteocat'))
+    meteocat_options('daily', start_date = as.Date('2020-04-15'), api_key = keyring::key_get('meteocat'))
   ))
   meteogalicia_daily <- suppressMessages(get_meteo_from(
     'meteogalicia',
-    meteogalicia_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+    meteogalicia_options('daily', start_date = as.Date('2020-04-15'), end_date = as.Date('2020-04-30'))
   ))
   ria_daily <- suppressMessages(get_meteo_from(
     'ria',
-    ria_options('daily', start_date = as.Date('2020-04-01'), end_date = as.Date('2020-04-30'))
+    ria_options('daily', start_date = as.Date('2020-04-15'), end_date = as.Date('2020-04-30'))
   ))
   test_object <- suppressMessages(purrr::reduce(
     list(

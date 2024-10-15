@@ -127,7 +127,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   daily_opts <- aemet_options(
     resolution = 'daily',
     start_date = as.Date('1990-01-01'),
-    end_date = as.Date('1990-01-31'),
+    end_date = as.Date('1990-01-15'),
     api = keyring::key_get('aemet')
   )
 }
