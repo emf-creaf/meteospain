@@ -6,20 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>API limits and loops • meteospain</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="API limits and loops">
-<meta property="og:description" content="meteospain">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -33,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -45,7 +44,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -86,7 +85,7 @@
 <li>
   <a href="https://github.com/emf-creaf/meteospain/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -97,7 +96,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -105,7 +104,7 @@
       <h1 data-toc-skip>API limits and loops</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/HEAD/vignettes/api_limits.Rmd" class="external-link"><code>vignettes/api_limits.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/vignettes/api_limits.Rmd" class="external-link"><code>vignettes/api_limits.Rmd</code></a></small>
       <div class="hidden name"><code>api_limits.Rmd</code></div>
 
     </div>
@@ -115,16 +114,16 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE</span></span></code></pre></div>
 <p>The following APIs impose a period limit in the data retrieved, not
 allowing querying more than the predetermined period in each API.</p>
 <div class="section level2">
 <h2 id="aemet-api">AEMET API<a class="anchor" aria-label="anchor" href="#aemet-api"></a>
 </h2>
-<p>AEMET API limit the daily data download to 31 days, and the monthly
-and yearly data to 3 years:</p>
+<p>AEMET API limit the daily data download to 15 days, and the monthly
+and yearly data to 36 months:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># aemet api has a limit for 31 days in daily:</span></span>
+<code class="sourceCode R"><span><span class="co"># aemet api has a limit for 15 days in daily:</span></span>
 <span><span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
@@ -136,10 +135,10 @@ and yearly data to 3 years:</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `api_function()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> 404</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> AEMET API returned no data: El rango de fechas no puede ser superior a 31</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> AEMET API returned no data: El rango de fechas no puede ser superior a 15</span></span>
 <span><span class="co">#&gt;   dias</span></span>
 <span></span>
-<span><span class="co"># and monthly and yearly data to 3 years</span></span>
+<span><span class="co"># and monthly and yearly data to 36 months</span></span>
 <span><span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
@@ -155,17 +154,30 @@ and yearly data to 3 years:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> AEMET API returned no data: El rango de las fechas no puede ser superior a 36</span></span>
 <span><span class="co">#&gt;   mesess</span></span></code></pre></div>
 <p>This means that with one call to <code>get_meteo_from</code> to the
-AEMET service, one can only download 31 days of data, (or 3 years in
+AEMET service, one can only download 15 days of data, (or 36 months in
 monthly and yearly data).<br>
 If the period needed is bigger than that, one option is performing all
 the calls necessary and join the results:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res_1990_jan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">res_1990_jan_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'aemet'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
 <span>    api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span>,</span>
 <span>    resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
 <span>    start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-01'</span><span class="op">)</span>,</span>
+<span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-15'</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span></span>
+<span><span class="va">res_1990_jan_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
+<span>  <span class="st">'aemet'</span>,</span>
+<span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
+<span>    api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span>,</span>
+<span>    resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
+<span>    start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-16'</span><span class="op">)</span>,</span>
 <span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-31'</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -173,43 +185,32 @@ the calls necessary and join the results:</p>
 <span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
-<span><span class="va">res_1990_feb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
-<span>  <span class="st">'aemet'</span>,</span>
-<span>  <span class="fu"><a href="../reference/services_options.html">aemet_options</a></span><span class="op">(</span></span>
-<span>    api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span>,</span>
-<span>    resolution <span class="op">=</span> <span class="st">'daily'</span>,</span>
-<span>    start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-02-01'</span><span class="op">)</span>,</span>
-<span>    end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-02-28'</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
-<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
-<span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">res_1990_jan</span>, <span class="va">res_1990_feb</span><span class="op">)</span></span>
-<span><span class="va">res</span></span>
-<span><span class="co">#&gt; Simple feature collection with 7015 features and 12 fields</span></span>
+<span><span class="va">res_1990_jan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">res_1990_jan_1</span>, <span class="va">res_1990_jan_2</span><span class="op">)</span></span>
+<span><span class="va">res_1990_jan</span></span>
+<span><span class="co">#&gt; Simple feature collection with 5066 features and 15 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -17.88889 ymin: 27.81889 xmax: 4.215556 ymax: 43.56694</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -18.115 ymin: 27.72528 xmax: 4.215556 ymax: 43.65111</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7,015 × 13</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5,066 × 16</span></span></span>
 <span><span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span></span>
 <span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0002I      <span style="color: #949494;">"</span>VANDELLÒS … TARRAGONA              32</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0016A      <span style="color: #949494;">"</span>REUS AEROP… TARRAGONA              71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA … BARCELONA               4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0200E      <span style="color: #949494;">"</span>BARCELONA,… BARCELONA             408</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0229I      <span style="color: #949494;">"</span>SABADELL A… BARCELONA             146</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0324A      <span style="color: #949494;">"</span>RIPOLL<span style="color: #949494;">"</span>     GIRONA                675</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0367       <span style="color: #949494;">"</span>GIRONA AER… GIRONA                143</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   1014       <span style="color: #949494;">"</span>HONDARRIBI… GIPUZKOA                4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   1024E      <span style="color: #949494;">"</span>DONOSTIA /… GIPUZKOA              250</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   1082       <span style="color: #949494;">"</span>BILBAO AER… BIZKAIA                42</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7,005 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   insolation [h], geometry &lt;POINT [°]&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0016B      <span style="color: #949494;">"</span>REUS (CENT… TARRAGONA             118</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA … BARCELONA               4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0149D      <span style="color: #949494;">"</span>MANRESA (L… BARCELONA             291</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0158O      <span style="color: #949494;">"</span>MONTSERRAT<span style="color: #949494;">"</span> BARCELONA             738</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0200E      <span style="color: #949494;">"</span>BARCELONA,… BARCELONA             408</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0229I      <span style="color: #949494;">"</span>SABADELL A… BARCELONA             146</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0294B      <span style="color: #949494;">"</span>LA BISBAL … GIRONA                 51</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0321       <span style="color: #949494;">"</span>CAMPDEVANO… GIRONA                731</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5,056 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 10 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], mean_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;</span></span></span></code></pre></div>
 <p>While for short periods this can be easily done, when needing long
 periods (years, decades), this can be tedious and prone to error (or at
 least involves a lot of <em>copy&amp;paste</em> and generate longer
@@ -220,8 +221,8 @@ To avoid this, we can use loops, both in a tidyverse way
 vectors of dates to retrieve:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># First, we prepare the date vectors, with the start and end dates.</span></span>
-<span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-06-01'</span><span class="op">)</span>, <span class="st">'months'</span><span class="op">)</span></span>
-<span><span class="va">end_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-02-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-07-01'</span><span class="op">)</span>, <span class="st">'months'</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span><span class="va">start_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-07-01'</span><span class="op">)</span>, <span class="st">'15 days'</span><span class="op">)</span></span>
+<span><span class="va">end_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-01-15'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'1990-07-15'</span><span class="op">)</span>, <span class="st">'15 days'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Both vectors must have the same length</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">start_dates</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">end_dates</span><span class="op">)</span></span>
@@ -229,17 +230,24 @@ vectors of dates to retrieve:</p>
 <span></span>
 <span><span class="co"># lets see them</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">start_dates</span>, <span class="va">end_dates</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   start_dates  end_dates</span></span>
-<span><span class="co">#&gt; 1  1990-01-01 1990-01-31</span></span>
-<span><span class="co">#&gt; 2  1990-02-01 1990-02-28</span></span>
-<span><span class="co">#&gt; 3  1990-03-01 1990-03-31</span></span>
-<span><span class="co">#&gt; 4  1990-04-01 1990-04-30</span></span>
-<span><span class="co">#&gt; 5  1990-05-01 1990-05-31</span></span>
-<span><span class="co">#&gt; 6  1990-06-01 1990-06-30</span></span></code></pre></div>
+<span><span class="co">#&gt;    start_dates  end_dates</span></span>
+<span><span class="co">#&gt; 1   1990-01-01 1990-01-15</span></span>
+<span><span class="co">#&gt; 2   1990-01-16 1990-01-30</span></span>
+<span><span class="co">#&gt; 3   1990-01-31 1990-02-14</span></span>
+<span><span class="co">#&gt; 4   1990-02-15 1990-03-01</span></span>
+<span><span class="co">#&gt; 5   1990-03-02 1990-03-16</span></span>
+<span><span class="co">#&gt; 6   1990-03-17 1990-03-31</span></span>
+<span><span class="co">#&gt; 7   1990-04-01 1990-04-15</span></span>
+<span><span class="co">#&gt; 8   1990-04-16 1990-04-30</span></span>
+<span><span class="co">#&gt; 9   1990-05-01 1990-05-15</span></span>
+<span><span class="co">#&gt; 10  1990-05-16 1990-05-30</span></span>
+<span><span class="co">#&gt; 11  1990-05-31 1990-06-14</span></span>
+<span><span class="co">#&gt; 12  1990-06-15 1990-06-29</span></span>
+<span><span class="co">#&gt; 13  1990-06-30 1990-07-14</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="tidyverse-loop">tidyverse loop<a class="anchor" aria-label="anchor" href="#tidyverse-loop"></a>
 </h3>
-<p>We are gonna use <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">purrr::map2_dfr</a></code>, to iterate both date
+<p>We are gonna use <code><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">purrr::map2</a></code>, to iterate both date
 vectors at the same time and return a data frame with all the results
 directly:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -267,6 +275,32 @@ directly:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">API request limit reached: Client error: (429) Too Many Requests (RFC 6585)</span></span></span>
+<span><span class="co">#&gt; Trying again in 60 seconds</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
@@ -275,27 +309,34 @@ directly:</p>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res_tidyverse</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    timestamp service station_id         station_name station_province altitude</span></span>
-<span><span class="co">#&gt; 1 1990-01-01   aemet      0002I          VANDELLÒS          TARRAGONA   32 [m]</span></span>
-<span><span class="co">#&gt; 2 1990-01-01   aemet      0016A      REUS AEROPUERTO        TARRAGONA   71 [m]</span></span>
-<span><span class="co">#&gt; 3 1990-01-01   aemet       0076 BARCELONA AEROPUERTO        BARCELONA    4 [m]</span></span>
-<span><span class="co">#&gt; 4 1990-01-01   aemet      0200E     BARCELONA, FABRA        BARCELONA  408 [m]</span></span>
-<span><span class="co">#&gt; 5 1990-01-01   aemet      0229I  SABADELL AEROPUERTO        BARCELONA  146 [m]</span></span>
-<span><span class="co">#&gt; 6 1990-01-01   aemet      0324A               RIPOLL           GIRONA  675 [m]</span></span>
-<span><span class="co">#&gt;   mean_temperature min_temperature max_temperature precipitation</span></span>
-<span><span class="co">#&gt; 1        11.2 [°C]        8.8 [°C]       13.7 [°C]     0 [L/m^2]</span></span>
-<span><span class="co">#&gt; 2         9.0 [°C]        5.4 [°C]       12.6 [°C]     0 [L/m^2]</span></span>
-<span><span class="co">#&gt; 3         9.2 [°C]        4.0 [°C]       14.4 [°C]     0 [L/m^2]</span></span>
-<span><span class="co">#&gt; 4         9.2 [°C]        6.4 [°C]       12.0 [°C]     0 [L/m^2]</span></span>
-<span><span class="co">#&gt; 5         7.0 [°C]        2.0 [°C]       12.0 [°C]     0 [L/m^2]</span></span>
-<span><span class="co">#&gt; 6         4.5 [°C]       -2.5 [°C]       11.5 [°C]     0 [L/m^2]</span></span>
-<span><span class="co">#&gt;   mean_wind_speed insolation                   geometry</span></span>
-<span><span class="co">#&gt; 1       1.7 [m/s]    0.1 [h] POINT (0.8713889 40.95806)</span></span>
-<span><span class="co">#&gt; 2       0.6 [m/s]    0.1 [h]    POINT (1.163611 41.145)</span></span>
-<span><span class="co">#&gt; 3       3.6 [m/s]    6.7 [h]      POINT (2.07 41.29278)</span></span>
-<span><span class="co">#&gt; 4       5.6 [m/s]    8.3 [h]  POINT (2.124167 41.41833)</span></span>
-<span><span class="co">#&gt; 5        NA [m/s]     NA [h]  POINT (2.103056 41.52361)</span></span>
-<span><span class="co">#&gt; 6        NA [m/s]     NA [h]  POINT (2.196111 42.19139)</span></span></code></pre></div>
+<span><span class="co">#&gt;    timestamp service station_id          station_name station_province altitude</span></span>
+<span><span class="co">#&gt; 1 1990-01-01   aemet      0002I           VANDELLÒS          TARRAGONA   32 [m]</span></span>
+<span><span class="co">#&gt; 2 1990-01-01   aemet      0016A       REUS AEROPUERTO        TARRAGONA   71 [m]</span></span>
+<span><span class="co">#&gt; 3 1990-01-01   aemet      0016B REUS (CENTRE LECTURA)        TARRAGONA  118 [m]</span></span>
+<span><span class="co">#&gt; 4 1990-01-01   aemet       0076  BARCELONA AEROPUERTO        BARCELONA    4 [m]</span></span>
+<span><span class="co">#&gt; 5 1990-01-01   aemet      0149D    MANRESA (LA CULLA)        BARCELONA  291 [m]</span></span>
+<span><span class="co">#&gt; 6 1990-01-01   aemet      0158O            MONTSERRAT        BARCELONA  738 [m]</span></span>
+<span><span class="co">#&gt;   mean_temperature min_temperature max_temperature mean_relative_humidity</span></span>
+<span><span class="co">#&gt; 1        11.2 [°C]        8.8 [°C]       13.7 [°C]                 80 [%]</span></span>
+<span><span class="co">#&gt; 2         9.0 [°C]        5.4 [°C]       12.6 [°C]                 89 [%]</span></span>
+<span><span class="co">#&gt; 3        10.1 [°C]        8.4 [°C]       11.8 [°C]                 82 [%]</span></span>
+<span><span class="co">#&gt; 4         9.2 [°C]        4.0 [°C]       14.4 [°C]                 74 [%]</span></span>
+<span><span class="co">#&gt; 5         5.0 [°C]       -1.5 [°C]       11.6 [°C]                 69 [%]</span></span>
+<span><span class="co">#&gt; 6         7.0 [°C]        3.0 [°C]       11.0 [°C]                 NA [%]</span></span>
+<span><span class="co">#&gt;   min_relative_humidity max_relative_humidity precipitation mean_wind_speed</span></span>
+<span><span class="co">#&gt; 1                NA [%]                NA [%]     0 [L/m^2]       1.7 [m/s]</span></span>
+<span><span class="co">#&gt; 2                NA [%]                NA [%]     0 [L/m^2]       0.6 [m/s]</span></span>
+<span><span class="co">#&gt; 3                NA [%]                NA [%]     0 [L/m^2]       0.6 [m/s]</span></span>
+<span><span class="co">#&gt; 4                NA [%]                NA [%]     0 [L/m^2]       3.6 [m/s]</span></span>
+<span><span class="co">#&gt; 5                NA [%]                NA [%]     0 [L/m^2]       0.8 [m/s]</span></span>
+<span><span class="co">#&gt; 6                NA [%]                NA [%]     0 [L/m^2]        NA [m/s]</span></span>
+<span><span class="co">#&gt;   insolation                   geometry</span></span>
+<span><span class="co">#&gt; 1    0.1 [h] POINT (0.8713889 40.95806)</span></span>
+<span><span class="co">#&gt; 2    0.1 [h]    POINT (1.163611 41.145)</span></span>
+<span><span class="co">#&gt; 3    0.2 [h]  POINT (1.108889 41.15417)</span></span>
+<span><span class="co">#&gt; 4    6.7 [h]      POINT (2.07 41.29278)</span></span>
+<span><span class="co">#&gt; 5    7.8 [h]     POINT (1.840278 41.72)</span></span>
+<span><span class="co">#&gt; 6     NA [h]  POINT (1.839167 41.59444)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="for-loop">for loop<a class="anchor" aria-label="anchor" href="#for-loop"></a>
@@ -321,23 +362,25 @@ vectors:</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res_for</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 6 features and 12 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 6 features and 15 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 0.8713889 ymin: 40.95806 xmax: 2.196111 ymax: 42.19139</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 0.8713889 ymin: 40.95806 xmax: 2.07 ymax: 41.72</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 13</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 16</span></span></span>
 <span><span class="co">#&gt;   timestamp           service station_id station_name  station_province altitude</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0002I      <span style="color: #949494;">"</span>VANDELLÒS  <span style="color: #949494;">"</span> TARRAGONA              32</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0016A      <span style="color: #949494;">"</span>REUS AEROPU… TARRAGONA              71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA A… BARCELONA               4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0200E      <span style="color: #949494;">"</span>BARCELONA, … BARCELONA             408</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0229I      <span style="color: #949494;">"</span>SABADELL AE… BARCELONA             146</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0324A      <span style="color: #949494;">"</span>RIPOLL<span style="color: #949494;">"</span>      GIRONA                675</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], precipitation [L/m^2], mean_wind_speed [m/s],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   insolation [h], geometry &lt;POINT [°]&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0016B      <span style="color: #949494;">"</span>REUS (CENTR… TARRAGONA             118</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA A… BARCELONA               4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0149D      <span style="color: #949494;">"</span>MANRESA (LA… BARCELONA             291</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1990-01-01 <span style="color: #949494;">00:00:00</span> aemet   0158O      <span style="color: #949494;">"</span>MONTSERRAT<span style="color: #949494;">"</span>  BARCELONA             738</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 10 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], mean_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;</span></span></span></code></pre></div>
 <p>Both methods return identical results:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># both are identical</span></span>
@@ -645,15 +688,15 @@ independently of the date supplied:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">all_years</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "1989-12-21 UTC" "1990-12-21 UTC" "1991-12-21 UTC" "1992-12-21 UTC"</span></span>
-<span><span class="co">#&gt;  [5] "1993-12-21 UTC" "1994-12-21 UTC" "1995-12-21 UTC" "1996-12-21 UTC"</span></span>
-<span><span class="co">#&gt;  [9] "1997-12-21 UTC" "1998-12-21 UTC" "1999-12-21 UTC" "2000-12-21 UTC"</span></span>
-<span><span class="co">#&gt; [13] "2001-12-21 UTC" "2002-12-21 UTC" "2003-12-21 UTC" "2004-12-21 UTC"</span></span>
-<span><span class="co">#&gt; [17] "2005-12-21 UTC" "2006-12-21 UTC" "2007-12-21 UTC" "2008-12-21 UTC"</span></span>
-<span><span class="co">#&gt; [21] "2009-12-21 UTC" "2010-12-21 UTC" "2011-12-21 UTC" "2012-12-21 UTC"</span></span>
-<span><span class="co">#&gt; [25] "2013-12-21 UTC" "2014-12-21 UTC" "2015-12-21 UTC" "2016-12-21 UTC"</span></span>
-<span><span class="co">#&gt; [29] "2017-12-21 UTC" "2018-12-21 UTC" "2019-12-21 UTC" "2020-12-21 UTC"</span></span>
-<span><span class="co">#&gt; [33] "2021-12-21 UTC" "2022-12-21 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "1989-10-16 UTC" "1990-10-16 UTC" "1991-10-16 UTC" "1992-10-16 UTC"</span></span>
+<span><span class="co">#&gt;  [5] "1993-10-16 UTC" "1994-10-16 UTC" "1995-10-16 UTC" "1996-10-16 UTC"</span></span>
+<span><span class="co">#&gt;  [9] "1997-10-16 UTC" "1998-10-16 UTC" "1999-10-16 UTC" "2000-10-16 UTC"</span></span>
+<span><span class="co">#&gt; [13] "2001-10-16 UTC" "2002-10-16 UTC" "2003-10-16 UTC" "2004-10-16 UTC"</span></span>
+<span><span class="co">#&gt; [17] "2005-10-16 UTC" "2006-10-16 UTC" "2007-10-16 UTC" "2008-10-16 UTC"</span></span>
+<span><span class="co">#&gt; [21] "2009-10-16 UTC" "2010-10-16 UTC" "2011-10-16 UTC" "2012-10-16 UTC"</span></span>
+<span><span class="co">#&gt; [25] "2013-10-16 UTC" "2014-10-16 UTC" "2015-10-16 UTC" "2016-10-16 UTC"</span></span>
+<span><span class="co">#&gt; [29] "2017-10-16 UTC" "2018-10-16 UTC" "2019-10-16 UTC" "2020-10-16 UTC"</span></span>
+<span><span class="co">#&gt; [33] "2021-10-16 UTC" "2022-10-16 UTC" "2023-10-16 UTC" "2024-10-16 UTC"</span></span></code></pre></div>
 <p>This means that with yearly we always get all the data available, so
 there is no need of loops.</p>
 </div>
@@ -662,9 +705,7 @@ there is no need of loops.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -677,16 +718,16 @@ there is no need of loops.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
