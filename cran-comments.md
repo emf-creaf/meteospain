@@ -1,16 +1,16 @@
-This version of `meteospain` fixes a bug in
-the coordinates processing from RIA API.
+This version of `meteospain` adds needed updates for some API connections as
+well as improves data returned by meteocat and aemet APIs.
 
 ## Test environments
 
-* local R installation (Arch Linux), R 4.3.2
+* local R installation (Arch Linux), R 4.4.1
 * windows-latest (on github actions), R release
 * macOS-latest (on github actions), R release
 * ubuntu-latest (on github actions), R release
 * ubuntu-latest (on github actions), R devel
 * ubuntu-latest (on github actions), R oldrel-1
-* win-builder (devel, oldrelease and release)
-* debian-clang-devel (on rhub)
+* win-builder (devel)
+* mac-builder (release)
 
 ## R CMD check results
 

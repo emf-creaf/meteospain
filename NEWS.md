@@ -8,7 +8,7 @@
     instead of 30 (#25).  
   - Added relative humidity vars to daily scale (#26).  
 * meteoclimatic API:
-  - Fixed domain fo new API (#24).
+  - Fixed domain for new API (#24).
 
 # meteospain 0.1.4
 
