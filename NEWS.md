@@ -1,4 +1,4 @@
-# meteospain (development version)
+# meteospain 0.2.0
 
 * MeteoCat API:
   - Updated variables returned in instant and hourly scales. Now all possible
