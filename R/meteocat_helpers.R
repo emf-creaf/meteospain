@@ -363,133 +363,145 @@
   if (length(query_resolution) < 1) {
     query_resolution <- NULL
   }
+  # cache (in this case with path and query to get the date also)
+  cache_ref <- rlang::hash(c(paths_resolution, query_resolution))
 
-  # GET and Status check ----------------------------------------------------------------------------------
-  # Here the things are a little convoluted. MeteoCat, for returning all stations only allows one variable
-  # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
-  # checking statuses and retrieving data if everything is ok.
-  api_statuses <- paths_resolution |>
-    purrr::map(
-      \(path) {
-        .check_status_meteocat(
-          "https://api.meteo.cat",
-          httr::add_headers(`x-api-key` = api_options$api_key),
-          path = path,
-          query = query_resolution,
-          httr::user_agent('https://github.com/emf-creaf/meteospain')
-        )
+  # if resolution less than daily, remove the cache
+  if (api_options$resolution %in% c("instant", "hourly")) {
+    apis_cache$remove(cache_ref)
+  }
+
+  data_meteocat <- .get_cached_result(cache_ref, {
+  
+    # GET and Status check ----------------------------------------------------------------------------------
+    # Here the things are a little convoluted. MeteoCat, for returning all stations only allows one variable
+    # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
+    # checking statuses and retrieving data if everything is ok.
+    api_statuses <- paths_resolution |>
+      purrr::map(
+        \(path) {
+          .check_status_meteocat(
+            "https://api.meteo.cat",
+            httr::add_headers(`x-api-key` = api_options$api_key),
+            path = path,
+            query = query_resolution,
+            httr::user_agent('https://github.com/emf-creaf/meteospain')
+          )
+        }
+      )
+  
+    variables_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
+      purrr::flatten_chr()
+    variables_codes <- purrr::map_depth(api_statuses, 1, 'code') |>
+      purrr::flatten_dbl()
+    variables_messages <- purrr::map_depth(api_statuses, 1, 'message') |>
+      purrr::flatten_chr()
+  
+    if (any(variables_statuses != 'OK')) {
+      if (any(variables_codes == 429)) {
+        messages_to_show <- variables_messages[which(variables_codes == 429)] |> unique()
+        return(.manage_429_errors(list(code = 429, message = messages_to_show[1]), api_options, .get_data_meteocat))
+      } else {
+        messages_to_show <- variables_messages[which(variables_codes != 200)] |> unique()
+        cli::cli_abort(c(messages_to_show))
       }
-    )
-
-  variables_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
-    purrr::flatten_chr()
-  variables_codes <- purrr::map_depth(api_statuses, 1, 'code') |>
-    purrr::flatten_dbl()
-  variables_messages <- purrr::map_depth(api_statuses, 1, 'message') |>
-    purrr::flatten_chr()
-
-  if (any(variables_statuses != 'OK')) {
-    if (any(variables_codes == 429)) {
-      messages_to_show <- variables_messages[which(variables_codes == 429)] |> unique()
-      return(.manage_429_errors(list(code = 429, message = messages_to_show[1]), api_options, .get_data_meteocat))
-    } else {
-      messages_to_show <- variables_messages[which(variables_codes != 200)] |> unique()
-      cli::cli_abort(c(messages_to_show))
     }
-  }
-
-  # Filter expression for stations ------------------------------------------------------------------------
-  # In case stations were supplied, we need also to filter them
-  filter_expression <- TRUE
-  # update filter if there is stations supplied
-  if (!rlang::is_null(api_options$stations)) {
-    filter_expression <- rlang::expr(.data$station_id %in% api_options$stations)
-  }
-
-  # Resolution specific carpentry -------------------------------------------------------------------------
-  # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
-  # differently. It also differs in the select step as in the latter group there is no repetition of column
-  # names after the unnest step.
-  resolution_specific_unnest <- .meteocat_short_carpentry
-  radiation_units <- "W/m^2"
-  var_names <- c(
-    "temperature", "min_temperature", "max_temperature",
-    "relative_humidity", "min_relative_humidity", "max_relative_humidity",
-    "precipitation", "max_precipitation_minute",
-    "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
-    "global_solar_radiation", "net_solar_radiation",
-    "snow_cover",
-    "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure"
-  )
-  if (api_options$resolution %in% c('daily', 'monthly', 'yearly')) {
-    resolution_specific_unnest <- .meteocat_long_carpentry
-    radiation_units <- "MJ/m^2"
-    var_names <- c("precipitation")
-  }
-
-  # Stations info for getting coords ----------------------------------------------------------------------
-  stations_info <- .get_info_meteocat(api_options)
-
-  # Data transformation -----------------------------------------------------------------------------------
-  response_trasformed <- purrr::map_depth(api_statuses, 1, 'content') |>
-    # resolution specific unnesting of raw data
-    resolution_specific_unnest() |>
-    # transform variable codes to standard names
-    dplyr::mutate(variable_name = .meteocat_var_codes_2_names(.data$variable_code)) |>
-    # for daily, monthly and yearly, sometimes there are duplicated rows, remove them
-    dplyr::distinct() |>
-    # each variable in its own column
-    tidyr::pivot_wider(
-      id_cols = -"variable_code",
-      names_from = "variable_name", values_from = "valor"
-    ) |>
-    .create_missing_vars(var_names = var_names) |>
-    # set service, date and units
-    dplyr::mutate(
-      service = 'meteocat',
-      timestamp = lubridate::parse_date_time(.data$timestamp, orders = c('ymdHMS', 'Ymz'), truncated = 5),
-      dplyr::across(dplyr::contains('temperature'), ~ units::set_units(.x, 'degree_C')),
-      dplyr::across(dplyr::contains('humidity'), ~ units::set_units(.x, '%')),
-      dplyr::across(dplyr::contains('precipitation'), ~ units::set_units(.x, 'L/m^2')),
-      # standard mode to avoid interpreting radiation_units as a symbol (default)
-      dplyr::across(
-        dplyr::contains('radiation'),
-        ~ units::set_units(.x, radiation_units, mode = "standard")
-      ),
-      dplyr::across(dplyr::contains('speed'), ~ units::set_units(.x, 'm/s')),
-      dplyr::across(dplyr::contains('direction'), ~ units::set_units(.x, 'degree')),
-      dplyr::across(dplyr::contains('pressure'), ~ units::set_units(.x, 'hPa')),
-      dplyr::across(dplyr::contains('snow'), ~ units::set_units(.x, 'cm'))
+  
+    # Filter expression for stations ------------------------------------------------------------------------
+    # In case stations were supplied, we need also to filter them
+    filter_expression <- TRUE
+    # update filter if there is stations supplied
+    if (!rlang::is_null(api_options$stations)) {
+      filter_expression <- rlang::expr(.data$station_id %in% api_options$stations)
+    }
+  
+    # Resolution specific carpentry -------------------------------------------------------------------------
+    # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
+    # differently. It also differs in the select step as in the latter group there is no repetition of column
+    # names after the unnest step.
+    resolution_specific_unnest <- .meteocat_short_carpentry
+    radiation_units <- "W/m^2"
+    var_names <- c(
+      "temperature", "min_temperature", "max_temperature",
+      "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+      "precipitation", "max_precipitation_minute",
+      "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+      "global_solar_radiation", "net_solar_radiation",
+      "snow_cover",
+      "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure"
     )
-
-  res <- response_trasformed |>
-    # remove unwanted stations
-    dplyr::filter(!! filter_expression) |>
-    # join stations_info
-    dplyr::left_join(stations_info, by = c('service', 'station_id')) |>
-    # arrange data
-    dplyr::arrange(.data$timestamp, .data$station_id) |>
-    # reorder variables to be consistent among all services
-    relocate_vars() |>
-    # ensure we have an sf
-    sf::st_as_sf()
-
-  # Check if any stations were returned -------------------------------------------------------------------
-  if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-    cli::cli_abort(c(
-      "Station(s) provided have no data for the dates selected.",
-      "Available stations with data for the actual query are:",
-      glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
+    if (api_options$resolution %in% c('daily', 'monthly', 'yearly')) {
+      resolution_specific_unnest <- .meteocat_long_carpentry
+      radiation_units <- "MJ/m^2"
+      var_names <- c("precipitation")
+    }
+  
+    # Stations info for getting coords ----------------------------------------------------------------------
+    stations_info <- .get_info_meteocat(api_options)
+  
+    # Data transformation -----------------------------------------------------------------------------------
+    response_trasformed <- purrr::map_depth(api_statuses, 1, 'content') |>
+      # resolution specific unnesting of raw data
+      resolution_specific_unnest() |>
+      # transform variable codes to standard names
+      dplyr::mutate(variable_name = .meteocat_var_codes_2_names(.data$variable_code)) |>
+      # for daily, monthly and yearly, sometimes there are duplicated rows, remove them
+      dplyr::distinct() |>
+      # each variable in its own column
+      tidyr::pivot_wider(
+        id_cols = -"variable_code",
+        names_from = "variable_name", values_from = "valor"
+      ) |>
+      .create_missing_vars(var_names = var_names) |>
+      # set service, date and units
+      dplyr::mutate(
+        service = 'meteocat',
+        timestamp = lubridate::parse_date_time(.data$timestamp, orders = c('ymdHMS', 'Ymz'), truncated = 5),
+        dplyr::across(dplyr::contains('temperature'), ~ units::set_units(.x, 'degree_C')),
+        dplyr::across(dplyr::contains('humidity'), ~ units::set_units(.x, '%')),
+        dplyr::across(dplyr::contains('precipitation'), ~ units::set_units(.x, 'L/m^2')),
+        # standard mode to avoid interpreting radiation_units as a symbol (default)
+        dplyr::across(
+          dplyr::contains('radiation'),
+          ~ units::set_units(.x, radiation_units, mode = "standard")
+        ),
+        dplyr::across(dplyr::contains('speed'), ~ units::set_units(.x, 'm/s')),
+        dplyr::across(dplyr::contains('direction'), ~ units::set_units(.x, 'degree')),
+        dplyr::across(dplyr::contains('pressure'), ~ units::set_units(.x, 'hPa')),
+        dplyr::across(dplyr::contains('snow'), ~ units::set_units(.x, 'cm'))
+      )
+  
+    res <- response_trasformed |>
+      # remove unwanted stations
+      dplyr::filter(!! filter_expression) |>
+      # join stations_info
+      dplyr::left_join(stations_info, by = c('service', 'station_id')) |>
+      # arrange data
+      dplyr::arrange(.data$timestamp, .data$station_id) |>
+      # reorder variables to be consistent among all services
+      relocate_vars() |>
+      # ensure we have an sf
+      sf::st_as_sf()
+  
+    # Check if any stations were returned -------------------------------------------------------------------
+    if ((!is.null(api_options$stations)) & nrow(res) < 1) {
+      cli::cli_abort(c(
+        "Station(s) provided have no data for the dates selected.",
+        "Available stations with data for the actual query are:",
+        glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
+      ))
+    }
+  
+    # Copyright message -------------------------------------------------------------------------------------
+    cli::cli_inform(c(
+      i = copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
+      legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
     ))
-  }
+  
+    res
+  })
 
-  # Copyright message -------------------------------------------------------------------------------------
-  cli::cli_inform(c(
-    i = copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
-    legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
-  ))
-
-  return(res)
+  return(data_meteocat)
 }
 
 

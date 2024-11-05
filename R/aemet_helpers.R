@@ -294,6 +294,8 @@
   # All necessary things for the GET ----------------------------------------------------------------------
   # create api path
   path_resolution <- .create_aemet_path(api_options)
+
+  # cache
   cache_ref <- rlang::hash(path_resolution)
 
   # if resolution less than daily, remove the cache
