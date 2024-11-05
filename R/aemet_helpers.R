@@ -294,144 +294,155 @@
   # All necessary things for the GET ----------------------------------------------------------------------
   # create api path
   path_resolution <- .create_aemet_path(api_options)
+  cache_ref <- rlang::hash(path_resolution)
 
-  # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
-  config_httr_aemet <- switch(
-    Sys.info()["sysname"],
-    'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
-    httr::config()
-  )
-
-  # GET and Status check ------------------------------------------------------------------------------------------
-  # now we need to check the status of the response (general status), and the status of the AEMET (specific
-  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
-  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
-  # This is done with .check_status_aemet helper, which return a list with the status, and if success the
-  # content parsed already
-  api_status_check <- .check_status_aemet(
-    "https://opendata.aemet.es",
-    httr::add_headers(api_key = api_options$api_key),
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = config_httr_aemet
-  )
-
-  if (api_status_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (api_status_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
-    } else {
-      cli::cli_abort(c(
-        x = api_status_check$code,
-        i = api_status_check$message
-      ))
-    }
+  # if resolution less than daily, remove the cache
+  if (api_options$resolution == "current_day") {
+    apis_cache$remove(cache_ref)
   }
 
-  response_content <- api_status_check$content
-
-  # Response data and metadata ----------------------------------------------------------------------------
-  # Now, as stated in the .check_status_aemet rationale, we need to access data and metadata
-  stations_data_check <- .check_status_aemet(
-    response_content$datos,
-    httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = config_httr_aemet
-  )
-
-  if (stations_data_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (stations_data_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
-    } else {
-      cli::cli_abort(c(
-        x = stations_data_check$code,
-        i = stations_data_check$message
-      ))
-    }
-  }
-
-  stations_metadata_check <- .check_status_aemet(
-    response_content$metadatos,
-    httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = config_httr_aemet
-  )
-
-  if (stations_metadata_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (stations_metadata_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
-    } else {
-      cli::cli_abort(c(
-        x = stations_metadata_check$code,
-        i = stations_metadata_check$message
-      ))
-    }
-  }
-  # We also need the stations info
-  stations_info <- .get_info_aemet(api_options)
-
-  # Filter expression for stations ------------------------------------------------------------------------
-  # In case stations were supplied, we need also to filter them
-  filter_expression <- TRUE
-  # update filter if there is stations supplied, but not for monthly. In monthly only one
-  # station must be used, so the filtering is unnecesary
-  if (!rlang::is_null(api_options$stations)) {
-    filter_expression <- switch(
-      api_options$resolution,
-      'current_day' = rlang::expr(.data$idema %in% api_options$stations),
-      'daily' = rlang::expr(.data$indicativo %in% api_options$stations),
-      'monthly' = TRUE,
-      'yearly' = TRUE
+  # get data from cache or from API if new
+  data_aemet <- .get_cached_result(cache_ref, {
+    # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
+    config_httr_aemet <- switch(
+      Sys.info()["sysname"],
+      'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
+      httr::config()
     )
-  }
-
-  # Resolution specific carpentry -------------------------------------------------------------------------
-  # Now, current day and daily have differences, in the names of the variables and also
-  # in the need to join the stations data to offer coords. We can branch the code with ifs, repeating the
-  # common steps in the data carpentry or we can create the specific functions and have only one common pipe.
-  resolution_specific_carpentry <- switch(
-    api_options$resolution,
-    'current_day' = .aemet_current_day_carpentry,
-    'daily' = .aemet_daily_carpentry,
-    'monthly' = .aemet_monthly_yearly_carpentry,
-    'yearly' = .aemet_monthly_yearly_carpentry
-  )
-
-  # Data transformation -----------------------------------------------------------------------------------
-  res <- stations_data_check$content |>
-    dplyr::as_tibble() |>
-    # remove unwanted stations
-    dplyr::filter(!! filter_expression) |>
-    # apply the resolution-specific transformations
-    resolution_specific_carpentry(stations_info, resolution = api_options$resolution) |>
-    # arrange data
-    dplyr::arrange(.data$timestamp, .data$station_id) |>
-    # reorder variables to be consistent among all services
-    relocate_vars() |>
-    # ensure we have an sf
-    sf::st_as_sf()
-
-
-  # Check if any stations were returned -------------------------------------------------------------------
-  if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-    cli::cli_abort(c(
-      x = "Station(s) provided have no data for the dates selected.",
-      "Available stations with data for the actual query are:",
-      glue::glue_collapse(
-        c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
-        sep = ', ', last = ' and '
+  
+    # GET and Status check ------------------------------------------------------------------------------------------
+    # now we need to check the status of the response (general status), and the status of the AEMET (specific
+    # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
+    # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
+    # This is done with .check_status_aemet helper, which return a list with the status, and if success the
+    # content parsed already
+    api_status_check <- .check_status_aemet(
+      "https://opendata.aemet.es",
+      httr::add_headers(api_key = api_options$api_key),
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain'),
+      config = config_httr_aemet
+    )
+  
+    if (api_status_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (api_status_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
+      } else {
+        cli::cli_abort(c(
+          x = api_status_check$code,
+          i = api_status_check$message
+        ))
+      }
+    }
+  
+    response_content <- api_status_check$content
+  
+    # Response data and metadata ----------------------------------------------------------------------------
+    # Now, as stated in the .check_status_aemet rationale, we need to access data and metadata
+    stations_data_check <- .check_status_aemet(
+      response_content$datos,
+      httr::user_agent('https://github.com/emf-creaf/meteospain'),
+      config = config_httr_aemet
+    )
+  
+    if (stations_data_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (stations_data_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
+      } else {
+        cli::cli_abort(c(
+          x = stations_data_check$code,
+          i = stations_data_check$message
+        ))
+      }
+    }
+  
+    stations_metadata_check <- .check_status_aemet(
+      response_content$metadatos,
+      httr::user_agent('https://github.com/emf-creaf/meteospain'),
+      config = config_httr_aemet
+    )
+  
+    if (stations_metadata_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (stations_metadata_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_data_aemet))
+      } else {
+        cli::cli_abort(c(
+          x = stations_metadata_check$code,
+          i = stations_metadata_check$message
+        ))
+      }
+    }
+    # We also need the stations info
+    stations_info <- .get_info_aemet(api_options)
+  
+    # Filter expression for stations ------------------------------------------------------------------------
+    # In case stations were supplied, we need also to filter them
+    filter_expression <- TRUE
+    # update filter if there is stations supplied, but not for monthly. In monthly only one
+    # station must be used, so the filtering is unnecesary
+    if (!rlang::is_null(api_options$stations)) {
+      filter_expression <- switch(
+        api_options$resolution,
+        'current_day' = rlang::expr(.data$idema %in% api_options$stations),
+        'daily' = rlang::expr(.data$indicativo %in% api_options$stations),
+        'monthly' = TRUE,
+        'yearly' = TRUE
       )
+    }
+  
+    # Resolution specific carpentry -------------------------------------------------------------------------
+    # Now, current day and daily have differences, in the names of the variables and also
+    # in the need to join the stations data to offer coords. We can branch the code with ifs, repeating the
+    # common steps in the data carpentry or we can create the specific functions and have only one common pipe.
+    resolution_specific_carpentry <- switch(
+      api_options$resolution,
+      'current_day' = .aemet_current_day_carpentry,
+      'daily' = .aemet_daily_carpentry,
+      'monthly' = .aemet_monthly_yearly_carpentry,
+      'yearly' = .aemet_monthly_yearly_carpentry
+    )
+  
+    # Data transformation -----------------------------------------------------------------------------------
+    res <- stations_data_check$content |>
+      dplyr::as_tibble() |>
+      # remove unwanted stations
+      dplyr::filter(!! filter_expression) |>
+      # apply the resolution-specific transformations
+      resolution_specific_carpentry(stations_info, resolution = api_options$resolution) |>
+      # arrange data
+      dplyr::arrange(.data$timestamp, .data$station_id) |>
+      # reorder variables to be consistent among all services
+      relocate_vars() |>
+      # ensure we have an sf
+      sf::st_as_sf()
+  
+  
+    # Check if any stations were returned -------------------------------------------------------------------
+    if ((!is.null(api_options$stations)) & nrow(res) < 1) {
+      cli::cli_abort(c(
+        x = "Station(s) provided have no data for the dates selected.",
+        "Available stations with data for the actual query are:",
+        glue::glue_collapse(
+          c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
+          sep = ', ', last = ' and '
+        )
+      ))
+    }
+  
+    # Copyright message -------------------------------------------------------------------------------------
+    cli::cli_inform(c(
+      i = copyright_style(stations_metadata_check$content$copyright),
+      legal_note_style(stations_metadata_check$content$notaLegal)
     ))
-  }
+  
+    # Return ------------------------------------------------------------------------------------------------
+    res
+  })
 
-  # Copyright message -------------------------------------------------------------------------------------
-  cli::cli_inform(c(
-    i = copyright_style(stations_metadata_check$content$copyright),
-    legal_note_style(stations_metadata_check$content$notaLegal)
-  ))
-
-  # Return ------------------------------------------------------------------------------------------------
-  return(res)
+  return(data_aemet)
 }
 
 
