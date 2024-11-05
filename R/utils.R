@@ -341,3 +341,25 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
 
   return(response$result)
 }
+
+# cache function
+.get_cached_result <- function(cache_ref, x) {
+  # logic:
+  # if cache_ref exists, return its value. if not create the cache with the
+  # result of expr and return that result
+  # cache is an internal package object created on load
+
+  # capture expression without evaluation (lazy load)
+  expr_to_evaluate <- rlang::enexpr(x)
+
+  # if cache exists, return it
+  if (apis_cache$exists(cache_ref)) {
+    return(apis_cache$get(cache_ref))
+  }
+
+  # if not, evaluate the expression
+  res <- eval(expr_to_evaluate)
+  # record the cache and return data
+  apis_cache$set(cache_ref, res)
+  return(res)
+}
