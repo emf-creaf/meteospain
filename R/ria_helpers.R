@@ -209,6 +209,13 @@
 #' @noRd
 .get_data_ria <- function(api_options) {
 
+  # All necessary things for the GET ----------------------------------------------------------------------
+  # stations_info and update api_options
+  # we need the stations id and their province
+  stations_info <- .get_info_ria(api_options)
+  if (is.null(api_options$stations)) {
+    api_options$stations <- stations_info[['station_id']]
+  }
   # create api paths
   paths_resolution <- .create_ria_path(api_options)
   # cache
@@ -219,14 +226,6 @@
   # get data from cache or from API if new
   data_ria <- .get_cached_result(cache_ref, {
 
-    # All necessary things for the GET ----------------------------------------------------------------------
-    # stations_info and update api_options
-    # we need the stations id and their province
-    stations_info <- .get_info_ria(api_options)
-
-    if (is.null(api_options$stations)) {
-      api_options$stations <- stations_info[['station_id']]
-    }
 
     # GET and Status check ----------------------------------------------------------------------------------
     # Here the things are a little convoluted. ria, for returning all stations only allows one variable

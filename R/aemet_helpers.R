@@ -380,20 +380,6 @@
     # We also need the stations info
     stations_info <- .get_info_aemet(api_options)
   
-    # Filter expression for stations ------------------------------------------------------------------------
-    # In case stations were supplied, we need also to filter them
-    filter_expression <- TRUE
-    # update filter if there is stations supplied, but not for monthly. In monthly only one
-    # station must be used, so the filtering is unnecesary
-    if (!rlang::is_null(api_options$stations)) {
-      filter_expression <- switch(
-        api_options$resolution,
-        'current_day' = rlang::expr(.data$idema %in% api_options$stations),
-        'daily' = rlang::expr(.data$indicativo %in% api_options$stations),
-        'monthly' = TRUE,
-        'yearly' = TRUE
-      )
-    }
   
     # Resolution specific carpentry -------------------------------------------------------------------------
     # Now, current day and daily have differences, in the names of the variables and also
@@ -410,8 +396,6 @@
     # Data transformation -----------------------------------------------------------------------------------
     res <- stations_data_check$content |>
       dplyr::as_tibble() |>
-      # remove unwanted stations
-      dplyr::filter(!! filter_expression) |>
       # apply the resolution-specific transformations
       resolution_specific_carpentry(stations_info, resolution = api_options$resolution) |>
       # arrange data
@@ -422,17 +406,6 @@
       sf::st_as_sf()
   
   
-    # Check if any stations were returned -------------------------------------------------------------------
-    if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-      cli::cli_abort(c(
-        x = "Station(s) provided have no data for the dates selected.",
-        "Available stations with data for the actual query are:",
-        glue::glue_collapse(
-          c(unique(stations_data_check$content$indicativo), unique(stations_data_check$content$idema)),
-          sep = ', ', last = ' and '
-        )
-      ))
-    }
   
     # Copyright message -------------------------------------------------------------------------------------
     cli::cli_inform(c(
@@ -444,7 +417,36 @@
     res
   })
 
-  return(data_aemet)
+  # Filter expression for stations ------------------------------------------------------------------------
+  # In case stations were supplied, we need also to filter them
+  filter_expression <- TRUE
+  # update filter if there is stations supplied, but not for monthly. In monthly only one
+  # station must be used, so the filtering is unnecesary
+  if (!rlang::is_null(api_options$stations)) {
+    filter_expression <- switch(
+      api_options$resolution,
+      'current_day' = rlang::expr(.data$station_id %in% api_options$stations),
+      'daily' = rlang::expr(.data$station_id %in% api_options$stations),
+      'monthly' = TRUE,
+      'yearly' = TRUE
+    )
+  }
+
+  # return the res filtered by stations if provided
+  data_aemet_fil <- data_aemet |>
+    # remove unwanted stations
+    dplyr::filter(!! filter_expression)
+  
+  # Check if any stations were returned -------------------------------------------------------------------
+  if ((!is.null(api_options$stations)) & nrow(data_aemet_fil) < 1) {
+    cli::cli_abort(c(
+      x = "Station(s) provided have no data for the dates selected.",
+      "Available stations with data for the actual query are:",
+      glue::glue_collapse(unique(data_aemet$station_id), sep = ', ', last = ' and ')
+    ))
+  }
+
+  return(data_aemet_fil)
 }
 
 

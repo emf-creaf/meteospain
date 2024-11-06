@@ -407,14 +407,6 @@
       }
     }
   
-    # Filter expression for stations ------------------------------------------------------------------------
-    # In case stations were supplied, we need also to filter them
-    filter_expression <- TRUE
-    # update filter if there is stations supplied
-    if (!rlang::is_null(api_options$stations)) {
-      filter_expression <- rlang::expr(.data$station_id %in% api_options$stations)
-    }
-  
     # Resolution specific carpentry -------------------------------------------------------------------------
     # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
     # differently. It also differs in the select step as in the latter group there is no repetition of column
@@ -472,8 +464,6 @@
       )
   
     res <- response_trasformed |>
-      # remove unwanted stations
-      dplyr::filter(!! filter_expression) |>
       # join stations_info
       dplyr::left_join(stations_info, by = c('service', 'station_id')) |>
       # arrange data
@@ -482,16 +472,7 @@
       relocate_vars() |>
       # ensure we have an sf
       sf::st_as_sf()
-  
-    # Check if any stations were returned -------------------------------------------------------------------
-    if ((!is.null(api_options$stations)) & nrow(res) < 1) {
-      cli::cli_abort(c(
-        "Station(s) provided have no data for the dates selected.",
-        "Available stations with data for the actual query are:",
-        glue::glue_collapse(unique(response_trasformed$station_id), sep = ', ', last = ' and ')
-      ))
-    }
-  
+
     # Copyright message -------------------------------------------------------------------------------------
     cli::cli_inform(c(
       i = copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
@@ -501,7 +482,28 @@
     res
   })
 
-  return(data_meteocat)
+  # Filter expression for stations ------------------------------------------------------------------------
+  # In case stations were supplied, we need also to filter them
+  filter_expression <- TRUE
+  # update filter if there is stations supplied
+  if (!rlang::is_null(api_options$stations)) {
+    filter_expression <- rlang::expr(.data$station_id %in% api_options$stations)
+  }
+
+  data_meteocat_fil <- data_meteocat |>
+    # remove unwanted stations
+    dplyr::filter(!! filter_expression)
+  
+  # Check if any stations were returned -------------------------------------------------------------------
+  if ((!is.null(api_options$stations)) & nrow(data_meteocat_fil) < 1) {
+    cli::cli_abort(c(
+      x = "Station(s) provided have no data for the dates selected.",
+      "Available stations with data for the actual query are:",
+      glue::glue_collapse(unique(data_meteocat$station_id), sep = ', ', last = ' and ')
+    ))
+  }
+
+  return(data_meteocat_fil)
 }
 
 
