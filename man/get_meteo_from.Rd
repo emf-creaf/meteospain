@@ -43,8 +43,7 @@ This cache can be cleared with \code{\link{clear_meteospain_cache}}.
 }
 
 \examples{
-\donttest{
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   library(meteospain)
   library(keyring)
 
@@ -57,7 +56,5 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     api_key = key_get('aemet')
   )
   get_meteo_from('aemet', options_for_aemet)
-}
-}
-
+\dontshow{\}) # examplesIf}
 }

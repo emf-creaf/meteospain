@@ -59,9 +59,7 @@ NULL
 
 #' Options for AEMET service
 #'
-#' @examples
-#' \donttest{
-#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#' @examplesIf interactive()
 #'   library(keyring)
 #'   library(meteospain)
 #'
@@ -83,8 +81,6 @@ NULL
 #'     end_date = as.Date('1990-01-15'),
 #'     api = keyring::key_get('aemet')
 #'   )
-#' }
-#' }
 #'
 #' @rdname services_options
 #'
@@ -122,9 +118,7 @@ aemet_options <- function(
 
 #' Options for MeteoCat service
 #'
-#' @examples
-#' \donttest{
-#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#' @examplesIf interactive()
 #'   ## MeteoCat examples -----------------------------------------------------------
 #'
 #'   # setting the key (a prompt will appear in console to supply the API key)
@@ -136,8 +130,6 @@ aemet_options <- function(
 #'     start_date = as.Date('2020-12-31'),
 #'     api = keyring::key_get('meteocat')
 #'   )
-#' }
-#' }
 #'
 #' @rdname services_options
 #'
@@ -270,9 +262,7 @@ meteogalicia_options <- function(
 
 #' Options for RIA service
 #'
-#' @examples
-#' \donttest{
-#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#' @examplesIf interactive()
 #'   library(keyring)
 #'   library(meteospain)
 #'
@@ -284,8 +274,6 @@ meteogalicia_options <- function(
 #'     start_date = as.Date('2020-04-01'),
 #'     end_date = as.Date('2020-04-30')
 #'   )
-#' }
-#' }
 #'
 #' @rdname services_options
 #'

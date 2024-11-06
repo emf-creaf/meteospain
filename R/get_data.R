@@ -22,9 +22,7 @@
 #' 
 #' This cache can be cleared with \code{\link{clear_meteospain_cache}}.
 #'
-#' @examples
-#' \donttest{
-#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#' @examplesIf interactive()
 #'   library(meteospain)
 #'   library(keyring)
 #'
@@ -37,8 +35,6 @@
 #'     api_key = key_get('aemet')
 #'   )
 #'   get_meteo_from('aemet', options_for_aemet)
-#' }
-#' }
 #'
 #' @return An sf (spatial) object with the stations meteorological data.
 #'
@@ -86,9 +82,7 @@ get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'me
 #' 
 #' This cache can be cleared with \code{\link{clear_meteospain_cache}}.
 #'
-#' @examples
-#' \donttest{
-#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#' @examplesIf interactive()
 #'   library(meteospain)
 #'   library(keyring)
 #'
@@ -96,8 +90,6 @@ get_meteo_from <- function(service = c('aemet', 'meteocat', 'meteoclimatic', 'me
 #'   # key_set('aemet')
 #'   api_options <- aemet_options(api_key = key_get('aemet'))
 #'   get_stations_info_from('aemet', api_options)
-#' }
-#' }
 #'
 #' @return An sf (spatial) object with the stations metadata.
 #'
@@ -138,9 +130,7 @@ get_stations_info_from <- function(
 #' @param options List with the needed service options. See \code{\link{services_options}} to have more info
 #'   about the different services and their options.
 #'
-#' @examples
-#' \donttest{
-#' if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+#' @examplesIf interactive()
 #'   library(meteospain)
 #'   library(keyring)
 #'
@@ -148,8 +138,6 @@ get_stations_info_from <- function(
 #'   # key_set('meteocat')
 #'   api_options <- meteocat_options(api_key = key_get('meteocat'))
 #'   get_quota_from('meteocat', api_options)
-#' }
-#' }
 #'
 #' @return A data frame with the quota info
 #'

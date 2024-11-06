@@ -107,8 +107,7 @@ stations provided}
 }
 
 \examples{
-\donttest{
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   library(keyring)
   library(meteospain)
 
@@ -130,11 +129,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     end_date = as.Date('1990-01-15'),
     api = keyring::key_get('aemet')
   )
-}
-}
-
-\donttest{
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+\dontshow{\}) # examplesIf}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   ## MeteoCat examples -----------------------------------------------------------
 
   # setting the key (a prompt will appear in console to supply the API key)
@@ -146,9 +142,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     start_date = as.Date('2020-12-31'),
     api = keyring::key_get('meteocat')
   )
-}
-}
-
+\dontshow{\}) # examplesIf}
 
 ## Meteoclimatic examples -------------------------------------------------
 
@@ -181,8 +175,7 @@ monthly_opts <- meteogalicia_options(
   end_date = as.Date('2000-12-31')
 )
 
-\donttest{
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   library(keyring)
   library(meteospain)
 
@@ -194,7 +187,5 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     start_date = as.Date('2020-04-01'),
     end_date = as.Date('2020-04-30')
   )
-}
-}
-
+\dontshow{\}) # examplesIf}
 }

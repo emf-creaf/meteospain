@@ -23,8 +23,7 @@ Depending on the service, some APIs allows only a number of data requests. This 
 quota numbers in the services that allow for this, \strong{(currently only MeteoCat)}
 }
 \examples{
-\donttest{
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   library(meteospain)
   library(keyring)
 
@@ -32,7 +31,5 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   # key_set('meteocat')
   api_options <- meteocat_options(api_key = key_get('meteocat'))
   get_quota_from('meteocat', api_options)
-}
-}
-
+\dontshow{\}) # examplesIf}
 }
