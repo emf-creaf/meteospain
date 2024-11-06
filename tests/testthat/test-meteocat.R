@@ -133,11 +133,15 @@ test_that("meteocat daily works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "min_temperature", "max_temperature",
-    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
-    "precipitation",
-    "mean_wind_direction", "mean_wind_speed",
-    "global_solar_radiation",
+    "mean_temperature", "max_temperature", "min_temperature",
+    "mean_temperature_classic", "thermal_amplitude", "mean_relative_humidity",
+    "max_relative_humidity", "min_relative_humidity", "mean_atmospheric_pressure",
+    "max_atmospheric_pressure", "min_atmospheric_pressure", "precipitation",
+    "precipitation_8h_8h", "max_precipitation_minute", "max_precipitation_hour",
+    "max_precipitation_30m", "max_precipitation_10m", "global_solar_radiation",
+    "mean_wind_speed", "mean_wind_direction", "max_wind_speed",
+    "max_wind_direction", "mean_snow_cover", "max_snow_cover", "new_snow_cover",
+    "min_snow_cover", "reference_evapotranspiration",
     "geometry"
   )
   main_test_battery(
@@ -163,15 +167,6 @@ test_that("meteocat daily works", {
   )
   test_object <- get_meteo_from('meteocat', api_options)
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
-  expected_names <- c(
-    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "min_temperature", 'max_temperature',
-    "mean_relative_humidity", "min_relative_humidity",
-    "precipitation",
-    "mean_wind_speed",
-    "global_solar_radiation",
-    "geometry"
-  )
   main_test_battery(
     test_object, service = 'meteocat', expected_names = expected_names, temperature = mean_temperature
   )
@@ -186,15 +181,21 @@ test_that("meteocat monthly works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature",
-    "min_temperature_absolute", "min_temperature_mean",
-    "max_temperature_absolute", "max_temperature_mean",
-    "mean_relative_humidity",
-    "min_relative_humidity_absolute", "min_relative_humidity_mean",
-    "max_relative_humidity_absolute", "max_relative_humidity_mean",
-    "precipitation",
-    "mean_wind_direction", "mean_wind_speed",
-    "global_solar_radiation",
+    "mean_temperature", "max_temperature_absolute", "min_temperature_absolute",
+    "max_temperature_mean", "min_temperature_mean", "mean_temperature_classic",
+    "frost_days", "max_thermal_amplitude", "mean_thermal_amplitude",
+    "extreme_thermal_amplitude", "mean_relative_humidity",
+    "max_relative_humidity_absolute", "min_relative_humidity_absolute",
+    "max_relative_humidity_mean", "min_relative_humidity_mean",
+    "mean_atmospheric_pressure", "max_atmospheric_pressure_absolute",
+    "min_atmospheric_pressure_absolute", "max_atmospheric_pressure_mean",
+    "min_atmospheric_pressure_mean", "precipitation", "precipitation_8h_8h",
+    "max_precipitation_minute", "max_precipitation_24h",
+    "max_precipitation_24h_8h_8h", "rain_days_0", "rain_days_02",
+    "max_precipitation_hour", "max_precipitation_30m", "max_precipitation_10m",
+    "global_solar_radiation", "mean_wind_speed", "mean_wind_direction",
+    "max_wind_speed", "max_wind_direction", "max_wind_speed_mean", "mean_snow_cover",
+    "max_snow_cover", "new_snow_cover",
     "geometry"
   )
   main_test_battery(
@@ -224,15 +225,21 @@ test_that("meteocat yearly works", {
   # expect_message((test_object <- get_meteo_from('meteocat', api_options)), 'meteo.cat')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature",
-    "min_temperature_absolute", "min_temperature_mean",
-    "max_temperature_absolute", "max_temperature_mean",
-    "mean_relative_humidity",
-    "min_relative_humidity_absolute", "min_relative_humidity_mean",
-    "max_relative_humidity_absolute", "max_relative_humidity_mean",
-    "precipitation",
-    "mean_wind_direction", "mean_wind_speed",
-    "global_solar_radiation",
+    "mean_temperature", "max_temperature_absolute", "min_temperature_absolute",
+    "max_temperature_mean", "min_temperature_mean", "mean_temperature_classic",
+    "frost_days", "max_thermal_amplitude", "mean_thermal_amplitude",
+    "extreme_thermal_amplitude", "thermal_oscillation", "mean_relative_humidity",
+    "max_relative_humidity_absolute", "min_relative_humidity_absolute",
+    "max_relative_humidity_mean", "min_relative_humidity_mean",
+    "mean_atmospheric_pressure", "max_atmospheric_pressure_absolute",
+    "min_atmospheric_pressure_absolute", "max_atmospheric_pressure_mean",
+    "min_atmospheric_pressure_mean", "precipitation", "precipitation_8h_8h",
+    "max_precipitation_minute", "max_precipitation_24h",
+    "max_precipitation_24h_8h_8h", "rain_days_0", "rain_days_02",
+    "max_precipitation_hour", "max_precipitation_30m", "max_precipitation_10m",
+    "global_solar_radiation", "mean_wind_speed", "mean_wind_direction",
+    "max_wind_speed", "max_wind_direction", "max_wind_speed_mean",
+    "mean_snow_cover", "max_snow_cover", "new_snow_cover",
     "geometry"
   )
   main_test_battery(

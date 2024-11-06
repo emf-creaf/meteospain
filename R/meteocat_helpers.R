@@ -402,7 +402,7 @@
   }
 
   data_meteocat <- .get_cached_result(cache_ref, {
-  
+
     # GET and Status check ----------------------------------------------------------------------------------
     # Here the things are a little convoluted. MeteoCat, for returning all stations only allows one variable
     # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
@@ -419,14 +419,14 @@
           )
         }
       )
-  
+
     variables_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
       purrr::flatten_chr()
     variables_codes <- purrr::map_depth(api_statuses, 1, 'code') |>
       purrr::flatten_dbl()
     variables_messages <- purrr::map_depth(api_statuses, 1, 'message') |>
       purrr::flatten_chr()
-  
+
     if (any(variables_statuses != 'OK')) {
       if (any(variables_codes == 429)) {
         messages_to_show <- variables_messages[which(variables_codes == 429)] |> unique()
@@ -436,31 +436,88 @@
         cli::cli_abort(c(messages_to_show))
       }
     }
-  
+
     # Resolution specific carpentry -------------------------------------------------------------------------
     # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
     # differently. It also differs in the select step as in the latter group there is no repetition of column
     # names after the unnest step.
     resolution_specific_unnest <- .meteocat_short_carpentry
     radiation_units <- "W/m^2"
-    var_names <- c(
-      "temperature", "min_temperature", "max_temperature",
-      "relative_humidity", "min_relative_humidity", "max_relative_humidity",
-      "precipitation", "max_precipitation_minute",
-      "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
-      "global_solar_radiation", "net_solar_radiation",
-      "snow_cover",
-      "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure"
+    var_names <- switch(
+      api_options$resolution,
+      "instant" = c(
+        "temperature", "min_temperature", "max_temperature",
+        "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+        "precipitation", "max_precipitation_minute",
+        "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+        "global_solar_radiation", "net_solar_radiation",
+        "snow_cover",
+        "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure"
+      ),
+      "hourly" = c(
+        "temperature", "min_temperature", "max_temperature",
+        "relative_humidity", "min_relative_humidity", "max_relative_humidity",
+        "precipitation", "max_precipitation_minute",
+        "wind_direction", "wind_speed", "max_wind_direction", "max_wind_speed",
+        "global_solar_radiation", "net_solar_radiation",
+        "snow_cover",
+        "atmospheric_pressure", "min_atmospheric_pressure", "max_atmospheric_pressure"
+      ),
+      "daily" = c(
+        "mean_temperature", "max_temperature", "min_temperature",
+        "mean_temperature_classic", "thermal_amplitude", "mean_relative_humidity",
+        "max_relative_humidity", "min_relative_humidity", "mean_atmospheric_pressure",
+        "max_atmospheric_pressure", "min_atmospheric_pressure", "precipitation",
+        "precipitation_8h_8h", "max_precipitation_minute", "max_precipitation_hour",
+        "max_precipitation_30m", "max_precipitation_10m", "global_solar_radiation",
+        "mean_wind_speed", "mean_wind_direction", "max_wind_speed",
+        "max_wind_direction", "mean_snow_cover", "max_snow_cover", "new_snow_cover",
+        "min_snow_cover", "reference_evapotranspiration"
+      ),
+      "monthly" = c(
+        "mean_temperature", "max_temperature_absolute", "min_temperature_absolute",
+        "max_temperature_mean", "min_temperature_mean", "mean_temperature_classic",
+        "frost_days", "max_thermal_amplitude", "mean_thermal_amplitude",
+        "extreme_thermal_amplitude", "mean_relative_humidity",
+        "max_relative_humidity_absolute", "min_relative_humidity_absolute",
+        "max_relative_humidity_mean", "min_relative_humidity_mean",
+        "mean_atmospheric_pressure", "max_atmospheric_pressure_absolute",
+        "min_atmospheric_pressure_absolute", "max_atmospheric_pressure_mean",
+        "min_atmospheric_pressure_mean", "precipitation", "precipitation_8h_8h",
+        "max_precipitation_minute", "max_precipitation_24h",
+        "max_precipitation_24h_8h_8h", "rain_days_0", "rain_days_02",
+        "max_precipitation_hour", "max_precipitation_30m", "max_precipitation_10m",
+        "global_solar_radiation", "mean_wind_speed", "mean_wind_direction",
+        "max_wind_speed", "max_wind_direction", "max_wind_speed_mean", "mean_snow_cover",
+        "max_snow_cover", "new_snow_cover"
+      ),
+      "yearly" = c(
+        "mean_temperature", "max_temperature_absolute", "min_temperature_absolute",
+        "max_temperature_mean", "min_temperature_mean", "mean_temperature_classic",
+        "frost_days", "max_thermal_amplitude", "mean_thermal_amplitude",
+        "extreme_thermal_amplitude", "thermal_oscillation", "mean_relative_humidity",
+        "max_relative_humidity_absolute", "min_relative_humidity_absolute",
+        "max_relative_humidity_mean", "min_relative_humidity_mean",
+        "mean_atmospheric_pressure", "max_atmospheric_pressure_absolute",
+        "min_atmospheric_pressure_absolute", "max_atmospheric_pressure_mean",
+        "min_atmospheric_pressure_mean", "precipitation", "precipitation_8h_8h",
+        "max_precipitation_minute", "max_precipitation_24h",
+        "max_precipitation_24h_8h_8h", "rain_days_0", "rain_days_02",
+        "max_precipitation_hour", "max_precipitation_30m", "max_precipitation_10m",
+        "global_solar_radiation", "mean_wind_speed", "mean_wind_direction",
+        "max_wind_speed", "max_wind_direction", "max_wind_speed_mean",
+        "mean_snow_cover", "max_snow_cover", "new_snow_cover"
+      )
     )
+
     if (api_options$resolution %in% c('daily', 'monthly', 'yearly')) {
       resolution_specific_unnest <- .meteocat_long_carpentry
       radiation_units <- "MJ/m^2"
-      var_names <- c("precipitation")
     }
-  
+
     # Stations info for getting coords ----------------------------------------------------------------------
     stations_info <- .get_info_meteocat(api_options)
-  
+
     # Data transformation -----------------------------------------------------------------------------------
     response_trasformed <- purrr::map_depth(api_statuses, 1, 'content') |>
       # resolution specific unnesting of raw data
@@ -490,9 +547,12 @@
         dplyr::across(dplyr::contains('speed'), ~ units::set_units(.x, 'm/s')),
         dplyr::across(dplyr::contains('direction'), ~ units::set_units(.x, 'degree')),
         dplyr::across(dplyr::contains('pressure'), ~ units::set_units(.x, 'hPa')),
-        dplyr::across(dplyr::contains('snow'), ~ units::set_units(.x, 'cm'))
+        dplyr::across(dplyr::contains('snow'), ~ units::set_units(.x, 'cm')),
+        dplyr::across(dplyr::contains('days'), ~ units::set_units(.x, 'days')),
+        dplyr::across(dplyr::contains('thermal'), ~ units::set_units(.x, 'degree_C')),
+        dplyr::across(dplyr::contains('evapotranspiration'), ~ units::set_units(.x, 'L/m^2'))
       )
-  
+
     res <- response_trasformed |>
       # join stations_info
       dplyr::left_join(stations_info, by = c('service', 'station_id')) |>
@@ -508,7 +568,7 @@
       i = copyright_style("Data provided by meteo.cat \u00A9 Servei Meteorol\u00F2gic de Catalunya"),
       legal_note_style("https://www.meteo.cat/wpweb/avis-legal/#info")
     ))
-  
+
     res
   })
 
@@ -523,7 +583,7 @@
   data_meteocat_fil <- data_meteocat |>
     # remove unwanted stations
     dplyr::filter(!! filter_expression)
-  
+
   # Check if any stations were returned -------------------------------------------------------------------
   if ((!is.null(api_options$stations)) & nrow(data_meteocat_fil) < 1) {
     cli::cli_abort(c(

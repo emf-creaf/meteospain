@@ -184,6 +184,7 @@ relocate_vars <- function(data) {
       dplyr::starts_with("mean_temperature"),
       dplyr::starts_with("min_temperature"),
       dplyr::starts_with("max_temperature"),
+      dplyr::contains("thermal"),
       dplyr::starts_with("relative_humidity"),
       dplyr::starts_with("mean_relative_humidity"),
       dplyr::starts_with("min_relative_humidity"),
@@ -194,6 +195,7 @@ relocate_vars <- function(data) {
       dplyr::contains("sol"),
       dplyr::contains("pressure"),
       dplyr::contains("snow"),
+      dplyr::contains("evapotranspiration"),
       "geometry"
     )
 }
