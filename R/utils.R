@@ -342,7 +342,7 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
   return(response$result)
 }
 
-# cache function
+# cache functions
 .get_cached_result <- function(cache_ref, x) {
   # logic:
   # if cache_ref exists, return its value.
@@ -355,4 +355,19 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
   res <- eval(x)
   apis_cache$set(cache_ref, res)
   return(res)
+}
+
+#' Clear all cached results
+#'
+#' Reset the internal cache used to limit the API requests.
+#'
+#' Cached results reduces the number of API requests, but sometimes we need
+#' fresh results without restarting the R session. \code{clear_meteospain_cache} function
+#' reset the cache for the actual R session.
+#'
+#' @export
+clear_meteospain_cache <- function() {
+  apis_cache$reset()
+  cli::cli_alert_success("Cache cleared sucessfully")
+  return(invisible(TRUE))
 }

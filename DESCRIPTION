@@ -55,7 +55,6 @@ Imports:
     units,
     xml2,
     vctrs,
-    memoise,
     cachem,
     curl,
     cli
