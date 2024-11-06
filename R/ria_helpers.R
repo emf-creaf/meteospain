@@ -53,25 +53,30 @@
 
   # path
   path_resolution <- c('agriculturaypesca', 'ifapa', 'riaws', 'provincias')
+  # cache
+  cache_ref <- rlang::hash(path_resolution)
 
+  # get data from cache or from API if new
+  provinces_ria <- .get_cached_result(cache_ref, {
+    # get and status check ----------------------------------------------------------------------------------
+    api_status_check <- .check_status_ria(
+      'https://www.juntadeandalucia.es',
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain')
+    )
 
-  # get and status check ----------------------------------------------------------------------------------
-  api_status_check <- .check_status_ria(
-    'https://www.juntadeandalucia.es',
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-  )
+    if (api_status_check$status != 'OK') {
+      cli::cli_abort(c(
+        x = api_status_check$code,
+        i = api_status_check$message
+      ))
+    }
 
-  if (api_status_check$status != 'OK') {
-    cli::cli_abort(c(
-      x = api_status_check$code,
-      i = api_status_check$message
-    ))
-  }
+    api_status_check$content |>
+      dplyr::as_tibble()
+  })
 
-  response_content <- api_status_check$content |>
-    dplyr::as_tibble()
-  return(response_content)
+  return(provinces_ria)
 }
 
 #' Create the path elements for RIA API
@@ -154,48 +159,54 @@
   # GET parts needed --------------------------------------------------------------------------------------
   # path
   path_resolution <- c('agriculturaypesca', 'ifapa', 'riaws', 'estaciones')
+  # cache
+  cache_ref <- rlang::hash(path_resolution)
 
-  # Status check ------------------------------------------------------------------------------------------
-  api_status_check <- .check_status_ria(
-    'https://www.juntadeandalucia.es',
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-  )
+  # get data from cache or from API if new
+  info_ria <- .get_cached_result(cache_ref, {
+    # Status check ------------------------------------------------------------------------------------------
+    api_status_check <- .check_status_ria(
+      'https://www.juntadeandalucia.es',
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain')
+    )
+  
+    if (api_status_check$status != 'OK') {
+      cli::cli_abort(c(
+        x = api_status_check$code,
+        i = api_status_check$message
+      ))
+    }
+  
+    # Data --------------------------------------------------------------------------------------------------
+    # ria returns a data frame, but some variables are data frames themselves. We need to work on that
+    response_content <- api_status_check$content
+  
+    province_df <- response_content[['provincia']] |>
+      dplyr::rename(station_province = "nombre", province_id = "id")
+  
+    response_content |>
+      dplyr::as_tibble() |>
+      # add service name, to identify the data if joining with other services
+      dplyr::mutate(service = 'ria') |>
+      dplyr::select(-"provincia") |>
+      dplyr::bind_cols(province_df) |>
+      dplyr::select(
+        "service", station_id = "codigoEstacion", station_name = "nombre",
+        "station_province", "province_id",
+        altitude = "altitud", "longitud", "latitud", under_plastic = "bajoplastico"
+      ) |>
+      dplyr::distinct() |>
+      dplyr::mutate(
+        station_id = as.character(glue::glue("{province_id}-{station_id}")),
+        altitude = units::set_units(.data$altitude, 'm'),
+        latitud = .parse_coords_dmsh(.data$latitud),
+        longitud = .parse_coords_dmsh(.data$longitud),
+      ) |>
+      sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
+  })
 
-  if (api_status_check$status != 'OK') {
-    cli::cli_abort(c(
-      x = api_status_check$code,
-      i = api_status_check$message
-    ))
-  }
-
-  # Data --------------------------------------------------------------------------------------------------
-  # ria returns a data frame, but some variables are data frames themselves. We need to work on that
-  response_content <- api_status_check$content
-
-  province_df <- response_content[['provincia']] |>
-    dplyr::rename(station_province = "nombre", province_id = "id")
-
-  response_content |>
-    dplyr::as_tibble() |>
-    # add service name, to identify the data if joining with other services
-    dplyr::mutate(service = 'ria') |>
-    dplyr::select(-"provincia") |>
-    dplyr::bind_cols(province_df) |>
-    dplyr::select(
-      "service", station_id = "codigoEstacion", station_name = "nombre",
-      "station_province", "province_id",
-      altitude = "altitud", "longitud", "latitud", under_plastic = "bajoplastico"
-    ) |>
-    dplyr::distinct() |>
-    dplyr::mutate(
-      station_id = as.character(glue::glue("{province_id}-{station_id}")),
-      altitude = units::set_units(.data$altitude, 'm'),
-      latitud = .parse_coords_dmsh(.data$latitud),
-      longitud = .parse_coords_dmsh(.data$longitud),
-    ) |>
-    sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
-
+  return(info_ria)
 }
 
 #' Get data from RIA

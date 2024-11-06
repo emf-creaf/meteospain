@@ -146,26 +146,31 @@
     'monthly' = c('xema', 'v1', 'variables', 'estadistics', 'mensuals', 'metadades'),
     'yearly' = c('xema', 'v1', 'variables', 'estadistics', 'anuals', 'metadades')
   )
+  # cache
+  cache_ref <- rlang::hash(path_resolution)
 
+  # get the data from cache or from API if new
+  variables_meteocat <- .get_cached_result(cache_ref, {
+    # get and status check ----------------------------------------------------------------------------------
+    api_status_check <- .check_status_meteocat(
+      'https://api.meteo.cat',
+      httr::add_headers(`x-api-key` = api_options$api_key),
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain')
+    )
 
-  # get and status check ----------------------------------------------------------------------------------
-  api_status_check <- .check_status_meteocat(
-    'https://api.meteo.cat',
-    httr::add_headers(`x-api-key` = api_options$api_key),
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-  )
-
-  if (api_status_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (api_status_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_variables_meteocat))
+    if (api_status_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (api_status_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_variables_meteocat))
+      }
     }
-  }
 
-  response_content <- api_status_check$content |>
-    dplyr::as_tibble()
-  return(response_content)
+    api_status_check$content |>
+      dplyr::as_tibble()
+  })
+
+  return(variables_meteocat)
 }
 
 #' Create the path elements for MeteoCat API
@@ -289,56 +294,62 @@
   # GET parts needed --------------------------------------------------------------------------------------
   # path
   path_resolution <- c('xema', 'v1', 'estacions', 'metadades')
+  # cache
+  cache_ref <- rlang::hash(path_resolution)
 
-  # Status check ------------------------------------------------------------------------------------------
-  api_status_check <- .check_status_meteocat(
-    "https://api.meteo.cat",
-    httr::add_headers(`x-api-key` = api_options$api_key),
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-  )
+  # get data from cache or from API if new
+  info_meteocat <- .get_cached_result(cache_ref, {
+    # Status check ------------------------------------------------------------------------------------------
+    api_status_check <- .check_status_meteocat(
+      "https://api.meteo.cat",
+      httr::add_headers(`x-api-key` = api_options$api_key),
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain')
+    )
 
-  if (api_status_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (api_status_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_info_meteocat))
-    } else {
-      cli::cli_abort(c(
-        x = api_status_check$code,
-        i = api_status_check$message
-      ))
+    if (api_status_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (api_status_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_info_meteocat))
+      } else {
+        cli::cli_abort(c(
+          x = api_status_check$code,
+          i = api_status_check$message
+        ))
+      }
     }
-  }
 
-  # Data --------------------------------------------------------------------------------------------------
-  # Meteocat returns a data frame, but some variables are data frames themselves. We need to work on that
-  response_content <- api_status_check$content
+    # Data --------------------------------------------------------------------------------------------------
+    # Meteocat returns a data frame, but some variables are data frames themselves. We need to work on that
+    response_content <- api_status_check$content
 
-  coords_df <- response_content[['coordenades']]
-  province_df <- response_content[['provincia']]['nom'] |>
-    dplyr::rename(station_province = "nom")
+    coords_df <- response_content[['coordenades']]
+    province_df <- response_content[['provincia']]['nom'] |>
+      dplyr::rename(station_province = "nom")
 
-  response_content |>
-    dplyr::as_tibble() |>
-    # add service name, to identify the data if joining with other services
-    dplyr::mutate(service = 'meteocat') |>
-    dplyr::select(
-      !dplyr::any_of(c(
-        'coordenades', 'municipi', 'comarca', 'provincia',
-        'xarxa', 'estats', 'tipus', 'emplacament'
-      ))
-    ) |>
-    dplyr::bind_cols(coords_df, province_df) |>
-    dplyr::select(
-      "service", station_id = "codi", station_name = "nom", "station_province",
-      altitude = "altitud", "longitud", "latitud"
-    ) |>
-    dplyr::distinct() |>
-    dplyr::mutate(
-      altitude = units::set_units(.data$altitude, 'm')
-    ) |>
-    sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
+    response_content |>
+      dplyr::as_tibble() |>
+      # add service name, to identify the data if joining with other services
+      dplyr::mutate(service = 'meteocat') |>
+      dplyr::select(
+        !dplyr::any_of(c(
+          'coordenades', 'municipi', 'comarca', 'provincia',
+          'xarxa', 'estats', 'tipus', 'emplacament'
+        ))
+      ) |>
+      dplyr::bind_cols(coords_df, province_df) |>
+      dplyr::select(
+        "service", station_id = "codi", station_name = "nom", "station_province",
+        altitude = "altitud", "longitud", "latitud"
+      ) |>
+      dplyr::distinct() |>
+      dplyr::mutate(
+        altitude = units::set_units(.data$altitude, 'm')
+      ) |>
+      sf::st_as_sf(coords = c('longitud', 'latitud'), crs = 4326)
+  })
 
+  return(info_meteocat)
 }
 
 #' Get data from MeteoCat

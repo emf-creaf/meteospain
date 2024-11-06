@@ -198,84 +198,92 @@
   path_resolution <- c(
     'opendata', 'api', 'valores', 'climatologicos', 'inventarioestaciones', 'todasestaciones'
   )
+  # cache
+  cache_ref <- rlang::hash(path_resolution)
 
-  # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
-  config_httr_aemet <- switch(
-    Sys.info()["sysname"],
-    'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
-    httr::config()
-  )
+  # get data from cache or from API if new
+  info_aemet <- .get_cached_result(cache_ref, {
 
-  # Status check ------------------------------------------------------------------------------------------
-  # now we need to check the status of the response (general status), and the status of the AEMET (specific
-  # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
-  # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
-  # This is done with .check_status_aemet helper, which return a list with the status, and if success the
-  # content parsed already
-  api_status_check <- .check_status_aemet(
-    "https://opendata.aemet.es",
-    httr::add_headers(api_key = api_options$api_key),
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = config_httr_aemet
-  )
+    # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
+    config_httr_aemet <- switch(
+      Sys.info()["sysname"],
+      'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
+      httr::config()
+    )
 
-  if (api_status_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (api_status_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
-    } else {
-      cli::cli_abort(c(
-        x = api_status_check$code,
-        i = api_status_check$message
-      ))
+    # Status check ------------------------------------------------------------------------------------------
+    # now we need to check the status of the response (general status), and the status of the AEMET (specific
+    # query status). They can differ, as you can reach succesfully AEMET API (200) but the response can be
+    # empty due to errors in the dates or stations (404) or simply the api key is incorrect (xxx).
+    # This is done with .check_status_aemet helper, which return a list with the status, and if success the
+    # content parsed already
+    api_status_check <- .check_status_aemet(
+      "https://opendata.aemet.es",
+      httr::add_headers(api_key = api_options$api_key),
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain'),
+      config = config_httr_aemet
+    )
+
+    if (api_status_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (api_status_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
+      } else {
+        cli::cli_abort(c(
+          x = api_status_check$code,
+          i = api_status_check$message
+        ))
+      }
     }
-  }
 
-  response_content <- api_status_check$content
+    response_content <- api_status_check$content
 
-  # Response data and metadata ----------------------------------------------------------------------------
-  # Now, as stated in the .check_status_aemet rationale, we need to access data (in this case we don't need
-  # metadata)
-  stations_info_check <- .check_status_aemet(
-    response_content$datos,
-    httr::user_agent('https://github.com/emf-creaf/meteospain'),
-    config = config_httr_aemet
-  )
+    # Response data and metadata ----------------------------------------------------------------------------
+    # Now, as stated in the .check_status_aemet rationale, we need to access data (in this case we don't need
+    # metadata)
+    stations_info_check <- .check_status_aemet(
+      response_content$datos,
+      httr::user_agent('https://github.com/emf-creaf/meteospain'),
+      config = config_httr_aemet
+    )
 
-  if (stations_info_check$status != 'OK') {
-    # if api request limit reached, do a recursive call to the function after 60 seconds
-    if (stations_info_check$code == 429) {
-      return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
-    } else {
-      cli::cli_abort(c(
-        x = stations_info_check$code,
-        i = stations_info_check$message
-      ))
+    if (stations_info_check$status != 'OK') {
+      # if api request limit reached, do a recursive call to the function after 60 seconds
+      if (stations_info_check$code == 429) {
+        return(.manage_429_errors(api_status_check, api_options, .get_info_aemet))
+      } else {
+        cli::cli_abort(c(
+          x = stations_info_check$code,
+          i = stations_info_check$message
+        ))
+      }
     }
-  }
 
-  # Data transformation ----------------------------------------------------------------------------------
-  # We can finally take the station info data frame and do the necessary transformations
-  stations_info_check$content |>
-    dplyr::as_tibble() |>
-    # add service name, to identify the data if joining with other services
-    dplyr::mutate(service = 'aemet') |>
-    dplyr::select(
-      "service", station_id = "indicativo", station_name = "nombre",
-      station_province = "provincia", altitude = "altitud", latitude = "latitud",
-      longitude = "longitud"
-    ) |>
-    # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
-    # and negative when S or W.
-    dplyr::mutate(
-      altitude = as.numeric(stringr::str_replace_all(.data$altitude, ',', '.')),
-      altitude = units::set_units(.data$altitude, "m"),
-      latitude = .aemet_coords_generator(.data$latitude),
-      longitude = .aemet_coords_generator(.data$longitude)
-    ) |>
-    sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
+    # Data transformation ----------------------------------------------------------------------------------
+    # We can finally take the station info data frame and do the necessary transformations
+    stations_info_check$content |>
+      dplyr::as_tibble() |>
+      # add service name, to identify the data if joining with other services
+      dplyr::mutate(service = 'aemet') |>
+      dplyr::select(
+        "service", station_id = "indicativo", station_name = "nombre",
+        station_province = "provincia", altitude = "altitud", latitude = "latitud",
+        longitude = "longitud"
+      ) |>
+      # latitude and longitude are in strings with the cardinal letter. We need to transform that to numeric
+      # and negative when S or W.
+      dplyr::mutate(
+        altitude = as.numeric(stringr::str_replace_all(.data$altitude, ',', '.')),
+        altitude = units::set_units(.data$altitude, "m"),
+        latitude = .aemet_coords_generator(.data$latitude),
+        longitude = .aemet_coords_generator(.data$longitude)
+      ) |>
+      sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
 
+  })
+
+  return(info_aemet)
 }
 
 #' Get data from AEMET

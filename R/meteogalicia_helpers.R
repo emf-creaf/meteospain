@@ -96,41 +96,49 @@
   path_resolution <- c(
     'mgrss', 'observacion', 'listaEstacionsMeteo.action'
   )
-  # api response
-  api_response <- safe_api_access(
-    type = 'rest',
-    "https://servizos.meteogalicia.gal",
-    config = list(http_version = 2),
-    path = path_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-  )
+  # cache
+  cache_ref <- rlang::hash(path_resolution)
 
-  # Status check ------------------------------------------------------------------------------------------
-  if (api_response$status_code != 200) {
-    cli::cli_abort(c(
-      "Unable to connect to meteogalicia API at {.url {api_response$url}}"
-    ))
-  }
+  # get data from cache or from API if new
+  info_meteogalicia <- .get_cached_result(cache_ref, {
+    # api response
+    api_response <- safe_api_access(
+      type = 'rest',
+      "https://servizos.meteogalicia.gal",
+      config = list(http_version = 2),
+      path = path_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain')
+    )
+
+    # Status check ------------------------------------------------------------------------------------------
+    if (api_response$status_code != 200) {
+      cli::cli_abort(c(
+        "Unable to connect to meteogalicia API at {.url {api_response$url}}"
+      ))
+    }
 
 
-  # Data --------------------------------------------------------------------------------------------------
-  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
+    # Data --------------------------------------------------------------------------------------------------
+    response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
 
-  # Meteogalicia returns a list, with one element called listaEstacionsMeteo, that is parsed directly to
-  # a data.frame with all the info. We work with that.
-  response_content$listaEstacionsMeteo |>
-    dplyr::as_tibble() |>
-    dplyr::mutate(service = 'meteogalicia') |>
-    .info_table_checker() |>
-    dplyr::select(
-      "service", station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
-      "altitude", "lat", "lon"
-    ) |>
-    dplyr::mutate(
-      station_id = as.character(.data$station_id),
-      altitude = units::set_units(.data$altitude, "m")
-    ) |>
-    sf::st_as_sf(coords = c('lon', 'lat'), crs = 4326)
+    # Meteogalicia returns a list, with one element called listaEstacionsMeteo, that is parsed directly to
+    # a data.frame with all the info. We work with that.
+    response_content$listaEstacionsMeteo |>
+      dplyr::as_tibble() |>
+      dplyr::mutate(service = 'meteogalicia') |>
+      .info_table_checker() |>
+      dplyr::select(
+        "service", station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
+        "altitude", "lat", "lon"
+      ) |>
+      dplyr::mutate(
+        station_id = as.character(.data$station_id),
+        altitude = units::set_units(.data$altitude, "m")
+      ) |>
+      sf::st_as_sf(coords = c('lon', 'lat'), crs = 4326)
+  })
+
+  return(info_meteogalicia)
 
 }
 
