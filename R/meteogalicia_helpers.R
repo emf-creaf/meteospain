@@ -146,118 +146,126 @@
 #' @noRd
 .get_data_meteogalicia <- function(api_options) {
 
-
-  # GET ---------------------------------------------------------------------------------------------------
   # api path
   path_resolution <- .create_meteogalicia_path(api_options)
   # get api query
   query_resolution <- .create_meteogalicia_query(api_options)
-  # get the api response
-  api_response <- safe_api_access(
-    type = 'rest',
-    "https://servizos.meteogalicia.gal",
-    config = list(http_version = 2),
-    path = path_resolution,
-    query = query_resolution,
-    httr::user_agent('https://github.com/emf-creaf/meteospain')
-  )
 
+  # cache (in this case with path and query to get the date also)
+  cache_ref <- rlang::hash(c(path_resolution, query_resolution))
 
-  # Status check ------------------------------------------------------------------------------------------
-  # bad stations return code 500
-  if (api_response$status_code %in% c(500L, 404L)) {
-    cli::cli_abort(c(
-      "MeteoGalicia API returned an error:",
-      stringr::str_remove_all(
-        httr::content(api_response, 'text'),
-        '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
-      ),
-      i = 'This usually happens when unknown station ids are supplied.'
+  # if resolution less than daily, remove the cache
+  if (api_options$resolution %in% c("instant", "current_day")) {
+    apis_cache$remove(cache_ref)
+  }
+
+  data_meteogalicia <- .get_cached_result(cache_ref, {
+    # GET ---------------------------------------------------------------------------------------------------
+    # get the api response
+    api_response <- safe_api_access(
+      type = 'rest',
+      "https://servizos.meteogalicia.gal",
+      config = list(http_version = 2),
+      path = path_resolution,
+      query = query_resolution,
+      httr::user_agent('https://github.com/emf-creaf/meteospain')
+    )
+    # Status check ------------------------------------------------------------------------------------------
+    # bad stations return code 500
+    if (api_response$status_code %in% c(500L, 404L)) {
+      cli::cli_abort(c(
+        "MeteoGalicia API returned an error:",
+        stringr::str_remove_all(
+          httr::content(api_response, 'text'),
+          '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
+        ),
+        i = 'This usually happens when unknown station ids are supplied.'
+      ))
+    }
+    # check any other codes besides 200
+    if (api_response$status_code != 200) {
+      cli::cli_abort(c(
+        "Unable to connect to meteogalicia API at {.url {api_response$url}}"
+      ))
+    }
+    # Check when html with error is returned (bad stations)
+    # LEGACY, bad stations now are reported with error 500 in the new meteogalicia API
+    if (httr::http_type(api_response) != "application/json") {
+      cli::cli_abort(c(
+        "MeteoGalicia API returned an error:",
+        stringr::str_remove_all(
+          httr::content(api_response, 'text'),
+          '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
+        ),
+        i = 'This usually happens when unknown station ids are supplied.'
+      ))
+    }
+    # response content
+    response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
+    # Check when empty lists are returned (bad dates)
+    if (length(response_content[[1]]) < 1) {
+      cli::cli_abort(c(
+        "MeteoGalicia API returned no data:\n",
+        i = "This usually happens when there is no data for the dates supplied."
+      ))
+    }
+    # Resolution specific carpentry -------------------------------------------------------------------------
+    # Now, resolutions have differences, in the component names of the list returned and also in variables
+    # returned. So we create specific functions for each resolution and use a common pipe (see aemet.helpers
+    # for a more complete rationale)
+    resolution_specific_unnesting <- switch(
+      api_options$resolution,
+      'instant' = .meteogalicia_instant_unnesting,
+      'current_day' = .meteogalicia_current_day_unnesting,
+      'daily' = .meteogalicia_daily_unnesting,
+      'monthly' = .meteogalicia_monthly_unnesting
+    )
+    resolution_specific_carpentry <- switch(
+      api_options$resolution,
+      'instant' = .meteogalicia_instant_carpentry,
+      'current_day' = .meteogalicia_current_day_carpentry,
+      'daily' = .meteogalicia_daily_carpentry,
+      'monthly' = .meteogalicia_monthly_carpentry
+    )
+    resolution_specific_joinvars <- c('service', 'station_id', 'station_name')
+    if (api_options$resolution %in% c('daily', 'monthly')) {
+      resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
+    }
+    # Data transformation -----------------------------------------------------------------------------------
+    res <-
+      resolution_specific_unnesting(response_content) |>
+      # final unnest, common to all resolutions
+      unnest_safe("listaMedidas") |>
+      # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
+      dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) |>
+      # remove unwanted variables
+      dplyr::select(-"lnCodigoValidacion", -"nomeParametro", -"unidade") |>
+      # now, some stations can have errors in the sense of duplicated precipitation values.
+      # We get the first record
+      tidyr::pivot_wider(
+        names_from = "codigoParametro", values_from = "valor", values_fn = dplyr::first
+      ) |>
+      # resolution-specific transformations
+      resolution_specific_carpentry() |>
+      dplyr::arrange(.data$timestamp, .data$station_id) |>
+      dplyr::left_join(.get_info_meteogalicia(), by = resolution_specific_joinvars) |>
+      # reorder variables to be consistent among all services
+      relocate_vars() |>
+      sf::st_as_sf()
+
+    # Copyright message -------------------------------------------------------------------------------------
+    cli::cli_inform(c(
+      i = copyright_style("A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser"),
+      copyright_style("utilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1"),
+      copyright_style("Conseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez"),
+      copyright_style("que as utilice para os usos distintos do particular e privado."),
+      legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
     ))
-  }
-  # check any other codes besides 200
-  if (api_response$status_code != 200) {
-    cli::cli_abort(c(
-      "Unable to connect to meteogalicia API at {.url {api_response$url}}"
-    ))
-  }
-  # Check when html with error is returned (bad stations)
-  # LEGACY, bad stations now are reported with error 500 in the new meteogalicia API
-  if (httr::http_type(api_response) != "application/json") {
-    cli::cli_abort(c(
-      "MeteoGalicia API returned an error:",
-      stringr::str_remove_all(
-        httr::content(api_response, 'text'),
-        '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
-      ),
-      i = 'This usually happens when unknown station ids are supplied.'
-    ))
-  }
-  # response content
-  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
-  # Check when empty lists are returned (bad dates)
-  if (length(response_content[[1]]) < 1) {
-    cli::cli_abort(c(
-      "MeteoGalicia API returned no data:\n",
-      i = "This usually happens when there is no data for the dates supplied."
-    ))
-  }
 
-  # Resolution specific carpentry -------------------------------------------------------------------------
-  # Now, resolutions have differences, in the component names of the list returned and also in variables
-  # returned. So we create specific functions for each resolution and use a common pipe (see aemet.helpers
-  # for a more complete rationale)
-  resolution_specific_unnesting <- switch(
-    api_options$resolution,
-    'instant' = .meteogalicia_instant_unnesting,
-    'current_day' = .meteogalicia_current_day_unnesting,
-    'daily' = .meteogalicia_daily_unnesting,
-    'monthly' = .meteogalicia_monthly_unnesting
-  )
-  resolution_specific_carpentry <- switch(
-    api_options$resolution,
-    'instant' = .meteogalicia_instant_carpentry,
-    'current_day' = .meteogalicia_current_day_carpentry,
-    'daily' = .meteogalicia_daily_carpentry,
-    'monthly' = .meteogalicia_monthly_carpentry
-  )
-  resolution_specific_joinvars <- c('service', 'station_id', 'station_name')
-  if (api_options$resolution %in% c('daily', 'monthly')) {
-    resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
-  }
+    res
+  })
 
-  # Data transformation -----------------------------------------------------------------------------------
-  res <-
-    resolution_specific_unnesting(response_content) |>
-    # final unnest, common to all resolutions
-    unnest_safe("listaMedidas") |>
-    # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
-    dplyr::filter(!.data$lnCodigoValidacion %in% c(0, 3, 9)) |>
-    # remove unwanted variables
-    dplyr::select(-"lnCodigoValidacion", -"nomeParametro", -"unidade") |>
-    # now, some stations can have errors in the sense of duplicated precipitation values.
-    # We get the first record
-    tidyr::pivot_wider(
-      names_from = "codigoParametro", values_from = "valor", values_fn = dplyr::first
-    ) |>
-    # resolution-specific transformations
-    resolution_specific_carpentry() |>
-    dplyr::arrange(.data$timestamp, .data$station_id) |>
-    dplyr::left_join(.get_info_meteogalicia(), by = resolution_specific_joinvars) |>
-    # reorder variables to be consistent among all services
-    relocate_vars() |>
-    sf::st_as_sf()
-
-  # Copyright message -------------------------------------------------------------------------------------
-  cli::cli_inform(c(
-    i = copyright_style("A informaci\u00F3n divulgada a trav\u00E9s deste servidor ofr\u00E9cese gratuitamente aos cidad\u00E1ns para que poida ser"),
-    copyright_style("utilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1"),
-    copyright_style("Conseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez"),
-    copyright_style("que as utilice para os usos distintos do particular e privado."),
-    legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
-  ))
-
-  return(res)
+  return(data_meteogalicia)
 }
 
 

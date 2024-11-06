@@ -209,123 +209,134 @@
 #' @noRd
 .get_data_ria <- function(api_options) {
 
-  # All necessary things for the GET ----------------------------------------------------------------------
-  # stations_info and update api_options
-  # we need the stations id and their province
-  stations_info <- .get_info_ria(api_options)
-
-  if (is.null(api_options$stations)) {
-    api_options$stations <- stations_info[['station_id']]
-  }
   # create api paths
   paths_resolution <- .create_ria_path(api_options)
+  # cache
+  # NOTE: in RIA, only resolutions available are daily and monthly, so no
+  # cache invalidation is needed for less than daily as in other APIs
+  cache_ref <- rlang::hash(paths_resolution)
 
-  # GET and Status check ----------------------------------------------------------------------------------
-  # Here the things are a little convoluted. ria, for returning all stations only allows one variable
-  # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
-  # checking statuses and retrieving data if everything is ok.
-  api_statuses <- paths_resolution |>
-    purrr::map(
-      \(path) {
-        .check_status_ria(
-          "https://www.juntadeandalucia.es",
-          path = path,
-          httr::user_agent('https://github.com/emf-creaf/meteospain')
-        )
-      }
+  # get data from cache or from API if new
+  data_ria <- .get_cached_result(cache_ref, {
+
+    # All necessary things for the GET ----------------------------------------------------------------------
+    # stations_info and update api_options
+    # we need the stations id and their province
+    stations_info <- .get_info_ria(api_options)
+
+    if (is.null(api_options$stations)) {
+      api_options$stations <- stations_info[['station_id']]
+    }
+
+    # GET and Status check ----------------------------------------------------------------------------------
+    # Here the things are a little convoluted. ria, for returning all stations only allows one variable
+    # and one day. This means that for all variables, we need to loop around all paths (variables) needed,
+    # checking statuses and retrieving data if everything is ok.
+    api_statuses <- paths_resolution |>
+      purrr::map(
+        \(path) {
+          .check_status_ria(
+            "https://www.juntadeandalucia.es",
+            path = path,
+            httr::user_agent('https://github.com/emf-creaf/meteospain')
+          )
+        }
+      )
+
+    ria_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
+      purrr::flatten_chr()
+    ria_codes <- purrr::map_depth(api_statuses, 1, 'code') |>
+      purrr::flatten_dbl()
+    ria_messages <- purrr::map_depth(api_statuses, 1, 'message') |>
+      purrr::flatten_chr()
+    ria_urls <- purrr::map_depth(api_statuses, 1, 'station_url') |>
+      purrr::flatten_chr()
+
+    messages_to_show <- ria_messages[which(ria_codes != 200)] |> unique()
+    stations_with_problems <- ria_urls[which(ria_codes != 200)] |>
+      unique() |>
+      purrr::map_chr(.f = .ria_url2station) |>
+      sort()
+
+    if (all(ria_statuses != 'OK')) {
+      cli::cli_abort(c(
+        messages_to_show
+      ))
+    }
+
+    if (any(ria_statuses != 'OK')) {
+      cli::cli_inform(c(
+        w = copyright_style("Some stations didn't return data for some dates:"),
+        stations_with_problems
+      ))
+    }
+
+    # Resolution specific carpentry -------------------------------------------------------------------------
+    # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
+    # differently. It also differs in the select step as in the latter group there is no repetition of column
+    # names after the unnest step.
+    resolution_specific_select_quos <- switch(
+      api_options$resolution,
+      'daily' = .ria_daily_select_quos,
+      'monthly' = .ria_monthly_select_quos
     )
 
-  ria_statuses <- purrr::map_depth(api_statuses, 1, 'status') |>
-    purrr::flatten_chr()
-  ria_codes <- purrr::map_depth(api_statuses, 1, 'code') |>
-    purrr::flatten_dbl()
-  ria_messages <- purrr::map_depth(api_statuses, 1, 'message') |>
-    purrr::flatten_chr()
-  ria_urls <- purrr::map_depth(api_statuses, 1, 'station_url') |>
-    purrr::flatten_chr()
+    resolution_specific_mutate_quos <- switch(
+      api_options$resolution,
+      'daily' = .ria_daily_mutate_quos,
+      'monthly' = .ria_monthly_mutate_quos
+    )
 
-  messages_to_show <- ria_messages[which(ria_codes != 200)] |> unique()
-  stations_with_problems <- ria_urls[which(ria_codes != 200)] |>
-    unique() |>
-    purrr::map_chr(.f = .ria_url2station) |>
-    sort()
+    # Data transformation -----------------------------------------------------------------------------------
 
-  if (all(ria_statuses != 'OK')) {
-    cli::cli_abort(c(
-      messages_to_show
-    ))
-  }
+    res <- purrr::map_depth(api_statuses, 1, 'content') |>
+      purrr::set_names(ria_urls) |>
+      purrr::discard(is.null) |>
+      purrr::imap(
+        \(.x, .y) {dplyr::mutate(.x, station_id = .ria_url2station(.y))}
+      ) |>
+      purrr::list_rbind() |>
+      dplyr::select(
+        !!! resolution_specific_select_quos(), "station_id",
+        mean_temperature = "tempMedia", min_temperature = "tempMin", max_temperature = "tempMax",
+        mean_relative_humidity = "humedadMedia", min_relative_humidity = "humedadMin",
+        max_relative_humidity = "humedadMax",
+        mean_wind_speed = "velViento", mean_wind_direction = "dirViento",
+        precipitation = "precipitacion",
+        solar_radiation = "radiacion"
+      ) |>
+      dplyr::mutate(
+        !!! resolution_specific_mutate_quos(),
+        mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+        min_temperature = units::set_units(.data$min_temperature, "degree_C"),
+        max_temperature = units::set_units(.data$max_temperature, "degree_C"),
+        mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+        min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
+        max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
+        mean_wind_speed = units::set_units(.data$mean_wind_speed, 'm/s'),
+        mean_wind_direction = units::set_units(.data$mean_wind_direction, 'degree'),
+        precipitation = units::set_units(.data$precipitation, "L/m^2"),
+        solar_radiation = units::set_units(.data$solar_radiation, "MJ/d/m^2"),
+        timestamp = lubridate::as_datetime(.data$timestamp),
+        station_id = as.character(.data$station_id)
+      ) |>
+      dplyr::left_join(stations_info, by = 'station_id') |>
+      dplyr::select(!dplyr::any_of(c('month', 'year', 'province_id'))) |>
+      # reorder variables to be consistent among all services
+      relocate_vars() |>
+      # ensure we have an sf
+      sf::st_as_sf()
 
-  if (any(ria_statuses != 'OK')) {
+    # Copyright message -------------------------------------------------------------------------------------
     cli::cli_inform(c(
-      w = copyright_style("Some stations didn't return data for some dates:"),
-      stations_with_problems
+      i = copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
+      legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
     ))
-  }
 
-  # Resolution specific carpentry -------------------------------------------------------------------------
-  # Now, instant/hourly and daily/monthly/yearly differs in the unnest step, as the column names are called
-  # differently. It also differs in the select step as in the latter group there is no repetition of column
-  # names after the unnest step.
-  resolution_specific_select_quos <- switch(
-    api_options$resolution,
-    'daily' = .ria_daily_select_quos,
-    'monthly' = .ria_monthly_select_quos
-  )
+    res
+  })
 
-  resolution_specific_mutate_quos <- switch(
-    api_options$resolution,
-    'daily' = .ria_daily_mutate_quos,
-    'monthly' = .ria_monthly_mutate_quos
-  )
-
-  # Data transformation -----------------------------------------------------------------------------------
-
-  res <- purrr::map_depth(api_statuses, 1, 'content') |>
-    purrr::set_names(ria_urls) |>
-    purrr::discard(is.null) |>
-    purrr::imap(
-      \(.x, .y) {dplyr::mutate(.x, station_id = .ria_url2station(.y))}
-    ) |>
-    purrr::list_rbind() |>
-    dplyr::select(
-      !!! resolution_specific_select_quos(), "station_id",
-      mean_temperature = "tempMedia", min_temperature = "tempMin", max_temperature = "tempMax",
-      mean_relative_humidity = "humedadMedia", min_relative_humidity = "humedadMin",
-      max_relative_humidity = "humedadMax",
-      mean_wind_speed = "velViento", mean_wind_direction = "dirViento",
-      precipitation = "precipitacion",
-      solar_radiation = "radiacion"
-    ) |>
-    dplyr::mutate(
-      !!! resolution_specific_mutate_quos(),
-      mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
-      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-      min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
-      max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
-      mean_wind_speed = units::set_units(.data$mean_wind_speed, 'm/s'),
-      mean_wind_direction = units::set_units(.data$mean_wind_direction, 'degree'),
-      precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      solar_radiation = units::set_units(.data$solar_radiation, "MJ/d/m^2"),
-      timestamp = lubridate::as_datetime(.data$timestamp),
-      station_id = as.character(.data$station_id)
-    ) |>
-    dplyr::left_join(stations_info, by = 'station_id') |>
-    dplyr::select(!dplyr::any_of(c('month', 'year', 'province_id'))) |>
-    # reorder variables to be consistent among all services
-    relocate_vars() |>
-    # ensure we have an sf
-    sf::st_as_sf()
-
-  # Copyright message -------------------------------------------------------------------------------------
-  cli::cli_inform(c(
-    i = copyright_style("Data provided by Red de Informaci\u00F3n Agroclim\u00E1tica de Andaluc\u00EDa (RIA)"),
-    legal_note_style("https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/")
-  ))
-
-  return(res)
+  return(data_ria)
 }
 
 

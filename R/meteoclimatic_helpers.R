@@ -58,6 +58,10 @@
   # api path
   path_resolution <- .create_meteoclimatic_path(api_options)
 
+  # cache
+  # NOTE: meteoclimatic only offers current day resolution, so no cache is
+  # used.
+
   # data
   data_xml_body <- safe_api_access(type = 'xml', path_resolution)
   # data is an xml file. Each station is a node in the xml, so we loop by nodes and build the tibble. Finally
