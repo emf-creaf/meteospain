@@ -4,6 +4,9 @@
   - new cache reduces significantly API calls, especially in meteocat (#29).
   - new cache avoids caching temporal resolutions below daily, where data changes
     between API calls (#29).
+* MeteoCat API:
+  - Updated variables returned for all temporal resolutions. Now all possible
+    variables are returned (#28).
 
 # meteospain 0.2.0
 
