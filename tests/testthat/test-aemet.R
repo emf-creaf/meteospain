@@ -47,9 +47,12 @@ test_that("aemet current works", {
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "temperature", "min_temperature", "max_temperature",
-    "relative_humidity", "precipitation",
-    "wind_direction", "wind_speed", "insolation", "geometry"
+    "precipitation", "max_wind_speed", "wind_direction", "wind_speed",
+    "max_wind_direction", "relative_humidity", "insolation",
+    "atmospheric_pressure", "temperature_soil", "temperature_soil_20",
+    "temperature_soil_5", "temperature", "temperature_dew_point",
+    "min_temperature", "max_temperature", "snow_cover",
+    "geometry"
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = temperature)
   # some stations
@@ -74,9 +77,11 @@ test_that("aemet daily works", {
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "min_temperature", "max_temperature",
-    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
-    "precipitation", "mean_wind_speed", "insolation", "geometry"
+    "mean_temperature", "precipitation", "min_temperature", "max_temperature",
+    "wind_direction", "mean_wind_speed", "max_wind_speed", "insolation",
+    "max_atmospheric_pressure", "min_atmospheric_pressure", "mean_relative_humidity",
+    "max_relative_humidity", "min_relative_humidity",
+    "geometry"
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # some stations
@@ -119,9 +124,17 @@ test_that("aemet monthly works", {
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "mean_min_temperature", "mean_max_temperature",
-    "mean_relative_humidity", "total_precipitation", "days_precipitation",
-    "mean_wind_speed", "mean_insolation", "mean_global_radiation", "geometry"
+    "mean_temperature", "min_temperature_mean", "max_temperature_mean",
+    "min_temperature_absolute", "max_temperature_absolute", "min_temperature_max",
+    "max_temperature_min", "temperature_days_30", "temperature_days_0",
+    "mean_temperature_soil_10", "mean_temperature_soil_20", "mean_temperature_soil_50",
+    "mean_relative_humidity", "vapour_pressure", "evaporation_total",
+    "total_precipitation", "rain_days", "rain_days_01", "rain_days_1", "rain_days_10",
+    "rain_days_30", "snow_days", "hail_days", "storm_days", "fog_days", "clear_days",
+    "cloudy_days", "cover_days", "mean_wind_speed", "mean_insolation",
+    "mean_global_radiation", "insolation_perc", "mean_atmospheric_pressure",
+    "max_atmospheric_pressure", "min_atmospheric_pressure",
+    "geometry"
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # more than one station -> warning
@@ -167,9 +180,17 @@ test_that("aemet yearly works", {
   # expect_message((test_object <- get_meteo_from('aemet', api_options)), 'Autorizado el uso')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "mean_min_temperature", "mean_max_temperature",
-    "mean_relative_humidity", "total_precipitation", "days_precipitation",
-    "mean_wind_speed", "mean_insolation", "mean_global_radiation", "geometry"
+    "mean_temperature", "min_temperature_mean", "max_temperature_mean",
+    "min_temperature_absolute", "max_temperature_absolute", "min_temperature_max",
+    "max_temperature_min", "temperature_days_30", "temperature_days_0",
+    "mean_temperature_soil_10", "mean_temperature_soil_20", "mean_temperature_soil_50",
+    "mean_relative_humidity", "vapour_pressure", "evaporation_total",
+    "total_precipitation", "rain_days", "rain_days_01", "rain_days_1", "rain_days_10",
+    "rain_days_30", "snow_days", "hail_days", "storm_days", "fog_days", "clear_days",
+    "cloudy_days", "cover_days", "mean_wind_speed", "mean_insolation",
+    "mean_global_radiation", "insolation_perc", "mean_atmospheric_pressure",
+    "max_atmospheric_pressure", "min_atmospheric_pressure",
+    "geometry"
   )
   main_test_battery(test_object, service = 'aemet', expected_names = expected_names, temperature = mean_temperature)
   # more than one station -> warning

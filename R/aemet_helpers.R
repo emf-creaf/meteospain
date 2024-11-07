@@ -464,21 +464,32 @@
     dplyr::select(dplyr::any_of(c(
       timestamp = "fint", station_id = "idema", station_name = "ubi",
       altitude = "alt",
+      precipitation = "prec",
+      max_wind_speed = "vmax",
+      wind_direction = "dv",
+      wind_speed = "vv",
+      max_wind_direction = "dmax",
+      relative_humidity = "hr",
+      insolation = "inso",
+      atmospheric_pressure = "pres",
+      temperature_soil = "ts",
+      temperature_soil_20 = "tss20cm",
+      temperature_soil_5 = "tss5cm",
       temperature = "ta",
+      temperature_dew_point = "tpr",
       min_temperature = "tamin",
       max_temperature = "tamax",
-      relative_humidity = "hr",
-      precipitation = "prec",
-      wind_speed = "vv",
-      wind_direction = "dv",
-      insolation = "inso",
+      snow_cover = "nieve",
       longitude = "lon", latitude = "lat"
     ))) |>
     # create any variable missing
     .create_missing_vars(
       var_names = c(
-        "temperature", "min_temperature", "max_temperature", "relative_humidity",
-        "precipitation", "wind_speed", "wind_direction", "insolation"
+        "precipitation", "max_wind_speed", "wind_direction", "wind_speed",
+        "max_wind_direction", "relative_humidity", "insolation",
+        "atmospheric_pressure", "temperature_soil", "temperature_soil_20",
+        "temperature_soil_5", "temperature", "temperature_dew_point",
+        "min_temperature", "max_temperature", "snow_cover"
       )
     ) |>
     # units
@@ -486,14 +497,22 @@
       service = 'aemet',
       timestamp = lubridate::as_datetime(.data$timestamp),
       altitude = units::set_units(.data$altitude, "m"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      max_wind_speed = units::set_units(.data$max_wind_speed, "m/s"),
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      max_wind_direction = units::set_units(.data$max_wind_direction, "degree"),
+      relative_humidity = units::set_units(.data$relative_humidity, "%"),
+      insolation = units::set_units(.data$insolation, "hours"),
+      atmospheric_pressure = units::set_units(.data$atmospheric_pressure, "hPa"),
+      temperature_soil = units::set_units(.data$temperature_soil, "degree_C"),
+      temperature_soil_20 = units::set_units(.data$temperature_soil_20, "degree_C"),
+      temperature_soil_5 = units::set_units(.data$temperature_soil_5, "degree_C"),
       temperature = units::set_units(.data$temperature, "degree_C"),
+      temperature_dew_point = units::set_units(.data$temperature_dew_point, "degree_C"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-      relative_humidity = units::set_units(.data$relative_humidity, "%"),
-      precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      wind_speed = units::set_units(.data$wind_speed, "m/s"),
-      wind_direction = units::set_units(.data$wind_direction, "degree"),
-      insolation = units::set_units(.data$insolation, "hours")
+      snow_cover = units::set_units(.data$snow_cover, "cm")
     ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'altitude')) |>
     sf::st_as_sf(coords = c('longitude', 'latitude'), crs = 4326)
@@ -505,49 +524,69 @@
       timestamp = "fecha",
       station_id = "indicativo", station_name = "nombre", station_province = "provincia",
       mean_temperature = "tmed",
+      precipitation = "prec",
       min_temperature = "tmin",
       max_temperature = "tmax",
-      mean_relative_humidity = "hrMedia",
-      min_relative_humidity = "hrMin",
-      max_relative_humidity = "hrMax",
-      precipitation = "prec",
+      wind_direction = "dir",
       mean_wind_speed = "velmedia",
-      # wind_direction = "dir",
-      insolation = "sol"
+      max_wind_speed = "racha",
+      insolation = "sol",
+      max_atmospheric_pressure = "presmax",
+      min_atmospheric_pressure = "presmin",
+      mean_relative_humidity = "hrMedia",
+      max_relative_humidity = "hrMax",
+      min_relative_humidity = "hrMin"
     ))) |>
     # create any variable missing
     .create_missing_vars(
       var_names = c(
-        "mean_temperature", "min_temperature", "max_temperature",
-        "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
-        "precipitation", "mean_wind_speed", "insolation"
+        "mean_temperature", "precipitation", "min_temperature", "max_temperature",
+        "wind_direction", "mean_wind_speed", "max_wind_speed", "insolation",
+        "max_atmospheric_pressure", "min_atmospheric_pressure", "mean_relative_humidity",
+        "max_relative_humidity", "min_relative_humidity"
       )
     ) |>
     # variables are characters, with "," as decimal point, so....
     dplyr::mutate(
       service = 'aemet',
       timestamp = lubridate::as_datetime(.data$timestamp),
-      mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
-      min_temperature = as.numeric(stringr::str_replace_all(.data$min_temperature, ',', '.')),
-      max_temperature = as.numeric(stringr::str_replace_all(.data$max_temperature, ',', '.')),
-      mean_relative_humidity = as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ',', '.')),
-      min_relative_humidity = as.numeric(stringr::str_replace_all(.data$min_relative_humidity, ',', '.')),
-      max_relative_humidity = as.numeric(stringr::str_replace_all(.data$max_relative_humidity, ',', '.')),
-      precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$precipitation, ',', '.'))),
-      mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
-      # wind_direction = as.numeric(stringr::str_replace_all(.data$wind_direction, ',', '.')),
-      insolation = as.numeric(stringr::str_replace_all(.data$insolation, ',', '.')),
+      mean_temperature = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_temperature, ",", "."))),
+      precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$precipitation, ",", "."))),
+      min_temperature = suppressWarnings(as.numeric(stringr::str_replace_all(.data$min_temperature, ",", "."))),
+      max_temperature = suppressWarnings(as.numeric(stringr::str_replace_all(.data$max_temperature, ",", "."))),
+      wind_direction = suppressWarnings(as.numeric(stringr::str_replace_all(.data$wind_direction, ",", "."))),
+      mean_wind_speed = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ",", "."))),
+      max_wind_speed = suppressWarnings(as.numeric(stringr::str_replace_all(.data$max_wind_speed, ",", "."))),
+      insolation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$insolation, ",", "."))),
+      max_atmospheric_pressure = suppressWarnings(
+        as.numeric(stringr::str_replace_all(.data$max_atmospheric_pressure, ",", "."))
+      ),
+      min_atmospheric_pressure = suppressWarnings(
+        as.numeric(stringr::str_replace_all(.data$min_atmospheric_pressure, ",", "."))
+      ),
+      mean_relative_humidity = suppressWarnings(
+        as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ",", "."))
+      ),
+      max_relative_humidity = suppressWarnings(
+        as.numeric(stringr::str_replace_all(.data$max_relative_humidity, ",", "."))
+      ),
+      min_relative_humidity = suppressWarnings(
+        as.numeric(stringr::str_replace_all(.data$min_relative_humidity, ",", "."))
+      ),
       # and set the units also
       mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-      min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
-      max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
-      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
       mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
-      # wind_direction = units::set_units(.data$wind_direction, degree),
-      insolation = units::set_units(.data$insolation, "h")
+      max_wind_speed = units::set_units(.data$max_wind_speed, "m/s"),
+      insolation = units::set_units(.data$insolation, "hours"),
+      max_atmospheric_pressure = units::set_units(.data$max_atmospheric_pressure, "hPa"),
+      min_atmospheric_pressure = units::set_units(.data$min_atmospheric_pressure, "hPa"),
+      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
+      max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
+      min_relative_humidity = units::set_units(.data$min_relative_humidity, "%")
     ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id', 'station_name', 'station_province'))
 }
@@ -562,22 +601,49 @@
   # data carpentry
   data |>
     dplyr::select(dplyr::any_of(c(
-          timestamp = "fecha",
-          station_id = "indicativo",
-          # temperatures
-          mean_temperature = "tm_mes",
-          mean_min_temperature = "tm_min",
-          mean_max_temperature = "tm_max",
-          # rh
-          mean_relative_humidity = "hr",
-          # precipitation
-          total_precipitation = "p_mes",
-          days_precipitation = "np_001",
-          # wind
-          mean_wind_speed = "w_med",
-          # radiation
-          mean_insolation = "inso",
-          mean_global_radiation = "glo"
+      timestamp = "fecha",
+      station_id = "indicativo", station_name = "nombre", station_province = "provincia",
+      # temperatures
+      mean_temperature = "tm_mes",
+      min_temperature_mean = "tm_min",
+      max_temperature_mean = "tm_max",
+      min_temperature_absolute = "ta_min",
+      max_temperature_absolute = "ta_max",
+      min_temperature_max = "ts_min",
+      max_temperature_min = "ti_max",
+      temperature_days_30 = "nt_30",
+      temperature_days_0 = "nt_00",
+      mean_temperature_soil_10 = "ts_10",
+      mean_temperature_soil_20 = "ts_20",
+      mean_temperature_soil_50 = "ts_50",
+      # rh
+      mean_relative_humidity = "hr",
+      vapour_pressure = "e",
+      evaporation_total = "evap",
+      # precipitation
+      total_precipitation = "p_mes",
+      rain_days = "n_llu",
+      rain_days_01 = "np_001",
+      rain_days_1 = "np_010",
+      rain_days_10 = "np_100",
+      rain_days_30 = "np_300",
+      snow_days = "n_nie",
+      hail_days = "n_gra",
+      storm_days = "n_tor",
+      fog_days = "n_fog",
+      clear_days = "n_des",
+      cloudy_days = "n_nub",
+      cover_days = "n_cub",
+      # wind
+      mean_wind_speed = "w_med",
+      # radiation
+      mean_insolation = "inso",
+      mean_global_radiation = "glo",
+      insolation_perc = "p_sol",
+      # pressure
+      mean_atmospheric_pressure = "q_med",
+      max_atmospheric_pressure = "q_max",
+      min_atmospheric_pressure = "q_min"
     ))) |>
     # remove yearly or monthly values, depending on resolution
     dplyr::filter(
@@ -591,9 +657,16 @@
     # create any variable missing
     .create_missing_vars(
       var_names = c(
-        "mean_temperature", "mean_min_temperature", "mean_max_temperature",
-        "mean_relative_humidity", "total_precipitation", "days_precipitation",
-        "mean_wind_speed", "mean_insolation", "mean_global_radiation"
+        "mean_temperature", "min_temperature_mean", "max_temperature_mean",
+        "min_temperature_absolute", "max_temperature_absolute", "min_temperature_max",
+        "max_temperature_min", "temperature_days_30", "temperature_days_0",
+        "mean_temperature_soil_10", "mean_temperature_soil_20", "mean_temperature_soil_50",
+        "mean_relative_humidity", "vapour_pressure", "evaporation_total",
+        "total_precipitation", "rain_days", "rain_days_01", "rain_days_1", "rain_days_10",
+        "rain_days_30", "snow_days", "hail_days", "storm_days", "fog_days", "clear_days",
+        "cloudy_days", "cover_days", "mean_wind_speed", "mean_insolation",
+        "mean_global_radiation", "insolation_perc", "mean_atmospheric_pressure",
+        "max_atmospheric_pressure", "min_atmospheric_pressure"
       )
     ) |>
     # timestamp has to be parsed, "ym" for monthly values, "y" for yearly, and
@@ -601,26 +674,77 @@
     dplyr::mutate(
       service = 'aemet',
       timestamp = lubridate::parse_date_time(.data$timestamp, orders = c("ym", "y")),
-      mean_temperature = as.numeric(stringr::str_replace_all(.data$mean_temperature, ',', '.')),
-      mean_min_temperature = as.numeric(stringr::str_replace_all(.data$mean_min_temperature, ',', '.')),
-      mean_max_temperature = as.numeric(stringr::str_replace_all(.data$mean_max_temperature, ',', '.')),
-      total_precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$total_precipitation, ',', '.'))),
-      mean_wind_speed = as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ',', '.')),
-      mean_relative_humidity = as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ',', '.')),
-      days_precipitation = as.numeric(stringr::str_replace_all(.data$days_precipitation, ',', '.')),
-      mean_insolation = as.numeric(stringr::str_replace_all(.data$mean_insolation, ',', '.')),
-      # global radiation is in 10*kJ/m2, so we multiply by 10 to set the units later to kJ/m2
-      mean_global_radiation = 10*as.numeric(stringr::str_replace_all(.data$mean_global_radiation, ',', '.')),
+      mean_temperature = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_temperature, ",", "."))),
+      min_temperature_mean = suppressWarnings(as.numeric(stringr::str_replace_all(.data$min_temperature_mean, ",", "."))),
+      max_temperature_mean = suppressWarnings(as.numeric(stringr::str_replace_all(.data$max_temperature_mean, ",", "."))),
+      min_temperature_absolute = suppressWarnings(as.numeric(stringr::str_replace_all(.data$min_temperature_absolute, ",", "."))),
+      max_temperature_absolute = suppressWarnings(as.numeric(stringr::str_replace_all(.data$max_temperature_absolute, ",", "."))),
+      min_temperature_max = suppressWarnings(as.numeric(stringr::str_replace_all(.data$min_temperature_max, ",", "."))),
+      max_temperature_min = suppressWarnings(as.numeric(stringr::str_replace_all(.data$max_temperature_min, ",", "."))),
+      temperature_days_30 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$temperature_days_30, ",", "."))),
+      temperature_days_0 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$temperature_days_0, ",", "."))),
+      mean_temperature_soil_10 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_temperature_soil_10, ",", "."))),
+      mean_temperature_soil_20 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_temperature_soil_20, ",", "."))),
+      mean_temperature_soil_50 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_temperature_soil_50, ",", "."))),
+      mean_relative_humidity = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_relative_humidity, ",", "."))),
+      vapour_pressure = suppressWarnings(as.numeric(stringr::str_replace_all(.data$vapour_pressure, ",", ".")) / 10),
+      evaporation_total = suppressWarnings(as.numeric(stringr::str_replace_all(.data$evaporation_total, ",", "."))),
+      total_precipitation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$total_precipitation, ",", "."))),
+      rain_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$rain_days, ",", "."))),
+      rain_days_01 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$rain_days_01, ",", "."))),
+      rain_days_1 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$rain_days_1, ",", "."))),
+      rain_days_10 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$rain_days_10, ",", "."))),
+      rain_days_30 = suppressWarnings(as.numeric(stringr::str_replace_all(.data$rain_days_30, ",", "."))),
+      snow_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$snow_days, ",", "."))),
+      hail_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$hail_days, ",", "."))),
+      storm_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$storm_days, ",", "."))),
+      fog_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$fog_days, ",", "."))),
+      clear_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$clear_days, ",", "."))),
+      cloudy_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$cloudy_days, ",", "."))),
+      cover_days = suppressWarnings(as.numeric(stringr::str_replace_all(.data$cover_days, ",", "."))),
+      mean_wind_speed = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_wind_speed, ",", "."))),
+      mean_insolation = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_insolation, ",", "."))),
+      mean_global_radiation = 10 * suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_global_radiation, ",", "."))),
+      insolation_perc = suppressWarnings(as.numeric(stringr::str_replace_all(.data$insolation_perc, ",", "."))),
+      mean_atmospheric_pressure = suppressWarnings(as.numeric(stringr::str_replace_all(.data$mean_atmospheric_pressure, ",", "."))),
+      max_atmospheric_pressure = suppressWarnings(as.numeric(stringr::str_replace_all(.data$max_atmospheric_pressure, ",", "."))),
+      min_atmospheric_pressure = suppressWarnings(as.numeric(stringr::str_replace_all(.data$min_atmospheric_pressure, ",", "."))),
       # and set the units also
       mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
-      mean_min_temperature = units::set_units(.data$mean_min_temperature, "degree_C"),
-      mean_max_temperature = units::set_units(.data$mean_max_temperature, "degree_C"),
-      total_precipitation = units::set_units(.data$total_precipitation, "L/m^2"),
-      mean_wind_speed = units::set_units(.data$mean_wind_speed, "km/h"),
+      min_temperature_mean = units::set_units(.data$min_temperature_mean, "degree_C"),
+      max_temperature_mean = units::set_units(.data$max_temperature_mean, "degree_C"),
+      min_temperature_absolute = units::set_units(.data$min_temperature_absolute, "degree_C"),
+      max_temperature_absolute = units::set_units(.data$max_temperature_absolute, "degree_C"),
+      min_temperature_max = units::set_units(.data$min_temperature_max, "degree_C"),
+      max_temperature_min = units::set_units(.data$max_temperature_min, "degree_C"),
+      temperature_days_30 = units::set_units(.data$temperature_days_30, "days"),
+      temperature_days_0 = units::set_units(.data$temperature_days_0, "days"),
+      mean_temperature_soil_10 = units::set_units(.data$mean_temperature_soil_10, "degree_C"),
+      mean_temperature_soil_20 = units::set_units(.data$mean_temperature_soil_20, "degree_C"),
+      mean_temperature_soil_50 = units::set_units(.data$mean_temperature_soil_50, "degree_C"),
       mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-      days_precipitation = units::set_units(.data$days_precipitation, "days"),
+      vapour_pressure = units::set_units(.data$vapour_pressure, "hPa"),
+      evaporation_total = units::set_units(.data$evaporation_total, "degree_C"),
+      total_precipitation = units::set_units(.data$total_precipitation, "degree_C"),
+      rain_days = units::set_units(.data$rain_days, "days"),
+      rain_days_01 = units::set_units(.data$rain_days_01, "days"),
+      rain_days_1 = units::set_units(.data$rain_days_1, "days"),
+      rain_days_10 = units::set_units(.data$rain_days_10, "days"),
+      rain_days_30 = units::set_units(.data$rain_days_30, "days"),
+      snow_days = units::set_units(.data$snow_days, "days"),
+      hail_days = units::set_units(.data$hail_days, "days"),
+      storm_days = units::set_units(.data$storm_days, "days"),
+      fog_days = units::set_units(.data$fog_days, "days"),
+      clear_days = units::set_units(.data$clear_days, "days"),
+      cloudy_days = units::set_units(.data$cloudy_days, "days"),
+      cover_days = units::set_units(.data$cover_days, "days"),
+      mean_wind_speed = units::set_units(.data$mean_wind_speed, "km/h"),
       mean_insolation = units::set_units(.data$mean_insolation, "hours"),
-      mean_global_radiation = units::set_units(.data$mean_global_radiation, "kJ/m^2")
+      mean_global_radiation = units::set_units(.data$mean_global_radiation, "kJ/m^2"),
+      insolation_perc = units::set_units(.data$insolation_perc, "%"),
+      mean_atmospheric_pressure = units::set_units(.data$mean_atmospheric_pressure, "hPa"),
+      max_atmospheric_pressure = units::set_units(.data$max_atmospheric_pressure, "hPa"),
+      min_atmospheric_pressure = units::set_units(.data$min_atmospheric_pressure, "hPa")
     ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id'))
 }
