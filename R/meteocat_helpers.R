@@ -509,6 +509,14 @@
         "mean_snow_cover", "max_snow_cover", "new_snow_cover"
       )
     )
+    resolution_date_floor <- switch(
+      api_options$resolution,
+      "instant" = "second",
+      "hourly" = "second",
+      "daily" = "day",
+      "monthly" = "month",
+      "yearly" = "year"
+    )
 
     if (api_options$resolution %in% c('daily', 'monthly', 'yearly')) {
       resolution_specific_unnest <- .meteocat_long_carpentry
@@ -519,7 +527,7 @@
     stations_info <- .get_info_meteocat(api_options)
 
     # Data transformation -----------------------------------------------------------------------------------
-    response_trasformed <- purrr::map_depth(api_statuses, 1, 'content') |>
+    response_transformed <- purrr::map_depth(api_statuses, 1, 'content') |>
       # resolution specific unnesting of raw data
       resolution_specific_unnest() |>
       # transform variable codes to standard names
@@ -535,7 +543,12 @@
       # set service, date and units
       dplyr::mutate(
         service = 'meteocat',
-        timestamp = lubridate::parse_date_time(.data$timestamp, orders = c('ymdHMS', 'Ymz'), truncated = 5),
+        timestamp = lubridate::parse_date_time(
+          .data$timestamp,
+          orders = c('ymdHMS', 'Ymz'),
+          truncated = 5
+        ) |>
+          lubridate::floor_date(resolution_date_floor),
         dplyr::across(dplyr::contains('temperature'), ~ units::set_units(.x, 'degree_C')),
         dplyr::across(dplyr::contains('humidity'), ~ units::set_units(.x, '%')),
         dplyr::across(dplyr::contains('precipitation'), ~ units::set_units(.x, 'L/m^2')),
@@ -553,7 +566,7 @@
         dplyr::across(dplyr::contains('evapotranspiration'), ~ units::set_units(.x, 'L/m^2'))
       )
 
-    res <- response_trasformed |>
+    res <- response_transformed |>
       # join stations_info
       dplyr::left_join(stations_info, by = c('service', 'station_id')) |>
       # arrange data
