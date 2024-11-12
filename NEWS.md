@@ -7,6 +7,7 @@
 * MeteoCat API:
   - Updated variables returned for all temporal resolutions. Now all possible
     variables are returned (#28).
+  - timestamp values are now floored accordingly to the temporal resolution (#30)
 
 # meteospain 0.2.0
 
