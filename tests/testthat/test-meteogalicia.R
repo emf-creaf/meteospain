@@ -38,7 +38,8 @@ test_that("meteogalicia instant works", {
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)))
   test_object <- get_meteo_from('meteogalicia', api_options)
   expected_names <- c(
-    "timestamp", "station_id", "station_name", "temperature",
+    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
+    "temperature",
     "temperature_soil_100", "temperature_soil_500", "relative_humidity",
     "precipitation", "wind_direction", "wind_speed", "max_wind_speed",
     "max_wind_direction", "global_solar_radiation", "insolation",
