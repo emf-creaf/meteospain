@@ -312,6 +312,7 @@
         mean_relative_humidity = "humedadMedia", min_relative_humidity = "humedadMin",
         max_relative_humidity = "humedadMax",
         mean_wind_speed = "velViento", mean_wind_direction = "dirViento",
+        max_wind_speed = "velVientoMax", max_wind_direction = "dirVientoVelMax",
         precipitation = "precipitacion",
         solar_radiation = "radiacion"
       ) |>
@@ -324,7 +325,9 @@
         min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
         max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
         mean_wind_speed = units::set_units(.data$mean_wind_speed, 'm/s'),
+        max_wind_speed = units::set_units(.data$max_wind_speed, 'm/s'),
         mean_wind_direction = units::set_units(.data$mean_wind_direction, 'degree'),
+        max_wind_direction = units::set_units(.data$max_wind_direction, 'degree'),
         precipitation = units::set_units(.data$precipitation, "L/m^2"),
         solar_radiation = units::set_units(.data$solar_radiation, "MJ/d/m^2"),
         timestamp = lubridate::as_datetime(.data$timestamp),
