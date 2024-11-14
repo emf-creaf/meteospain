@@ -1,5 +1,8 @@
 # meteospain (development version)
 
+* All APIs:
+  - Updated variables returned (data more complete) in all temporal scales
+    with focus on atmospheric pressure (#19, #27, #28)
 * New cache method. `memoise` dependency is dropped and `cachem` is used directly.
   - new cache reduces significantly API calls, especially in meteocat (#29).
   - new cache avoids caching temporal resolutions below daily, where data changes
