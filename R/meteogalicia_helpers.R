@@ -312,33 +312,63 @@
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
       var_names = c(
-        'TA_AVG_1.5m', 'DV_AVG_2m', 'VV_AVG_2m', 'HR_AVG_1.5m',
-        'PP_SUM_1.5m', 'HSOL_SUM_1.5m', 'RS_AVG_1.5m'
+        # temperatures
+        "TA_AVG_1.5m", "TS_AVG_-0.1m", "TS_AVG_-0.5m",
+        # humidities
+        "HR_AVG_1.5m",
+        # precipitation
+        "PP_SUM_1.5m",
+        # winds
+        "DV_AVG_2m", "VV_AVG_2m", "VV_RACHA_2m", "	DV_CONDICION_2m",
+        # radiations
+        "RS_AVG_1.5m", "HSOL_SUM_1.5m", "RREF_AVG_1.5m", "BIO_AVG_1.5m",
+        # pressures
+        "PR_AVG_1.5m", "PRED_AVG_1.5m",
+        # soil moisture
+        "HS_CV_AVG_-0.2m"
       )
     ) |>
     dplyr::select(
       timestamp = "instanteLecturaUTC", station_id = "idEstacion", station_name = "estacion",
+      # temperatures
       temperature = "TA_AVG_1.5m",
-      wind_direction = "DV_AVG_2m",
-      wind_speed = "VV_AVG_2m",
+      temperature_soil_100 = "TS_AVG_-0.1m", temperature_soil_500 = "TS_AVG_-0.5m",
+      # humidities
       relative_humidity = "HR_AVG_1.5m",
+      # precipitation
       precipitation = "PP_SUM_1.5m",
-      insolation = "HSOL_SUM_1.5m"
-      # global_solar_radiation = "RS_AVG_1.5m"
+      # winds
+      wind_direction = "DV_AVG_2m", wind_speed = "VV_AVG_2m",
+      max_wind_speed = "VV_RACHA_2m", max_wind_direction = "DV_CONDICION_2m",
+      # radiations
+      global_solar_radiation = "RS_AVG_1.5m",
+      insolation = "HSOL_SUM_1.5m",
+      reflected_radiation = "RREF_AVG_1.5m", uv_radiation = "BIO_AVG_1.5m",
+      # pressures
+      atmospheric_pressure = "PR_AVG_1.5m", atmospheric_pressure_reduced = "PRED_AVG_1.5m",
+      # soil moisture
+      soil_moisture = "HS_CV_AVG_-0.2m"
     ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
       service = 'meteogalicia',
       station_id = as.character(.data$station_id),
       temperature = units::set_units(.data$temperature, "degree_C"),
-      wind_direction = units::set_units(.data$wind_direction, "degree"),
-      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      temperature_soil_100 = units::set_units(.data$temperature_soil_100, "degree_C"),
+      temperature_soil_500 = units::set_units(.data$temperature_soil_500, "degree_C"),
       relative_humidity = units::set_units(.data$relative_humidity, "%"),
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      insolation = units::set_units(.data$insolation, "h")
-      # global_solar_radiation = units::set_units(
-      #   units::set_units(.data$global_solar_radiation, "J/s/m^2") * insolation, 'MJ/m^2'
-      # )
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      max_wind_speed = units::set_units(.data$max_wind_speed, "m/s"),
+      max_wind_direction = units::set_units(.data$max_wind_direction, "degree"),
+      global_solar_radiation = units::set_units(.data$global_solar_radiation, "W/m^2"),
+      insolation = units::set_units(.data$insolation, "hours"),
+      reflected_radiation = units::set_units(.data$reflected_radiation, "W/m^2"),
+      uv_radiation = units::set_units(.data$uv_radiation, "W/m^2"),
+      atmospheric_pressure = units::set_units(.data$atmospheric_pressure, "hPa"),
+      atmospheric_pressure_reduced = units::set_units(.data$atmospheric_pressure_reduced, "hPa"),
+      soil_moisture = units::set_units(.data$soil_moisture, "m^3/m^3")
     )
 }
 .meteogalicia_current_day_carpentry <- function(data) {
@@ -347,19 +377,31 @@
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
       var_names = c(
-        'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
-        'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+        # temperatures
+        "TA_AVG_1.5m", "TA_MIN_1.5m", "TA_MAX_1.5m",
+        # humidities
+        "HR_AVG_1.5m",
+        # Precipitations
+        "PP_SUM_1.5m", "IP_MAX_1.5m",
+        # winds
+        "DV_AVG_2m", "VV_AVG_2m", "VV_RACHA_2m", "DV_CONDICION_2m",
+        # radiations
+        "HSOL_SUM_1.5m"
       )
     ) |>
     dplyr::select(
       timestamp = "instanteLecturaUTC", station_id = "idEstacion", station_name = "estacion",
+      # temperatures
       temperature = "TA_AVG_1.5m",
-      min_temperature = "TA_MIN_1.5m",
-      max_temperature = "TA_MAX_1.5m",
-      wind_direction = "DV_AVG_2m",
-      wind_speed = "VV_AVG_2m",
+      min_temperature = "TA_MIN_1.5m", max_temperature = "TA_MAX_1.5m",
+      # humidities
       relative_humidity = "HR_AVG_1.5m",
-      precipitation = "PP_SUM_1.5m",
+      # Precipitations
+      precipitation = "PP_SUM_1.5m", max_precipitation_hour = "IP_MAX_1.5m",
+      # winds
+      wind_direction = "DV_AVG_2m", wind_speed = "VV_AVG_2m",
+      max_wind_speed = "VV_RACHA_2m", max_wind_direction = "DV_CONDICION_2m",
+      # radiations
       insolation = "HSOL_SUM_1.5m"
     ) |>
     dplyr::mutate(
@@ -369,11 +411,14 @@
       temperature = units::set_units(.data$temperature, "degree_C"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-      wind_direction = units::set_units(.data$wind_direction, "degree"),
-      wind_speed = units::set_units(.data$wind_speed, "m/s"),
       relative_humidity = units::set_units(.data$relative_humidity, "%"),
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      insolation = units::set_units(.data$insolation, "h")
+      max_precipitation_hour = units::set_units(.data$max_precipitation_hour, "L/m^2/h"),
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      wind_speed = units::set_units(.data$wind_speed, "m/s"),
+      max_wind_speed = units::set_units(.data$max_wind_speed, "m/s"),
+      max_wind_direction = units::set_units(.data$max_wind_direction, "degree"),
+      insolation = units::set_units(.data$insolation, "hours")
     )
 }
 .meteogalicia_daily_carpentry <- function(data) {
@@ -382,23 +427,44 @@
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
       var_names = c(
-        'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'DV_AVG_2m', 'VV_AVG_2m',
-        'HR_AVG_1.5m', 'HR_MIN_1.5m', 'HR_MAX_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+        # temperatures
+        "TA_AVG_1.5m", "TA_MIN_1.5m", "TA_MAX_1.5m", "TS_AVG_-0.1m",
+        # humidities
+        "HR_AVG_1.5m", "HR_MIN_1.5m", "HR_MAX_1.5m",
+        # precipitations
+        "PP_SUM_1.5m", "ET0_SUM_1.5m",
+        # winds
+        "DVP_MODA_2m", "VV_AVG_2m", "VV_MAX_2m", "DV_CONDICION_2m",
+        # radiations
+        "HSOL_SUM_1.5m", "IUVX_MAX_1.5m", "INS_RATIO_1.5m", "IRD_SUM_1.5m",
+        # pressures
+        "PR_AVG_1.5m", "PRED_AVG_1.5m",
+        # soil moisture
+        "HS_CV_AVG_-0.2m"
       )
     ) |>
     dplyr::select(
       timestamp = "data",
       station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
-      mean_temperature = "TA_AVG_1.5m",
-      min_temperature = "TA_MIN_1.5m",
-      max_temperature = "TA_MAX_1.5m",
-      mean_wind_direction = "DV_AVG_2m",
-      mean_wind_speed = "VV_AVG_2m",
+      # temperatures
+      mean_temperature = "TA_AVG_1.5m", min_temperature = "TA_MIN_1.5m",
+      max_temperature = "TA_MAX_1.5m", mean_soil_temperature = "TS_AVG_-0.1m",
+      # humidities
       mean_relative_humidity = "HR_AVG_1.5m",
-      min_relative_humidity = "HR_MIN_1.5m",
-      max_relative_humidity = "HR_MAX_1.5m",
-      precipitation = "PP_SUM_1.5m",
-      insolation = "HSOL_SUM_1.5m"
+      min_relative_humidity = "HR_MIN_1.5m", max_relative_humidity = "HR_MAX_1.5m",
+      # precipitations
+      precipitation = "PP_SUM_1.5m", reference_evapotranspiration = "ET0_SUM_1.5m",
+      # winds
+      mean_wind_direction = "DVP_MODA_2m", mean_wind_speed = "VV_AVG_2m",
+      max_wind_speed = "VV_MAX_2m", max_wind_direction = "DV_CONDICION_2m",
+      # radiations
+      insolation = "HSOL_SUM_1.5m", uv_radiation_index = "IUVX_MAX_1.5m",
+      insolation_ratio = "INS_RATIO_1.5m", global_solar_irradiation = "IRD_SUM_1.5m",
+      # pressures
+      mean_atmospheric_pressure = "PR_AVG_1.5m",
+      atmospheric_pressure_reduced = "PRED_AVG_1.5m",
+      # soil moisture
+      soil_moisture = "HS_CV_AVG_-0.2m"
     ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
@@ -407,13 +473,23 @@
       mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-      mean_wind_direction = units::set_units(.data$mean_wind_direction, "degree"),
-      mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
+      mean_soil_temperature = units::set_units(.data$mean_soil_temperature, "degree_C"),
       mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
       min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
       max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
       precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      insolation = units::set_units(.data$insolation, "h")
+      reference_evapotranspiration = units::set_units(.data$reference_evapotranspiration, "L/m^2"),
+      mean_wind_direction = units::set_units(.data$mean_wind_direction, "degree"),
+      mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
+      max_wind_speed = units::set_units(.data$max_wind_speed, "m/s"),
+      max_wind_direction = units::set_units(.data$max_wind_direction, "degree"),
+      insolation = units::set_units(.data$insolation, "hours"),
+      uv_radiation_index = units::set_units(.data$uv_radiation_index, ""),
+      insolation_ratio = units::set_units(.data$insolation_ratio, "%"),
+      global_solar_irradiation = units::set_units(.data$global_solar_irradiation, "kJ/m^2") / 10,
+      mean_atmospheric_pressure = units::set_units(.data$mean_atmospheric_pressure, "hPa"),
+      atmospheric_pressure_reduced = units::set_units(.data$atmospheric_pressure_reduced, "hPa"),
+      soil_moisture = units::set_units(.data$soil_moisture, "m^3/m^3")
     )
 }
 .meteogalicia_monthly_carpentry <- function(data) {
@@ -422,35 +498,79 @@
     # select step to fail. We create missing variables and populate them with NAs to avoid this error
     .create_missing_vars(
       var_names = c(
-        'TA_AVG_1.5m', 'TA_MIN_1.5m', 'TA_MAX_1.5m', 'VV_AVG_2m',
-        'HR_AVG_1.5m', 'PP_SUM_1.5m', 'HSOL_SUM_1.5m'
+        # temperatures
+        "TA_AVG_1.5m", "TA_MIN_1.5m", "TA_MAX_1.5m", "TS_AVG_-0.1m",
+        "TA_AVGMIN_1.5m", "TA_AVGMAX_1.5m",
+        # humidities
+        "HR_AVG_1.5m", "HR_AVGMAX_1.5m", "HR_AVGMIN_1.5m",
+        # precipitations
+        "PP_SUM_1.5m", "PP_MAX_1.5m", "NDPP_RECUENTO_1.5m", "NDPP1_RECUENTO_1.5m",
+        "NDPP10_RECUENTO_1.5m", "NDPP30_RECUENTO_1.5m", "NDPP1_RECUENTO_1.5m",
+        # winds
+        "DVP_MODA_2m", "VV_AVG_2m", "VV_MAX_2m", "DV_CONDICION_2m",
+        # radiations
+        "HSOL_SUM_1.5m", "INS_AVG_1.5m", "IRD_AVG_1.5m",
+        # pressures
+        "PR_AVG_1.5m", "PRED_AVG_1.5m"
       )
     ) |>
     dplyr::select(
       timestamp = "data",
       station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
-      mean_temperature = "TA_AVG_1.5m",
-      min_temperature = "TA_MIN_1.5m",
-      max_temperature = "TA_MAX_1.5m",
-      mean_wind_speed = "VV_AVG_2m",
+      # temperatures
+      mean_temperature = "TA_AVG_1.5m", min_temperature = "TA_MIN_1.5m",
+      max_temperature = "TA_MAX_1.5m", mean_soil_temperature = "TS_AVG_-0.1m",
+      min_temperature_mean = "TA_AVGMIN_1.5m", max_temperature_mean = "TA_AVGMAX_1.5m",
+      # humidities
       mean_relative_humidity = "HR_AVG_1.5m",
-      precipitation = "PP_SUM_1.5m",
-      insolation = "HSOL_SUM_1.5m"
+      max_relative_humidity_mean = "HR_AVGMAX_1.5m",
+      min_relative_humidity_mean = "HR_AVGMIN_1.5m",
+      # precipitations
+      precipitation = "PP_SUM_1.5m", max_precipitation_24h = "PP_MAX_1.5m",
+      rain_days_0 = "NDPP_RECUENTO_1.5m", rain_days_01 = "NDPP1_RECUENTO_1.5m",
+      rain_days_10 = "NDPP10_RECUENTO_1.5m", rain_days_30 = "NDPP30_RECUENTO_1.5m",
+      rain_days_60 = "NDPP1_RECUENTO_1.5m",
+      # winds
+      mean_wind_direction = "DVP_MODA_2m", mean_wind_speed = "VV_AVG_2m",
+      max_wind_speed = "VV_MAX_2m", max_wind_direction = "DV_CONDICION_2m",
+      # radiations
+      insolation = "HSOL_SUM_1.5m", insolation_ratio = "INS_AVG_1.5m",
+      global_solar_irradiation = "IRD_AVG_1.5m",
+      # pressures
+      mean_atmospheric_pressure = "PR_AVG_1.5m",
+      atmospheric_pressure_reduced = "PRED_AVG_1.5m"
     ) |>
     dplyr::mutate(
       timestamp = lubridate::as_datetime(.data$timestamp),
       service = 'meteogalicia',
       station_id = as.character(.data$station_id),
-      mean_temperature = units::set_units(.data$mean_temperature, "degree_C"),
-      min_temperature = units::set_units(.data$min_temperature, "degree_C"),
-      max_temperature = units::set_units(.data$max_temperature, "degree_C"),
-      mean_wind_speed = units::set_units(.data$mean_wind_speed, "m/s"),
-      mean_relative_humidity = units::set_units(.data$mean_relative_humidity, "%"),
-      precipitation = units::set_units(.data$precipitation, "L/m^2"),
-      insolation = units::set_units(.data$insolation, "h")
+      mean_temperature = units::units_set(.data$mean_temperature, "degree_C"),
+      min_temperature = units::units_set(.data$min_temperature, "degree_C"),
+      max_temperature = units::units_set(.data$max_temperature, "degree_C"),
+      mean_soil_temperature = units::units_set(.data$mean_soil_temperature, "degree_C"),
+      min_temperature_mean = units::units_set(.data$min_temperature_mean, "degree_C"),
+      max_temperature_mean = units::units_set(.data$max_temperature_mean, "degree_C"),
+      mean_relative_humidity = units::units_set(.data$mean_relative_humidity, "%"),
+      max_relative_humidity_mean = units::units_set(.data$max_relative_humidity_mean, "%"),
+      min_relative_humidity_mean = units::units_set(.data$min_relative_humidity_mean, "%"),
+      precipitation = units::units_set(.data$precipitation, "L/m^2"),
+      max_precipitation_24h = units::units_set(.data$max_precipitation_24h, "L/m^2"),
+      rain_days_0 = units::units_set(.data$rain_days_0, "days"),
+      rain_days_01 = units::units_set(.data$rain_days_01, "days"),
+      rain_days_10 = units::units_set(.data$rain_days_10, "days"),
+      rain_days_30 = units::units_set(.data$rain_days_30, "days"),
+      rain_days_60 = units::units_set(.data$rain_days_60, "days"),
+      mean_wind_direction = units::units_set(.data$mean_wind_direction, "degree"),
+      mean_wind_speed = units::units_set(.data$mean_wind_speed, "m/s"),
+      max_wind_speed = units::units_set(.data$max_wind_speed, "m/s"),
+      max_wind_direction = units::units_set(.data$max_wind_direction, "degree"),
+      insolation = units::units_set(.data$insolation, "hours"),
+      insolation_ratio = units::units_set(.data$insolation_ratio, "%"),
+      global_solar_irradiation = units::units_set(.data$global_solar_irradiation, "kJ/m^2") / 10,
+      mean_atmospheric_pressure = units::units_set(.data$mean_atmospheric_pressure, "hPa"),
+      atmospheric_pressure_reduced = units::units_set(.data$atmospheric_pressure_reduced, "hPa")
     )
 }
-
 
 # info table checker ------------------------------------------------------------------------------------
 

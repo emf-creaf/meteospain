@@ -38,11 +38,12 @@ test_that("meteogalicia instant works", {
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)))
   test_object <- get_meteo_from('meteogalicia', api_options)
   expected_names <- c(
-    "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "temperature",
-    "relative_humidity", "precipitation",
-    "wind_direction", "wind_speed",
-    "insolation", #"global_solar_radiation",
+    "timestamp", "station_id", "station_name", "temperature",
+    "temperature_soil_100", "temperature_soil_500", "relative_humidity",
+    "precipitation", "wind_direction", "wind_speed", "max_wind_speed",
+    "max_wind_direction", "global_solar_radiation", "insolation",
+    "reflected_radiation", "uv_radiation", "atmospheric_pressure",
+    "atmospheric_pressure_reduced", "soil_moisture",
     "geometry"
   )
   main_test_battery(
@@ -68,10 +69,9 @@ test_that("meteogalicia current works", {
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "temperature", "min_temperature", "max_temperature",
-    "relative_humidity", "precipitation",
-    "wind_direction", "wind_speed",
-    "insolation",
+    "temperature", "min_temperature", "max_temperature", "relative_humidity",
+    "precipitation", "max_precipitation_hour", "wind_direction", "wind_speed",
+    "max_wind_speed", "max_wind_direction", "insolation",
     "geometry"
   )
   main_test_battery(
@@ -95,10 +95,12 @@ test_that("meteogalicia daily works", {
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "min_temperature", "max_temperature",
-    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity", "precipitation",
-    "mean_wind_direction", "mean_wind_speed",
-    "insolation",
+    "mean_temperature", "min_temperature", "max_temperature", "mean_soil_temperature",
+    "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
+    "precipitation", "reference_evapotranspiration", "mean_wind_direction",
+    "mean_wind_speed", "max_wind_speed", "max_wind_direction", "insolation",
+    "uv_radiation_index", "insolation_ratio", "global_solar_irradiation",
+    "mean_atmospheric_pressure", "atmospheric_pressure_reduced", "soil_moisture",
     "geometry"
   )
   main_test_battery(
@@ -142,10 +144,14 @@ test_that("meteogalicia monthly works", {
   # expect_message((test_object <- get_meteo_from('meteogalicia', api_options)), 'mencionar expresamente a MeteoGalicia')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
-    "mean_temperature", "min_temperature", "max_temperature",
-    "mean_relative_humidity", "precipitation",
-    "mean_wind_speed",
-    "insolation",
+    "mean_temperature", "min_temperature", "max_temperature", "mean_soil_temperature",
+    "min_temperature_mean", "max_temperature_mean", "mean_relative_humidity",
+    "max_relative_humidity_mean", "min_relative_humidity_mean", "precipitation",
+    "max_precipitation_24h", "rain_days_0", "rain_days_01", "rain_days_10",
+    "rain_days_30", "rain_days_60", "mean_wind_direction", "mean_wind_speed",
+    "max_wind_speed", "max_wind_direction", "insolation", "insolation_ratio",
+    "global_solar_irradiation", "mean_atmospheric_pressure",
+    "atmospheric_pressure_reduced",
     "geometry"
   )
   main_test_battery(
