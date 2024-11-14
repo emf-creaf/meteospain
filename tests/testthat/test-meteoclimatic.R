@@ -37,7 +37,9 @@ test_that("Meteoclimatic works as expected", {
   # expect_message((test_object <- get_meteo_from('meteoclimatic', api_options)), 'non-professional')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "min_temperature", "max_temperature",
-    "min_relative_humidity", "max_relative_humidity", "precipitation", "geometry"
+    "min_relative_humidity", "max_relative_humidity", "precipitation",
+    "max_atmospheric_pressure", "min_atmospheric_pressure",
+    "wind_direction", "max_wind_speed", "geometry"
   )
   main_test_battery(
     test_object, service = 'meteoclimatic', expected_names = expected_names, temperature = min_temperature,

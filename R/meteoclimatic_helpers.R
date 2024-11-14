@@ -105,6 +105,18 @@
           ),
           precipitation = xml2::xml_double(
             (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/rain/total')))
+          ),
+          max_atmospheric_pressure = xml2::xml_double(
+            (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/barometre/max')))
+          ),
+          min_atmospheric_pressure = xml2::xml_double(
+            (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/barometre/min')))
+          ),
+          wind_direction = xml2::xml_double(
+            (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/wind/azimuth')))
+          ),
+          max_wind_speed = xml2::xml_double(
+            (xml2::xml_find_first(data_xml_body, paste0(.x, '/stationdata/wind/max')))
           )
         )
       }
@@ -117,7 +129,11 @@
       min_temperature = units::set_units(.data$min_temperature, "degree_C"),
       max_relative_humidity = units::set_units(.data$max_relative_humidity, "%"),
       min_relative_humidity = units::set_units(.data$min_relative_humidity, "%"),
-      precipitation = units::set_units(.data$precipitation, "L/m^2")
+      precipitation = units::set_units(.data$precipitation, "L/m^2"),
+      max_atmospheric_pressure = units::set_units(.data$max_atmospheric_pressure, "hPa"),
+      min_atmospheric_pressure = units::set_units(.data$min_atmospheric_pressure, "hPa"),
+      wind_direction = units::set_units(.data$wind_direction, "degree"),
+      max_wind_speed = units::set_units(.data$max_wind_speed, "km/h")
     ) |>
     dplyr::arrange(.data$timestamp, .data$station_id) |>
     # reorder variables to be consistent among all services
