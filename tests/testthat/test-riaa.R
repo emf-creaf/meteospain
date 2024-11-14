@@ -49,6 +49,7 @@ test_that("ria daily works", {
     "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
     "precipitation",
     "mean_wind_direction", "mean_wind_speed",
+    "max_wind_direction", "max_wind_speed",
     "solar_radiation",
     "under_plastic",
     "geometry"
@@ -79,6 +80,7 @@ test_that("ria monthly works", {
     "mean_relative_humidity", "min_relative_humidity", "max_relative_humidity",
     "precipitation",
     "mean_wind_direction", "mean_wind_speed",
+    "max_wind_direction", "max_wind_speed",
     "solar_radiation",
     "under_plastic",
     "geometry"
