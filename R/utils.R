@@ -404,11 +404,13 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
 
   # checks and errors
   if (is.null(response$result)) {
+    # browser()
     din_dots <- rlang::list2(...)
-    cli::cli_abort(c(
+    cli::cli_warn(c(
       "Unable to connect to API at {.url {din_dots[[1]]}}: {.val {response$error}}",
       i = "This usually happens when connection with {.url {din_dots[[1]]}} is not possible."
     ))
+    return(NULL)
   }
 
   return(response$result)

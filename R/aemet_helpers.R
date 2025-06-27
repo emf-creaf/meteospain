@@ -104,9 +104,19 @@
 
   # GET step
   api_response <- safe_api_access(type = 'rest', ...)
-  # api_response <- httr::GET(...)
+  
+  if (is.null(api_response)) {
+    res <- list(
+      status = 'Error',
+      code = 429,
+      message = glue::glue(
+        "API request truncated"
+      )
+    )
+    return(res)
+  }
+  
   response_status <- httr::status_code(api_response)
-
   # and now the status checks
   if (response_status == 404) {
     res <- list(
