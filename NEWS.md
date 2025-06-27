@@ -1,4 +1,4 @@
-# meteospain (development version)
+# meteospain 0.2.1
 
 * All APIs:
   - Updated variables returned (data more complete) in all temporal scales
