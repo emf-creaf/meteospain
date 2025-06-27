@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -76,11 +76,25 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.2.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.0" id="meteospain-020">meteospain 0.2.0<a class="anchor" aria-label="anchor" href="#meteospain-020"></a></h2>
+<h2 class="page-header" data-toc-text="0.2.1" id="meteospain-021">meteospain 0.2.1<a class="anchor" aria-label="anchor" href="#meteospain-021"></a></h2>
+<ul><li>All APIs:
+<ul><li>Updated variables returned (data more complete) in all temporal scales with focus on atmospheric pressure (<a href="https://github.com/emf-creaf/meteospain/issues/19" class="external-link">#19</a>, <a href="https://github.com/emf-creaf/meteospain/issues/27" class="external-link">#27</a>, <a href="https://github.com/emf-creaf/meteospain/issues/28" class="external-link">#28</a>)</li>
+</ul></li>
+<li>New cache method. <code>memoise</code> dependency is dropped and <code>cachem</code> is used directly.
+<ul><li>new cache reduces significantly API calls, especially in meteocat (<a href="https://github.com/emf-creaf/meteospain/issues/29" class="external-link">#29</a>).</li>
+<li>new cache avoids caching temporal resolutions below daily, where data changes between API calls (<a href="https://github.com/emf-creaf/meteospain/issues/29" class="external-link">#29</a>).</li>
+</ul></li>
+<li>MeteoCat API:
+<ul><li>Updated variables returned for all temporal resolutions. Now all possible variables are returned (<a href="https://github.com/emf-creaf/meteospain/issues/28" class="external-link">#28</a>).</li>
+<li>timestamp values are now floored accordingly to the temporal resolution (<a href="https://github.com/emf-creaf/meteospain/issues/30" class="external-link">#30</a>)</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.0" id="meteospain-020">meteospain 0.2.0<small>2024-10-17</small><a class="anchor" aria-label="anchor" href="#meteospain-020"></a></h2>
 <ul><li>MeteoCat API:
 <ul><li>Updated variables returned in instant and hourly scales. Now all possible variables are returned (<a href="https://github.com/emf-creaf/meteospain/issues/27" class="external-link">#27</a>).<br></li>
 </ul></li>
@@ -180,7 +194,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>

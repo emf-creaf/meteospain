@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get meteorological stations data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.2.0/R/get_data.R" class="external-link"><code>R/get_data.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/R/get_data.R" class="external-link"><code>R/get_data.R</code></a></small>
     <div class="hidden name"><code>get_meteo_from.Rd</code></div>
     </div>
 
@@ -125,17 +125,16 @@ for a detailed explanations of those limits and the ways to retrieve longer peri
     <h2>Cache</h2>
 
 
-<p>In order to avoid unnecessary API calls, results of this function are cached in memory with
-<code><a href="https://memoise.r-lib.org/reference/memoise.html" class="external-link">memoise</a></code>. This means that subsequent calls from <code>get_meteo_from</code> with the same
-arguments will be faster as they will not call the meteorological service API. This cache has a maximum
-size of 1024 MB and persist 24 hours in the same R session after loading the package.
-To forgot the cache, <code>memoise::forget(get_meteo_from)</code> can be used.</p>
+<p>To avoid unnecessary API calls (especially in rate-limited APIs), results are cached to
+memory in a <code><a href="https://cachem.r-lib.org/reference/cache_mem.html" class="external-link">cache_mem</a></code> object. This cache is limited to the actual
+R session and invalidates after 24h.
+Temporal resolutions below daily are not cached, as they change often.</p>
+<p>This cache can be cleared with <code><a href="clear_meteospain_cache.html">clear_meteospain_cache</a></code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"NOT_CRAN"</span><span class="op">)</span>, <span class="st">"true"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emf-creaf.github.io/meteospain/">meteospain</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://keyring.r-lib.org/" class="external-link">keyring</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -149,35 +148,6 @@ To forgot the cache, <code>memoise::forget(get_meteo_from)</code> can be used.</
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">get_meteo_from</span><span class="op">(</span><span class="st">'aemet'</span>, <span class="va">options_for_aemet</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 11994 features and 15 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -18.115 ymin: 27.66528 xmax: 4.323889 ymax: 43.78611</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11,994 × 16</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    timestamp           service station_id station_name station_province altitude</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0002I      <span style="color: #949494;">"</span>VANDELLÒS … TARRAGONA              32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0009X      <span style="color: #949494;">"</span>ALFORJA<span style="color: #949494;">"</span>    TARRAGONA             406</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0016A      <span style="color: #949494;">"</span>REUS AEROP… TARRAGONA              71</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0016B      <span style="color: #949494;">"</span>REUS (CENT… TARRAGONA             118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0034X      <span style="color: #949494;">"</span>VALLS<span style="color: #949494;">"</span>      TARRAGONA             233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0042Y      <span style="color: #949494;">"</span>TARRAGONA <span style="color: #949494;">"</span> TARRAGONA              55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0061X      <span style="color: #949494;">"</span>PONTONS<span style="color: #949494;">"</span>    BARCELONA             632</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0066X      <span style="color: #949494;">"</span>VILAFRANCA… BARCELONA             177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0073X      <span style="color: #949494;">"</span>SITGES<span style="color: #949494;">"</span>     BARCELONA              58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2012-01-16 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA … BARCELONA               4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11,984 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: mean_temperature [°C], min_temperature [°C],</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   max_temperature [°C], mean_relative_humidity [%],</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;</span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -192,7 +162,7 @@ To forgot the cache, <code>memoise::forget(get_meteo_from)</code> can be used.</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>

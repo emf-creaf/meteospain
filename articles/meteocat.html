@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
       <h1 data-toc-skip>MeteoCat service</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.2.0/vignettes/meteocat.Rmd" class="external-link"><code>vignettes/meteocat.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/vignettes/meteocat.Rmd" class="external-link"><code>vignettes/meteocat.Rmd</code></a></small>
       <div class="hidden name"><code>meteocat.Rmd</code></div>
 
     </div>
@@ -205,7 +205,7 @@ and accessing keys:</p>
 <span><span class="co">#&gt; [1] "instant"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2024-10-16"</span></span>
+<span><span class="co">#&gt; [1] "2025-06-27"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -239,25 +239,25 @@ and accessing keys:</p>
 <p>Accessing station metadata for MeteoCat is simple:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteocat'</span>, <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 240 features and 5 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 242 features and 5 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55219 xmax: 3.18165 ymax: 42.77011</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55219 xmax: 3.18147 ymax: 42.77011</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 240 × 6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 242 × 6</span></span></span>
 <span><span class="co">#&gt;    service  station_id station_name                   station_province altitude</span></span>
 <span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> meteocat AN         Barcelona - Av. Lluís Companys Barcelona             7.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> meteocat CA         Clariana de Cardener           Lleida              693  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> meteocat CB         les Llosses                    Girona              700  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> meteocat CC         Orís                           Barcelona           626  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> meteocat CE         els Hostalets de Pierola       Barcelona           316  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> meteocat CF         Lloret de Mar                  Girona               63.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> meteocat CG         Molló - Fabert                 Girona             <span style="text-decoration: underline;">1</span>405  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> meteocat CH         Falset - Escola                Tarragona           350  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> meteocat CI         Sant Pau de Segúries           Girona              852  </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 230 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> meteocat C6         Castellnou de Seana            Lleida              264  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> meteocat C7         Tàrrega                        Lleida              427  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> meteocat C8         Cervera                        Lleida              554  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> meteocat C9         Mas de Barberans               Tarragona           240  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> meteocat CA         Clariana de Cardener           Lleida              693  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> meteocat CB         les Llosses                    Girona              700  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> meteocat CC         Orís                           Barcelona           626  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> meteocat CD         la Seu d'Urgell - Bellestar    Lleida              849  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> meteocat CE         els Hostalets de Pierola       Barcelona           316  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 232 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;POINT [°]&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -273,14 +273,14 @@ and accessing keys:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span><span class="va">catalunya_2020</span></span>
-<span><span class="co">#&gt; Simple feature collection with 2255 features and 20 fields (with 12 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 2255 features and 45 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18165 ymax: 42.77011</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18147 ymax: 42.77011</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,255 × 21</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,255 × 46</span></span></span>
 <span><span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
+<span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C6         Castellnou … Lleida               264 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C7         Tàrrega      Lleida               427 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… C8         Cervera      Lleida               554 </span></span>
@@ -292,12 +292,12 @@ and accessing keys:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CI         Sant Pau de… Girona               852 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> meteoc… CJ         Organyà      Lleida               566.</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,245 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 15 more variables: mean_temperature [°C], min_temperature_absolute [°C],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   min_temperature_mean [°C], max_temperature_absolute [°C],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature_mean [°C], mean_relative_humidity [%],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity_absolute [%], min_relative_humidity_mean [%],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   max_relative_humidity_absolute [%], max_relative_humidity_mean [%],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_direction [°], mean_wind_speed [m/s], …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more variables: mean_temperature [°C], mean_temperature_classic [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   min_temperature_absolute [°C], min_temperature_mean [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature_absolute [°C], max_temperature_mean [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   max_thermal_amplitude [°C], mean_thermal_amplitude [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   extreme_thermal_amplitude [°C], mean_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity_absolute [%], min_relative_humidity_mean [%], …</span></span></span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">catalunya_2020</span> <span class="op">|&gt;</span></span>
@@ -315,11 +315,6 @@ and accessing keys:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">precipitation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `scale_name` argument of `continuous_scale()` is deprecated as of ggplot2</span></span>
-<span><span class="co">#&gt; 3.5.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span>
 <span><span class="co">#&gt; Warning: Removed 25 rows containing non-finite outside the scale range</span></span>
 <span><span class="co">#&gt; (`stat_bin()`).</span></span></code></pre></div>
@@ -343,7 +338,7 @@ and accessing keys:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>

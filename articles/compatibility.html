@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">meteospain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
       <h1 data-toc-skip>Compatibility between services</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.2.0/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="hidden name"><code>compatibility.Rmd</code></div>
 
     </div>
@@ -158,6 +158,8 @@ already (see code above)</p>
 <span>      api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">API request limit reached: Client error: (429) Too Many Requests (RFC 6585)</span></span></span>
+<span><span class="co">#&gt; Trying again in 60 seconds</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
@@ -228,23 +230,27 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
 <span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
 <span><span class="co">#&gt; mean_relative_humidity, min_relative_humidity, max_relative_humidity,</span></span>
-<span><span class="co">#&gt; precipitation, mean_wind_speed, geometry)`</span></span>
+<span><span class="co">#&gt; precipitation, mean_wind_speed, max_wind_speed, max_atmospheric_pressure,</span></span>
+<span><span class="co">#&gt; min_atmospheric_pressure, geometry)`</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
 <span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
 <span><span class="co">#&gt; mean_relative_humidity, min_relative_humidity, max_relative_humidity,</span></span>
-<span><span class="co">#&gt; precipitation, mean_wind_speed, insolation, geometry, mean_wind_direction)`</span></span>
+<span><span class="co">#&gt; precipitation, mean_wind_speed, max_wind_speed, insolation, geometry,</span></span>
+<span><span class="co">#&gt; mean_wind_direction, max_wind_direction, mean_atmospheric_pressure,</span></span>
+<span><span class="co">#&gt; reference_evapotranspiration)`</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(timestamp, service, station_id, station_name,</span></span>
 <span><span class="co">#&gt; station_province, altitude, mean_temperature, min_temperature, max_temperature,</span></span>
 <span><span class="co">#&gt; mean_relative_humidity, min_relative_humidity, max_relative_humidity,</span></span>
-<span><span class="co">#&gt; precipitation, mean_wind_speed, geometry, mean_wind_direction)`</span></span>
+<span><span class="co">#&gt; precipitation, mean_wind_speed, max_wind_speed, geometry, mean_wind_direction,</span></span>
+<span><span class="co">#&gt; max_wind_direction)`</span></span>
 <span></span>
 <span><span class="va">april_2020_spain</span></span>
-<span><span class="co">#&gt; Simple feature collection with 22167 features and 19 fields (with 120 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 22152 features and 43 fields (with 90 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -18.115 ymin: 27.66528 xmax: 4.323889 ymax: 43.78611</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 22,167 × 20</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 22,152 × 44</span></span></span>
 <span><span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0009X      <span style="color: #949494;">"</span>ALFORJA<span style="color: #949494;">"</span>    TARRAGONA             406</span></span>
@@ -257,13 +263,13 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0073X      <span style="color: #949494;">"</span>SITGES<span style="color: #949494;">"</span>     BARCELONA              58</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA … BARCELONA               4</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0092X      <span style="color: #949494;">"</span>BERGA<span style="color: #949494;">"</span>      BARCELONA             682</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 22,157 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 14 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 22,142 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 38 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], mean_relative_humidity [%],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_speed [m/s], insolation [h],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;, mean_wind_direction [°],</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   global_solar_radiation [MJ/m^2], solar_radiation [MJ/d/m^2], …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], wind_direction [°], mean_wind_speed [m/s],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   max_wind_speed [m/s], insolation [h], max_atmospheric_pressure [hPa],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   min_atmospheric_pressure [hPa], geometry &lt;POINT [°]&gt;, …</span></span></span></code></pre></div>
 <p>We can visualize the data, only one day.</p>
 <div class="section level4">
 <h4 id="by-service">By service<a class="anchor" aria-label="anchor" href="#by-service"></a>
@@ -307,7 +313,7 @@ After the join we convert back to <code>sf</code>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>
