@@ -15,3 +15,6 @@ articles:
   contents:
   - api_limits
   - compatibility
+
+template:
+  bootstrap: 5
