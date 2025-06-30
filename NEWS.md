@@ -11,6 +11,9 @@
   - Updated variables returned for all temporal resolutions. Now all possible
     variables are returned (#28).
   - timestamp values are now floored accordingly to the temporal resolution (#30)
+* AEMET API:
+  - Updated API errors managing. Retry number when curl error occurs increased
+    to 2. Also added 0.4 seconds of wait between API calls.
 
 # meteospain 0.2.0
 
