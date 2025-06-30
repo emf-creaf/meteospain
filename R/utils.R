@@ -225,12 +225,15 @@ relocate_vars <- function(data) {
   # For that we use api_options$while_number. If it is null or less than one repeat,
   # if not, stop
   while (is.null(api_options$while_number) || api_options$while_number < 1) {
+    if (is.null(api_options$while_number)) {
+      api_options$while_number <- 2
+    }
     cli::cli_inform(c(
       i = copyright_style(api_status_check$message),
-      "Trying again in 60 seconds"
+      "Trying again in 60 seconds (retry {3 - api_options$while_number} of 2)"
     ))
     Sys.sleep(60)
-    api_options$while_number <- 1
+    api_options$while_number <- api_options$while_number - 1
     return(.f(api_options))
   }
   cli::cli_abort(c(
@@ -399,6 +402,10 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
     'rest' = .safeGET,
     'xml' = .safe_read_xml
   )
+
+  # waiting a little everytime we access the api to reduce 429 and other errors,
+  # especially in aemet
+  Sys.sleep(0.4)
 
   response <- api_access(...)
 
