@@ -403,10 +403,6 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
     'xml' = .safe_read_xml
   )
 
-  # waiting a little everytime we access the api to reduce 429 and other errors,
-  # especially in aemet
-  Sys.sleep(0.4)
-
   response <- api_access(...)
 
   # checks and errors

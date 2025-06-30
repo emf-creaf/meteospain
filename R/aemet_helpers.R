@@ -102,6 +102,10 @@
 #' @noRd
 .check_status_aemet <- function(...) {
 
+  # waiting a little everytime we access the api to reduce 429 and other errors
+  # in aemet
+  Sys.sleep(1)
+
   # GET step
   api_response <- safe_api_access(type = 'rest', ...)
   
