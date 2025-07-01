@@ -416,6 +416,19 @@ safe_api_access <- function(type = c('rest', 'xml'), ...) {
     return(NULL)
   }
 
+  # Aemet shanenigans, let's try catch them
+  if (
+    !is.null(response$result$headers$`remaining-request-count`) &&
+      as.numeric(response$result$headers$`remaining-request-count`) < 6
+  ) {
+    cli::cli_warn(c(
+      "Reaching end of remaining request for AEMET API",
+      "!" = "Remaining requests = {response$result$headers$`remaining-request-count`}",
+      i = "Waiting 60 seconds to cooldown"
+    ))
+    Sys.sleep(60)
+  }
+
   return(response$result)
 }
 
