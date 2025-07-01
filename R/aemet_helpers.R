@@ -234,7 +234,7 @@
     # content parsed already
     api_status_check <- .check_status_aemet(
       "https://opendata.aemet.es",
-      httr::add_headers(api_key = api_options$api_key),
+      httr::add_headers(api_key = api_options$api_key, "Cache-Control" = "no-cache"),
       path = path_resolution,
       httr::user_agent('https://github.com/emf-creaf/meteospain'),
       config = config_httr_aemet
@@ -344,7 +344,7 @@
     # content parsed already
     api_status_check <- .check_status_aemet(
       "https://opendata.aemet.es",
-      httr::add_headers(api_key = api_options$api_key),
+      httr::add_headers(api_key = api_options$api_key, "Cache-Control" = "no-cache"),
       path = path_resolution,
       httr::user_agent('https://github.com/emf-creaf/meteospain'),
       config = config_httr_aemet
