@@ -104,7 +104,7 @@
       <h1 data-toc-skip>Compatibility between services</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.2.1/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="hidden name"><code>compatibility.Rmd</code></div>
 
     </div>
@@ -158,6 +158,13 @@ already (see code above)</p>
 <span>      api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'aemet'</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Unable to connect to API at <span style="color: #0000BB; font-style: italic;">&lt;https://opendata.aemet.es&gt;</span>: <span style="color: #0000BB;">Error in</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">curl::curl_fetch_memory(url, handle = handle): Failure when receiving data from</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">the peer [opendata.aemet.es]: Recv failure: Connection reset by peer</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> This usually happens when connection with <span style="color: #0000BB; font-style: italic;">&lt;https://opendata.aemet.es&gt;</span> is not</span></span>
+<span><span class="co">#&gt;   possible.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">API request truncated</span></span></span>
+<span><span class="co">#&gt; Trying again in 60 seconds (retry 1 of 3)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">© AEMET. Autorizado el uso de la información y su reproducción citando a</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #BBBB00; font-weight: bold;">AEMET como autora de la misma.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.aemet.es/es/nota_legal</span></span></span>
@@ -180,7 +187,7 @@ already (see code above)</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Consellería de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">fonte da mesma cada vez</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">que as utilice para os usos distintos do particular e privado.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteogalicia.gal/web/informacion/notaIndex.action</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteogalicia.gal/aviso-legal</span></span></span>
 <span></span>
 <span><span class="va">ria_daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span></span>
 <span>  <span class="st">'ria'</span>,</span>
@@ -243,7 +250,7 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="co">#&gt; max_wind_direction)`</span></span>
 <span></span>
 <span><span class="va">april_2020_spain</span></span>
-<span><span class="co">#&gt; Simple feature collection with 22152 features and 43 fields (with 90 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 22152 features and 43 fields (with 75 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -18.115 ymin: 27.66528 xmax: 4.323889 ymax: 43.78611</span></span>
