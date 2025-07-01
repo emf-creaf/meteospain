@@ -224,13 +224,13 @@ relocate_vars <- function(data) {
   # persists, stop.
   # For that we use api_options$while_number. If it is null or less than one repeat,
   # if not, stop
-  while (is.null(api_options$while_number) || api_options$while_number < 1) {
+  while (is.null(api_options$while_number) || api_options$while_number > 0) {
     if (is.null(api_options$while_number)) {
-      api_options$while_number <- 2
+      api_options$while_number <- 3
     }
     cli::cli_inform(c(
       i = copyright_style(api_status_check$message),
-      "Trying again in 60 seconds (retry {3 - api_options$while_number} of 2)"
+      "Trying again in 60 seconds (retry {4 - api_options$while_number} of 3)"
     ))
     Sys.sleep(60)
     api_options$while_number <- api_options$while_number - 1
