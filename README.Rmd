@@ -41,7 +41,7 @@ The following meteorological stations services are available:
 
   - [AEMET](https://www.aemet.es/en/portada), the Spanish State Meteorological Agency.
   - [MeteoCat](https://meteo.cat), the Catalan Meteorology Service.
-  - [MeteoGalicia](https://www.meteogalicia.gal/web/inicio.action), the Galician Meteorological Service.
+  - [MeteoGalicia](https://www.meteogalicia.gal/), the Galician Meteorological Service.
   - [RIA](https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/), the Andalucian Agroclimatic
   Information Network.
   - [Meteoclimatic](https://www.meteoclimatic.net/), the Spanish non-professional meteorological stations 
