@@ -267,7 +267,7 @@
       copyright_style("utilizada libremente por eles, co \u00FAnico compromiso de mencionar expresamente a MeteoGalicia e \u00E1"),
       copyright_style("Conseller\u00EDa de Medio Ambiente, Territorio e Vivenda da Xunta de Galicia como fonte da mesma cada vez"),
       copyright_style("que as utilice para os usos distintos do particular e privado."),
-      legal_note_style("https://www.meteogalicia.gal/web/informacion/notaIndex.action")
+      legal_note_style("https://www.meteogalicia.gal/aviso-legal")
     ))
 
     res
