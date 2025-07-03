@@ -319,7 +319,7 @@
         # precipitation
         "PP_SUM_1.5m",
         # winds
-        "DV_AVG_2m", "VV_AVG_2m", "VV_RACHA_2m", "	DV_CONDICION_2m",
+        "DV_AVG_2m", "VV_AVG_2m", "VV_RACHA_2m", "DV_CONDICION_2m",
         # radiations
         "RS_AVG_1.5m", "HSOL_SUM_1.5m", "RREF_AVG_1.5m", "BIO_AVG_1.5m",
         # pressures
