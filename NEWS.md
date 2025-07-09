@@ -1,5 +1,9 @@
 # meteospain (development version)
 
+* MeteoGalicia API:
+  - Fixed bug in instant data which failed for some stations without 2m wind
+    data.
+
 # meteospain 0.2.1
 
 * All APIs:
