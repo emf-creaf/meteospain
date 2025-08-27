@@ -219,12 +219,12 @@
   info_aemet <- .get_cached_result(cache_ref, {
 
     # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
-    config_httr_aemet <- switch(
-      Sys.info()["sysname"],
-      'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
-      httr::config()
-    )
-    # config_httr_aemet <- httr::config()
+    # config_httr_aemet <- switch(
+    #   Sys.info()["sysname"],
+    #   'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1', sslversion = 327680),
+    #   httr::config()
+    # )
+    config_httr_aemet <- httr::config()
 
     # Status check ------------------------------------------------------------------------------------------
     # now we need to check the status of the response (general status), and the status of the AEMET (specific
@@ -329,12 +329,12 @@
   # get data from cache or from API if new
   data_aemet <- .get_cached_result(cache_ref, {
     # create httr config to execute only if in linux, due to the ubuntu 20.04 update to seclevel 2
-    config_httr_aemet <- switch(
-      Sys.info()["sysname"],
-      'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1'),
-      httr::config()
-    )
-    # config_httr_aemet <- httr::config()
+    # config_httr_aemet <- switch(
+    #   Sys.info()["sysname"],
+    #   'Linux' = httr::config(ssl_cipher_list = 'DEFAULT@SECLEVEL=1', sslversion = 327680),
+    #   httr::config()
+    # )
+    config_httr_aemet <- httr::config()
   
     # GET and Status check ------------------------------------------------------------------------------------------
     # now we need to check the status of the response (general status), and the status of the AEMET (specific
