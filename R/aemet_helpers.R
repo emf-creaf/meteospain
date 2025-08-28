@@ -113,9 +113,7 @@
     res <- list(
       status = 'Error',
       code = 429,
-      message = glue::glue(
-        "API request truncated"
-      )
+      message = "API request truncated"
     )
     return(res)
   }
@@ -126,9 +124,7 @@
     res <- list(
       status = 'Error',
       code = response_status,
-      message = glue::glue(
-        "Unable to connect to AEMET API at {api_response$url}: {httr::http_status(api_response)$message}"
-      )
+      message = "Unable to connect to AEMET API at {api_response$url}: {httr::http_status(api_response)$message}"
     )
     return(res)
   }
@@ -137,7 +133,7 @@
     res <- list(
       status = 'Error',
       code = response_status,
-      message = glue::glue("Invalid API Key: {httr::http_status(api_response)$message}")
+      message = "Invalid API Key: {httr::http_status(api_response)$message}"
     )
     return(res)
   }
@@ -146,9 +142,7 @@
     res <- list(
       status = 'Error',
       code = response_status,
-      message = glue::glue(
-        "API request limit reached: {httr::http_status(api_response)$message}"
-      )
+      message = "API request limit reached: {httr::http_status(api_response)$message}"
     )
     return(res)
   }
@@ -170,7 +164,7 @@
       res <- list(
         status = 'Error',
         code =  response_status,
-        message = glue::glue("AEMET API returned an error: {html_text}")
+        message = "AEMET API returned an error: {html_text}"
       )
     }
 
@@ -185,7 +179,7 @@
     res <- list(
       status = 'Error',
       code = response_content$estado,
-      message = glue::glue("AEMET API returned no data: {response_content$descripcion}")
+      message = "AEMET API returned no data: {response_content$descripcion}"
     )
     return(res)
   }
@@ -349,7 +343,7 @@
       httr::user_agent('https://github.com/emf-creaf/meteospain'),
       config = config_httr_aemet
     )
-  
+
     if (api_status_check$status != 'OK') {
       # if api request limit reached, do a recursive call to the function after 60 seconds
       if (api_status_check$code == 429) {
