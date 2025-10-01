@@ -1,8 +1,11 @@
-# meteospain (development version)
+# meteospain 0.2.2
 
 * MeteoGalicia API:
   - Fixed bug in instant data which failed for some stations without 2m wind
     data.
+* AEMET API:
+  - Better API messages parsing
+  - Removed fix ssl level on linux machines as aemet now offers latest certs
 
 # meteospain 0.2.1
 

@@ -1,5 +1,4 @@
-This version of `meteospain` adds needed updates for some API connections as
-well as improves data returned by meteocat and aemet APIs.
+This version of `meteospain` fixes a bug in Meteogalicia helpers when variables are missing from raw data.
 
 ## Test environments
 
