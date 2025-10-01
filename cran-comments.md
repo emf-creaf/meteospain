@@ -15,15 +15,35 @@ This version of `meteospain` fixes a bug in Meteogalicia helpers when variables 
 
 * checking CRAN incoming feasibility ... NOTE
 
-Possibly mis-spelled words in DESCRIPTION:
-  AEMET
-  APIs
-  Meteoclimatic
-  SMC
+  - Possibly mis-spelled words in DESCRIPTION:
+      AEMET
+      APIs
+      Meteoclimatic
+      SMC
   
 Words detected are Spanish meteorological services API names
 and are not mis-spelled
- 
+
+  - Found the following (possibly) invalid URLs:
+      URL: https://opendata.aemet.es/centrodedescargas/inicio
+        From: man/services_options.Rd
+              inst/doc/aemet.html
+        Status: Error
+        Message: Failure when receiving data from the peer [opendata.aemet.es]:
+          schannel: server closed abruptly (missing close_notify)
+
+URL is correct, but sometimes fails
+
+  - Found the following (possibly) invalid URLs:
+      URL: https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/
+        From: inst/doc/ria.html
+              README.md
+        Status: Error
+        Message: Timeout was reached [www.juntadeandalucia.es]:
+          Operation timed out after 60006 milliseconds with 0 bytes received
+
+URL is correct, but sometimes fails
+
 ## Reverse/Downstream dependencies
 
 R CMD check was run with no fail for downstream dependencies:
