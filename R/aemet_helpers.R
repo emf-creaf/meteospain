@@ -119,12 +119,19 @@
   }
   
   response_status <- httr::status_code(api_response)
+  response_url <- api_response$url
+  response_message <- httr::http_status(api_response)$message
   # and now the status checks
   if (response_status == 404) {
     res <- list(
       status = 'Error',
       code = response_status,
-      message = "Unable to connect to AEMET API at {api_response$url}: {httr::http_status(api_response)$message}"
+      message = paste0(
+        "Unable to connect to AEMET API at ",
+        response_url,
+        ": ",
+        response_message
+      )
     )
     return(res)
   }
@@ -133,7 +140,10 @@
     res <- list(
       status = 'Error',
       code = response_status,
-      message = "Invalid API Key: {httr::http_status(api_response)$message}"
+      message = paste0(
+        "Invalid API Key: ",
+        response_message
+      )
     )
     return(res)
   }
@@ -142,7 +152,10 @@
     res <- list(
       status = 'Error',
       code = response_status,
-      message = "API request limit reached: {httr::http_status(api_response)$message}"
+      message = paste0(
+        "API request limit reached: ",
+        response_message
+      )
     )
     return(res)
   }
@@ -164,7 +177,7 @@
       res <- list(
         status = 'Error',
         code =  response_status,
-        message = "AEMET API returned an error: {html_text}"
+        message = paste0("AEMET API returned an error: ", html_text)
       )
     }
 
@@ -179,7 +192,7 @@
     res <- list(
       status = 'Error',
       code = response_content$estado,
-      message = "AEMET API returned no data: {response_content$descripcion}"
+      message = paste0("AEMET API returned no data: ", response_content$descripcion)
     )
     return(res)
   }

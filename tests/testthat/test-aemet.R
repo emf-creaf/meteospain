@@ -226,7 +226,7 @@ test_that("aemet yearly works", {
 
 test_that("aemet API errors, messages, warnings are correctly raised", {
   # copyright message
-  api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
+  # api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
   # invalid key
   api_options <- aemet_options('current_day', api_key = 'tururu')
   expect_error(get_meteo_from('aemet', api_options), "Invalid API Key")
