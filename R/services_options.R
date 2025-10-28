@@ -17,7 +17,7 @@
 #' Temporal resolutions vary from service to service. Check the "Usage" section to see resolutions available
 #' to each service. Possible values are:
 #' \itemize{
-#'   \item{\code{current_day} returns the last 24h of measures.}
+#'   \item{\code{current_day} returns the last 12-24h of measures.}
 #'   \item{\code{instant} returns the last measures available.}
 #'   \item{\code{hourly} returns the hourly measures.}
 #'   \item{\code{daily} returns any past date/s with daily aggregation.}

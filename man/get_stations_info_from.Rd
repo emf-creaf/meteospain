@@ -37,7 +37,7 @@ This cache can be cleared with \code{\link{clear_meteospain_cache}}.
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   library(meteospain)
   library(keyring)
 

@@ -43,7 +43,7 @@ warning system. `meteospain` only access to the automatic meteorological station
 
 `meteospain` offers access to the AEMET API at different temporal resolutions:
 
-  - "current_day", returning the latest 24 hours of measures for all or selected stations.
+  - "current_day", returning the latest 12 hours of measures for all or selected stations.
   - "daily", returning the daily aggregated measures for all or selected stations.
   - "monthly", returning the monthly aggregated measures for **only one** station.
   - "yearly", returning the yearly aggregated measures for **only one** station.

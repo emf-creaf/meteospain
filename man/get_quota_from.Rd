@@ -23,7 +23,7 @@ Depending on the service, some APIs allows only a number of data requests. This 
 quota numbers in the services that allow for this, \strong{(currently only MeteoCat)}
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   library(meteospain)
   library(keyring)
 

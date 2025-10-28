@@ -67,7 +67,7 @@ Set the options for accessing the different Spanish meteorological services
 Temporal resolutions vary from service to service. Check the "Usage" section to see resolutions available
 to each service. Possible values are:
 \itemize{
-\item{\code{current_day} returns the last 24h of measures.}
+\item{\code{current_day} returns the last 12-24h of measures.}
 \item{\code{instant} returns the last measures available.}
 \item{\code{hourly} returns the hourly measures.}
 \item{\code{daily} returns any past date/s with daily aggregation.}
@@ -107,7 +107,7 @@ stations provided}
 }
 
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   library(keyring)
   library(meteospain)
 
@@ -130,7 +130,7 @@ stations provided}
     api = keyring::key_get('aemet')
   )
 \dontshow{\}) # examplesIf}
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   ## MeteoCat examples -----------------------------------------------------------
 
   # setting the key (a prompt will appear in console to supply the API key)
@@ -175,7 +175,7 @@ monthly_opts <- meteogalicia_options(
   end_date = as.Date('2000-12-31')
 )
 
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   library(keyring)
   library(meteospain)
 
