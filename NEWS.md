@@ -1,5 +1,8 @@
 # meteospain (development version)
 
+* AEMET API:
+  - Documented new limit (12h) in AEMET for current day (#32)
+
 # meteospain 0.2.2
 
 * MeteoGalicia API:
