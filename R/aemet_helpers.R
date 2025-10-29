@@ -254,7 +254,7 @@
       } else {
         cli::cli_abort(c(
           x = api_status_check$code,
-          i = api_status_check$message
+          i = stringr::str_remove_all(api_status_check$message, "[{|}]")
         ))
       }
     }
@@ -277,7 +277,7 @@
       } else {
         cli::cli_abort(c(
           x = stations_info_check$code,
-          i = stations_info_check$message
+          i = stringr::str_remove_all(stations_info_check$message, "[{|}]")
         ))
       }
     }
@@ -364,7 +364,7 @@
       } else {
         cli::cli_abort(c(
           x = api_status_check$code,
-          i = api_status_check$message
+          i = stringr::str_remove_all(api_status_check$message, "[{|}]")
         ))
       }
     }
@@ -386,7 +386,7 @@
       } else {
         cli::cli_abort(c(
           x = stations_data_check$code,
-          i = stations_data_check$message
+          i = stringr::str_remove_all(stations_data_check$message, "[{|}]")
         ))
       }
     }
@@ -404,7 +404,7 @@
       } else {
         cli::cli_abort(c(
           x = stations_metadata_check$code,
-          i = stations_metadata_check$message
+          i = stringr::str_remove_all(stations_metadata_check$message, "[{|}]")
         ))
       }
     }
