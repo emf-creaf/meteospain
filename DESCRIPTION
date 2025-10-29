@@ -58,7 +58,8 @@ Imports:
     vctrs,
     cachem,
     curl,
-    cli
+    cli,
+    httr2
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
