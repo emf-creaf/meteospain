@@ -771,3 +771,73 @@
     ) |>
     dplyr::left_join(stations_info, by = c('service', 'station_id'))
 }
+
+.create_aemet_request <- function(path, api_options) {
+  aemet_request <- httr2::request("https://opendata.aemet.es") |>
+    httr2::req_url_path_append(path) |>
+    httr2::req_headers_redacted(api_key = api_options$api_key) |>
+    httr2::req_headers("Cache-Control" = "no-cache") |>
+    httr2::req_user_agent(
+      "meteospain R package (https://emf.creaf.cat/software/meteospain/)"
+    ) |>
+    httr2::req_error(
+      body = \(resp) {
+        message <- httr2::resp_body_string(resp)
+
+        if (httr2::resp_content_type(resp) == "text/html") {
+          message <- httr2::resp_body_html(resp) |>
+            rvest::html_element("p") |>
+            rvest::html_text()
+        }
+
+        if (httr2::resp_content_type(resp) == "text/plain") {
+          message <- httr2::resp_body_string(resp) |>
+            jsonlite::fromJSON() |>
+            _$descripcion
+        }
+
+        if (httr2::resp_content_type(resp) == "application/json") {
+          message <- httr2::resp_body_json(resp, simplifyVector = TRUE)
+        }
+
+        return(message)
+      }
+    ) |>
+    httr2::req_retry(
+      max_tries = 3,
+      retry_on_failure = TRUE,
+      is_transient = \(resp) {
+        httr2::resp_status(resp) %in% c(429, 500, 503)
+      },
+      backoff = \(resp) {
+        60
+      },
+      after = \(resp) {
+        browser()
+        if (httr2::resp_header_exists(resp, "X-RateLimit-Reset")) {
+          time <- as.numeric(httr2::resp_header(resp, "X-RateLimit-Reset"))
+          return(time - unclass(Sys.time()))
+        } else {
+          return(NA)
+        }
+      }
+    )
+
+  # httr2::req_dry_run(aemet_request)
+  
+  intermediate_response <- httr2::req_perform(aemet_request, verbosity = 2)
+
+  aemet_data_response <- aemet_request |>
+    httr2::req_url(httr2::resp_body_json(intermediate_response)$datos) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string() |>
+    jsonlite::fromJSON() |>
+    dplyr::as_tibble()
+
+  aemet_metadata_response <- aemet_request |>
+    httr2::req_url(httr2::resp_body_json(intermediate_response)$metadatos) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string() |>
+    jsonlite::fromJSON() |>
+    dplyr::as_tibble()
+}
