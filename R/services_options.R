@@ -97,7 +97,8 @@ aemet_options <- function(
   assertthat::assert_that(
     assertthat::is.date(start_date),
     assertthat::is.date(end_date),
-    rlang::is_character(api_key)
+    rlang::is_character(api_key),
+    nchar(api_key) > 0
   )
   assertthat::assert_that(
     dplyr::if_else(rlang::is_null(stations), TRUE, rlang::is_character(stations)),
