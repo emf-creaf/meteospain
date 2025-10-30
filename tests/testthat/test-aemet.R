@@ -20,6 +20,7 @@ test_that("aemet service options works", {
   expect_error(aemet_options(resolution = 'not_valid_resolution', api_key = 'tururu'), "must be one of")
   expect_error(aemet_options(), "is missing, with no default")
   expect_error(aemet_options(stations = c(25, 26, 27), api_key = 'tururu'), "must be a character vector")
+  expect_error(aemet_options(api_key = ""), "not greater")
 
 })
 
@@ -229,7 +230,7 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
   # api_options <- aemet_options('current_day', api_key = keyring::key_get('aemet'))
   # invalid key
   api_options <- aemet_options('current_day', api_key = 'tururu')
-  expect_error(get_meteo_from('aemet', api_options), "Invalid API Key")
+  expect_error(get_meteo_from('aemet', api_options), "API key")
   # dates out of bounds
   api_options <- aemet_options(
     'daily',
@@ -262,13 +263,13 @@ test_that("aemet API errors, messages, warnings are correctly raised", {
     api_key = keyring::key_get('aemet'),
     stations = 'XXXXXX'
   )
-  expect_error(get_meteo_from('aemet', api_options), "404")
+  expect_error(get_meteo_from('aemet', api_options), "No hay datos")
   api_options$stations <- NULL
   expect_error(get_meteo_from('aemet', api_options), "needs one station provided")
   api_options$resolution <- "yearly"
   expect_error(get_meteo_from('aemet', api_options), "needs one station provided")
   api_options$stations <- 'XXXXXX'
-  expect_error(get_meteo_from('aemet', api_options), "404")
+  expect_error(get_meteo_from('aemet', api_options), "No hay datos")
 
   api_options <- aemet_options(
     'monthly',
