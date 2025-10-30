@@ -216,32 +216,6 @@ relocate_vars <- function(data) {
   }
 }
 
-.manage_429_errors <- function(api_status_check, api_options, .f) {
-
-  # if api request limit reached, do a recursive call to the function after 60 seconds
-  # But only once. Is complicated to know if the limit is because too much request per second or
-  # if the quota limit has been reached. So, we repeat once after 60 seconds, and if the error
-  # persists, stop.
-  # For that we use api_options$while_number. If it is null or less than one repeat,
-  # if not, stop
-  while (is.null(api_options$while_number) || api_options$while_number > 0) {
-    if (is.null(api_options$while_number)) {
-      api_options$while_number <- 3
-    }
-    cli::cli_inform(c(
-      i = copyright_style(api_status_check$message),
-      "Trying again in 60 seconds (retry {4 - api_options$while_number} of 3)"
-    ))
-    Sys.sleep(60)
-    api_options$while_number <- api_options$while_number - 1
-    return(.f(api_options))
-  }
-  cli::cli_abort(c(
-    x = api_status_check$code,
-    i = api_status_check$message
-  ))
-}
-
 .aemet_coords_generator <- function(coord_vec) {
   dplyr::if_else(
     stringr::str_detect(coord_vec, "S") | stringr::str_detect(coord_vec, "W"),
