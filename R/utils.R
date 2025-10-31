@@ -14,14 +14,6 @@ legal_note_style <- cli::combine_ansi_styles('blue', 'underline')
 
 # swiss knives ------------------------------------------------------------------------------------------
 
-.empty_string_to_null <- function(glue_string) {
-  if (length(glue_string) < 1) {
-    NULL
-  } else {
-    glue_string
-  }
-}
-
 .create_missing_vars <- function(df, var_names) {
 
   missing_var_names <- var_names[which(!var_names %in% names(df))]

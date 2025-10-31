@@ -47,39 +47,80 @@
   # We will use a stamp function:
   meteogalicia_stamp <- lubridate::stamp("25/12/2001", orders = "d0mY", quiet = TRUE)
 
-  # the first thing is the stations, as it is the common part for any resolution
-  stations_query_string <- glue::glue("idEst={glue::glue_collapse(api_options$stations, sep = ',')}")
-
-  # dates also can be done, and used if needed
-  dates_query_string <- glue::glue(
-    "dataIni={meteogalicia_stamp(api_options$start_date)}&dataFin={meteogalicia_stamp(api_options$end_date)}"
+  # All possible queries, later we remove based in resolution
+  query_list <- list(
+    idEst = glue::glue_collapse(api_options$stations, sep = ","),
+    dataIni = I(meteogalicia_stamp(api_options$start_date)),
+    dataFin = I(meteogalicia_stamp(api_options$end_date)),
+    numHoras = 24
   )
-
+  
+  # remove the stations, as it is the common part for any resolution
+  if (rlang::is_null(api_options$stations)) {
+    query_list[["idEst"]] <- NULL
+  }
   # now the specifics for each resolution:
   #   - instant, nothing, only the stations if any
   #   - current day, stations if any and numHoras=24
   #   - daily, stations if any, start date and end date
   #   - monthly, stations if any, start date and end date
-
   if (api_options$resolution == 'instant') {
-    res <- .empty_string_to_null(stations_query_string)
+    query_list[c("dataIni", "dataFin", "numHoras")] <- NULL
   }
   if (api_options$resolution == 'current_day') {
-    if (rlang::is_null(api_options$stations)) {
-      res <- "numHoras=24"
-    } else {
-      res <- glue::glue("{stations_query_string}&numHoras=24")
-    }
+    query_list[c("dataIni", "dataFin")] <- NULL
   }
   if (api_options$resolution %in% c('daily', 'monthly')) {
-    if (rlang::is_null(api_options$stations)) {
-      res <- dates_query_string
-    } else {
-      res <- glue::glue("{stations_query_string}&{dates_query_string}")
-    }
+    query_list[c("numHoras")] <- NULL
   }
 
-  return(res)
+  return(query_list)
+}
+
+.create_meteogalicia_request <- function(path, api_options, query = NULL) {
+
+  meteogalicia_request <- httr2::request("https://servizos.meteogalicia.gal") |>
+    httr2::req_url_path_append(path) |>
+    httr2::req_url_query(!!!query) |>
+    httr2::req_user_agent(
+      "meteospain R package (https://emf.creaf.cat/software/meteospain/)"
+    ) |>
+    httr2::req_error(
+      body = \(resp) {
+        message <- httr2::resp_body_string(resp)
+        # more verbose known errors
+        if (httr2::resp_status(resp) %in% c(404L, 500L)) {
+          browser()
+          message <- httr2::resp_body_html(resp) |>
+            rvest::html_element("p") |>
+            rvest::html_text()
+        }
+
+        return(message)
+      }
+    ) |>
+    httr2::req_retry(
+      max_tries = 3,
+      retry_on_failure = TRUE,
+      is_transient = \(resp) {
+        httr2::resp_status(resp) %in% c(429, 500, 503)
+      },
+      backoff = \(resp) {
+        60
+      },
+      after = \(resp) {
+        if (httr2::resp_header_exists(resp, "X-RateLimit-Reset")) {
+          time <- as.numeric(httr2::resp_header(resp, "X-RateLimit-Reset"))
+          return(time - unclass(Sys.time()))
+        } else {
+          return(NA)
+        }
+      }
+    )
+
+  httr2::req_perform(meteogalicia_request) |>
+    httr2::resp_body_json(flatten = TRUE, simplifyDataFrame = TRUE) |>
+    dplyr::as_tibble()
 }
 
 
@@ -100,32 +141,10 @@
   cache_ref <- rlang::hash(path_resolution)
 
   # get data from cache or from API if new
-  info_meteogalicia <- .get_cached_result(cache_ref, {
-    # api response
-    api_response <- safe_api_access(
-      type = 'rest',
-      "https://servizos.meteogalicia.gal",
-      config = list(http_version = 2),
-      path = path_resolution,
-      httr::user_agent('https://github.com/emf-creaf/meteospain')
-    )
-
-    # Status check ------------------------------------------------------------------------------------------
-    if (api_response$status_code != 200) {
-      cli::cli_abort(c(
-        "Unable to connect to meteogalicia API at {.url {api_response$url}}"
-      ))
-    }
-
-
-    # Data --------------------------------------------------------------------------------------------------
-    response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
-
-    # Meteogalicia returns a list, with one element called listaEstacionsMeteo, that is parsed directly to
-    # a data.frame with all the info. We work with that.
-    response_content$listaEstacionsMeteo |>
-      dplyr::as_tibble() |>
-      dplyr::mutate(service = 'meteogalicia') |>
+  .get_cached_result(cache_ref, {
+    .create_meteogalicia_request(path_resolution, api_options) |>
+      unnest_safe(listaEstacionsMeteo) |>
+      dplyr::mutate(service = "meteogalicia") |>
       .info_table_checker() |>
       dplyr::select(
         "service", station_id = "idEstacion", station_name = "estacion", station_province = "provincia",
@@ -137,9 +156,6 @@
       ) |>
       sf::st_as_sf(coords = c('lon', 'lat'), crs = 4326)
   })
-
-  return(info_meteogalicia)
-
 }
 
 #' Get data from MeteoGalicia
@@ -168,56 +184,8 @@
   }
 
   data_meteogalicia <- .get_cached_result(cache_ref, {
-    # GET ---------------------------------------------------------------------------------------------------
-    # get the api response
-    api_response <- safe_api_access(
-      type = 'rest',
-      "https://servizos.meteogalicia.gal",
-      config = list(http_version = 2),
-      path = path_resolution,
-      query = query_resolution,
-      httr::user_agent('https://github.com/emf-creaf/meteospain')
-    )
-    # Status check ------------------------------------------------------------------------------------------
-    # bad stations return code 500
-    if (api_response$status_code %in% c(500L, 404L)) {
-      cli::cli_abort(c(
-        "MeteoGalicia API returned an error:",
-        stringr::str_remove_all(
-          httr::content(api_response, 'text'),
-          '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
-        ),
-        i = 'This usually happens when unknown station ids are supplied.'
-      ))
-    }
-    # check any other codes besides 200
-    if (api_response$status_code != 200) {
-      cli::cli_abort(c(
-        "Unable to connect to meteogalicia API at {.url {api_response$url}}"
-      ))
-    }
-    # Check when html with error is returned (bad stations)
-    # LEGACY, bad stations now are reported with error 500 in the new meteogalicia API
-    if (httr::http_type(api_response) != "application/json") {
-      cli::cli_abort(c(
-        "MeteoGalicia API returned an error:",
-        stringr::str_remove_all(
-          httr::content(api_response, 'text'),
-          '<.*?>|\\t|\\n|<!DOCTYPE((.|\n|\r)*?)(\"|])>'
-        ),
-        i = 'This usually happens when unknown station ids are supplied.'
-      ))
-    }
-    # response content
-    response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text'))
-    # Check when empty lists are returned (bad dates)
-    if (length(response_content[[1]]) < 1) {
-      cli::cli_abort(c(
-        "MeteoGalicia API returned no data:\n",
-        i = "This usually happens when there is no data for the dates supplied."
-      ))
-    }
-    # Resolution specific carpentry -------------------------------------------------------------------------
+    
+    # choosing the unnesting strategy based on resolution
     # Now, resolutions have differences, in the component names of the list returned and also in variables
     # returned. So we create specific functions for each resolution and use a common pipe (see aemet.helpers
     # for a more complete rationale)
@@ -239,9 +207,9 @@
     if (api_options$resolution %in% c('daily', 'monthly')) {
       resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
     }
-    # Data transformation -----------------------------------------------------------------------------------
-    res <-
-      resolution_specific_unnesting(response_content) |>
+
+    res <- .create_meteogalicia_request(path_resolution, api_options) |>
+      resolution_specific_unnesting() |>
       # final unnest, common to all resolutions
       unnest_safe("listaMedidas") |>
       # remove the non valid data (0 == no validated data, 3 = wrong data, 9 = data not registered)
