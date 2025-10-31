@@ -87,13 +87,23 @@
     ) |>
     httr2::req_error(
       body = \(resp) {
-        message <- httr2::resp_body_string(resp)
+        message <- httr2::resp_status(resp)
+        
         # more verbose known errors
-        if (httr2::resp_status(resp) %in% c(404L, 500L)) {
-          browser()
-          message <- httr2::resp_body_html(resp) |>
-            rvest::html_element("p") |>
-            rvest::html_text()
+        if (httr2::resp_status(resp) %in% c(404L)) {
+          message <- c(
+            message,
+            "This usually happens when unknown station ids are supplied."
+          )
+        }
+
+        if (httr2::resp_status(resp) %in% c(500L)) {
+          message <- c(
+            message,
+            httr2::resp_body_html(resp) |>
+              rvest::html_element("body") |>
+              rvest::html_text()
+          )
         }
 
         return(message)
@@ -103,7 +113,7 @@
       max_tries = 3,
       retry_on_failure = TRUE,
       is_transient = \(resp) {
-        httr2::resp_status(resp) %in% c(429, 500, 503)
+        httr2::resp_status(resp) %in% c(429, 503)
       },
       backoff = \(resp) {
         60
@@ -118,9 +128,18 @@
       }
     )
 
-  httr2::req_perform(meteogalicia_request) |>
+  res <- httr2::req_perform(meteogalicia_request) |>
     httr2::resp_body_json(flatten = TRUE, simplifyDataFrame = TRUE) |>
     dplyr::as_tibble()
+  
+  if (nrow(res) < 1) {
+    cli::cli_abort(c(
+      "MeteoGalicia API returned no data:\n",
+      i = "This usually happens when there is no data for the dates supplied."
+    ))
+  }
+
+  res
 }
 
 
@@ -208,7 +227,7 @@
       resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
     }
 
-    res <- .create_meteogalicia_request(path_resolution, api_options) |>
+    res <- .create_meteogalicia_request(path_resolution, api_options, query_resolution) |>
       resolution_specific_unnesting() |>
       # final unnest, common to all resolutions
       unnest_safe("listaMedidas") |>
