@@ -77,6 +77,21 @@
   return(query_list)
 }
 
+#' Create request for Meteogalicia API
+#'
+#' Create the request for meteogalicia based on path and query
+#'
+#' This function creates the request, deal with errors and retries if needed
+#' and access the data of the response.
+#'
+#' @param path Character vector with the path as obtained by
+#'   \link{\code{.create_meteogalicia_path}}
+#' @param query List of name value pairs to query dates, needed for the request
+#'   on some API endpoints
+#'
+#' @return a tibble converted from the response json.
+#'
+#' @noRd
 .create_meteogalicia_request <- function(path, query = NULL) {
 
   meteogalicia_request <- httr2::request("https://servizos.meteogalicia.gal") |>
