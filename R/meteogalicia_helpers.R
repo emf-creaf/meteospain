@@ -77,7 +77,7 @@
   return(query_list)
 }
 
-.create_meteogalicia_request <- function(path, api_options, query = NULL) {
+.create_meteogalicia_request <- function(path, query = NULL) {
 
   meteogalicia_request <- httr2::request("https://servizos.meteogalicia.gal") |>
     httr2::req_url_path_append(path) |>
@@ -161,8 +161,8 @@
 
   # get data from cache or from API if new
   .get_cached_result(cache_ref, {
-    .create_meteogalicia_request(path_resolution, api_options) |>
-      unnest_safe(listaEstacionsMeteo) |>
+    .create_meteogalicia_request(path_resolution) |>
+      unnest_safe("listaEstacionsMeteo") |>
       dplyr::mutate(service = "meteogalicia") |>
       .info_table_checker() |>
       dplyr::select(
@@ -227,7 +227,7 @@
       resolution_specific_joinvars <- c(resolution_specific_joinvars, 'station_province')
     }
 
-    res <- .create_meteogalicia_request(path_resolution, api_options, query_resolution) |>
+    res <- .create_meteogalicia_request(path_resolution, query_resolution) |>
       resolution_specific_unnesting() |>
       # final unnest, common to all resolutions
       unnest_safe("listaMedidas") |>
