@@ -226,7 +226,6 @@
   failures <- meteocat_responses |>
     httr2::resps_failures()
 
-  # TODO: do something with the errors (cli warning or similar)
   if (length(failures) > 0) {
     urls <- purrr::map(httr2::resps_requests(failures), "url")
     messages <- purrr::map(failures, "message")
