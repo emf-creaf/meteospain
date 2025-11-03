@@ -45,7 +45,6 @@ Imports:
     assertthat,
     dplyr (>= 1.0.0),
     glue,
-    httr,
     jsonlite,
     lubridate,
     purrr (>= 1.0.0),
