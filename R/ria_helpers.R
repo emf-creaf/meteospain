@@ -1,48 +1,3 @@
-#' httr::GET, and internally checking statuses. If error, return the error code and the message.
-#' In the main function, if the error returned is API limit, wait 60 seconds, if other, stop
-#' and give the correct message.
-#'
-#' @param ... <[`dynamic-dots`][rlang::dyn-dots]> Arguments for httr::GET
-#'
-#' @noRd
-.check_status_ria <- function(...) {
-
-  # GET step
-  api_response <- safe_api_access(type = 'rest', ...)
-  response_status <- httr::status_code(api_response)
-
-  # and now the status checks
-  # 400 Bad Request: Parameters are not correct, message contains further info
-  # 404 Not found: Not found
-  # 500 Internal Error Server: Internal error, message contains further info
-  # 503 Service Unavailable
-  if (response_status %in% c(400, 404, 500, 503)) {
-    res <- list(
-      status = 'Error',
-      code = response_status,
-      message = glue::glue(
-        "Unable to obtain data from RIA API:\n",
-        "{httr::http_status(api_response)$message}\n",
-        "{rawToChar(api_response$content)}"
-      ),
-      station_url = api_response$url
-    )
-    return(res)
-  }
-
-  # If we reach here, is because everything went well
-  response_content <- jsonlite::fromJSON(httr::content(api_response, as = 'text', encoding = 'UTF-8'))
-  res <- list(
-    status = 'OK',
-    code = response_status,
-    message = "Data received",
-    content = response_content,
-    station_url = api_response$url
-  )
-
-  return(res)
-}
-
 #' Create request for RIA API
 #'
 #' Create the request for ria based on paths
@@ -222,26 +177,6 @@
   }
 
   return(paths_resolution)
-}
-
-#' Get province metadata
-#'
-#' provinces metadata
-#'
-#' @noRd
-.get_provinces_ria <- function() {
-
-  # path
-  path_resolution <- list(c('agriculturaypesca', 'ifapa', 'riaws', 'provincias'))
-  # cache
-  cache_ref <- rlang::hash(path_resolution)
-
-  # get data from cache or from API if new
-  provinces_ria <- .get_cached_result(cache_ref, {
-    .create_ria_request(path_resolution)
-  })
-
-  return(provinces_ria)
 }
 
 #' Get info for the ria stations
