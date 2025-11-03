@@ -115,3 +115,4 @@ april_2020_spain |>
   ggplot(aes(colour = mean_temperature)) +
   geom_sf() +
   scale_colour_viridis_c()
+```
