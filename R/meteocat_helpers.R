@@ -1,6 +1,6 @@
 #' Create the path elements for MeteoCat API
 #'
-#' Path vectors for MeteoCat API to use with httr::GET
+#' Path vectors for MeteoCat API to use with httr2
 #'
 #' @section Dates
 #' In this case as MeteoCat is capped to one date: one day for hourly, one month for daily, one year for
@@ -104,7 +104,7 @@
 
 #' Create the query element for MeteoCat API
 #'
-#' Query string for MeteoCat API to use with httr::GET
+#' Query string for MeteoCat API to use with httr2
 #'
 #' MeteoCat needs dates for daily and monthly resolutions as query parameters (broken down in year and month).
 #'

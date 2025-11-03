@@ -107,7 +107,7 @@
 
 #' Create the path elements for RIA API
 #'
-#' Path vectors for RIA API to use with httr::GET
+#' Path vectors for RIA API to use with httr2
 #'
 #' @section Stations
 #' In this case as RIA is capped to one station per query, so we need to loop by stations provided, or, if
