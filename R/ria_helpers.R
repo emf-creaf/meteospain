@@ -50,12 +50,7 @@
             60
           },
           after = \(resp) {
-            if (httr2::resp_header_exists(resp, "X-RateLimit-Reset")) {
-              time <- as.numeric(httr2::resp_header(resp, "X-RateLimit-Reset"))
-              return(time - unclass(Sys.time()))
-            } else {
-              return(NA)
-            }
+            NA
           }
         )
     }

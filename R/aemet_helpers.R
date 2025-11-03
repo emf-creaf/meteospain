@@ -90,23 +90,29 @@
       body = \(resp) {
         message <- httr2::resp_body_string(resp)
 
+        # known errors for better messaging
         if (httr2::resp_content_type(resp) == "text/html") {
           message <- httr2::resp_body_html(resp) |>
             rvest::html_element("p") |>
             rvest::html_text()
+          return(message)
         }
 
-        if (httr2::resp_content_type(resp) == "text/plain") {
+        # text plain but NOT after all retries and still 429
+        if (httr2::resp_content_type(resp) == "text/plain" && httr2::resp_status(resp) != 429L) {
           message <- httr2::resp_body_string(resp) |>
             jsonlite::fromJSON() |>
             _$descripcion
+          return(message)
         }
 
         if (httr2::resp_content_type(resp) == "application/json") {
           message <- httr2::resp_body_json(resp, simplifyVector = TRUE)
+          return(message)
         }
 
-        return(message)
+        browser()
+        message
       }
     ) |>
     httr2::req_retry(
@@ -116,15 +122,11 @@
         httr2::resp_status(resp) %in% c(429, 500, 503)
       },
       backoff = \(resp) {
-        60
+        # random waiting time between 35 and 61 seconds
+        runif(1,35,61)
       },
       after = \(resp) {
-        if (httr2::resp_header_exists(resp, "X-RateLimit-Reset")) {
-          time <- as.numeric(httr2::resp_header(resp, "X-RateLimit-Reset"))
-          return(time - unclass(Sys.time()))
-        } else {
-          return(NA)
-        }
+        NA
       }
     )
 
@@ -136,6 +138,7 @@
 
   if (httr2::resp_body_json(intermediate_response)$estado != 200L) {
     cli::cli_abort(c(
+      "x" = httr2::resp_body_json(intermediate_response)$estado,
       "i" = httr2::resp_body_json(intermediate_response)$descripcion
     ))
   }
