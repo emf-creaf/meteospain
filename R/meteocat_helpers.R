@@ -238,7 +238,7 @@
       ))
     }
 
-    cli::cli_warn(purrr::map2(urls, messages, \(u, m) { paste0(u, ": ", m) }))
+    cli::cli_warn(purrr::map2_chr(urls, messages, \(u, m) { paste0(u, ": ", m) }))
   }
 
   return(res)
