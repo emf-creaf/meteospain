@@ -93,7 +93,7 @@
         # known errors for better messaging
         if (httr2::resp_content_type(resp) == "text/html") {
           message <- httr2::resp_body_html(resp) |>
-            rvest::html_element("p") |>
+            rvest::html_element("body") |>
             rvest::html_text()
           return(message)
         }
@@ -111,7 +111,6 @@
           return(message)
         }
 
-        browser()
         message
       }
     ) |>
@@ -123,9 +122,22 @@
       },
       backoff = \(resp) {
         # random waiting time between 35 and 61 seconds
-        runif(1,35,61)
+        runif(1, 35, 61)
       },
       after = \(resp) {
+        # if error is 500, with 429 inside as html, then wait 61 seconds
+        if (
+          httr2::resp_status(resp) %in% c(500) &&
+            httr2::resp_content_type(resp) == "text/html" &&
+            stringr::str_detect(
+              rvest::html_text(rvest::html_element(httr2::resp_body_html(resp), "h1")),
+              "429 Too Many Requests"
+            )
+        ) {
+          return(61)
+        }
+
+        # default, left backoff decide (NA)
         NA
       }
     )
