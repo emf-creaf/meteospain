@@ -101,7 +101,7 @@
       ))
     }
 
-    cli::cli_warn(c(
+    cli::cli_inform(c(
       "x" = "Some stations didn't return data:",
       "i" = purrr::map2_chr(urls, messages, \(u, m) { paste0(u, ": ", m) })
     ))
