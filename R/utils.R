@@ -192,20 +192,25 @@ relocate_vars <- function(data) {
     )
 }
 
-.ria_url2station <- function(station_url) {
-  if (stringr::str_detect(station_url, 'mensuales')) {
-    parts <- stringr::str_remove_all(
-      station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/'
-    ) |>
-      stringr::str_split('/', n = 3, simplify = TRUE)
-    return(glue::glue("{parts[,1]}-{parts[,2]}"))
-  } else {
-    parts <- stringr::str_remove_all(
-      station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/'
-    ) |>
-      stringr::str_split('/', n = 3, simplify = TRUE)
-    return(glue::glue("{parts[,1]}-{parts[,2]}"))
-  }
+.ria_url2station <- function(stations_url) {
+  purrr::map_chr(
+    stations_url,
+    \(station_url) {
+      if (stringr::str_detect(station_url, 'mensuales')) {
+        parts <- stringr::str_remove_all(
+          station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/'
+        ) |>
+          stringr::str_split('/', n = 3, simplify = TRUE)
+        return(glue::glue("{parts[,1]}-{parts[,2]}"))
+      } else {
+        parts <- stringr::str_remove_all(
+          station_url, 'https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/'
+        ) |>
+          stringr::str_split('/', n = 3, simplify = TRUE)
+        return(glue::glue("{parts[,1]}-{parts[,2]}"))
+      }
+    }
+  )
 }
 
 .aemet_coords_generator <- function(coord_vec) {

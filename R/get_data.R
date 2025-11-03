@@ -113,7 +113,7 @@ get_stations_info_from <- function(
     'meteocat' = .get_info_meteocat(options),
     'meteoclimatic' = .get_info_meteoclimatic(options),
     'meteogalicia' = .get_info_meteogalicia(),
-    'ria' = .get_info_ria(options)
+    'ria' = .get_info_ria()
   )
 
   return(res)

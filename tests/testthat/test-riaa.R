@@ -41,7 +41,7 @@ test_that("ria daily works", {
   # all stations (two days ago, because the data update is not real time, meaning that if I test
   # this in the morning, sometimes it will fail as the data is not in the API yet)
   api_options <- ria_options('daily', start_date = Sys.Date() - 2)
-  test_object <- get_meteo_from('ria', api_options)
+  test_object <- suppressWarnings(get_meteo_from('ria', api_options))
   # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
@@ -72,7 +72,7 @@ test_that("ria daily works", {
 test_that("ria monthly works", {
   # all stations
   api_options <- ria_options('monthly', start_date = Sys.Date() - 120, end_date = Sys.Date() - 1)
-  test_object <- get_meteo_from('ria', api_options)
+  test_object <- suppressWarnings(get_meteo_from('ria', api_options))
   # expect_message((test_object <- get_meteo_from('ria', api_options)), 'www.juntadeandalucia.es')
   expected_names <- c(
     "timestamp", "service", "station_id", "station_name", "station_province", "altitude",
@@ -106,10 +106,10 @@ test_that("ria API errors, messages, warnings are correctly raised", {
   api_options <- ria_options()
   # invalid stations
   api_options <- ria_options(stations = c('18-4234', '18-12323', '234wdas-aq3', 'tururu'))
-  expect_error(get_meteo_from('ria', api_options), "Unable to obtain data from RIA API")
+  expect_error(get_meteo_from('ria', api_options), "No data")
   # dates out of bounds
   api_options <- ria_options('daily', start_date = as.Date('1890-01-01'))
-  expect_error(get_meteo_from('ria', api_options), "Unable to obtain data from RIA API:")
+  expect_error(get_meteo_from('ria', api_options), "No data")
   api_options$resolution <- 'tururu'
   expect_error(get_meteo_from('ria', api_options), "is not a valid temporal resolution")
 })
