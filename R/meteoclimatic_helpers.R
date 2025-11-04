@@ -46,7 +46,7 @@
         NA
       }
     )
-  res <- httr2::req_perform(meteoclimatic_request) |>
+  httr2::req_perform(meteoclimatic_request) |>
     httr2::resp_body_xml()
 }
 
@@ -68,7 +68,7 @@
     ))
   }
 
-  return(meteoclimatic_path)
+  meteoclimatic_path
 }
 
 #' Get info for the meteoclimatic stations
@@ -82,7 +82,7 @@
   path_resolution <- c("rss", api_options$stations)
   # station_info
   raw_station_info <- .create_meteoclimatic_request(path_resolution)
-  res <- dplyr::tibble(
+  dplyr::tibble(
     service = 'meteoclimatic',
     # station_id is special, we need obtain it from the link, so we need to remove all the link previous to the code
     station_id = substr(xml2::xml_text(xml2::xml_find_all(raw_station_info, '//item/link')), start = 37, stop = 100),
@@ -92,8 +92,6 @@
     long = xml2::xml_double(xml2::xml_find_all(raw_station_info, '//item/geo:Point/geo:long'))
   ) |>
     sf::st_as_sf(coords = c('long', 'lat'), crs = 4326)
-
-  return(res)
 }
 
 #' Get data from Meteoclimatic
@@ -199,5 +197,5 @@
     legal_note_style("https://www.meteoclimatic.net/index")
   ))
 
-  return(stations_data)
+  stations_data
 }
