@@ -251,7 +251,7 @@
 
   # retrieve the data
   .create_meteocat_request(path_quota, api_options) |>
-    tidyr::unnest(c("client", "plans"))
+    unnest_safe(c("client", "plans"))
 }
 
 #' Get variables metadata
@@ -299,7 +299,7 @@
   info_meteocat <- .get_cached_result(cache_ref, {
     # retrieve the data
     .create_meteocat_request(path_resolution, api_options) |>
-      tidyr::unnest(
+      unnest_safe(
         dplyr::any_of(c("coordenades", "provincia")),
         names_sep = "_"
       ) |>
