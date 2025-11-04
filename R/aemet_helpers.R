@@ -115,14 +115,13 @@
       }
     ) |>
     httr2::req_retry(
-      max_tries = 3,
+      max_tries = 4,
       retry_on_failure = TRUE,
       is_transient = \(resp) {
         httr2::resp_status(resp) %in% c(429, 500, 503)
       },
       backoff = \(resp) {
-        # random waiting time between 35 and 61 seconds
-        runif(1, 35, 61)
+        61
       },
       after = \(resp) {
         # if error is 500, with 429 inside as html, then wait 61 seconds
