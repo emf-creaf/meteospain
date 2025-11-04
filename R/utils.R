@@ -282,7 +282,7 @@ unnest_safe <- function(x, ...) {
 # test helpers ------------------------------------------------------------------------------------------
 
 skip_if_no_internet <- function() {
-  if (!curl::has_internet()) {
+  if (!httr2::is_online()) {
     testthat::skip("No internet connection, skipping tests")
   }
 }

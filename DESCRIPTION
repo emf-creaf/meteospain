@@ -56,7 +56,6 @@ Imports:
     xml2,
     vctrs,
     cachem,
-    curl,
     cli,
     httr2,
     rvest
