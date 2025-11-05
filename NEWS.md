@@ -1,5 +1,8 @@
 # meteospain (development version)
 
+* Refactored API connections, now using `httr2` instead of `httr` (#31).
+  This also dropped other dependencies.
+
 * AEMET API:
   - Documented new limit (12h) in AEMET for current day (#32)
 
