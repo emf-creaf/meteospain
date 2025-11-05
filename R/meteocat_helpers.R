@@ -231,13 +231,18 @@
 
   if (length(failures) > 0) {
     urls <- purrr::map(httr2::resps_requests(failures), "url")
-    messages <- purrr::map(failures, "message")
+    messages <- purrr::map2_chr(
+      failures,
+      \(resp) {
+        httr2::resp_body_json(resp, simplifyVector = TRUE)$message
+      }
+    )
 
     # If all is failures, stop
     if (identical(length(failures), length(meteocat_responses))) {
       cli::cli_abort(c(
         "x" = "No data was retrieved",
-        purrr::map2_chr(urls, messages, \(u, m) { paste0(u, ": ", m) })
+        unique(messages)
       ))
     }
 
@@ -281,7 +286,7 @@
     'yearly' = list(c('xema', 'v1', 'variables', 'estadistics', 'anuals', 'metadades'))
   )
   # cache
-  cache_ref <- rlang::hash(path_resolution)
+  cache_ref <- rlang::hash(c(path_resolution, api_options$api_key))
 
   # get the data from cache or from API if new
   .get_cached_result(cache_ref, {
@@ -302,7 +307,7 @@
   # path
   path_resolution <- list(c('xema', 'v1', 'estacions', 'metadades'))
   # cache
-  cache_ref <- rlang::hash(path_resolution)
+  cache_ref <- rlang::hash(c(path_resolution, api_options$api_key))
 
   # get data from cache or from API if new
   info_meteocat <- .get_cached_result(cache_ref, {
@@ -355,7 +360,7 @@
     query_resolution <- NULL
   }
   # cache (in this case with path and query to get the date also)
-  cache_ref <- rlang::hash(c(paths_resolution, query_resolution))
+  cache_ref <- rlang::hash(c(paths_resolution, query_resolution, api_options$api_key))
 
   # if resolution less than daily, remove the cache
   if (api_options$resolution %in% c("instant", "hourly")) {

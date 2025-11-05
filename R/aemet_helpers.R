@@ -183,7 +183,7 @@
     'opendata', 'api', 'valores', 'climatologicos', 'inventarioestaciones', 'todasestaciones'
   )
   # cache
-  cache_ref <- rlang::hash(path_resolution)
+  cache_ref <- rlang::hash(c(path_resolution, api_options$api_key))
 
   # get data from cache or from API if new
   info_aemet <- .get_cached_result(cache_ref, {
@@ -230,7 +230,7 @@
   path_resolution <- .create_aemet_path(api_options)
 
   # cache
-  cache_ref <- rlang::hash(path_resolution)
+  cache_ref <- rlang::hash(c(path_resolution, api_options$api_key))
 
   # if resolution less than daily, remove the cache
   if (api_options$resolution == "current_day") {
