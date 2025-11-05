@@ -163,7 +163,6 @@
         ) |>
         httr2::req_error(
           body = \(resp) {
-            # browser()
             # fallback
             message <- httr2::resp_body_string(resp)
             # more verbose known errors
@@ -174,6 +173,13 @@
               message <-
                 httr2::resp_body_json(resp, simplifyVector = TRUE)$message
             }
+            if (httr2::resp_status(resp) == 429L) {
+              message <- c(
+                httr2::resp_status(resp),
+                httr2::resp_body_json(resp, simplifyVector = TRUE)$message,
+                "i" = "This usually means you have reached your API key limit for this month and you are out of requests"
+              )
+            }
 
             message
           }
@@ -182,7 +188,10 @@
           max_tries = 3,
           retry_on_failure = TRUE,
           is_transient = \(resp) {
-            httr2::resp_status(resp) %in% c(429, 500, 503)
+            if (httr2::resp_status(resp) == 429L && httr2::resp_body_json(resp, simplifyVector = TRUE)$message == "Limit Exceeded") {
+              return(FALSE)
+            }
+            httr2::resp_status(resp) %in% c(429L, 500L, 503L)
           },
           backoff = \(resp) {
             60

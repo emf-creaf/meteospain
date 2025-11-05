@@ -278,6 +278,9 @@ test_that("meteocat API errors, messages, warnings are correctly raised", {
   expect_error(get_meteo_from('meteocat', api_options), "provided have no data for the dates selected")
   api_options$resolution <- 'tururu'
   expect_error(get_meteo_from('meteocat', api_options), "is not a valid temporal resolution")
+  # api limits reached
+  api_options <- meteocat_options("daily", api_key = keyring::key_get("meteocat_zero"))
+  expect_error(get_meteo_from("meteocat", api_options), "for this month")
 })
 
 
