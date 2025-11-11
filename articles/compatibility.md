@@ -56,12 +56,11 @@ meteocat_daily <- get_meteo_from(
   'meteocat',
   meteocat_options('daily', start_date = as.Date('2020-04-16'), api_key = keyring::key_get('meteocat'))
 )
-#> iterating ■■■                                7% | ETA: 20s
-#> iterating ■■■■                              11% | ETA: 18s
-#> iterating ■■■■■■■■■■                        30% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■■                   48% | ETA:  9s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  6s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  2s
+#> iterating ■■■                                7% | ETA: 16s
+#> iterating ■■■■■■■                           19% | ETA: 15s
+#> iterating ■■■■■■■■■■■■                      37% | ETA: 11s
+#> iterating ■■■■■■■■■■■■■■■■■■                56% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  4s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -83,11 +82,11 @@ ria_daily <- get_meteo_from(
   'ria',
   ria_options('daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'))
 )
-#> iterating ■■■                                8% | ETA: 13s
-#> iterating ■■■■■■                            18% | ETA: 11s
-#> iterating ■■■■■■■■■■■■■                     41% | ETA:  8s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             65% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        84% | ETA:  2s
+#> iterating ■■■                                8% | ETA: 12s
+#> iterating ■■■■■■■                           20% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■                    45% | ETA:  7s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  4s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      91% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ✖ Some stations didn't return data:
 #> https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-16/2020-04-30:

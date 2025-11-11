@@ -163,12 +163,12 @@ api_options <- meteocat_options(
   api_key = key_get('meteocat')
 )
 catalunya_2020 <- get_meteo_from('meteocat', options = api_options)
-#> iterating ■■■                                5% | ETA: 23s
-#> iterating ■■■■■■■                           21% | ETA: 15s
+#> iterating ■■■                                8% | ETA: 17s
+#> iterating ■■■■■■                            18% | ETA: 16s
 #> iterating ■■■■■■■■■■■                       33% | ETA: 13s
 #> iterating ■■■■■■■■■■■■■■■■■                 54% | ETA:  8s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■            69% | ETA:  6s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        85% | ETA:  3s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■       87% | ETA:  2s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info

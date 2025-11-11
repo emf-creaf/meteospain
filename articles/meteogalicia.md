@@ -130,12 +130,12 @@ Accessing station metadata for MeteoGalicia is simple:
 
 ``` r
 get_stations_info_from('meteogalicia')
-#> Simple feature collection with 154 features and 5 fields
+#> Simple feature collection with 155 features and 5 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.184586 ymin: 41.8982 xmax: -6.765224 ymax: 43.7383
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 154 × 6
+#> # A tibble: 155 × 6
 #>    service      station_id station_name             station_province altitude
 #>  * <chr>        <chr>      <chr>                    <chr>                 [m]
 #>  1 meteogalicia 10157      Coruña-Torre de Hércules A Coruña               21
@@ -148,7 +148,7 @@ get_stations_info_from('meteogalicia')
 #>  8 meteogalicia 10800      Camariñas                A Coruña                5
 #>  9 meteogalicia 19001      Rus                      A Coruña              134
 #> 10 meteogalicia 10147      Cariño                   A Coruña               20
-#> # ℹ 144 more rows
+#> # ℹ 145 more rows
 #> # ℹ 1 more variable: geometry <POINT [°]>
 ```
 
@@ -170,7 +170,7 @@ galicia_2020 <- get_meteo_from('meteogalicia', options = api_options)
 #> que as utilice para os usos distintos do particular e privado.
 #> https://www.meteogalicia.gal/aviso-legal
 galicia_2020
-#> Simple feature collection with 1770 features and 31 fields (with 12 geometries empty)
+#> Simple feature collection with 1770 features and 31 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -9.178318 ymin: 41.8982 xmax: -6.765224 ymax: 43.70426

@@ -49,12 +49,12 @@ Accessing station metadata for Meteoclimatic is simple:
 
 ``` r
 get_stations_info_from('meteoclimatic', options = api_options)
-#> Simple feature collection with 225 features and 3 fields
+#> Simple feature collection with 235 features and 3 fields
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.26
+#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.3
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 225 × 4
+#> # A tibble: 235 × 4
 #>    service       station_id          station_name          geometry
 #>  * <chr>         <chr>               <chr>              <POINT [°]>
 #>  1 meteoclimatic ESCAT0800000008591B Aiguafreda Aj. (… (2.25 41.77)
@@ -67,7 +67,7 @@ get_stations_info_from('meteoclimatic', options = api_options)
 #>  8 meteoclimatic ESCAT0800000008915C Badalona - BCIN … (2.26 41.46)
 #>  9 meteoclimatic ESCAT0800000008915A Badalona - Bufal… (2.24 41.46)
 #> 10 meteoclimatic ESCAT0800000008912A Badalona - Centr… (2.25 41.45)
-#> # ℹ 215 more rows
+#> # ℹ 225 more rows
 ```
 
 ### Meteoclimatic data
@@ -80,25 +80,25 @@ current_day_barcelona <- get_meteo_from('meteoclimatic', options = api_options)
 #> coordinates of stations can be present.
 #> https://www.meteoclimatic.net/index
 current_day_barcelona
-#> Simple feature collection with 225 features and 13 fields
+#> Simple feature collection with 235 features and 13 fields
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.26
+#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.3
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 225 × 14
+#> # A tibble: 235 × 14
 #>    timestamp           service       station_id     station_name min_temperature
 #>  * <dttm>              <chr>         <chr>          <chr>                   [°C]
-#>  1 2025-11-11 12:05:00 meteoclimatic ESCAT08000000… Cussons - S…             0.8
-#>  2 2025-11-11 12:07:00 meteoclimatic ESCAT08000000… Vallromanes…             6.9
-#>  3 2025-11-11 12:08:00 meteoclimatic ESCAT08000000… Sant Boi - …             8.6
-#>  4 2025-11-11 12:09:00 meteoclimatic ESCAT08000000… Sant Fost -…             8  
-#>  5 2025-11-11 12:09:00 meteoclimatic ESCAT08000000… St Quirze d…             8  
-#>  6 2025-11-11 12:09:00 meteoclimatic ESCAT08000000… Marganell (…             2.6
-#>  7 2025-11-11 12:09:00 meteoclimatic ESCAT08000000… Vic - Zona …             3.5
-#>  8 2025-11-11 12:10:00 meteoclimatic ESCAT08000000… Barcelona -…            10.2
-#>  9 2025-11-11 12:10:00 meteoclimatic ESCAT08000000… Barcelona -…            11.1
-#> 10 2025-11-11 12:10:00 meteoclimatic ESCAT08000000… Badalona - …            10.1
-#> # ℹ 215 more rows
+#>  1 2025-11-11 14:14:00 meteoclimatic ESCAT08000000… Cussons - S…             0.8
+#>  2 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… Terrassa - …             9.6
+#>  3 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… Vacarisses …             2.7
+#>  4 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… Puigllançad…             2.7
+#>  5 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… Cadí Est- P…             0.7
+#>  6 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… Bagà (refug…             4.4
+#>  7 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… La Pobla de…             2.8
+#>  8 2025-11-11 14:15:00 meteoclimatic ESCAT08000000… Pedraforca-…             0.7
+#>  9 2025-11-11 14:16:00 meteoclimatic ESCAT08000000… El Prat-Zon…             9.5
+#> 10 2025-11-11 14:22:00 meteoclimatic ESCAT08000000… Vallromanes…             6.9
+#> # ℹ 225 more rows
 #> # ℹ 9 more variables: max_temperature [°C], min_relative_humidity [%],
 #> #   max_relative_humidity [%], precipitation [L/m^2], wind_direction [°],
 #> #   max_wind_speed [km/h], max_atmospheric_pressure [hPa],

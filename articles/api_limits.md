@@ -61,6 +61,28 @@ res_1990_jan_1 <- get_meteo_from(
     end_date = as.Date('1990-01-15')
   )
 )
+#> Waiting 61s for retry backoff ■                               
+#> Waiting 61s for retry backoff ■■                              
+#> Waiting 61s for retry backoff ■■■■                            
+#> Waiting 61s for retry backoff ■■■■■                           
+#> Waiting 61s for retry backoff ■■■■■■■                         
+#> Waiting 61s for retry backoff ■■■■■■■■                        
+#> Waiting 61s for retry backoff ■■■■■■■■■■                      
+#> Waiting 61s for retry backoff ■■■■■■■■■■■                     
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■                   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■                  
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■               
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■            
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■           
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■        
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■     
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
 #> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
 #>   AEMET como autora de la misma.
 #> https://www.aemet.es/es/nota_legal
@@ -168,18 +190,28 @@ res_tidyverse <-
     }
   ) |>
   purrr::list_rbind()
-#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
-#>   AEMET como autora de la misma.
-#> https://www.aemet.es/es/nota_legal
-#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
-#>   AEMET como autora de la misma.
-#> https://www.aemet.es/es/nota_legal
-#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
-#>   AEMET como autora de la misma.
-#> https://www.aemet.es/es/nota_legal
-#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
-#>   AEMET como autora de la misma.
-#> https://www.aemet.es/es/nota_legal
+#> Waiting 61s for retry backoff ■                               
+#> Waiting 61s for retry backoff ■■■                             
+#> Waiting 61s for retry backoff ■■■■                            
+#> Waiting 61s for retry backoff ■■■■■■                          
+#> Waiting 61s for retry backoff ■■■■■■■                         
+#> Waiting 61s for retry backoff ■■■■■■■■■                       
+#> Waiting 61s for retry backoff ■■■■■■■■■■                      
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■                    
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■                   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■                 
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■              
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■           
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■        
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
 #> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
 #>   AEMET como autora de la misma.
 #> https://www.aemet.es/es/nota_legal
@@ -196,31 +228,31 @@ res_tidyverse <-
 #> 
 #> Waiting 61s for retry backoff ■■                              
 #> 
-#> Waiting 61s for retry backoff ■■■■                            
+#> Waiting 61s for retry backoff ■■■                             
 #> 
 #> Waiting 61s for retry backoff ■■■■■                           
 #> 
-#> Waiting 61s for retry backoff ■■■■■■■                         
+#> Waiting 61s for retry backoff ■■■■■■                          
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■                        
 #> 
-#> Waiting 61s for retry backoff ■■■■■■■■■■                      
+#> Waiting 61s for retry backoff ■■■■■■■■■                       
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■■■■                     
 #> 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■                   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■                    
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■■■■■■■                  
 #> 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■                 
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■               
 #> 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■              
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■            
 #> 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■           
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
 #> 
@@ -236,6 +268,18 @@ res_tidyverse <-
 #> 
 #> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
 #> 
+#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
+#>   AEMET como autora de la misma.
+#> https://www.aemet.es/es/nota_legal
+#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
+#>   AEMET como autora de la misma.
+#> https://www.aemet.es/es/nota_legal
+#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
+#>   AEMET como autora de la misma.
+#> https://www.aemet.es/es/nota_legal
+#> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
+#>   AEMET como autora de la misma.
+#> https://www.aemet.es/es/nota_legal
 #> ℹ © AEMET. Autorizado el uso de la información y su reproducción citando a
 #>   AEMET como autora de la misma.
 #> https://www.aemet.es/es/nota_legal
@@ -364,12 +408,12 @@ api_options <- meteocat_options(
   api_key = keyring::key_get('meteocat')
 )
 april_2020 <- get_meteo_from('meteocat', api_options)
-#> iterating ■■■                                7% | ETA: 16s
-#> iterating ■■■■■                             15% | ETA: 17s
-#> iterating ■■■■■■■■■■                        30% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■■                   48% | ETA: 10s
+#> iterating ■■■                                7% | ETA: 13s
+#> iterating ■■■■■■■                           19% | ETA: 14s
+#> iterating ■■■■■■■■■■■                       33% | ETA: 12s
+#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA:  9s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     93% | ETA:  1s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    96% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -406,35 +450,35 @@ meteocat_2020q1_tidyverse <-
     }
   ) |>
   purrr::list_rbind()
-#> iterating ■■■                                7% | ETA: 17s
-#> iterating ■■■■■■■■                          22% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■                     41% | ETA: 10s
+#> iterating ■■■                                7% | ETA: 16s
+#> iterating ■■■■■■■■■                         26% | ETA: 13s
+#> iterating ■■■■■■■■■■■■■■                    44% | ETA: 10s
 #> iterating ■■■■■■■■■■■■■■■■■■■               59% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         81% | ETA:  3s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  4s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
-#> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
-#> https://www.meteo.cat/wpweb/avis-legal/#info
-#> iterating ■■■                                7% | ETA: 19s
-#> 
-#> iterating ■■■■■                             15% | ETA: 17s
-#> 
-#> iterating ■■■■■■■■■■■                       33% | ETA: 12s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■                56% | ETA:  7s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  3s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
-#> 
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
 #> iterating ■■■■                              11% | ETA: 17s
 #> 
-#> iterating ■■■■■■■■■■                        30% | ETA: 12s
+#> iterating ■■■■■■■■■■                        30% | ETA: 13s
 #> 
-#> iterating ■■■■■■■■■■■■■■■                   48% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA:  8s
 #> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  5s
+#> 
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     93% | ETA:  1s
+#> 
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
+#> 
+#> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
+#> https://www.meteo.cat/wpweb/avis-legal/#info
+#> iterating ■■■■                              11% | ETA: 13s
+#> 
+#> iterating ■■■■■■■■                          22% | ETA: 13s
+#> 
+#> iterating ■■■■■■■■■■■■■■                    44% | ETA:  9s
+#> 
+#> iterating ■■■■■■■■■■■■■■■■■■■■              63% | ETA:  6s
 #> 
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     93% | ETA:  1s
 #> 
@@ -571,12 +615,12 @@ api_options <- meteocat_options(
   api_key = keyring::key_get('meteocat')
 )
 year_2020 <- get_meteo_from('meteocat', api_options)
-#> iterating ■■■                                5% | ETA: 22s
-#> iterating ■■■■■■                            18% | ETA: 16s
-#> iterating ■■■■■■■■■■                        31% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■■                   46% | ETA: 11s
+#> iterating ■■■                                8% | ETA: 16s
+#> iterating ■■■■■■■                           21% | ETA: 15s
+#> iterating ■■■■■■■■■■■                       33% | ETA: 13s
+#> iterating ■■■■■■■■■■■■■■■■                  49% | ETA: 10s
 #> iterating ■■■■■■■■■■■■■■■■■■■■              64% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        85% | ETA:  3s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         79% | ETA:  4s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -608,12 +652,12 @@ meteocat_2019_20_tidyverse <-
     }
   ) |>
   purrr::list_rbind()
-#> iterating ■■■                                5% | ETA: 19s
-#> iterating ■■■■■                             13% | ETA: 19s
-#> iterating ■■■■■■■■■                         26% | ETA: 16s
-#> iterating ■■■■■■■■■■■■■■■                   46% | ETA: 11s
-#> iterating ■■■■■■■■■■■■■■■■■■■■              64% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        82% | ETA:  3s
+#> iterating ■■■■                              10% | ETA: 20s
+#> iterating ■■■■■■■■                          23% | ETA: 17s
+#> iterating ■■■■■■■■■■■■■                     41% | ETA: 12s
+#> iterating ■■■■■■■■■■■■■■■■■■■               59% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          77% | ETA:  4s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    97% | ETA:  0s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -780,14 +824,15 @@ api_options <- meteocat_options(
   api_key = keyring::key_get('meteocat')
 )
 all_years <- get_meteo_from('meteocat', api_options)
-#> iterating ■■■                                8% | ETA: 31s
-#> iterating ■■■■■■                            18% | ETA: 24s
-#> iterating ■■■■■■■■■■                        30% | ETA: 18s
-#> iterating ■■■■■■■■■■■■■■                    42% | ETA: 15s
-#> iterating ■■■■■■■■■■■■■■■■■                 55% | ETA: 12s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             65% | ETA:  9s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           75% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  3s
+#> iterating ■■■                                5% | ETA: 36s
+#> iterating ■■■■■                             12% | ETA: 30s
+#> iterating ■■■■■■■■                          22% | ETA: 25s
+#> iterating ■■■■■■■■■■■                       32% | ETA: 22s
+#> iterating ■■■■■■■■■■■■■■■                   45% | ETA: 16s
+#> iterating ■■■■■■■■■■■■■■■■■■                57% | ETA: 12s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        82% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    98% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
