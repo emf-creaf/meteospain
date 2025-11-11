@@ -1,10 +1,14 @@
-# meteospain (development version)
+# meteospain 0.3.0
 
 * Refactored API connections, now using `httr2` instead of `httr` (#31).
   This also dropped other dependencies.
 
 * AEMET API:
   - Documented new limit (12h) in AEMET for current day (#32)
+
+* MeteoCat API:
+  - Now the especific 429 error that happens when monthly requests limit is
+  reached is catched and the user informed
 
 # meteospain 0.2.2
 

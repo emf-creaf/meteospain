@@ -1,8 +1,9 @@
-This version of `meteospain` fixes a bug in Meteogalicia helpers when variables are missing from raw data.
+This version of `meteospain` migrates from `httr` to `httr2`, also removing
+unnecesary dependencies.
 
 ## Test environments
 
-* local R installation (Arch Linux), R 4.5.1
+* local R installation (Arch Linux), R 4.5.2
 * windows-latest (on github actions), R release
 * macOS-latest (on github actions), R release
 * ubuntu-latest (on github actions), R release
