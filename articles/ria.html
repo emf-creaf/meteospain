@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">meteospain</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,10 +140,10 @@ reference.</p>
 <span><span class="co">#&gt; [1] "daily"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2025-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2025-11-10"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2025-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2025-11-10"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -158,10 +158,10 @@ reference.</p>
 <span><span class="co">#&gt; [1] "daily"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $start_date</span></span>
-<span><span class="co">#&gt; [1] "2025-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2025-11-10"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $end_date</span></span>
-<span><span class="co">#&gt; [1] "2025-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2025-11-10"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $stations</span></span>
 <span><span class="co">#&gt; [1] "14-2" "4-2"</span></span>
@@ -223,29 +223,60 @@ reference.</p>
 <span>  end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-12-31'</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">andalucia_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_meteo_from.html">get_meteo_from</a></span><span class="op">(</span><span class="st">'ria'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Some stations didn't return data for some dates:</span></span></span>
-<span><span class="co">#&gt; 11-3</span></span>
-<span><span class="co">#&gt; 11-8</span></span>
-<span><span class="co">#&gt; 11-9</span></span>
-<span><span class="co">#&gt; 14-3</span></span>
-<span><span class="co">#&gt; 18-4</span></span>
-<span><span class="co">#&gt; 18-9</span></span>
-<span><span class="co">#&gt; 21-1</span></span>
-<span><span class="co">#&gt; 21-104</span></span>
-<span><span class="co">#&gt; 21-106</span></span>
-<span><span class="co">#&gt; 21-107</span></span>
-<span><span class="co">#&gt; 21-12</span></span>
-<span><span class="co">#&gt; 23-10</span></span>
-<span><span class="co">#&gt; 23-13</span></span>
-<span><span class="co">#&gt; 23-9</span></span>
-<span><span class="co">#&gt; 29-3</span></span>
-<span><span class="co">#&gt; 29-5</span></span>
-<span><span class="co">#&gt; 4-3</span></span>
-<span><span class="co">#&gt; 4-9</span></span>
-<span><span class="co">#&gt; 41-1</span></span>
-<span><span class="co">#&gt; 41-14</span></span>
-<span><span class="co">#&gt; 41-4</span></span>
-<span><span class="co">#&gt; 41-6</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■                             </span>   6% | ETA: 20s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■                          </span>  16% | ETA: 17s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■                      </span>  31% | ETA: 14s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■                  </span>  44% | ETA: 12s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■             </span>  59% | ETA:  9s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■         </span>  72% | ETA:  6s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■     </span>  86% | ETA:  3s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ </span>  99% | ETA:  0s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ </span> 100% | ETA:  0s</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Some stations didn't return data:</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/21/104/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/18/9/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/29/3/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/29/5/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/21/1/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/41/4/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/21/106/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/23/9/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/41/1/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/23/10/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/23/13/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/21/12/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/4/3/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/14/3/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/21/107/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/18/4/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/11/8/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/11/3/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/11/9/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/4/9/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/41/6/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/41/14/2020/1/12:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by Red de Información Agroclimática de Andalucía (RIA)</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/</span></span></span>
 <span><span class="va">andalucia_2020</span></span>
@@ -254,62 +285,26 @@ reference.</p>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -7.248333 ymin: 36.285 xmax: -1.770278 ymax: 38.49611</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; First 10 features:</span></span>
-<span><span class="co">#&gt;     timestamp service station_id station_name station_province altitude</span></span>
-<span><span class="co">#&gt; 1  2020-01-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 2  2020-02-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 3  2020-03-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 4  2020-04-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 5  2020-05-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 6  2020-06-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 7  2020-07-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 8  2020-08-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 9  2020-09-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt; 10 2020-10-01     ria       14-2       Adamuz          Córdoba  145 [m]</span></span>
-<span><span class="co">#&gt;    mean_temperature min_temperature max_temperature mean_relative_humidity</span></span>
-<span><span class="co">#&gt; 1        8.084 [°C]     -1.075 [°C]      18.59 [°C]             86.550 [%]</span></span>
-<span><span class="co">#&gt; 2       12.118 [°C]      1.414 [°C]      25.33 [°C]             82.603 [%]</span></span>
-<span><span class="co">#&gt; 3       13.362 [°C]      2.343 [°C]      29.61 [°C]             76.503 [%]</span></span>
-<span><span class="co">#&gt; 4       15.378 [°C]      4.422 [°C]      26.26 [°C]             83.117 [%]</span></span>
-<span><span class="co">#&gt; 5       21.035 [°C]      9.440 [°C]      36.67 [°C]             65.812 [%]</span></span>
-<span><span class="co">#&gt; 6       24.067 [°C]     11.320 [°C]      40.67 [°C]             47.662 [%]</span></span>
-<span><span class="co">#&gt; 7       29.895 [°C]     14.330 [°C]      43.21 [°C]             37.810 [%]</span></span>
-<span><span class="co">#&gt; 8       27.107 [°C]     11.310 [°C]      43.69 [°C]             41.089 [%]</span></span>
-<span><span class="co">#&gt; 9       22.876 [°C]      8.720 [°C]      37.68 [°C]             56.056 [%]</span></span>
-<span><span class="co">#&gt; 10      15.796 [°C]      4.093 [°C]      33.13 [°C]             69.394 [%]</span></span>
-<span><span class="co">#&gt;    min_relative_humidity max_relative_humidity precipitation</span></span>
-<span><span class="co">#&gt; 1             32.860 [%]             100.0 [%]  44.2 [L/m^2]</span></span>
-<span><span class="co">#&gt; 2             16.250 [%]             100.0 [%]   3.2 [L/m^2]</span></span>
-<span><span class="co">#&gt; 3             23.710 [%]             100.0 [%]  57.8 [L/m^2]</span></span>
-<span><span class="co">#&gt; 4             32.710 [%]             100.0 [%]  73.8 [L/m^2]</span></span>
-<span><span class="co">#&gt; 5             16.570 [%]             100.0 [%]  23.6 [L/m^2]</span></span>
-<span><span class="co">#&gt; 6             11.600 [%]             100.0 [%]   1.4 [L/m^2]</span></span>
-<span><span class="co">#&gt; 7              8.110 [%]              81.1 [%]   1.2 [L/m^2]</span></span>
-<span><span class="co">#&gt; 8              3.755 [%]             100.0 [%]  10.6 [L/m^2]</span></span>
-<span><span class="co">#&gt; 9             14.220 [%]             100.0 [%]  27.0 [L/m^2]</span></span>
-<span><span class="co">#&gt; 10            16.180 [%]             100.0 [%]  35.8 [L/m^2]</span></span>
-<span><span class="co">#&gt;    mean_wind_direction max_wind_direction mean_wind_speed max_wind_speed</span></span>
-<span><span class="co">#&gt; 1           56.916 [°]             NA [°]     0.451 [m/s]    7.010 [m/s]</span></span>
-<span><span class="co">#&gt; 2          113.220 [°]             NA [°]     0.414 [m/s]    5.664 [m/s]</span></span>
-<span><span class="co">#&gt; 3          219.480 [°]             NA [°]     0.721 [m/s]    8.820 [m/s]</span></span>
-<span><span class="co">#&gt; 4          211.290 [°]             NA [°]     0.504 [m/s]    7.140 [m/s]</span></span>
-<span><span class="co">#&gt; 5          171.527 [°]             NA [°]     0.505 [m/s]    6.213 [m/s]</span></span>
-<span><span class="co">#&gt; 6          226.806 [°]             NA [°]     0.852 [m/s]    7.950 [m/s]</span></span>
-<span><span class="co">#&gt; 7          223.775 [°]             NA [°]     0.510 [m/s]    5.684 [m/s]</span></span>
-<span><span class="co">#&gt; 8          228.480 [°]             NA [°]     0.452 [m/s]    5.410 [m/s]</span></span>
-<span><span class="co">#&gt; 9          210.046 [°]             NA [°]     0.282 [m/s]    7.160 [m/s]</span></span>
-<span><span class="co">#&gt; 10         170.166 [°]             NA [°]     0.328 [m/s]    8.770 [m/s]</span></span>
-<span><span class="co">#&gt;      solar_radiation under_plastic                  geometry</span></span>
-<span><span class="co">#&gt; 1   8.108 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 2  13.562 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 3  15.845 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 4  17.620 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 5  23.983 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 6  28.220 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 7  27.251 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 8  24.888 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 9  18.787 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span>
-<span><span class="co">#&gt; 10 14.771 [MJ/d/m^2]         FALSE POINT (-4.445278 37.9975)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,209 × 20</span></span></span>
+<span><span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-01-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-02-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-03-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-04-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-05-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-06-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-07-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-08-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-09-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-10-01 <span style="color: #949494;">00:00:00</span> ria     14-2       Adamuz       Córdoba               145</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,199 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 14 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], mean_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   precipitation [L/m^2], mean_wind_direction [°], max_wind_direction [°],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   mean_wind_speed [m/s], max_wind_speed [m/s], solar_radiation [MJ/(d*m^2)],</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;, under_plastic &lt;lgl&gt;</span></span></span></code></pre></div>
 <p>Visually:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">andalucia_2020</span> <span class="op">|&gt;</span></span>
@@ -319,7 +314,7 @@ reference.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">max_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ria_files/figure-html/ria_data_plot-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="ria_files/figure-html/ria_data_plot-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">andalucia_2020</span> <span class="op">|&gt;</span></span>
@@ -330,7 +325,7 @@ reference.</p>
 <span><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</span></span>
 <span><span class="co">#&gt; Warning: Removed 21 rows containing non-finite outside the scale range</span></span>
 <span><span class="co">#&gt; (`stat_bin()`).</span></span></code></pre></div>
-<p><img src="ria_files/figure-html/ria_data_plot-2.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="ria_files/figure-html/ria_data_plot-2.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -344,7 +339,7 @@ reference.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

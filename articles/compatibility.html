@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">meteospain</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,6 +130,16 @@ already (see code above)</p>
 <span>  <span class="st">'meteocat'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">meteocat_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-16'</span><span class="op">)</span>, api_key <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html" class="external-link">key_get</a></span><span class="op">(</span><span class="st">'meteocat'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■                              </span>   4% | ETA: 37s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■                            </span>  11% | ETA: 32s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■                         </span>  19% | ETA: 27s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■                      </span>  30% | ETA: 23s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■                   </span>  41% | ETA: 18s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■               </span>  52% | ETA: 14s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■            </span>  63% | ETA: 11s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■        </span>  78% | ETA:  6s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■    </span>  89% | ETA:  3s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ </span> 100% | ETA:  0s</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by meteo.cat © Servei Meteorològic de Catalunya</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteo.cat/wpweb/avis-legal/#info</span></span></span>
 <span></span>
@@ -150,30 +160,59 @@ already (see code above)</p>
 <span>  <span class="st">'ria'</span>,</span>
 <span>  <span class="fu"><a href="../reference/services_options.html">ria_options</a></span><span class="op">(</span><span class="st">'daily'</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-16'</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-04-30'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Some stations didn't return data for some dates:</span></span></span>
-<span><span class="co">#&gt; 11-3</span></span>
-<span><span class="co">#&gt; 11-8</span></span>
-<span><span class="co">#&gt; 11-9</span></span>
-<span><span class="co">#&gt; 14-3</span></span>
-<span><span class="co">#&gt; 18-4</span></span>
-<span><span class="co">#&gt; 18-9</span></span>
-<span><span class="co">#&gt; 21-1</span></span>
-<span><span class="co">#&gt; 21-104</span></span>
-<span><span class="co">#&gt; 21-106</span></span>
-<span><span class="co">#&gt; 21-107</span></span>
-<span><span class="co">#&gt; 21-12</span></span>
-<span><span class="co">#&gt; 23-10</span></span>
-<span><span class="co">#&gt; 23-13</span></span>
-<span><span class="co">#&gt; 23-9</span></span>
-<span><span class="co">#&gt; 29-3</span></span>
-<span><span class="co">#&gt; 29-5</span></span>
-<span><span class="co">#&gt; 4-3</span></span>
-<span><span class="co">#&gt; 4-9</span></span>
-<span><span class="co">#&gt; 41-1</span></span>
-<span><span class="co">#&gt; 41-14</span></span>
-<span><span class="co">#&gt; 41-4</span></span>
-<span><span class="co">#&gt; 41-6</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by Red de Información Agroclimática de Andalucía (RIA)</span></span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■                             </span>   6% | ETA: 19s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■                           </span>  14% | ETA: 18s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■                      </span>  29% | ETA: 14s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■                  </span>  44% | ETA: 11s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■              </span>  58% | ETA:  9s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■         </span>  72% | ETA:  6s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■     </span>  86% | ETA:  3s</span></span>
+<span><span class="co">#&gt; iterating <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ </span> 100% | ETA:  0s</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Some stations didn't return data:</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/9/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/3/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/29/5/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/1/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/4/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/106/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/9/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/1/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/10/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/23/13/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/12/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/4/3/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/14/3/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/107/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/18/4/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/8/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/3/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/11/9/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/4/9/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/6/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.</span></span>
+<span><span class="co">#&gt; https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/41/14/2020-04-16/2020-04-30:</span></span>
+<span><span class="co">#&gt; HTTP 404 Not Found.<span style="color: #00BBBB;">ℹ</span> <span style="color: #BBBB00; font-weight: bold;">Data provided by Red de Información Agroclimática de Andalucía (RIA)</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaweb/web/</span></span></span></code></pre></div>
 <p>Now we have all daily data for April, lets join them. We are gonna
 use the purrr package to do it in one pipe.<br>
@@ -207,25 +246,25 @@ After the join we convert back to <code>sf</code>.</p>
 <span><span class="co">#&gt; max_wind_direction)`</span></span>
 <span></span>
 <span><span class="va">april_2020_spain</span></span>
-<span><span class="co">#&gt; Simple feature collection with 20984 features and 43 fields (with 75 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 22197 features and 43 fields (with 120 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -18.115 ymin: 27.71889 xmax: 4.323889 ymax: 43.78611</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -18.115 ymin: 27.66528 xmax: 4.323889 ymax: 43.78611</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20,984 × 44</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 22,197 × 44</span></span></span>
 <span><span class="co">#&gt;    timestamp           service station_id station_name station_province altitude</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494;">[m]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0009X      ALFORJA      TARRAGONA             406</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0016A      REUS AEROPU… TARRAGONA              71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0016B      REUS (CENTR… TARRAGONA             118</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0034X      VALLS        TARRAGONA             233</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0061X      PONTONS      BARCELONA             632</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0073X      SITGES       BARCELONA              58</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0076       BARCELONA A… BARCELONA               4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0092X      BERGA        BARCELONA             682</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0106X      BALSARENY    BARCELONA             361</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0114X      PRATS DE LL… BARCELONA             700</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 20,974 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0009X      <span style="color: #949494;">"</span>ALFORJA<span style="color: #949494;">"</span>    TARRAGONA             406</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0016A      <span style="color: #949494;">"</span>REUS AEROP… TARRAGONA              71</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0016B      <span style="color: #949494;">"</span>REUS (CENT… TARRAGONA             118</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0034X      <span style="color: #949494;">"</span>VALLS<span style="color: #949494;">"</span>      TARRAGONA             233</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0042Y      <span style="color: #949494;">"</span>TARRAGONA <span style="color: #949494;">"</span> TARRAGONA              55</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0061X      <span style="color: #949494;">"</span>PONTONS<span style="color: #949494;">"</span>    BARCELONA             632</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0066X      <span style="color: #949494;">"</span>VILAFRANCA… BARCELONA             177</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0073X      <span style="color: #949494;">"</span>SITGES<span style="color: #949494;">"</span>     BARCELONA              58</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0076       <span style="color: #949494;">"</span>BARCELONA … BARCELONA               4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2020-04-16 <span style="color: #949494;">00:00:00</span> aemet   0092X      <span style="color: #949494;">"</span>BERGA<span style="color: #949494;">"</span>      BARCELONA             682</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 22,187 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 38 more variables: mean_temperature [°C], min_temperature [°C],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   max_temperature [°C], mean_relative_humidity [%],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   min_relative_humidity [%], max_relative_humidity [%],</span></span></span>
@@ -243,7 +282,7 @@ After the join we convert back to <code>sf</code>.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">service</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_d</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="compatibility_files/figure-html/plot_map-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="compatibility_files/figure-html/plot_map-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="by-one-variable">By one variable<a class="anchor" aria-label="anchor" href="#by-one-variable"></a>
@@ -255,7 +294,7 @@ After the join we convert back to <code>sf</code>.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="compatibility_files/figure-html/plot_map_2-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="compatibility_files/figure-html/plot_map_2-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -269,7 +308,7 @@ After the join we convert back to <code>sf</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
