@@ -56,15 +56,12 @@ meteocat_daily <- get_meteo_from(
   'meteocat',
   meteocat_options('daily', start_date = as.Date('2020-04-16'), api_key = keyring::key_get('meteocat'))
 )
-#> iterating ■■                                 4% | ETA: 37s
-#> iterating ■■■■                              11% | ETA: 32s
-#> iterating ■■■■■■■                           19% | ETA: 27s
-#> iterating ■■■■■■■■■■                        30% | ETA: 23s
-#> iterating ■■■■■■■■■■■■■                     41% | ETA: 18s
-#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■■■■■■■              63% | ETA: 11s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  6s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  3s
+#> iterating ■■■                                7% | ETA: 20s
+#> iterating ■■■■                              11% | ETA: 18s
+#> iterating ■■■■■■■■■■                        30% | ETA: 14s
+#> iterating ■■■■■■■■■■■■■■■                   48% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  2s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -86,13 +83,11 @@ ria_daily <- get_meteo_from(
   'ria',
   ria_options('daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'))
 )
-#> iterating ■■■                                6% | ETA: 19s
-#> iterating ■■■■■                             14% | ETA: 18s
-#> iterating ■■■■■■■■■■                        29% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■                    44% | ETA: 11s
-#> iterating ■■■■■■■■■■■■■■■■■■                58% | ETA:  9s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           72% | ETA:  6s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■       86% | ETA:  3s
+#> iterating ■■■                                8% | ETA: 13s
+#> iterating ■■■■■■                            18% | ETA: 11s
+#> iterating ■■■■■■■■■■■■■                     41% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■             65% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        84% | ETA:  2s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ✖ Some stations didn't return data:
 #> https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-16/2020-04-30:

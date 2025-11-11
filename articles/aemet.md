@@ -157,6 +157,28 @@ Accessing station metadata for AEMET is simple:
 
 ``` r
 get_stations_info_from('aemet', api_options)
+#> Waiting 61s for retry backoff ■                               
+#> Waiting 61s for retry backoff ■■■                             
+#> Waiting 61s for retry backoff ■■■■                            
+#> Waiting 61s for retry backoff ■■■■■■                          
+#> Waiting 61s for retry backoff ■■■■■■■                         
+#> Waiting 61s for retry backoff ■■■■■■■■■                       
+#> Waiting 61s for retry backoff ■■■■■■■■■■                      
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■                    
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■                   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■                 
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■              
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■           
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
+#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
 #> Simple feature collection with 947 features and 5 fields
 #> Geometry type: POINT
 #> Dimension:     XY
