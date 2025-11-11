@@ -230,6 +230,7 @@
     httr2::resps_failures()
 
   if (length(failures) > 0) {
+    urls <- purrr::map(httr2::resps_requests(failures), "url")
     messages <- purrr::map_chr(
       failures,
       \(resp) {
