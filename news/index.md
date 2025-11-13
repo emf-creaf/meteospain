@@ -2,6 +2,8 @@
 
 ## meteospain 0.3.0
 
+CRAN release: 2025-11-12
+
 - Refactored API connections, now using `httr2` instead of `httr`
   ([\#31](https://github.com/emf-creaf/meteospain/issues/31)). This also
   dropped other dependencies.

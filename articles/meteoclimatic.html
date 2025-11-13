@@ -69,7 +69,7 @@
       <h1>Meteoclimatic service</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/vignettes/meteoclimatic.Rmd" class="external-link"><code>vignettes/meteoclimatic.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.3.0/vignettes/meteoclimatic.Rmd" class="external-link"><code>vignettes/meteoclimatic.Rmd</code></a></small>
       <div class="d-none name"><code>meteoclimatic.Rmd</code></div>
     </div>
 
@@ -129,25 +129,25 @@ one.</p>
 <p>Accessing station metadata for Meteoclimatic is simple:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_stations_info_from.html">get_stations_info_from</a></span><span class="op">(</span><span class="st">'meteoclimatic'</span>, options <span class="op">=</span> <span class="va">api_options</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 235 features and 3 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 216 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.3</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.26</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 235 × 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 216 × 4</span></span></span>
 <span><span class="co">#&gt;    service       station_id          station_name          geometry</span></span>
 <span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;POINT [°]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> meteoclimatic ESCAT0800000008591B Aiguafreda Aj. (… (2.25 41.77)</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> meteoclimatic ESCAT0800000008328F Alella-Mirador (… (2.29 41.49)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> meteoclimatic ESCAT0800000008350A Arenys de Mar (B… (2.56 41.59)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> meteoclimatic ESCAT0800000008358A Arenys de Munt (… (2.54 41.61)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> meteoclimatic ESCAT0800000008310B Argentona (Barce… (2.39 41.56)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> meteoclimatic ESCAT0800000008610B Avià (Barcelona)  (1.83 42.08)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> meteoclimatic ESCAT0800000008610A Avià - Sud (Barc… (1.83 42.07)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> meteoclimatic ESCAT0800000008915C Badalona - BCIN … (2.26 41.46)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> meteoclimatic ESCAT0800000008915A Badalona - Bufal… (2.24 41.46)</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> meteoclimatic ESCAT0800000008912A Badalona - Centr… (2.25 41.45)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 225 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> meteoclimatic ESCAT0800000008358A Arenys de Munt (… (2.54 41.61)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> meteoclimatic ESCAT0800000008310B Argentona (Barce… (2.39 41.56)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> meteoclimatic ESCAT0800000008610B Avià (Barcelona)  (1.83 42.08)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> meteoclimatic ESCAT0800000008610A Avià - Sud (Barc… (1.83 42.07)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> meteoclimatic ESCAT0800000008915C Badalona - BCIN … (2.26 41.46)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> meteoclimatic ESCAT0800000008915A Badalona - Bufal… (2.24 41.46)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> meteoclimatic ESCAT0800000008912A Badalona - Centr… (2.25 41.45)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> meteoclimatic ESCAT0800000008911C Badalona - Dalt … (2.26 41.46)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 206 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="meteoclimatic-data">Meteoclimatic data<a class="anchor" aria-label="anchor" href="#meteoclimatic-data"></a>
@@ -160,25 +160,25 @@ one.</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">coordinates of stations can be present.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; text-decoration: underline;">https://www.meteoclimatic.net/index</span></span></span>
 <span><span class="va">current_day_barcelona</span></span>
-<span><span class="co">#&gt; Simple feature collection with 235 features and 13 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 216 features and 13 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.3</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.26</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 235 × 14</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 216 × 14</span></span></span>
 <span><span class="co">#&gt;    timestamp           service       station_id     station_name min_temperature</span></span>
 <span><span class="co">#&gt;  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494;">[°C]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2025-11-11 <span style="color: #949494;">14:14:00</span> meteoclimatic ESCAT08000000… Cussons - S…             0.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… Terrassa - …             9.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… Vacarisses …             2.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… Puigllançad…             2.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… Cadí Est- P…             0.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… Bagà (refug…             4.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… La Pobla de…             2.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2025-11-11 <span style="color: #949494;">14:15:00</span> meteoclimatic ESCAT08000000… Pedraforca-…             0.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2025-11-11 <span style="color: #949494;">14:16:00</span> meteoclimatic ESCAT08000000… El Prat-Zon…             9.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2025-11-11 <span style="color: #949494;">14:22:00</span> meteoclimatic ESCAT08000000… Vallromanes…             6.9</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 225 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2025-11-13 <span style="color: #949494;">10:21:00</span> meteoclimatic ESCAT08000000… Barcelona -…            16.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2025-11-13 <span style="color: #949494;">10:21:00</span> meteoclimatic ESCAT08000000… Molins de R…            12.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2025-11-13 <span style="color: #949494;">10:22:00</span> meteoclimatic ESCAT08000000… Vallromanes…            12.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2025-11-13 <span style="color: #949494;">10:24:00</span> meteoclimatic ESCAT08000000… Sant Fost -…            13.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2025-11-13 <span style="color: #949494;">10:24:00</span> meteoclimatic ESCAT08000000… Aiguafreda …             5.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2025-11-13 <span style="color: #949494;">10:24:00</span> meteoclimatic ESCAT08000000… Sant Quintí…            12.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2025-11-13 <span style="color: #949494;">10:25:00</span> meteoclimatic ESCAT08000000… Barcelona -…            12.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2025-11-13 <span style="color: #949494;">10:25:00</span> meteoclimatic ESCAT08000000… Palau-solit…            12.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2025-11-13 <span style="color: #949494;">10:25:00</span> meteoclimatic ESCAT08000000… S. Cugat Va…            12.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2025-11-13 <span style="color: #949494;">10:25:00</span> meteoclimatic ESCAT08000000… Canet de Ma…            16.3</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 206 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 9 more variables: max_temperature [°C], min_relative_humidity [%],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   max_relative_humidity [%], precipitation [L/m^2], wind_direction [°],</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   max_wind_speed [km/h], max_atmospheric_pressure [hPa],</span></span></span>
@@ -197,7 +197,7 @@ one.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">max_relative_humidity</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</span></span>
-<span><span class="co">#&gt; Warning: Removed 5 rows containing non-finite outside the scale range</span></span>
+<span><span class="co">#&gt; Warning: Removed 4 rows containing non-finite outside the scale range</span></span>
 <span><span class="co">#&gt; (`stat_bin()`).</span></span></code></pre></div>
 <p><img src="meteoclimatic_files/figure-html/meteoclimatic_data_plot-2.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 </div>
