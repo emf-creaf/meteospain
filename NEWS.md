@@ -1,5 +1,8 @@
 # meteospain (development version)
 
+* New method to obtain variable metadata from the APIs `get_variables_from`
+  - For now only working in meteocat
+
 # meteospain 0.3.0
 
 * Refactored API connections, now using `httr2` instead of `httr` (#31).

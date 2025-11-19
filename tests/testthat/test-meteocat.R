@@ -291,3 +291,28 @@ test_that("meteocat get_quota works as expected", {
   expect_s3_class((test_object <- get_quota_from('meteocat', api_options)), 'tbl')
   expect_named(test_object, c("client", 'nom', 'periode', 'maxConsultes', 'consultesRestants', 'consultesRealitzades'))
 })
+
+# meteocat get get variables tests -----------------------------------------------------------------
+
+test_that("meteocat get_variables works as expected", {
+  # instant
+  api_options <- meteocat_options("instant", api_key = keyring::key_get('meteocat'))
+  expect_s3_class((test_object <- get_variables_from("meteocat", api_options)), 'tbl')
+  expect_true("meteospain_names" %in% names(test_object))
+  # hourly
+  api_options <- meteocat_options("hourly", api_key = keyring::key_get('meteocat'))
+  expect_s3_class((test_object <- get_variables_from("meteocat", api_options)), 'tbl')
+  expect_true("meteospain_names" %in% names(test_object))
+  # daily
+  api_options <- meteocat_options("daily", api_key = keyring::key_get('meteocat'))
+  expect_s3_class((test_object <- get_variables_from("meteocat", api_options)), 'tbl')
+  expect_true("meteospain_names" %in% names(test_object))
+  # monthly
+  api_options <- meteocat_options("monthly", api_key = keyring::key_get('meteocat'))
+  expect_s3_class((test_object <- get_variables_from("meteocat", api_options)), 'tbl')
+  expect_true("meteospain_names" %in% names(test_object))
+  # yearly
+  api_options <- meteocat_options("yearly", api_key = keyring::key_get('meteocat'))
+  expect_s3_class((test_object <- get_variables_from("meteocat", api_options)), 'tbl')
+  expect_true("meteospain_names" %in% names(test_object))
+})

@@ -291,7 +291,9 @@
   # get the data from cache or from API if new
   .get_cached_result(cache_ref, {
     # retrieve the data
-    .create_meteocat_request(path_resolution, api_options)
+    .create_meteocat_request(path_resolution, api_options) |>
+      dplyr::mutate(meteospain_names = .meteocat_var_codes_2_names(.data$codi)) |>
+      dplyr::filter(!is.na(.data$meteospain_names))
   })
 }
 

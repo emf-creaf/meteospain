@@ -160,3 +160,47 @@ get_quota_from <- function(service = c('meteocat'), options) {
 
   return(res)
 }
+
+#' Get variables info
+#'
+#' Obtain information about variables as offered by the APIs
+#'
+#' Depending on the service, information about original variable names,
+#' menaning, original units...
+#' \strong{Currently only MeteoCat is available}, other services will result
+#' in an error
+#'
+#' @param service Character with the service name (in lower case).
+#' @param options List with the needed service options. See \code{\link{services_options}} to have more info
+#'   about the different services and their options.
+#'
+#' @examplesIf interactive()
+#'   library(meteospain)
+#'   library(keyring)
+#'
+#'   # MeteoCat (we need a key)
+#'   # key_set('meteocat')
+#'   api_options <- meteocat_options("daily", api_key = key_get('meteocat'))
+#'   get_variables_from('meteocat', api_options)
+#'
+#' @return A data frame with the variables info
+#'
+#' @export
+get_variables_from <- function(service = c("meteocat"), options) {
+  # check internet connection
+  if (!httr2::is_online()) {
+    cli::cli_abort(c("No internet connection detected"))
+    # stop("No internet connection detected")
+  }
+
+  # check arguments
+  service <- rlang::arg_match(service)
+
+  # dispatch the correct function depending on the service selected
+  res <- switch(
+    service,
+    'meteocat' = .get_variables_meteocat(options)
+  )
+
+  return(res)
+}
