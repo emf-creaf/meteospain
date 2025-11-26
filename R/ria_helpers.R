@@ -24,7 +24,10 @@
         httr2::req_error(
           body = \(resp) {
             # fallback
-            message <- httr2::resp_body_string(resp)
+            message <- "Unknown error, response has no body"
+            if (httr2::resp_has_body(resp)) {
+              message <- httr2::resp_body_string(resp)
+            }
             # more verbose known errors
             if (httr2::resp_status(resp) == 404L) {
               message <- c(
