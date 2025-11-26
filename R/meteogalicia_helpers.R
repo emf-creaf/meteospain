@@ -140,6 +140,10 @@
 
   res <- httr2::req_perform(meteogalicia_request) |>
     httr2::resp_body_json(flatten = TRUE, simplifyDataFrame = TRUE) |>
+    # from 25/11/2025, stations info return two elements, listaEstacionsMeteo
+    # and idTipo. The latter now is NULL, which if passed to as_tibble directly
+    # returns an error. Let's remove any NULL elements from the json body:
+    purrr::discard(.p = is.null) |>
     dplyr::as_tibble()
   
   if (nrow(res) < 1) {
