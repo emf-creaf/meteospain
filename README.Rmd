@@ -32,7 +32,7 @@ Also, `meteospain` is in active development. You can install the development ver
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("emf-creaf/meteospain")
+remotes::install_github("emf-creaf/meteospain", ref = "devel")
 ```
 
 ## Services
