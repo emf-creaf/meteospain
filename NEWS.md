@@ -1,4 +1,4 @@
-# meteospain (development version)
+# meteospain 0.3.1
 
 * New method to obtain variable metadata from the APIs `get_variables_from`
   - For now only working in meteocat

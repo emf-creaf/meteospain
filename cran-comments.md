@@ -1,5 +1,5 @@
-This version of `meteospain` migrates from `httr` to `httr2`, also removing
-unnecesary dependencies.
+This version of `meteospain` fixes changes in MeteoGalicia and RIA APIs. Also
+introduces a new method to get variables metadata.
 
 ## Test environments
 
