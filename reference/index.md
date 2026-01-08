@@ -10,6 +10,8 @@
   : Get api quota info
 - [`get_stations_info_from()`](https://emf-creaf.github.io/meteospain/reference/get_stations_info_from.md)
   : Get meteorological stations info
+- [`get_variables_from()`](https://emf-creaf.github.io/meteospain/reference/get_variables_from.md)
+  : Get variables info
 - [`aemet_options()`](https://emf-creaf.github.io/meteospain/reference/services_options.md)
   [`meteocat_options()`](https://emf-creaf.github.io/meteospain/reference/services_options.md)
   [`meteoclimatic_options()`](https://emf-creaf.github.io/meteospain/reference/services_options.md)

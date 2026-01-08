@@ -18,16 +18,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/emf-creaf/meteospain/blob/v0.3.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/emf-creaf/meteospain/blob/main/DESCRIPTION)
 
-Granda V (2025). *meteospain: Access to Spanish Meteorological Stations
-Services*. R package version 0.3.0,
+Granda V (2026). *meteospain: Access to Spanish Meteorological Stations
+Services*. R package version 0.3.1,
 <https://emf-creaf.github.io/meteospain/>.
 
     @Manual{,
       title = {meteospain: Access to Spanish Meteorological Stations Services},
       author = {Victor Granda},
-      year = {2025},
-      note = {R package version 0.3.0},
+      year = {2026},
+      note = {R package version 0.3.1},
       url = {https://emf-creaf.github.io/meteospain/},
     }

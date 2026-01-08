@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">meteospain</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,9 +43,21 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/emf-creaf/meteospain/blob/v0.3.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/emf-creaf/meteospain/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.1" id="meteospain-031">meteospain 0.3.1<a class="anchor" aria-label="anchor" href="#meteospain-031"></a></h2>
+<ul><li>
+<p>New method to obtain variable metadata from the APIs <code>get_variables_from</code></p>
+<ul><li>For now only working in meteocat</li>
+</ul></li>
+<li><p>Fixed <a href="https://github.com/emf-creaf/meteospain/issues/34" class="external-link">#34</a>. Since 25/11/2025 MeteoGalicia started returning some NULL elements on the json body response, generating an error when converting to tibble</p></li>
+<li>
+<p>RIA API:</p>
+<ul><li>Manage responses without body</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="meteospain-030">meteospain 0.3.0<a class="anchor" aria-label="anchor" href="#meteospain-030"></a></h2><p class="text-muted">CRAN release: 2025-11-12</p>
 <ul><li><p>Refactored API connections, now using <code>httr2</code> instead of <code>httr</code> (<a href="https://github.com/emf-creaf/meteospain/issues/31" class="external-link">#31</a>). This also dropped other dependencies.</p></li>

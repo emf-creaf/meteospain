@@ -1,5 +1,20 @@
 # Changelog
 
+## meteospain 0.3.1
+
+- New method to obtain variable metadata from the APIs
+  `get_variables_from`
+
+  - For now only working in meteocat
+
+- Fixed [\#34](https://github.com/emf-creaf/meteospain/issues/34). Since
+  25/11/2025 MeteoGalicia started returning some NULL elements on the
+  json body response, generating an error when converting to tibble
+
+- RIA API:
+
+  - Manage responses without body
+
 ## meteospain 0.3.0
 
 CRAN release: 2025-11-12
