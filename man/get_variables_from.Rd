@@ -21,6 +21,8 @@ Obtain information about variables as offered by the APIs
 \details{
 Depending on the service, information about original variable names,
 menaning, original units...
+\strong{Currently only MeteoCat is available}, other services will result
+in an error
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
