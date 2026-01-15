@@ -89,10 +89,10 @@ api_options
     #> [1] "current_day"
     #> 
     #> $start_date
-    #> [1] "2026-01-08"
+    #> [1] "2026-01-15"
     #> 
     #> $end_date
-    #> [1] "2026-01-08"
+    #> [1] "2026-01-15"
     #> 
     #> $stations
     #> NULL
@@ -157,28 +157,6 @@ Accessing station metadata for AEMET is simple:
 
 ``` r
 get_stations_info_from('aemet', api_options)
-#> Waiting 61s for retry backoff ■                               
-#> Waiting 61s for retry backoff ■■                              
-#> Waiting 61s for retry backoff ■■■■                            
-#> Waiting 61s for retry backoff ■■■■■                           
-#> Waiting 61s for retry backoff ■■■■■■■                         
-#> Waiting 61s for retry backoff ■■■■■■■■                        
-#> Waiting 61s for retry backoff ■■■■■■■■■■                      
-#> Waiting 61s for retry backoff ■■■■■■■■■■■                     
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■                   
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■                  
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■               
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■            
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
 #> Simple feature collection with 947 features and 5 fields
 #> Geometry type: POINT
 #> Dimension:     XY
@@ -188,9 +166,9 @@ get_stations_info_from('aemet', api_options)
 #>    service station_id station_name                  station_province altitude
 #>  * <chr>   <chr>      <chr>                         <chr>                 [m]
 #>  1 aemet   B013X      ESCORCA, LLUC                 ILLES BALEARS         490
-#>  2 aemet   B051A      SÓLLER, PUERTO                ILLES BALEARS           5
+#>  2 aemet   B051A      SÓLLER, PUERTO                BALEARES                5
 #>  3 aemet   B087X      BANYALBUFAR                   ILLES BALEARS          60
-#>  4 aemet   B103B      ANDRATX - SANT ELM            ILLES BALEARS          52
+#>  4 aemet   B103B      ANDRATX - SANT ELM            BALEARES               52
 #>  5 aemet   B158X      CALVIÀ, ES CAPDELLÀ           BALEARES               50
 #>  6 aemet   B228       PALMA, PUERTO                 ILLES BALEARS           3
 #>  7 aemet   B236C      PALMA, UNIVERSITAT            ILLES BALEARS          95

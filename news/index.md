@@ -2,6 +2,8 @@
 
 ## meteospain 0.3.1
 
+CRAN release: 2026-01-08
+
 - New method to obtain variable metadata from the APIs
   `get_variables_from`
 

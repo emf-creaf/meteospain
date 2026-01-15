@@ -56,14 +56,14 @@ meteocat_daily <- get_meteo_from(
   'meteocat',
   meteocat_options('daily', start_date = as.Date('2020-04-16'), api_key = keyring::key_get('meteocat'))
 )
-#> iterating ■■                                 4% | ETA: 31s
-#> iterating ■■■■■                             15% | ETA: 27s
-#> iterating ■■■■■■■■                          22% | ETA: 24s
+#> iterating ■■                                 4% | ETA: 34s
+#> iterating ■■■■■                             15% | ETA: 24s
+#> iterating ■■■■■■■■■                         26% | ETA: 22s
 #> iterating ■■■■■■■■■■■                       33% | ETA: 20s
-#> iterating ■■■■■■■■■■■■■■                    44% | ETA: 16s
-#> iterating ■■■■■■■■■■■■■■■■■■                56% | ETA: 13s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  8s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         81% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■                   48% | ETA: 14s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  3s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -85,14 +85,36 @@ ria_daily <- get_meteo_from(
   'ria',
   ria_options('daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'))
 )
-#> iterating ■■■                                6% | ETA: 19s
-#> iterating ■■■                                7% | ETA: 19s
-#> iterating ■■■■■■■■                          22% | ETA: 16s
-#> iterating ■■■■■■■■■■■■                      37% | ETA: 12s
-#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA: 10s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         81% | ETA:  4s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    95% | ETA:  1s
+#> Waiting 60s for retry backoff ■                               
+#> Waiting 60s for retry backoff ■■                              
+#> Waiting 60s for retry backoff ■■■■                            
+#> Waiting 60s for retry backoff ■■■■■                           
+#> Waiting 60s for retry backoff ■■■■■■■                         
+#> Waiting 60s for retry backoff ■■■■■■■■                        
+#> Waiting 60s for retry backoff ■■■■■■■■■■                      
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■                    
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■                   
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■                  
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■                
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■               
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■             
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■            
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
+#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
+#> iterating ■■■                                6% | ETA: 24s
+#> iterating ■■■■                               9% | ETA: 22s
+#> iterating ■■■■■■■                           20% | ETA: 23s
+#> iterating ■■■■■■■■■■■                       33% | ETA: 17s
+#> iterating ■■■■■■■■■■■■■■■                   47% | ETA: 13s
+#> iterating ■■■■■■■■■■■■■■■■■■                58% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            69% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        82% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      91% | ETA:  2s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ✖ Some stations didn't return data:
 #> https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-16/2020-04-30:

@@ -96,7 +96,7 @@ api_options
     #> [1] "instant"
     #> 
     #> $start_date
-    #> [1] "2026-01-08"
+    #> [1] "2026-01-15"
     #> 
     #> $stations
     #> NULL
@@ -163,16 +163,17 @@ api_options <- meteocat_options(
   api_key = key_get('meteocat')
 )
 catalunya_2020 <- get_meteo_from('meteocat', options = api_options)
-#> iterating ■■■                                5% | ETA: 25s
-#> iterating ■■■■                              10% | ETA: 27s
-#> iterating ■■■■■■■                           21% | ETA: 23s
-#> iterating ■■■■■■■■■■■                       33% | ETA: 19s
-#> iterating ■■■■■■■■■■■■■                     41% | ETA: 18s
-#> iterating ■■■■■■■■■■■■■■■■■                 54% | ETA: 13s
-#> iterating ■■■■■■■■■■■■■■■■■■■               62% | ETA: 11s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           72% | ETA:  9s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        82% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     95% | ETA:  1s
+#> iterating ■■                                 3% | ETA: 47s
+#> iterating ■■■■                              10% | ETA: 32s
+#> iterating ■■■■■■                            18% | ETA: 30s
+#> iterating ■■■■■■■■■                         28% | ETA: 25s
+#> iterating ■■■■■■■■■■■■                      36% | ETA: 23s
+#> iterating ■■■■■■■■■■■■■■■                   46% | ETA: 18s
+#> iterating ■■■■■■■■■■■■■■■■■                 54% | ETA: 15s
+#> iterating ■■■■■■■■■■■■■■■■■■■■              64% | ETA: 12s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           72% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         79% | ETA:  7s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     92% | ETA:  3s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
