@@ -474,7 +474,8 @@
       # each variable in its own column
       tidyr::pivot_wider(
         id_cols = -"variable_code",
-        names_from = "variable_name", values_from = "valor"
+        names_from = "variable_name", values_from = "valor",
+        values_fn = ~ mean(.x, na.rm = TRUE)
       ) |>
       .create_missing_vars(var_names = var_names) |>
       # set service, date and units
