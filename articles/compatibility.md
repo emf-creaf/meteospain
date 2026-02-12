@@ -56,14 +56,11 @@ meteocat_daily <- get_meteo_from(
   'meteocat',
   meteocat_options('daily', start_date = as.Date('2020-04-16'), api_key = keyring::key_get('meteocat'))
 )
-#> iterating ■■                                 4% | ETA: 34s
-#> iterating ■■■■■                             15% | ETA: 24s
-#> iterating ■■■■■■■■■                         26% | ETA: 22s
-#> iterating ■■■■■■■■■■■                       33% | ETA: 20s
-#> iterating ■■■■■■■■■■■■■■■                   48% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  8s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  6s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  3s
+#> iterating ■■■                                7% | ETA: 18s
+#> iterating ■■■■                              11% | ETA: 17s
+#> iterating ■■■■■■■■■■                        30% | ETA: 12s
+#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  5s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -85,36 +82,12 @@ ria_daily <- get_meteo_from(
   'ria',
   ria_options('daily', start_date = as.Date('2020-04-16'), end_date = as.Date('2020-04-30'))
 )
-#> Waiting 60s for retry backoff ■                               
-#> Waiting 60s for retry backoff ■■                              
-#> Waiting 60s for retry backoff ■■■■                            
-#> Waiting 60s for retry backoff ■■■■■                           
-#> Waiting 60s for retry backoff ■■■■■■■                         
-#> Waiting 60s for retry backoff ■■■■■■■■                        
-#> Waiting 60s for retry backoff ■■■■■■■■■■                      
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■                    
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■                   
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■                  
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■                
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■               
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■             
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■            
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
-#> Waiting 60s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
-#> iterating ■■■                                6% | ETA: 24s
-#> iterating ■■■■                               9% | ETA: 22s
-#> iterating ■■■■■■■                           20% | ETA: 23s
-#> iterating ■■■■■■■■■■■                       33% | ETA: 17s
-#> iterating ■■■■■■■■■■■■■■■                   47% | ETA: 13s
-#> iterating ■■■■■■■■■■■■■■■■■■                58% | ETA: 10s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■            69% | ETA:  8s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        82% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      91% | ETA:  2s
+#> iterating ■■                                 5% | ETA: 20s
+#> iterating ■■■■■                             12% | ETA: 19s
+#> iterating ■■■■■■■■■■■                       35% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA:  8s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           73% | ETA:  4s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    95% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ✖ Some stations didn't return data:
 #> https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosdiarios/forceEt0/21/104/2020-04-16/2020-04-30:
@@ -197,7 +170,7 @@ april_2020_spain <- list(
 #> max_wind_direction)`
 
 april_2020_spain
-#> Simple feature collection with 22197 features and 43 fields (with 120 geometries empty)
+#> Simple feature collection with 22197 features and 43 fields (with 150 geometries empty)
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -18.115 ymin: 27.66528 xmax: 4.323889 ymax: 43.78611

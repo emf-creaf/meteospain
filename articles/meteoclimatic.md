@@ -49,25 +49,25 @@ Accessing station metadata for Meteoclimatic is simple:
 
 ``` r
 get_stations_info_from('meteoclimatic', options = api_options)
-#> Simple feature collection with 224 features and 3 fields
+#> Simple feature collection with 223 features and 3 fields
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.26
+#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.3
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 224 × 4
+#> # A tibble: 223 × 4
 #>    service       station_id          station_name          geometry
 #>  * <chr>         <chr>               <chr>              <POINT [°]>
-#>  1 meteoclimatic ESCAT0800000008591B Aiguafreda Aj. (… (2.25 41.77)
-#>  2 meteoclimatic ESCAT0800000008328F Alella-Mirador (… (2.29 41.49)
-#>  3 meteoclimatic ESCAT0800000008350A Arenys de Mar (B… (2.56 41.59)
-#>  4 meteoclimatic ESCAT0800000008358A Arenys de Munt (… (2.54 41.61)
-#>  5 meteoclimatic ESCAT0800000008310B Argentona (Barce… (2.39 41.56)
-#>  6 meteoclimatic ESCAT0800000008610B Avià (Barcelona)  (1.83 42.08)
-#>  7 meteoclimatic ESCAT0800000008610A Avià - Sud (Barc… (1.83 42.07)
-#>  8 meteoclimatic ESCAT0800000008915C Badalona - BCIN … (2.26 41.46)
-#>  9 meteoclimatic ESCAT0800000008915A Badalona - Bufal… (2.24 41.46)
-#> 10 meteoclimatic ESCAT0800000008912A Badalona - Centr… (2.25 41.45)
-#> # ℹ 214 more rows
+#>  1 meteoclimatic ESCAT0800000008328F Alella-Mirador (… (2.29 41.49)
+#>  2 meteoclimatic ESCAT0800000008350A Arenys de Mar (B… (2.56 41.59)
+#>  3 meteoclimatic ESCAT0800000008310B Argentona (Barce… (2.39 41.56)
+#>  4 meteoclimatic ESCAT0800000008610B Avià (Barcelona)  (1.83 42.08)
+#>  5 meteoclimatic ESCAT0800000008610A Avià - Sud (Barc… (1.83 42.07)
+#>  6 meteoclimatic ESCAT0800000008915C Badalona - BCIN … (2.26 41.46)
+#>  7 meteoclimatic ESCAT0800000008915A Badalona - Bufal… (2.24 41.46)
+#>  8 meteoclimatic ESCAT0800000008912A Badalona - Centr… (2.25 41.45)
+#>  9 meteoclimatic ESCAT0800000008911C Badalona - Dalt … (2.26 41.46)
+#> 10 meteoclimatic ESCAT0800000008080A Badalona - Llefi… (2.23 41.44)
+#> # ℹ 213 more rows
 ```
 
 ### Meteoclimatic data
@@ -80,25 +80,25 @@ current_day_barcelona <- get_meteo_from('meteoclimatic', options = api_options)
 #> coordinates of stations can be present.
 #> https://www.meteoclimatic.net/index
 current_day_barcelona
-#> Simple feature collection with 224 features and 13 fields
+#> Simple feature collection with 223 features and 13 fields
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.26
+#> Bounding box:  xmin: 1.52 ymin: 1.81 xmax: 41.64 ymax: 42.3
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 224 × 14
+#> # A tibble: 223 × 14
 #>    timestamp           service       station_id     station_name min_temperature
 #>  * <dttm>              <chr>         <chr>          <chr>                   [°C]
-#>  1 2026-01-15 11:49:00 meteoclimatic ESCAT08000000… Barcelona -…             5.6
-#>  2 2026-01-15 11:54:00 meteoclimatic ESCAT08000000… Sant Fost -…             4.6
-#>  3 2026-01-15 11:54:00 meteoclimatic ESCAT08000000… Montmeló-T.…             2.5
-#>  4 2026-01-15 11:55:00 meteoclimatic ESCAT08000000… Palau-solit…             4.9
-#>  5 2026-01-15 11:55:00 meteoclimatic ESCAT08000000… Vacarisses …             1.1
-#>  6 2026-01-15 11:55:00 meteoclimatic ESCAT08000000… Canet de Ma…             9  
-#>  7 2026-01-15 11:55:00 meteoclimatic ESCAT08000000… Taradell (D…             0.3
-#>  8 2026-01-15 11:55:00 meteoclimatic ESCAT08000000… Sallent [El…             0.2
-#>  9 2026-01-15 11:55:00 meteoclimatic ESCAT08000000… Gavà.  La B…             8.2
-#> 10 2026-01-15 11:56:00 meteoclimatic ESCAT08000000… Pineda de M…             8.9
-#> # ℹ 214 more rows
+#>  1 2026-02-12 11:30:00 meteoclimatic ESCAT08000000… La Pobla de…             5.3
+#>  2 2026-02-12 11:30:00 meteoclimatic ESCAT08000000… Pedraforca-…            -5.2
+#>  3 2026-02-12 11:33:25 meteoclimatic ESCAT08000000… Palau Solit…            11.7
+#>  4 2026-02-12 11:34:00 meteoclimatic ESCAT08000000… Cussons - S…             7.9
+#>  5 2026-02-12 11:38:00 meteoclimatic ESCAT08000000… Sant Fost -…            10.8
+#>  6 2026-02-12 11:38:00 meteoclimatic ESCAT08000000… Sant Quintí…            12.5
+#>  7 2026-02-12 11:39:00 meteoclimatic ESCAT08000000… Montmeló-T.…            10.9
+#>  8 2026-02-12 11:39:00 meteoclimatic ESCAT08000000… St Quirze d…            12.3
+#>  9 2026-02-12 11:39:00 meteoclimatic ESCAT08000000… Vic - Zona …             9.4
+#> 10 2026-02-12 11:40:00 meteoclimatic ESCAT08000000… Palau-solit…            12.1
+#> # ℹ 213 more rows
 #> # ℹ 9 more variables: max_temperature [°C], min_relative_humidity [%],
 #> #   max_relative_humidity [%], precipitation [L/m^2], wind_direction [°],
 #> #   max_wind_speed [km/h], max_atmospheric_pressure [hPa],

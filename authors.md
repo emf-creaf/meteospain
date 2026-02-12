@@ -18,7 +18,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/emf-creaf/meteospain/blob/v0.3.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/emf-creaf/meteospain/blob/main/DESCRIPTION)
 
 Granda V (2026). *meteospain: Access to Spanish Meteorological Stations
 Services*. R package version 0.3.1,

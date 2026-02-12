@@ -25,50 +25,6 @@ get_meteo_from(
     end_date = as.Date('1990-12-31')
   )
 )
-#> Waiting 61s for retry backoff ■                               
-#> Waiting 61s for retry backoff ■■                              
-#> Waiting 61s for retry backoff ■■■                             
-#> Waiting 61s for retry backoff ■■■■■                           
-#> Waiting 61s for retry backoff ■■■■■■                          
-#> Waiting 61s for retry backoff ■■■■■■■■                        
-#> Waiting 61s for retry backoff ■■■■■■■■■                       
-#> Waiting 61s for retry backoff ■■■■■■■■■■■                     
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■                    
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■                  
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■                 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■              
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■           
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■        
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■     
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
-#> Waiting 61s for retry backoff ■                               
-#> Waiting 61s for retry backoff ■■                              
-#> Waiting 61s for retry backoff ■■■■                            
-#> Waiting 61s for retry backoff ■■■■■                           
-#> Waiting 61s for retry backoff ■■■■■■■                         
-#> Waiting 61s for retry backoff ■■■■■■■■                        
-#> Waiting 61s for retry backoff ■■■■■■■■■■                      
-#> Waiting 61s for retry backoff ■■■■■■■■■■■                     
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■                   
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■                  
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■                
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■               
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■             
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■            
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■          
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■         
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■       
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■      
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■    
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
-#> Waiting 61s for retry backoff ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 
 #> Error in `.create_aemet_request()`:
 #> ✖ 404
 #> ℹ El rango de fechas no puede ser superior a 15 dias
@@ -364,15 +320,12 @@ api_options <- meteocat_options(
   api_key = keyring::key_get('meteocat')
 )
 april_2020 <- get_meteo_from('meteocat', api_options)
-#> iterating ■■                                 4% | ETA: 35s
-#> iterating ■■■■■                             15% | ETA: 30s
-#> iterating ■■■■■■■■                          22% | ETA: 26s
-#> iterating ■■■■■■■■■■                        30% | ETA: 24s
-#> iterating ■■■■■■■■■■■■■                     41% | ETA: 19s
-#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA: 15s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA: 10s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         81% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     93% | ETA:  2s
+#> iterating ■■                                 4% | ETA: 44s
+#> iterating ■■■■                              11% | ETA: 28s
+#> iterating ■■■■■■■■■                         26% | ETA: 18s
+#> iterating ■■■■■■■■■■■■■■■                   48% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  2s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -409,59 +362,40 @@ meteocat_2020q1_tidyverse <-
     }
   ) |>
   purrr::list_rbind()
-#> iterating ■■                                 4% | ETA: 29s
-#> iterating ■■■■                              11% | ETA: 30s
-#> iterating ■■■■■■■■                          22% | ETA: 25s
-#> iterating ■■■■■■■■■■                        30% | ETA: 23s
-#> iterating ■■■■■■■■■■■■■■                    44% | ETA: 17s
-#> iterating ■■■■■■■■■■■■■■■■■■                56% | ETA: 13s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA: 10s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  6s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     93% | ETA:  2s
+#> iterating ■■■                                7% | ETA: 18s
+#> iterating ■■■■■■■                           19% | ETA: 16s
+#> iterating ■■■■■■■■■■■                       33% | ETA: 13s
+#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     93% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
-#> iterating ■■■                                7% | ETA: 21s
+#> iterating ■■■                                7% | ETA: 18s
 #> 
-#> iterating ■■■■■                             15% | ETA: 24s
+#> iterating ■■■■■■■■                          22% | ETA: 15s
 #> 
-#> iterating ■■■■■■■■■                         26% | ETA: 22s
+#> iterating ■■■■■■■■■■■■                      37% | ETA: 12s
 #> 
-#> iterating ■■■■■■■■■■■                       33% | ETA: 20s
+#> iterating ■■■■■■■■■■■■■■■■■■                56% | ETA:  8s
 #> 
-#> iterating ■■■■■■■■■■■■■■                    44% | ETA: 17s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA: 15s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■              63% | ETA: 11s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           74% | ETA:  8s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  3s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         81% | ETA:  3s
 #> 
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> 
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
-#> iterating ■■                                 4% | ETA: 29s
+#> iterating ■■■                                7% | ETA: 17s
 #> 
-#> iterating ■■■                                7% | ETA: 30s
+#> iterating ■■■■■                             15% | ETA: 16s
 #> 
-#> iterating ■■■■■■■                           19% | ETA: 26s
+#> iterating ■■■■■■■■■■                        30% | ETA: 13s
 #> 
-#> iterating ■■■■■■■■■■                        30% | ETA: 22s
+#> iterating ■■■■■■■■■■■■■■■                   48% | ETA:  9s
 #> 
-#> iterating ■■■■■■■■■■■■                      37% | ETA: 19s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  5s
 #> 
-#> iterating ■■■■■■■■■■■■■■■                   48% | ETA: 16s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■               59% | ETA: 12s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA:  9s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■       85% | ETA:  4s
-#> 
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    96% | ETA:  1s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  2s
 #> 
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> 
@@ -596,17 +530,13 @@ api_options <- meteocat_options(
   api_key = keyring::key_get('meteocat')
 )
 year_2020 <- get_meteo_from('meteocat', api_options)
-#> iterating ■■                                 3% | ETA: 39s
-#> iterating ■■■■■                             13% | ETA: 34s
-#> iterating ■■■■■■■                           21% | ETA: 30s
-#> iterating ■■■■■■■■■                         28% | ETA: 26s
-#> iterating ■■■■■■■■■■■■■                     38% | ETA: 22s
-#> iterating ■■■■■■■■■■■■■■■■                  49% | ETA: 18s
-#> iterating ■■■■■■■■■■■■■■■■■■                56% | ETA: 15s
-#> iterating ■■■■■■■■■■■■■■■■■■■■              64% | ETA: 13s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           74% | ETA:  9s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        85% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     95% | ETA:  2s
+#> iterating ■■■                                5% | ETA: 23s
+#> iterating ■■■■■                             13% | ETA: 20s
+#> iterating ■■■■■■■■■                         28% | ETA: 16s
+#> iterating ■■■■■■■■■■■■■■                    44% | ETA: 12s
+#> iterating ■■■■■■■■■■■■■■■■■■■               59% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           72% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  2s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -638,17 +568,13 @@ meteocat_2019_20_tidyverse <-
     }
   ) |>
   purrr::list_rbind()
-#> iterating ■■■                                5% | ETA: 25s
-#> iterating ■■■■■                             13% | ETA: 29s
-#> iterating ■■■■■■■                           21% | ETA: 25s
-#> iterating ■■■■■■■■■■■                       33% | ETA: 20s
-#> iterating ■■■■■■■■■■■■■                     41% | ETA: 18s
-#> iterating ■■■■■■■■■■■■■■■■                  51% | ETA: 15s
-#> iterating ■■■■■■■■■■■■■■■■■■■               59% | ETA: 13s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■            69% | ETA: 10s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          77% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■       87% | ETA:  4s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    97% | ETA:  1s
+#> iterating ■■■                                5% | ETA: 20s
+#> iterating ■■■■■■                            15% | ETA: 19s
+#> iterating ■■■■■■■■■■                        31% | ETA: 15s
+#> iterating ■■■■■■■■■■■■■■■                   46% | ETA: 11s
+#> iterating ■■■■■■■■■■■■■■■■■■■               59% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           74% | ETA:  5s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     95% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
@@ -816,18 +742,15 @@ api_options <- meteocat_options(
 )
 all_years <- get_meteo_from('meteocat', api_options)
 #> iterating ■■                                 2% | ETA:  1m
-#> iterating ■■■■                              10% | ETA: 44s
-#> iterating ■■■■■                             15% | ETA: 42s
-#> iterating ■■■■■■■■                          22% | ETA: 38s
-#> iterating ■■■■■■■■■■                        30% | ETA: 33s
-#> iterating ■■■■■■■■■■■■                      38% | ETA: 28s
-#> iterating ■■■■■■■■■■■■■■■                   45% | ETA: 25s
-#> iterating ■■■■■■■■■■■■■■■■■                 52% | ETA: 21s
-#> iterating ■■■■■■■■■■■■■■■■■■■               60% | ETA: 17s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             68% | ETA: 14s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           72% | ETA: 12s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  9s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      90% | ETA:  4s
+#> iterating ■■■■                              10% | ETA: 46s
+#> iterating ■■■■■■                            18% | ETA: 36s
+#> iterating ■■■■■■■■■                         25% | ETA: 30s
+#> iterating ■■■■■■■■■■■                       35% | ETA: 25s
+#> iterating ■■■■■■■■■■■■■■■                   45% | ETA: 20s
+#> iterating ■■■■■■■■■■■■■■■■■■                57% | ETA: 14s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■            70% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         80% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     95% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info

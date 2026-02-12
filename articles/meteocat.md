@@ -96,7 +96,7 @@ api_options
     #> [1] "instant"
     #> 
     #> $start_date
-    #> [1] "2026-01-15"
+    #> [1] "2026-02-12"
     #> 
     #> $stations
     #> NULL
@@ -163,22 +163,17 @@ api_options <- meteocat_options(
   api_key = key_get('meteocat')
 )
 catalunya_2020 <- get_meteo_from('meteocat', options = api_options)
-#> iterating ■■                                 3% | ETA: 47s
-#> iterating ■■■■                              10% | ETA: 32s
-#> iterating ■■■■■■                            18% | ETA: 30s
-#> iterating ■■■■■■■■■                         28% | ETA: 25s
-#> iterating ■■■■■■■■■■■■                      36% | ETA: 23s
-#> iterating ■■■■■■■■■■■■■■■                   46% | ETA: 18s
-#> iterating ■■■■■■■■■■■■■■■■■                 54% | ETA: 15s
-#> iterating ■■■■■■■■■■■■■■■■■■■■              64% | ETA: 12s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           72% | ETA: 10s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■         79% | ETA:  7s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     92% | ETA:  3s
+#> iterating ■■■                                8% | ETA: 20s
+#> iterating ■■■■■■                            18% | ETA: 17s
+#> iterating ■■■■■■■■■■■                       33% | ETA: 13s
+#> iterating ■■■■■■■■■■■■■■■■                  51% | ETA:  9s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■             67% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■        85% | ETA:  3s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ℹ Data provided by meteo.cat © Servei Meteorològic de Catalunya
 #> https://www.meteo.cat/wpweb/avis-legal/#info
 catalunya_2020
-#> Simple feature collection with 2255 features and 45 fields
+#> Simple feature collection with 2255 features and 45 fields (with 12 geometries empty)
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: 0.30565 ymin: 40.55786 xmax: 3.18147 ymax: 42.77011

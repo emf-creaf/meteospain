@@ -62,10 +62,10 @@ api_options
 #> [1] "daily"
 #> 
 #> $start_date
-#> [1] "2026-01-14"
+#> [1] "2026-02-11"
 #> 
 #> $end_date
-#> [1] "2026-01-14"
+#> [1] "2026-02-11"
 #> 
 #> $stations
 #> NULL
@@ -80,10 +80,10 @@ api_options
 #> [1] "daily"
 #> 
 #> $start_date
-#> [1] "2026-01-14"
+#> [1] "2026-02-11"
 #> 
 #> $end_date
-#> [1] "2026-01-14"
+#> [1] "2026-02-11"
 #> 
 #> $stations
 #> [1] "14-2" "4-2"
@@ -145,14 +145,11 @@ api_options <- ria_options(
   end_date = as.Date('2020-12-31')
 )
 andalucia_2020 <- get_meteo_from('ria', options = api_options)
-#> iterating ■■                                 4% | ETA: 24s
-#> iterating ■■■■                              11% | ETA: 31s
-#> iterating ■■■■■■■■                          22% | ETA: 22s
-#> iterating ■■■■■■■■■■■■                      38% | ETA: 15s
-#> iterating ■■■■■■■■■■■■■■■■■                 54% | ETA: 11s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■             66% | ETA:  8s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■          77% | ETA:  5s
-#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      91% | ETA:  2s
+#> iterating ■■■                                7% | ETA: 13s
+#> iterating ■■■■■■■■■■                        28% | ETA: 10s
+#> iterating ■■■■■■■■■■■■■■■■                  51% | ETA:  6s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■           73% | ETA:  4s
+#> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     94% | ETA:  1s
 #> iterating ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> ✖ Some stations didn't return data:
 #> https://www.juntadeandalucia.es/agriculturaypesca/ifapa/riaws/datosmensuales/21/104/2020/1/12:
